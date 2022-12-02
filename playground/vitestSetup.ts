@@ -1,5 +1,5 @@
 import type * as http from 'node:http'
-import path, { dirname, join, resolve } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import os from 'node:os'
 import fs from 'fs-extra'
 import { chromium } from 'playwright-chromium'
@@ -30,10 +30,6 @@ export const workspaceRoot = resolve(__dirname, '../')
 export const isBuild = !!process.env.VITE_TEST_BUILD
 export const isServe = !isBuild
 export const isWindows = process.platform === 'win32'
-export const viteBinPath = path.posix.join(
-  workspaceRoot,
-  'packages/vite/bin/vite.js'
-)
 
 // #endregion
 

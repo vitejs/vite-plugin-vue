@@ -11,7 +11,7 @@ on:
 
 jobs:
   release:
-    if: github.repository == 'vitejs/vite'
+    if: github.repository == 'vitejs/vite-plugin-vue'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

@@ -27,15 +27,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vitejs/vite.git",
+    "url": "git+https://github.com/vitejs/vite-plugin-vue.git",
     "directory": "packages/plugin-vue"
   },
   "bugs": {
-    "url": "https://github.com/vitejs/vite/issues"
+    "url": "https://github.com/vitejs/vite-plugin-vue/issues"
   },
-  "homepage": "https://github.com/vitejs/vite/tree/main/packages/plugin-vue#readme",
+  "homepage": "https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#readme",
   "peerDependencies": {
-    "vite": "^3.0.0",
+    "vite": "^4.0.0-alpha.0",
     "vue": "^3.2.25"
   },
   "devDependencies": {
@@ -45,7 +45,7 @@
     "rollup": "~3.3.0",
     "slash": "^5.0.0",
     "source-map": "^0.6.1",
-    "vite": "workspace:*",
+    "vite": "^4.0.0-alpha.0",
     "vue": "^3.2.45"
   }
 }

@@ -11,7 +11,7 @@ export default {
 }
 ```
 
-For JSX / TSX support, [`@vitejs/plugin-vue-jsx`](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx) is also needed.
+For JSX / TSX support, [`@vitejs/plugin-vue-jsx`](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx) is also needed.
 
 ## Options
 

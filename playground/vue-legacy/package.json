@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "debug": "node --inspect-brk ../../packages/vite/bin/vite",
+    "debug": "node --inspect-brk vite",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -13,6 +13,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*",
-    "@vitejs/plugin-legacy": "workspace:*"
+    "@vitejs/plugin-legacy": "^3.0.0-alpha.0"
   }
 }
