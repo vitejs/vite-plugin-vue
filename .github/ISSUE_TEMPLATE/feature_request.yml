@@ -1,11 +1,21 @@
 name: "\U0001F680 New feature proposal"
-description: Propose a new feature to be added to Vite
+description: Propose a new feature
 labels: ["enhancement: pending triage"]
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for your interest in the project and taking the time to fill out this feature report!
+  - type: checkboxes
+    id: plugins
+    attributes:
+      label: Related plugins
+      description: Select the plugin which is related
+      options:
+        - label: |
+            [plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
+        - label: |
+            [plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)
   - type: textarea
     id: feature-description
     attributes:
