@@ -20,8 +20,8 @@ See [`@vitejs/plugin-vue` documentation](packages/plugin-vue/README.md) and [`@v
 
 | Package                                         | Version (click for changelogs)                                                                                                     |
 | ----------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
-| [@vitejs/plugin-react](packages/plugin-vue)     | [![plugin-react version](https://img.shields.io/npm/v/@vitejs/plugin-vue.svg?label=%20)](packages/plugin-vue/CHANGELOG.md)         |
-| [@vitejs/plugin-react](packages/plugin-vue-jsx) | [![plugin-react version](https://img.shields.io/npm/v/@vitejs/plugin-vue-jsx.svg?label=%20)](packages/plugin-vue-jsx/CHANGELOG.md) |
+| [@vitejs/plugin-vue](packages/plugin-vue)     | [![plugin-vue version](https://img.shields.io/npm/v/@vitejs/plugin-vue.svg?label=%20)](packages/plugin-vue/CHANGELOG.md)         |
+| [@vitejs/plugin-vue-jsx](packages/plugin-vue-jsx) | [![plugin-vue-jsx version](https://img.shields.io/npm/v/@vitejs/plugin-vue-jsx.svg?label=%20)](packages/plugin-vue-jsx/CHANGELOG.md) |
 
 ## License
 
