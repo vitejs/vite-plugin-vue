@@ -1,11 +1,21 @@
 name: "\U0001F41E Bug report"
-description: Report an issue with Vite
+description: Report an issue
 labels: [pending triage]
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
+  - type: checkboxes
+    id: plugins
+    attributes:
+      label: Related plugins
+      description: Select the plugin which is related
+      options:
+        - label: |
+            [plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
+        - label: |
+            [plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)
   - type: textarea
     id: bug-description
     attributes:
@@ -18,7 +28,7 @@ body:
     id: reproduction
     attributes:
       label: Reproduction
-      description: Please provide a link via [vite.new](https://vite.new/) or a link to a repo that can reproduce the problem you ran into. `npm create vite@latest` and `npm create vite-extra@latest` (for SSR or library repros) can be used as a starter template. A [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) is required ([Why?](https://antfu.me/posts/why-reproductions-are-required)). If a report is vague (e.g. just a generic error message) and has no reproduction, it will receive a "need reproduction" label. If no reproduction is provided after 3 days, it will be auto-closed.
+      description: Please provide a link via [vite.new/vue](https://vite.new/vue) / [vite.new/vue-ts](https://vite.new/vue-ts) or a link to a repo that can reproduce the problem you ran into. `npm create vite@latest` and `npm create vite-extra@latest` (for SSR or library repros) can be used as a starter template. A [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) is required ([Why?](https://antfu.me/posts/why-reproductions-are-required)). If a report is vague (e.g. just a generic error message) and has no reproduction, it will receive a "need reproduction" label. If no reproduction is provided after 3 days, it will be auto-closed.
       placeholder: Reproduction URL
     validations:
       required: true
