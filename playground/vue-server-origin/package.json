@@ -1,5 +1,5 @@
 {
-  "name": "test-vue-server-origin",
+  "name": "@vitejs/test-vue-server-origin",
   "private": true,
   "version": "0.0.0",
   "scripts": {

@@ -3,6 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { Foo } from 'dep-import-type/deep'
+import { Foo } from '@vitejs/test-dep-import-type/deep'
 const msg: Foo = {}
 </script>

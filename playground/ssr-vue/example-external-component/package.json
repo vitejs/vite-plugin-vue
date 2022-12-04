@@ -1,5 +1,5 @@
 {
-  "name": "example-external-component",
+  "name": "@vitejs/test-example-external-component",
   "private": true,
   "version": "0.0.0",
   "type": "module",
