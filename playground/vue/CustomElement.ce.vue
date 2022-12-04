@@ -9,7 +9,7 @@
 import { reactive, onBeforeMount } from 'vue'
 
 defineProps({
-  label: String
+  label: String,
 })
 
 const state = reactive({ count: 0 })

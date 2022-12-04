@@ -6,12 +6,12 @@ export default defineConfig({
     devSourcemap: true,
     preprocessorOptions: {
       less: {
-        additionalData: '@color: red;'
-      }
-    }
+        additionalData: '@color: red;',
+      },
+    },
   },
   plugins: [vuePlugin()],
   build: {
-    sourcemap: true
-  }
+    sourcemap: true,
+  },
 })

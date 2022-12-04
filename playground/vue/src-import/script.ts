@@ -9,11 +9,11 @@ export default defineComponent({
     SrcImportStyle,
     SrcImportStyle2,
     SrcImportModuleStyle,
-    SrcImportModuleStyle2
+    SrcImportModuleStyle2,
   },
   setup() {
     return {
-      msg: 'hello from script src!'
+      msg: 'hello from script src!',
     }
-  }
+  },
 })

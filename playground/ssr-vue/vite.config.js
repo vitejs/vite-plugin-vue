@@ -37,7 +37,7 @@ export default defineConfig(({ command, ssrBuild }) => ({
               : 'hi'
           }' }`
         }
-      }
+      },
     },
     {
       name: 'virtual-module',
@@ -54,7 +54,7 @@ export default defineConfig(({ command, ssrBuild }) => ({
         } else if (id === nestedVirtualId) {
           return `export const msg = "[success] from conventional virtual file"`
         }
-      }
+      },
     },
     // Example of a plugin that injects a helper from a virtual module that can
     // be used in renderBuiltUrl
@@ -80,7 +80,7 @@ export default defineConfig(({ command, ssrBuild }) => ({
           if (id === virtualId) {
             return {
               code: `export const __ssr_vue_processAssetPath = (url) => '${base}' + url`,
-              moduleSideEffects: 'no-treeshake'
+              moduleSideEffects: 'no-treeshake',
             }
           }
         },
@@ -95,32 +95,32 @@ export default defineConfig(({ command, ssrBuild }) => ({
               code:
                 `import { __ssr_vue_processAssetPath } from '${virtualId}';__ssr_vue_processAssetPath;` +
                 code,
-              sourcemap: null // no sourcemap support to speed up CI
+              sourcemap: null, // no sourcemap support to speed up CI
             }
           }
-        }
+        },
       }
-    })()
+    })(),
   ],
   experimental: {
     renderBuiltUrl(filename, { hostType, type, ssr }) {
       if (ssr && type === 'asset' && hostType === 'js') {
         return {
-          runtime: `__ssr_vue_processAssetPath(${JSON.stringify(filename)})`
+          runtime: `__ssr_vue_processAssetPath(${JSON.stringify(filename)})`,
         }
       }
-    }
+    },
   },
   build: {
-    minify: false
+    minify: false,
   },
   ssr: {
     noExternal: [
       // this package has uncompiled .vue files
-      'example-external-component'
-    ]
+      'example-external-component',
+    ],
   },
   optimizeDeps: {
-    exclude: ['example-external-component']
-  }
+    exclude: ['example-external-component'],
+  },
 }))

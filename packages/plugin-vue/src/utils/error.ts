@@ -3,7 +3,7 @@ import type { RollupError } from 'rollup'
 
 export function createRollupError(
   id: string,
-  error: CompilerError | SyntaxError
+  error: CompilerError | SyntaxError,
 ): RollupError {
   const { message, name, stack } = error
   const rollupError: RollupError = {
@@ -11,14 +11,14 @@ export function createRollupError(
     plugin: 'vue',
     message,
     name,
-    stack
+    stack,
   }
 
   if ('code' in error && error.loc) {
     rollupError.loc = {
       file: id,
       line: error.loc.start.line,
-      column: error.loc.start.column
+      column: error.loc.start.column,
     }
   }
 

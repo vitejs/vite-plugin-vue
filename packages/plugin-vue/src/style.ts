@@ -11,7 +11,7 @@ export async function transformStyle(
   index: number,
   options: ResolvedOptions,
   pluginContext: TransformPluginContext,
-  filename: string
+  filename: string,
 ) {
   const block = descriptor.styles[index]
   // vite already handles pre-processors and CSS module so this is only
@@ -29,11 +29,11 @@ export async function transformStyle(
             map: {
               from: filename,
               inline: false,
-              annotation: false
-            }
-          }
+              annotation: false,
+            },
+          },
         }
-      : {})
+      : {}),
   })
 
   if (result.errors.length) {
@@ -42,7 +42,7 @@ export async function transformStyle(
         error.loc = {
           file: descriptor.filename,
           line: error.line + block.loc.start.line,
-          column: error.column
+          column: error.column,
         }
       }
       pluginContext.error(error)
@@ -55,12 +55,12 @@ export async function transformStyle(
         // version property of result.map is declared as string
         // but actually it is a number
         result.map as Omit<RawSourceMap, 'version'> as ExistingRawSourceMap,
-        filename
+        filename,
       )
     : ({ mappings: '' } as any)
 
   return {
     code: result.code,
-    map: map
+    map: map,
   }
 }

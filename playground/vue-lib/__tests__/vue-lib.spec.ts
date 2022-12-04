@@ -8,15 +8,15 @@ describe('vue component library', () => {
     // Build lib
     await build({
       logLevel: 'silent',
-      configFile: path.resolve(__dirname, '../vite.config.lib.ts')
+      configFile: path.resolve(__dirname, '../vite.config.lib.ts'),
     })
     // Build app
     const { output } = (await build({
       logLevel: 'silent',
-      configFile: path.resolve(__dirname, '../vite.config.consumer.ts')
+      configFile: path.resolve(__dirname, '../vite.config.consumer.ts'),
     })) as RollupOutput
     const { code } = output.find(
-      (e) => e.type === 'chunk' && e.isEntry
+      (e) => e.type === 'chunk' && e.isEntry,
     ) as OutputChunk
     // Unused css module should be treeshaked
     expect(code).toContain('styleA') // styleA is used by CompA
@@ -28,7 +28,7 @@ describe('vue component library', () => {
     const { output } = (
       await build({
         logLevel: 'silent',
-        configFile: path.resolve(__dirname, '../vite.config.lib-css.ts')
+        configFile: path.resolve(__dirname, '../vite.config.lib-css.ts'),
       })
     )[0]
     expect(output[0].code).toContain('.card{padding:4rem}')

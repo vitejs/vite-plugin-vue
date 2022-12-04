@@ -7,7 +7,7 @@
 import vue from '@vitejs/plugin-vue'
 
 export default {
-  plugins: [vue()]
+  plugins: [vue()],
 }
 ```
 
@@ -113,10 +113,10 @@ export default {
         },
         transformAssetUrls: {
           // ...
-        }
-      }
-    })
-  ]
+        },
+      },
+    }),
+  ],
 }
 ```
 
@@ -138,11 +138,11 @@ const vueI18nPlugin = {
     return `export default Comp => {
       Comp.i18n = ${code}
     }`
-  }
+  },
 }
 
 export default {
-  plugins: [vue(), vueI18nPlugin]
+  plugins: [vue(), vueI18nPlugin],
 }
 ```
 

@@ -14,12 +14,12 @@ export default {
       : document.querySelector('.import-meta-url')?.textContent
     return {
       msg: 'About',
-      url
+      url,
     }
   },
   components: {
-    Button
-  }
+    Button,
+  },
 }
 </script>
 

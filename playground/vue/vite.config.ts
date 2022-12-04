@@ -6,15 +6,15 @@ export default defineConfig({
   resolve: {
     alias: {
       '/@': __dirname,
-      '@': __dirname
-    }
+      '@': __dirname,
+    },
   },
   plugins: [
     vuePlugin({
-      reactivityTransform: true
+      reactivityTransform: true,
     }),
     splitVendorChunkPlugin(),
-    vueI18nPlugin
+    vueI18nPlugin,
   ],
   build: {
     // to make tests faster
@@ -26,13 +26,13 @@ export default defineConfig({
           if (id.includes('src-import')) {
             return 'src-import'
           }
-        }
-      }
-    }
+        },
+      },
+    },
   },
   css: {
     modules: {
-      localsConvention: 'camelCaseOnly'
-    }
-  }
+      localsConvention: 'camelCaseOnly',
+    },
+  },
 })

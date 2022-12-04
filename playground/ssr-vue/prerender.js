@@ -10,7 +10,7 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 const toAbsolute = (p) => path.resolve(__dirname, p)
 
 const manifest = JSON.parse(
-  fs.readFileSync(toAbsolute('dist/static/ssr-manifest.json'), 'utf-8')
+  fs.readFileSync(toAbsolute('dist/static/ssr-manifest.json'), 'utf-8'),
 )
 const template = fs.readFileSync(toAbsolute('dist/static/index.html'), 'utf-8')
 const { render } = await import('./dist/server/entry-server.js')

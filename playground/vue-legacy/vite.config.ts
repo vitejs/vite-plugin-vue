@@ -8,17 +8,17 @@ export default defineConfig({
   base: '',
   resolve: {
     alias: {
-      '@': __dirname
-    }
+      '@': __dirname,
+    },
   },
   plugins: [
     legacyPlugin({
-      targets: ['defaults', 'not IE 11', 'chrome > 48']
+      targets: ['defaults', 'not IE 11', 'chrome > 48'],
     }),
-    vuePlugin()
+    vuePlugin(),
   ],
   build: {
-    minify: false
+    minify: false,
   },
   // special test only hook
   // for tests, remove `<script type="module">` tags and remove `nomodule`
@@ -31,5 +31,5 @@ export default defineConfig({
       .replace(/<script type="module".*?<\/script>/g, '')
       .replace(/<script nomodule/g, '<script')
     fs.writeFileSync(indexPath, index)
-  }
+  },
 })

@@ -10,8 +10,8 @@ export default {
   plugins: [
     vueJsx({
       // options are passed on to @vue/babel-plugin-jsx
-    })
-  ]
+    }),
+  ],
 }
 ```
 

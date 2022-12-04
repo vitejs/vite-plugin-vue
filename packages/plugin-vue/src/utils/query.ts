@@ -32,6 +32,6 @@ export function parseVueRequest(id: string): {
   }
   return {
     filename,
-    query
+    query,
   }
 }

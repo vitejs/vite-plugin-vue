@@ -26,7 +26,7 @@ import { reactive, defineAsyncComponent } from 'vue'
 import Button from '../components/button'
 const ImportType = load('ImportType')
 const Foo = defineAsyncComponent(() =>
-  import('../components/Foo').then((mod) => mod.Foo)
+  import('../components/Foo').then((mod) => mod.Foo),
 )
 function load(file) {
   return defineAsyncComponent(() => import(`../components/${file}.vue`))
@@ -39,7 +39,7 @@ const protocol = url ? new URL(url).protocol : undefined
 const state = reactive({
   count: 0,
   protocol,
-  url
+  url,
 })
 </script>
 
