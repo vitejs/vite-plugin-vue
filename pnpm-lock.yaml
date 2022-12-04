@@ -172,24 +172,24 @@ importers:
     specifiers:
       '@vitejs/plugin-vue': workspace:*
       '@vitejs/plugin-vue-jsx': workspace:*
+      '@vitejs/test-dep-import-type': link:./dep-import-type
+      '@vitejs/test-example-external-component': file:example-external-component
       compression: ^1.7.4
-      dep-import-type: link:./dep-import-type
-      example-external-component: file:example-external-component
       express: ^4.18.2
       pinia: ^2.0.27
       serve-static: ^1.15.0
       vue: ^3.2.45
       vue-router: ^4.1.6
     dependencies:
-      example-external-component: file:playground/ssr-vue/example-external-component
+      '@vitejs/test-example-external-component': file:playground/ssr-vue/example-external-component
       pinia: 2.0.27_vue@3.2.45
       vue: 3.2.45
       vue-router: 4.1.6_vue@3.2.45
     devDependencies:
       '@vitejs/plugin-vue': link:../../packages/plugin-vue
       '@vitejs/plugin-vue-jsx': link:../../packages/plugin-vue-jsx
+      '@vitejs/test-dep-import-type': link:dep-import-type
       compression: 1.7.4
-      dep-import-type: link:dep-import-type
       express: 4.18.2
       serve-static: 1.15.0
 
@@ -6078,6 +6078,6 @@ packages:
 
   file:playground/ssr-vue/example-external-component:
     resolution: {directory: playground/ssr-vue/example-external-component, type: directory}
-    name: example-external-component
+    name: '@vitejs/test-example-external-component'
     version: 0.0.0
     dev: false

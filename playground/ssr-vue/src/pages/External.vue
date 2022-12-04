@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ExampleExternalComponent from 'example-external-component'
+import ExampleExternalComponent from '@vitejs/test-example-external-component'
 
 export default {
   components: {

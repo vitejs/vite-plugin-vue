@@ -1,5 +1,5 @@
 {
-  "name": "test-vue-jsx",
+  "name": "@vitejs/test-vue-jsx",
   "private": true,
   "version": "0.0.0",
   "scripts": {

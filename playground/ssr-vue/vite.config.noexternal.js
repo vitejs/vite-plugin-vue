@@ -20,6 +20,6 @@ export default Object.assign(config, {
     ],
   },
   optimizeDeps: {
-    exclude: ['example-external-component'],
+    exclude: ['@vitejs/test-example-external-component'],
   },
 })
