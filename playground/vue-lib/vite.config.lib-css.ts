@@ -10,7 +10,7 @@ export default defineConfig({
       entry: path.resolve(__dirname, 'src-lib-css/index.ts'),
       name: 'index',
       formats: ['umd'],
-      fileName: 'index.js'
-    }
-  }
+      fileName: 'index.js',
+    },
+  },
 })

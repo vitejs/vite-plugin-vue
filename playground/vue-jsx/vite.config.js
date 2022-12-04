@@ -7,7 +7,7 @@ const vuePlugin = require('@vitejs/plugin-vue')
 module.exports = {
   plugins: [
     vueJsxPlugin({
-      include: [/\.tesx$/, /\.[jt]sx$/]
+      include: [/\.tesx$/, /\.[jt]sx$/],
     }),
     vuePlugin(),
     {
@@ -29,14 +29,14 @@ export default defineComponent(() => {
 });
 `
         }
-      }
-    }
+      },
+    },
   ],
   build: {
     // to make tests faster
-    minify: false
+    minify: false,
   },
   optimizeDeps: {
-    disabled: true
-  }
+    disabled: true,
+  },
 }

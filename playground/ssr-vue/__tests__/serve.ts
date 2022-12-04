@@ -23,8 +23,8 @@ export async function serve(): Promise<{ close(): Promise<void> }> {
         target: 'esnext',
         minify: false,
         ssrManifest: true,
-        outDir: 'dist/client'
-      }
+        outDir: 'dist/client',
+      },
     })
     // server build
     await build({
@@ -34,8 +34,8 @@ export async function serve(): Promise<{ close(): Promise<void> }> {
       build: {
         target: 'esnext',
         ssr: 'src/entry-server.js',
-        outDir: 'dist/server'
-      }
+        outDir: 'dist/server',
+      },
     })
   }
 
@@ -45,7 +45,7 @@ export async function serve(): Promise<{ close(): Promise<void> }> {
   const { app, vite } = await createServer(
     rootDir,
     isBuild,
-    hmrPorts['ssr-vue']
+    hmrPorts['ssr-vue'],
   )
   viteServer = vite
 
@@ -61,7 +61,7 @@ export async function serve(): Promise<{ close(): Promise<void> }> {
             if (vite) {
               await vite.close()
             }
-          }
+          },
         })
       })
     } catch (e) {

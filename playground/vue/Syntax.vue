@@ -6,9 +6,9 @@
 <script setup>
 import { ref } from 'vue'
 const foo = {
-  bar: 'baz'
+  bar: 'baz',
 }
 const a = ref({
-  b: foo?.bar
+  b: foo?.bar,
 })
 </script>

@@ -4,7 +4,7 @@ import type {
   CompilerOptions,
   SFCDescriptor,
   SFCTemplateCompileOptions,
-  SFCTemplateCompileResults
+  SFCTemplateCompileResults,
 } from 'vue/compiler-sfc'
 import type { PluginContext, TransformPluginContext } from 'rollup'
 import { getResolvedScript } from './script'
@@ -17,7 +17,7 @@ export async function transformTemplateAsModule(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   pluginContext: TransformPluginContext,
-  ssr: boolean
+  ssr: boolean,
 ) {
   const result = compile(code, descriptor, options, pluginContext, ssr)
 
@@ -35,7 +35,7 @@ export async function transformTemplateAsModule(
 
   return {
     code: returnCode,
-    map: result.map
+    map: result.map,
   }
 }
 
@@ -47,15 +47,15 @@ export function transformTemplateInMain(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   pluginContext: PluginContext,
-  ssr: boolean
+  ssr: boolean,
 ): SFCTemplateCompileResults {
   const result = compile(code, descriptor, options, pluginContext, ssr)
   return {
     ...result,
     code: result.code.replace(
       /\nexport (function|const) (render|ssrRender)/,
-      '\n$1 _sfc_$2'
-    )
+      '\n$1 _sfc_$2',
+    ),
   }
 }
 
@@ -65,12 +65,12 @@ export function compile(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   pluginContext: PluginContext,
-  ssr: boolean
+  ssr: boolean,
 ) {
   const filename = descriptor.filename
   const result = options.compiler.compileTemplate({
     ...resolveTemplateCompilerOptions(descriptor, options, ssr)!,
-    source: code
+    source: code,
   })
 
   if (result.errors.length) {
@@ -78,8 +78,8 @@ export function compile(
       pluginContext.error(
         typeof error === 'string'
           ? { id: filename, message: error }
-          : createRollupError(filename, error)
-      )
+          : createRollupError(filename, error),
+      ),
     )
   }
 
@@ -87,8 +87,8 @@ export function compile(
     result.tips.forEach((tip) =>
       pluginContext.warn({
         id: filename,
-        message: tip
-      })
+        message: tip,
+      }),
     )
   }
 
@@ -98,7 +98,7 @@ export function compile(
 export function resolveTemplateCompilerOptions(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  ssr: boolean
+  ssr: boolean,
 ): Omit<SFCTemplateCompileOptions, 'source'> | undefined {
   const block = descriptor.template
   if (!block) {
@@ -121,14 +121,14 @@ export function resolveTemplateCompilerOptions(
         base:
           (options.devServer.config.server?.origin ?? '') +
           devBase +
-          slash(path.relative(options.root, path.dirname(filename)))
+          slash(path.relative(options.root, path.dirname(filename))),
       }
     }
   } else if (transformAssetUrls !== false) {
     // build: force all asset urls into import requests so that they go through
     // the assets plugin for asset registration
     assetUrlOptions = {
-      includeAbsolute: true
+      includeAbsolute: true,
     }
   }
 
@@ -137,7 +137,7 @@ export function resolveTemplateCompilerOptions(
     if (Object.values(transformAssetUrls).some((val) => Array.isArray(val))) {
       transformAssetUrls = {
         ...assetUrlOptions,
-        tags: transformAssetUrls as any
+        tags: transformAssetUrls as any,
       }
     } else {
       transformAssetUrls = { ...assetUrlOptions, ...transformAssetUrls }
@@ -150,7 +150,7 @@ export function resolveTemplateCompilerOptions(
   if (block.lang === 'pug') {
     preprocessOptions = {
       doctype: 'html',
-      ...preprocessOptions
+      ...preprocessOptions,
     }
   }
 
@@ -180,7 +180,7 @@ export function resolveTemplateCompilerOptions(
       scopeId: hasScoped ? `data-v-${id}` : undefined,
       bindingMetadata: resolvedScript ? resolvedScript.bindings : undefined,
       expressionPlugins,
-      sourceMap: options.sourceMap
-    }
+      sourceMap: options.sourceMap,
+    },
   }
 }

@@ -6,7 +6,7 @@ import type {
   SFCBlock,
   SFCScriptCompileOptions,
   SFCStyleCompileOptions,
-  SFCTemplateCompileOptions
+  SFCTemplateCompileOptions,
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
 /* eslint-enable import/no-duplicates */
@@ -85,7 +85,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     include = /\.vue$/,
     exclude,
     customElement = /\.ce\.vue$/,
-    reactivityTransform = false
+    reactivityTransform = false,
   } = rawOptions
 
   const filter = createFilter(include, exclude)
@@ -113,7 +113,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     root: process.cwd(),
     sourceMap: true,
     cssDevSourcemap: false,
-    devToolsEnabled: process.env.NODE_ENV !== 'production'
+    devToolsEnabled: process.env.NODE_ENV !== 'production',
   }
 
   return {
@@ -129,17 +129,17 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     config(config) {
       return {
         resolve: {
-          dedupe: config.build?.ssr ? [] : ['vue']
+          dedupe: config.build?.ssr ? [] : ['vue'],
         },
         define: {
           __VUE_OPTIONS_API__: config.define?.__VUE_OPTIONS_API__ ?? true,
-          __VUE_PROD_DEVTOOLS__: config.define?.__VUE_PROD_DEVTOOLS__ ?? false
+          __VUE_PROD_DEVTOOLS__: config.define?.__VUE_PROD_DEVTOOLS__ ?? false,
         },
         ssr: {
           external: config.legacy?.buildSsrCjsExternalHeuristics
             ? ['vue', '@vue/server-renderer']
-            : []
-        }
+            : [],
+        },
       }
     },
 
@@ -151,7 +151,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         cssDevSourcemap: config.css?.devSourcemap ?? false,
         isProduction: config.isProduction,
         devToolsEnabled:
-          !!config.define!.__VUE_PROD_DEVTOOLS__ || !config.isProduction
+          !!config.define!.__VUE_PROD_DEVTOOLS__ || !config.isProduction,
       }
     },
 
@@ -201,7 +201,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         if (block) {
           return {
             code: block.content,
-            map: block.map as any
+            map: block.map as any,
           }
         }
       }
@@ -221,7 +221,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         ) {
           return options.compiler.transformRef(code, {
             filename,
-            sourceMap: true
+            sourceMap: true,
           })
         }
         return
@@ -235,7 +235,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           options,
           this,
           ssr,
-          customElementFilter(filename)
+          customElementFilter(filename),
         )
       } else {
         // sub block request
@@ -252,10 +252,10 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
             Number(query.index),
             options,
             this,
-            filename
+            filename,
           )
         }
       }
-    }
+    },
   }
 }

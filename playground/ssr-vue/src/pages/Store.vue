@@ -9,12 +9,12 @@ export default {
   async setup() {
     const useFooStore = defineStore('foo-store', {
       state: () => ({
-        foo: 'bar'
-      })
+        foo: 'bar',
+      }),
     })
     const fooStore = useFooStore()
     return { fooStore }
-  }
+  },
 }
 </script>
 

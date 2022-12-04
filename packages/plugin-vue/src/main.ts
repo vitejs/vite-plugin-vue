@@ -10,7 +10,7 @@ import { normalizePath, transformWithEsbuild } from 'vite'
 import {
   createDescriptor,
   getPrevDescriptor,
-  setSrcDescriptor
+  setSrcDescriptor,
 } from './utils/descriptorCache'
 import { isUseInlineTemplate, resolveScript } from './script'
 import { transformTemplateInMain } from './template'
@@ -26,7 +26,7 @@ export async function transformMain(
   options: ResolvedOptions,
   pluginContext: TransformPluginContext,
   ssr: boolean,
-  asCustomElement: boolean
+  asCustomElement: boolean,
 ) {
   const { devServer, isProduction, devToolsEnabled } = options
 
@@ -36,7 +36,7 @@ export async function transformMain(
 
   if (errors.length) {
     errors.forEach((error) =>
-      pluginContext.error(createRollupError(filename, error))
+      pluginContext.error(createRollupError(filename, error)),
     )
     return null
   }
@@ -50,7 +50,7 @@ export async function transformMain(
     descriptor,
     options,
     pluginContext,
-    ssr
+    ssr,
   )
 
   // template
@@ -64,13 +64,13 @@ export async function transformMain(
       descriptor,
       options,
       pluginContext,
-      ssr
+      ssr,
     ))
   }
 
   if (hasTemplateImport) {
     attachedProps.push(
-      ssr ? ['ssrRender', '_sfc_ssrRender'] : ['render', '_sfc_render']
+      ssr ? ['ssrRender', '_sfc_ssrRender'] : ['render', '_sfc_render'],
     )
   } else {
     // #2128
@@ -88,7 +88,7 @@ export async function transformMain(
     descriptor,
     pluginContext,
     asCustomElement,
-    attachedProps
+    attachedProps,
   )
 
   // custom blocks
@@ -98,7 +98,7 @@ export async function transformMain(
     scriptCode,
     templateCode,
     stylesCode,
-    customBlocksCode
+    customBlocksCode,
   ]
   if (hasScoped) {
     attachedProps.push([`__scopeId`, JSON.stringify(`data-v-${descriptor.id}`)])
@@ -107,7 +107,7 @@ export async function transformMain(
     // expose filename during serve for devtools to pickup
     attachedProps.push([
       `__file`,
-      JSON.stringify(isProduction ? path.basename(filename) : filename)
+      JSON.stringify(isProduction ? path.basename(filename) : filename),
     ])
   }
 
@@ -121,7 +121,7 @@ export async function transformMain(
     output.push(`_sfc_main.__hmrId = ${JSON.stringify(descriptor.id)}`)
     output.push(
       `typeof __VUE_HMR_RUNTIME__ !== 'undefined' && ` +
-        `__VUE_HMR_RUNTIME__.createRecord(_sfc_main.__hmrId, _sfc_main)`
+        `__VUE_HMR_RUNTIME__.createRecord(_sfc_main.__hmrId, _sfc_main)`,
     )
     // check if the template is the only thing that changed
     if (prevDescriptor && isOnlyTemplateChanged(prevDescriptor, descriptor)) {
@@ -136,14 +136,14 @@ export async function transformMain(
       `  } else {`,
       `    __VUE_HMR_RUNTIME__.reload(updated.__hmrId, updated)`,
       `  }`,
-      `})`
+      `})`,
     )
   }
 
   // SSR module registration by wrapping user setup
   if (ssr) {
     const normalizedFilename = normalizePath(
-      path.relative(options.root, filename)
+      path.relative(options.root, filename),
     )
     output.push(
       `import { useSSRContext as __vite_useSSRContext } from 'vue'`,
@@ -151,10 +151,10 @@ export async function transformMain(
       `_sfc_main.setup = (props, ctx) => {`,
       `  const ssrContext = __vite_useSSRContext()`,
       `  ;(ssrContext.modules || (ssrContext.modules = new Set())).add(${JSON.stringify(
-        normalizedFilename
+        normalizedFilename,
       )})`,
       `  return _sfc_setup ? _sfc_setup(props, ctx) : undefined`,
-      `}`
+      `}`,
     )
   }
 
@@ -167,11 +167,11 @@ export async function transformMain(
       const gen = fromMap(
         // version property of result.map is declared as string
         // but actually it is `3`
-        scriptMap as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap
+        scriptMap as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap,
       )
       const tracer = new TraceMap(
         // same above
-        templateMap as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap
+        templateMap as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap,
       )
       const offset = (scriptCode.match(/\r?\n/g)?.length ?? 0) + 1
       eachMapping(tracer, (m) => {
@@ -181,8 +181,8 @@ export async function transformMain(
           original: { line: m.originalLine, column: m.originalColumn },
           generated: {
             line: m.generatedLine + offset,
-            column: m.generatedColumn
-          }
+            column: m.generatedColumn,
+          },
         })
       })
 
@@ -207,7 +207,7 @@ export async function transformMain(
       `import _export_sfc from '${EXPORT_HELPER_ID}'`,
       `export default /*#__PURE__*/_export_sfc(_sfc_main, [${attachedProps
         .map(([key, val]) => `['${key}',${val}]`)
-        .join(',')}])`
+        .join(',')}])`,
     )
   }
 
@@ -226,9 +226,9 @@ export async function transformMain(
       {
         loader: 'ts',
         target: 'esnext',
-        sourcemap: options.sourceMap
+        sourcemap: options.sourceMap,
       },
-      resolvedMap
+      resolvedMap,
     )
     resolvedCode = code
     resolvedMap = resolvedMap ? (map as any) : resolvedMap
@@ -237,13 +237,13 @@ export async function transformMain(
   return {
     code: resolvedCode,
     map: resolvedMap || {
-      mappings: ''
+      mappings: '',
     },
     meta: {
       vite: {
-        lang: descriptor.script?.lang || descriptor.scriptSetup?.lang || 'js'
-      }
-    }
+        lang: descriptor.script?.lang || descriptor.scriptSetup?.lang || 'js',
+      },
+    },
   }
 }
 
@@ -251,7 +251,7 @@ async function genTemplateCode(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   pluginContext: PluginContext,
-  ssr: boolean
+  ssr: boolean,
 ) {
   const template = descriptor.template!
   const hasScoped = descriptor.styles.some((style) => style.scoped)
@@ -265,7 +265,7 @@ async function genTemplateCode(
       descriptor,
       options,
       pluginContext,
-      ssr
+      ssr,
     )
   } else {
     if (template.src) {
@@ -273,7 +273,7 @@ async function genTemplateCode(
         template.src,
         descriptor,
         pluginContext,
-        hasScoped
+        hasScoped,
       )
     }
     const src = template.src || descriptor.filename
@@ -289,7 +289,7 @@ async function genTemplateCode(
     const renderFnName = ssr ? 'ssrRender' : 'render'
     return {
       code: `import { ${renderFnName} as _sfc_${renderFnName} } from ${request}`,
-      map: undefined
+      map: undefined,
     }
   }
 }
@@ -298,7 +298,7 @@ async function genScriptCode(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   pluginContext: PluginContext,
-  ssr: boolean
+  ssr: boolean,
 ): Promise<{
   code: string
   map: RawSourceMap | undefined
@@ -324,7 +324,7 @@ async function genScriptCode(
       scriptCode = options.compiler.rewriteDefault(
         script.content,
         '_sfc_main',
-        [...defaultPlugins, ...userPlugins]
+        [...defaultPlugins, ...userPlugins],
       )
       map = script.map
     } else {
@@ -343,7 +343,7 @@ async function genScriptCode(
   }
   return {
     code: scriptCode,
-    map
+    map,
   }
 }
 
@@ -351,7 +351,7 @@ async function genStyleCode(
   descriptor: SFCDescriptor,
   pluginContext: PluginContext,
   asCustomElement: boolean,
-  attachedProps: [string, string][]
+  attachedProps: [string, string][],
 ) {
   let stylesCode = ``
   let cssModulesMap: Record<string, string> | undefined
@@ -363,7 +363,7 @@ async function genStyleCode(
           style.src,
           descriptor,
           pluginContext,
-          style.scoped
+          style.scoped,
         )
       }
       const src = style.src || descriptor.filename
@@ -382,20 +382,20 @@ async function genStyleCode(
       if (style.module) {
         if (asCustomElement) {
           throw new Error(
-            `<style module> is not supported in custom elements mode.`
+            `<style module> is not supported in custom elements mode.`,
           )
         }
         const [importCode, nameMap] = genCSSModulesCode(
           i,
           styleRequest,
-          style.module
+          style.module,
         )
         stylesCode += importCode
         Object.assign((cssModulesMap ||= {}), nameMap)
       } else {
         if (asCustomElement) {
           stylesCode += `\nimport _style_${i} from ${JSON.stringify(
-            styleRequest
+            styleRequest,
           )}`
         } else {
           stylesCode += `\nimport ${JSON.stringify(styleRequest)}`
@@ -406,7 +406,7 @@ async function genStyleCode(
     if (asCustomElement) {
       attachedProps.push([
         `styles`,
-        `[${descriptor.styles.map((_, i) => `_style_${i}`).join(',')}]`
+        `[${descriptor.styles.map((_, i) => `_style_${i}`).join(',')}]`,
       ])
     }
   }
@@ -414,7 +414,7 @@ async function genStyleCode(
     const mappingCode =
       Object.entries(cssModulesMap).reduce(
         (code, [key, value]) => code + `"${key}":${value},\n`,
-        '{\n'
+        '{\n',
       ) + '}'
     stylesCode += `\nconst cssModules = ${mappingCode}`
     attachedProps.push([`__cssModules`, `cssModules`])
@@ -425,7 +425,7 @@ async function genStyleCode(
 function genCSSModulesCode(
   index: number,
   request: string,
-  moduleName: string | boolean
+  moduleName: string | boolean,
 ): [importCode: string, nameMap: Record<string, string>] {
   const styleVar = `style${index}`
   const exposedName = typeof moduleName === 'string' ? moduleName : '$style'
@@ -433,13 +433,13 @@ function genCSSModulesCode(
   const moduleRequest = request.replace(/\.(\w+)$/, '.module.$1')
   return [
     `\nimport ${styleVar} from ${JSON.stringify(moduleRequest)}`,
-    { [exposedName]: styleVar }
+    { [exposedName]: styleVar },
   ]
 }
 
 async function genCustomBlockCode(
   descriptor: SFCDescriptor,
-  pluginContext: PluginContext
+  pluginContext: PluginContext,
 ) {
   let code = ''
   for (let index = 0; index < descriptor.customBlocks.length; index++) {
@@ -467,7 +467,7 @@ async function linkSrcToDescriptor(
   src: string,
   descriptor: SFCDescriptor,
   pluginContext: PluginContext,
-  scoped?: boolean
+  scoped?: boolean,
 ) {
   const srcFile =
     (await pluginContext.resolve(src, descriptor.filename))?.id || src
@@ -483,7 +483,7 @@ const ignoreList = ['id', 'index', 'src', 'type', 'lang', 'module', 'scoped']
 function attrsToQuery(
   attrs: SFCBlock['attrs'],
   langFallback?: string,
-  forceLangFallback = false
+  forceLangFallback = false,
 ): string {
   let query = ``
   for (const name in attrs) {

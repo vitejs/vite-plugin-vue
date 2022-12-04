@@ -6,7 +6,7 @@ import {
   isBuild,
   isServe,
   page,
-  serverLogs
+  serverLogs,
 } from '~utils'
 
 describe.runIf(isServe)('serve:vue-sourcemap', () => {
@@ -63,7 +63,7 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     const css = await getStyleTagContentIncluding('.sass-with-import ')
     const map = extractSourcemap(css)
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot(
-      'serve-sass-with-import'
+      'serve-sass-with-import',
     )
   })
 
@@ -71,7 +71,7 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     const css = await getStyleTagContentIncluding('.less ')
     const map = extractSourcemap(css)
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot(
-      'serve-less-with-additionalData'
+      'serve-less-with-additionalData',
     )
   })
 
@@ -79,7 +79,7 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     const css = await getStyleTagContentIncluding('.src-import[data-v-')
     const map = extractSourcemap(css)
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot(
-      'serve-src-imported'
+      'serve-src-imported',
     )
   })
 
@@ -87,13 +87,13 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     const css = await getStyleTagContentIncluding('.src-import-sass[data-v-')
     const map = extractSourcemap(css)
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot(
-      'serve-src-imported-sass'
+      'serve-src-imported-sass',
     )
   })
 
   test('no script', async () => {
     const res = await page.request.get(
-      new URL('./NoScript.vue', page.url()).href
+      new URL('./NoScript.vue', page.url()).href,
     )
     const js = await res.text()
     const map = extractSourcemap(js)
@@ -102,7 +102,7 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
 
   test('no template', async () => {
     const res = await page.request.get(
-      new URL('./NoTemplate.vue', page.url()).href
+      new URL('./NoTemplate.vue', page.url()).href,
     )
     const js = await res.text()
     const map = extractSourcemap(js)

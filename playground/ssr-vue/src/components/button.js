@@ -7,10 +7,10 @@ export default defineComponent({
       return createVNode(
         'div',
         {
-          class: 'btn'
+          class: 'btn',
         },
-        'dynamicBtn'
+        'dynamicBtn',
       )
     }
-  }
+  },
 })

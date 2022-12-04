@@ -20,7 +20,7 @@ function useI18n(locale = 'en') {
 export default {
   setup() {
     return { ...useI18n('ja') }
-  }
+  },
 }
 </script>
 

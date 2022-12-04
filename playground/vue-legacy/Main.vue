@@ -4,13 +4,13 @@ import css from './inline.css?inline'
 
 export default defineComponent({
   components: {
-    module: defineAsyncComponent(() => import('./module.vue'))
+    module: defineAsyncComponent(() => import('./module.vue')),
   },
   setup() {
     return {
-      css
+      css,
     }
-  }
+  },
 })
 </script>
 <template>

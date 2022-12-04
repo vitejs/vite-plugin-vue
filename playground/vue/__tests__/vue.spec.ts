@@ -7,7 +7,7 @@ import {
   isBuild,
   page,
   serverLogs,
-  untilUpdated
+  untilUpdated,
 } from '~utils'
 
 test('should render', async () => {
@@ -52,12 +52,12 @@ describe('dep scan', () => {
 describe('pre-processors', () => {
   test('pug', async () => {
     expect(await page.textContent('p.pug')).toMatch(
-      `This is rendered from <template lang="pug">`
+      `This is rendered from <template lang="pug">`,
     )
     // #1383 pug default doctype
     expect(await page.textContent('.pug-slot')).toMatch(`slot content`)
     editFile('PreProcessors.vue', (code) =>
-      code.replace('Pre-Processors', 'Updated')
+      code.replace('Pre-Processors', 'Updated'),
     )
     await untilUpdated(() => page.textContent('h2.pre-processors'), 'Updated')
   })
@@ -66,7 +66,7 @@ describe('pre-processors', () => {
     const el = await page.$('p.pug')
     expect(await getColor(el)).toBe('magenta')
     editFile('PreProcessors.vue', (code) =>
-      code.replace('$color: magenta;', '$color: red;')
+      code.replace('$color: magenta;', '$color: red;'),
     )
     await untilUpdated(() => getColor(el), 'red')
   })
@@ -75,7 +75,7 @@ describe('pre-processors', () => {
     const el = await page.$('p.pug-less')
     expect(await getColor(el)).toBe('green')
     editFile('PreProcessors.vue', (code) =>
-      code.replace('@color: green;', '@color: blue;')
+      code.replace('@color: green;', '@color: blue;'),
     )
     await untilUpdated(() => getColor(el), 'blue')
   })
@@ -86,11 +86,11 @@ describe('pre-processors', () => {
       code
         .replace('<style lang="stylus">', '<style lang="scss">')
         .replace('color = orange', '$color: yellow;')
-        .replace('color: color', '{ color: $color; }')
+        .replace('color: color', '{ color: $color; }'),
     )
     await untilUpdated(() => getColor('p.pug-stylus'), 'yellow')
     editFile('PreProcessors.vue', (code) =>
-      code.replace('$color: yellow;', '$color: orange;')
+      code.replace('$color: yellow;', '$color: orange;'),
     )
     await untilUpdated(() => getColor('p.pug-stylus'), 'orange')
   })
@@ -100,7 +100,7 @@ describe('css modules', () => {
   test('basic', async () => {
     expect(await getColor('.sfc-css-modules')).toBe('blue')
     editFile('CssModules.vue', (code) =>
-      code.replace('color: blue;', 'color: red;')
+      code.replace('color: blue;', 'color: red;'),
     )
     await untilUpdated(() => getColor('.sfc-css-modules'), 'red')
   })
@@ -108,7 +108,7 @@ describe('css modules', () => {
   test('with preprocessor + name', async () => {
     expect(await getColor('.sfc-css-modules-with-pre')).toBe('orange')
     editFile('CssModules.vue', (code) =>
-      code.replace('color: orange;', 'color: blue;')
+      code.replace('color: orange;', 'color: blue;'),
     )
     await untilUpdated(() => getColor('.sfc-css-modules-with-pre'), 'blue')
   })
@@ -128,21 +128,21 @@ describe('asset reference', () => {
   test('relative import', async () => {
     const el = await page.$('img.relative-import')
     expect(await el.evaluate((el) => (el as HTMLImageElement).src)).toMatch(
-      assetMatch
+      assetMatch,
     )
   })
 
   test('absolute import', async () => {
     const el = await page.$('img.relative-import')
     expect(await el.evaluate((el) => (el as HTMLImageElement).src)).toMatch(
-      assetMatch
+      assetMatch,
     )
   })
 
   test('absolute import from public dir', async () => {
     const el = await page.$('img.public-import')
     expect(await el.evaluate((el) => (el as HTMLImageElement).src)).toMatch(
-      `/icon.png`
+      `/icon.png`,
     )
   })
 
@@ -175,14 +175,14 @@ describe('hmr', () => {
 
   test('should reload and reset state when script is edited', async () => {
     editFile('Hmr.vue', (code) =>
-      code.replace('let foo: number = 0', 'let foo: number = 100')
+      code.replace('let foo: number = 0', 'let foo: number = 100'),
     )
     await untilUpdated(() => page.textContent('.hmr-inc'), 'count is 100')
   })
 
   test('global hmr for some scenarios', async () => {
     editFile('Hmr.vue', (code) =>
-      code.replace('</template>', '  <Node/>\n' + '</template>')
+      code.replace('</template>', '  <Node/>\n' + '</template>'),
     )
     await untilUpdated(() => page.innerHTML('.node'), 'this is node')
   })
@@ -196,7 +196,7 @@ describe('hmr', () => {
     editFile('HmrTsx.vue', (code) => code.replace(/count/g, 'updatedCount'))
     await untilUpdated(
       () => page.innerHTML('.hmr-tsx-block .hmr-tsx-inc'),
-      'updatedCount is 0'
+      'updatedCount is 0',
     )
   })
 })
@@ -204,10 +204,10 @@ describe('hmr', () => {
 describe('src imports', () => {
   test('script src with ts', async () => {
     expect(await page.textContent('.src-imports-script')).toMatch(
-      'hello from script src'
+      'hello from script src',
     )
     editFile('src-import/script.ts', (code) =>
-      code.replace('hello from script src', 'updated')
+      code.replace('hello from script src', 'updated'),
     )
     await untilUpdated(() => page.textContent('.src-imports-script'), 'updated')
   })
@@ -216,7 +216,7 @@ describe('src imports', () => {
     const el = await page.$('.src-imports-style')
     expect(await getColor(el)).toBe('tan')
     editFile('src-import/style.css', (code) =>
-      code.replace('color: tan', 'color: red')
+      code.replace('color: tan', 'color: red'),
     )
     await untilUpdated(() => getColor(el), 'red')
   })
@@ -224,7 +224,7 @@ describe('src imports', () => {
   test('template src import hmr', async () => {
     const el = await page.$('.src-imports-style')
     editFile('src-import/template.html', (code) =>
-      code.replace('should be tan', 'should be red')
+      code.replace('should be tan', 'should be red'),
     )
     await untilUpdated(() => el.textContent(), 'should be red')
   })
@@ -275,7 +275,7 @@ describe('vue worker', () => {
 describe('import with ?url', () => {
   test('should work', async () => {
     expect(await page.textContent('.import-with-url-query')).toMatch(
-      isBuild ? /^data:/ : '/Null.vue'
+      isBuild ? /^data:/ : '/Null.vue',
     )
   })
 })

@@ -17,11 +17,11 @@ const prevCache = new Map<string, SFCDescriptor | undefined>()
 export function createDescriptor(
   filename: string,
   source: string,
-  { root, isProduction, sourceMap, compiler }: ResolvedOptions
+  { root, isProduction, sourceMap, compiler }: ResolvedOptions,
 ): SFCParseResult {
   const { descriptor, errors } = compiler.parse(source, {
     filename,
-    sourceMap
+    sourceMap,
   })
 
   // ensure the path is normalized in a way that is consistent inside
@@ -39,7 +39,7 @@ export function getPrevDescriptor(filename: string): SFCDescriptor | undefined {
 
 export function setPrevDescriptor(
   filename: string,
-  entry: SFCDescriptor
+  entry: SFCDescriptor,
 ): void {
   prevCache.set(filename, entry)
 }
@@ -47,7 +47,7 @@ export function setPrevDescriptor(
 export function getDescriptor(
   filename: string,
   options: ResolvedOptions,
-  createIfNotFound = true
+  createIfNotFound = true,
 ): SFCDescriptor | undefined {
   if (cache.has(filename)) {
     return cache.get(filename)!
@@ -56,7 +56,7 @@ export function getDescriptor(
     const { descriptor, errors } = createDescriptor(
       filename,
       fs.readFileSync(filename, 'utf-8'),
-      options
+      options,
     )
     if (errors.length) {
       throw errors[0]
@@ -67,7 +67,7 @@ export function getDescriptor(
 
 export function getSrcDescriptor(
   filename: string,
-  query: VueQuery
+  query: VueQuery,
 ): SFCDescriptor {
   if (query.scoped) {
     return cache.get(`${filename}?src=${query.src}`)!
@@ -78,7 +78,7 @@ export function getSrcDescriptor(
 export function setSrcDescriptor(
   filename: string,
   entry: SFCDescriptor,
-  scoped?: boolean
+  scoped?: boolean,
 ): void {
   if (scoped) {
     // if multiple Vue files use the same src file, they will be overwritten

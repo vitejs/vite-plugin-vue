@@ -11,7 +11,7 @@ import {
   page,
   untilBrowserLogAfter,
   untilUpdated,
-  viteServer
+  viteServer,
 } from '~utils'
 
 const url = `http://localhost:${port}/test/`
@@ -41,16 +41,16 @@ test('/about', async () => {
   if (isBuild) {
     // assert correct preload directive generation for async chunks and CSS
     expect(aboutHtml).not.toMatch(
-      /link rel="modulepreload".*?href="\/test\/assets\/Home-\w{8}\.js"/
+      /link rel="modulepreload".*?href="\/test\/assets\/Home-\w{8}\.js"/,
     )
     expect(aboutHtml).not.toMatch(
-      /link rel="stylesheet".*?href="\/test\/assets\/Home-\w{8}\.css"/
+      /link rel="stylesheet".*?href="\/test\/assets\/Home-\w{8}\.css"/,
     )
     expect(aboutHtml).toMatch(
-      /link rel="modulepreload".*?href="\/test\/assets\/About-\w{8}\.js"/
+      /link rel="modulepreload".*?href="\/test\/assets\/About-\w{8}\.js"/,
     )
     expect(aboutHtml).toMatch(
-      /link rel="stylesheet".*?href="\/test\/assets\/About-\w{8}\.css"/
+      /link rel="stylesheet".*?href="\/test\/assets\/About-\w{8}\.css"/,
     )
   }
 })
@@ -59,7 +59,7 @@ test('/external', async () => {
   await untilBrowserLogAfter(() => page.goto(url + 'external'), 'hydrated')
 
   expect(await page.textContent('div')).toMatch(
-    'Example external component content'
+    'Example external component content',
   )
   // should not have hydration mismatch
   browserLogs.forEach((msg) => {
@@ -72,13 +72,13 @@ test('/external', async () => {
   if (isBuild) {
     // assert correct preload directive generation for async chunks and CSS
     expect(externalHtml).not.toMatch(
-      /link rel="modulepreload".*?href="\/test\/assets\/Home-\w{8}\.js"/
+      /link rel="modulepreload".*?href="\/test\/assets\/Home-\w{8}\.js"/,
     )
     expect(externalHtml).not.toMatch(
-      /link rel="stylesheet".*?href="\/test\/assets\/Home-\w{8}\.css"/
+      /link rel="stylesheet".*?href="\/test\/assets\/Home-\w{8}\.css"/,
     )
     expect(externalHtml).toMatch(
-      /link rel="modulepreload".*?href="\/test\/assets\/External-\w{8}\.js"/
+      /link rel="modulepreload".*?href="\/test\/assets\/External-\w{8}\.js"/,
     )
   }
 })
@@ -97,23 +97,23 @@ test('/', async () => {
   if (isBuild) {
     // assert correct preload directive generation for async chunks and CSS
     expect(html).toMatch(
-      /link rel="modulepreload".*?href="\/test\/assets\/Home-\w{8}\.js"/
+      /link rel="modulepreload".*?href="\/test\/assets\/Home-\w{8}\.js"/,
     )
     expect(html).toMatch(
-      /link rel="stylesheet".*?href="\/test\/assets\/Home-\w{8}\.css"/
+      /link rel="stylesheet".*?href="\/test\/assets\/Home-\w{8}\.css"/,
     )
     // JSX component preload registration
     expect(html).toMatch(
-      /link rel="modulepreload".*?href="\/test\/assets\/Foo-\w{8}\.js"/
+      /link rel="modulepreload".*?href="\/test\/assets\/Foo-\w{8}\.js"/,
     )
     expect(html).toMatch(
-      /link rel="stylesheet".*?href="\/test\/assets\/Foo-\w{8}\.css"/
+      /link rel="stylesheet".*?href="\/test\/assets\/Foo-\w{8}\.css"/,
     )
     expect(html).not.toMatch(
-      /link rel="modulepreload".*?href="\/test\/assets\/About-\w{8}\.js"/
+      /link rel="modulepreload".*?href="\/test\/assets\/About-\w{8}\.js"/,
     )
     expect(html).not.toMatch(
-      /link rel="stylesheet".*?href="\/test\/assets\/About-\w{8}\.css"/
+      /link rel="stylesheet".*?href="\/test\/assets\/About-\w{8}\.css"/,
     )
   }
 })
@@ -139,7 +139,7 @@ test('asset', async () => {
   })
   const img = await page.$('img')
   expect(await img.getAttribute('src')).toMatch(
-    isBuild ? /\/test\/assets\/logo-\w{8}\.png/ : '/src/assets/logo.png'
+    isBuild ? /\/test\/assets\/logo-\w{8}\.png/ : '/src/assets/logo.png',
   )
 })
 
@@ -176,7 +176,7 @@ test(
     editFile('src/pages/Home.vue', (code) => code.replace('Home', 'changed'))
     await untilUpdated(() => page.textContent('h1'), 'changed')
   },
-  { retry: 3 }
+  { retry: 3 },
 )
 
 test('client navigation', async () => {
@@ -206,7 +206,7 @@ test.runIf(isBuild)('dynamic css file should be preloaded', async () => {
     await import(
       resolve(
         process.cwd(),
-        './playground-temp/ssr-vue/dist/client/ssr-manifest.json'
+        './playground-temp/ssr-vue/dist/client/ssr-manifest.json',
       )
     )
   ).default
@@ -243,5 +243,5 @@ test.runIf(!isBuild)(
     expect(firstParameter).toContain('Error when evaluating SSR module')
     expect(firstParameter).toContain(THROW_MESSAGE)
     spy.mockClear()
-  }
+  },
 )

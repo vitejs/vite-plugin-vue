@@ -10,14 +10,14 @@ export default defineConfig({
       entry: path.resolve(__dirname, 'src-lib/index.ts'),
       name: 'MyVueLib',
       formats: ['es'],
-      fileName: 'my-vue-lib'
+      fileName: 'my-vue-lib',
     },
     rollupOptions: {
       external: ['vue'],
       output: {
-        globals: { vue: 'Vue' }
-      }
-    }
+        globals: { vue: 'Vue' },
+      },
+    },
   },
-  plugins: [vue()]
+  plugins: [vue()],
 })

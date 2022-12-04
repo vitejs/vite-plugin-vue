@@ -33,7 +33,7 @@ test('should update', async () => {
 describe.runIf(isServe)('vue-jsx server', () => {
   test('hmr: named export', async () => {
     editFile('Comps.jsx', (code) =>
-      code.replace('named {count', 'named updated {count')
+      code.replace('named {count', 'named updated {count'),
     )
     await untilUpdated(() => page.textContent('.named'), 'named updated 0')
 
@@ -46,11 +46,11 @@ describe.runIf(isServe)('vue-jsx server', () => {
 
   test('hmr: named export via specifier', async () => {
     editFile('Comps.jsx', (code) =>
-      code.replace('named specifier {count', 'named specifier updated {count')
+      code.replace('named specifier {count', 'named specifier updated {count'),
     )
     await untilUpdated(
       () => page.textContent('.named-specifier'),
-      'named specifier updated 1'
+      'named specifier updated 1',
     )
 
     // affect all components in same file
@@ -61,7 +61,7 @@ describe.runIf(isServe)('vue-jsx server', () => {
 
   test('hmr: default export', async () => {
     editFile('Comps.jsx', (code) =>
-      code.replace('default {count', 'default updated {count')
+      code.replace('default {count', 'default updated {count'),
     )
     await untilUpdated(() => page.textContent('.default'), 'default updated 2')
 
@@ -75,11 +75,11 @@ describe.runIf(isServe)('vue-jsx server', () => {
     expect(await page.textContent('.named')).toMatch('1')
 
     editFile('Comp.tsx', (code) =>
-      code.replace('default tsx {count', 'default tsx updated {count')
+      code.replace('default tsx {count', 'default tsx updated {count'),
     )
     await untilUpdated(
       () => page.textContent('.default-tsx'),
-      'default tsx updated 3'
+      'default tsx updated 3',
     )
 
     // should not affect other components on the page
@@ -88,7 +88,7 @@ describe.runIf(isServe)('vue-jsx server', () => {
 
   test('hmr: script in .vue', async () => {
     editFile('Script.vue', (code) =>
-      code.replace('script {count', 'script updated {count')
+      code.replace('script {count', 'script updated {count'),
     )
     await untilUpdated(() => page.textContent('.script'), 'script updated 4')
 
@@ -98,11 +98,11 @@ describe.runIf(isServe)('vue-jsx server', () => {
   test('hmr: src import in .vue', async () => {
     await page.click('.script')
     editFile('SrcImport.jsx', (code) =>
-      code.replace('src import {count', 'src import updated {count')
+      code.replace('src import {count', 'src import updated {count'),
     )
     await untilUpdated(
       () => page.textContent('.src-import'),
-      'src import updated 5'
+      'src import updated 5',
     )
 
     expect(await page.textContent('.script')).toMatch('5')
@@ -110,7 +110,7 @@ describe.runIf(isServe)('vue-jsx server', () => {
 
   test('hmr: setup jsx in .vue', async () => {
     editFile('setup-syntax-jsx.vue', (code) =>
-      code.replace('let count = ref(100)', 'let count = ref(1000)')
+      code.replace('let count = ref(100)', 'let count = ref(1000)'),
     )
     await untilUpdated(() => page.textContent('.setup-jsx'), '1000')
   })

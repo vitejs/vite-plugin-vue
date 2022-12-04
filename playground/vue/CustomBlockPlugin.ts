@@ -14,7 +14,7 @@ export const vueI18nPlugin: Plugin = {
       code: `export default Comp => {
       Comp.i18n = ${code}
     }`,
-      map: { mappings: '' }
+      map: { mappings: '' },
     }
-  }
+  },
 }

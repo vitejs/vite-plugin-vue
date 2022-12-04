@@ -9,7 +9,7 @@ const isTest = process.env.VITEST
 export async function createServer(
   root = process.cwd(),
   isProd = process.env.NODE_ENV === 'production',
-  hmrPort
+  hmrPort,
 ) {
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
   const resolve = (p) => path.resolve(__dirname, p)
@@ -20,7 +20,7 @@ export async function createServer(
 
   const manifest = isProd
     ? JSON.parse(
-        fs.readFileSync(resolve('dist/client/ssr-manifest.json'), 'utf-8')
+        fs.readFileSync(resolve('dist/client/ssr-manifest.json'), 'utf-8'),
       )
     : {}
 
@@ -43,13 +43,13 @@ export async function createServer(
           // During tests we edit the files too fast and sometimes chokidar
           // misses change events, so enforce polling for consistency
           usePolling: true,
-          interval: 100
+          interval: 100,
         },
         hmr: {
-          port: hmrPort
-        }
+          port: hmrPort,
+        },
       },
-      appType: 'custom'
+      appType: 'custom',
     })
     // use vite's connect instance as middleware
     app.use(vite.middlewares)
@@ -58,8 +58,8 @@ export async function createServer(
     app.use(
       '/test/',
       (await import('serve-static')).default(resolve('dist/client'), {
-        index: false
-      })
+        index: false,
+      }),
     )
   }
 
@@ -100,6 +100,6 @@ if (!isTest) {
   createServer().then(({ app }) =>
     app.listen(6173, () => {
       console.log('http://localhost:6173')
-    })
+    }),
   )
 }

@@ -6,7 +6,7 @@ import { isCSSRequest } from 'vite'
 import {
   createDescriptor,
   getDescriptor,
-  setPrevDescriptor
+  setPrevDescriptor,
 } from './utils/descriptorCache'
 import { getResolvedScript, setResolvedScript } from './script'
 import type { ResolvedOptions } from '.'
@@ -20,7 +20,7 @@ const directRequestRE = /(?:\?|&)direct\b/
  */
 export async function handleHotUpdate(
   { file, modules, read, server }: HmrContext,
-  options: ResolvedOptions
+  options: ResolvedOptions,
 ): Promise<ModuleNode[] | void> {
   const prevDescriptor = getDescriptor(file, options, false)
   if (!prevDescriptor) {
@@ -55,7 +55,7 @@ export async function handleHotUpdate(
       const scriptModuleRE = new RegExp(
         `type=script.*&lang\.${
           descriptor.scriptSetup?.lang || descriptor.script?.lang
-        }$`
+        }$`,
       )
       scriptModule = modules.find((m) => scriptModuleRE.test(m.url))
     }
@@ -71,7 +71,7 @@ export async function handleHotUpdate(
       setResolvedScript(
         descriptor,
         getResolvedScript(prevDescriptor, false)!,
-        false
+        false,
       )
     }
     affectedModules.add(templateModule)
@@ -105,7 +105,7 @@ export async function handleHotUpdate(
         (m) =>
           m.url.includes(`type=style&index=${i}`) &&
           m.url.endsWith(`.${next.lang || 'css'}`) &&
-          !directRequestRE.test(m.url)
+          !directRequestRE.test(m.url),
       )
       if (mod) {
         affectedModules.add(mod)
@@ -137,7 +137,7 @@ export async function handleHotUpdate(
       const next = nextCustoms[i]
       if (!prev || !isEqualBlock(prev, next)) {
         const mod = modules.find((m) =>
-          m.url.includes(`type=${prev.type}&index=${i}`)
+          m.url.includes(`type=${prev.type}&index=${i}`),
         )
         if (mod) {
           affectedModules.add(mod)
@@ -156,7 +156,7 @@ export async function handleHotUpdate(
       affectedModules.add(mainModule)
     } else if (mainModule && !affectedModules.has(mainModule)) {
       const styleImporters = [...mainModule.importers].filter((m) =>
-        isCSSRequest(m.url)
+        isCSSRequest(m.url),
       )
       styleImporters.forEach((m) => affectedModules.add(m))
     }
@@ -186,7 +186,7 @@ export function isEqualBlock(a: SFCBlock | null, b: SFCBlock | null): boolean {
 
 export function isOnlyTemplateChanged(
   prev: SFCDescriptor,
-  next: SFCDescriptor
+  next: SFCDescriptor,
 ): boolean {
   return (
     !hasScriptChanged(prev, next) &&
