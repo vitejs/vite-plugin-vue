@@ -1,3 +1,10 @@
+## 3.0.0 (2022-12-09)
+
+* chore: update vite dep to ^4.0.0 (#49) ([5a2f789](https://github.com/vitejs/vite-plugin-vue/commit/5a2f789)), closes [#49](https://github.com/vitejs/vite-plugin-vue/issues/49)
+* chore(deps): update all non-major dependencies (#40) ([4c95967](https://github.com/vitejs/vite-plugin-vue/commit/4c95967)), closes [#40](https://github.com/vitejs/vite-plugin-vue/issues/40)
+
+
+
 ## 3.0.0-beta.0 (2022-12-05)
 
 * chore: 3.0 release notes and bump peer deps (#9072) ([e6947e7](https://github.com/vitejs/vite-plugin-vue/commit/e6947e7)), closes [#9072](https://github.com/vitejs/vite-plugin-vue/issues/9072)
