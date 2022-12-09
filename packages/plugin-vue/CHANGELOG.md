@@ -1,3 +1,11 @@
+## 4.0.0 (2022-12-09)
+
+* chore: update vite dep to ^4.0.0 (#49) ([5a2f789](https://github.com/vitejs/vite-plugin-vue/commit/5a2f789)), closes [#49](https://github.com/vitejs/vite-plugin-vue/issues/49)
+* chore(deps): update all non-major dependencies (#40) ([4c95967](https://github.com/vitejs/vite-plugin-vue/commit/4c95967)), closes [#40](https://github.com/vitejs/vite-plugin-vue/issues/40)
+* chore(deps): update rollup and esbuild (#46) ([92fec7b](https://github.com/vitejs/vite-plugin-vue/commit/92fec7b)), closes [#46](https://github.com/vitejs/vite-plugin-vue/issues/46)
+
+
+
 ## 4.0.0-beta.0 (2022-12-05)
 
 * chore: @typescript-eslint/explicit-module-boundary-types (#2735) ([3337060](https://github.com/vitejs/vite-plugin-vue/commit/3337060)), closes [#2735](https://github.com/vitejs/vite-plugin-vue/issues/2735)
