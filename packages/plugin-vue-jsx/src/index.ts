@@ -187,7 +187,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               const matched = declaredComponents.find((name) => name === _name)
               if (matched) {
                 hotComponents.push({
-                  local: node.declaration.name,
+                  local: _name,
                   exported: 'default',
                   id: getHash(id + 'default'),
                 })
