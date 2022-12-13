@@ -136,7 +136,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
         }
 
         // check for hmr injection
-        const declaredComponents: { name: string }[] = []
+        const declaredComponents: string[] = []
         const hotComponents: HotComponent[] = []
         let hasDefault = false
 
@@ -154,7 +154,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               node.declaration.type === 'VariableDeclaration'
             ) {
               hotComponents.push(
-                ...parseComponentDecls(node.declaration).map(({ name }) => ({
+                ...parseComponentDecls(node.declaration).map((name) => ({
                   local: name,
                   exported: name,
                   id: getHash(id + name),
@@ -167,7 +167,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                   spec.exported.type === 'Identifier'
                 ) {
                   const matched = declaredComponents.find(
-                    ({ name }) => name === spec.local.name,
+                    (name) => name === spec.local.name,
                   )
                   if (matched) {
                     hotComponents.push({
@@ -184,9 +184,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
           if (node.type === 'ExportDefaultDeclaration') {
             if (node.declaration.type === 'Identifier') {
               const _name = node.declaration.name
-              const matched = declaredComponents.find(
-                ({ name }) => name === _name,
-              )
+              const matched = declaredComponents.find((name) => name === _name)
               if (matched) {
                 hotComponents.push({
                   local: node.declaration.name,
@@ -257,9 +255,7 @@ function parseComponentDecls(node: types.VariableDeclaration) {
   const names = []
   for (const decl of node.declarations) {
     if (decl.id.type === 'Identifier' && isDefineComponentCall(decl.init)) {
-      names.push({
-        name: decl.id.name,
-      })
+      names.push(decl.id.name)
     }
   }
   return names
