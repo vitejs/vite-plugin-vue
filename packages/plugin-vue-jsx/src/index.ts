@@ -142,7 +142,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
 
         for (const node of result.ast!.program.body) {
           if (node.type === 'VariableDeclaration') {
-            const names = parseComponentDecls(node, code)
+            const names = parseComponentDecls(node)
             if (names.length) {
               declaredComponents.push(...names)
             }
@@ -154,13 +154,11 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               node.declaration.type === 'VariableDeclaration'
             ) {
               hotComponents.push(
-                ...parseComponentDecls(node.declaration, code).map(
-                  ({ name }) => ({
-                    local: name,
-                    exported: name,
-                    id: getHash(id + name),
-                  }),
-                ),
+                ...parseComponentDecls(node.declaration).map(({ name }) => ({
+                  local: name,
+                  exported: name,
+                  id: getHash(id + name),
+                })),
               )
             } else if (node.specifiers.length) {
               for (const spec of node.specifiers) {
@@ -255,7 +253,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
   }
 }
 
-function parseComponentDecls(node: types.VariableDeclaration, source: string) {
+function parseComponentDecls(node: types.VariableDeclaration) {
   const names = []
   for (const decl of node.declarations) {
     if (decl.id.type === 'Identifier' && isDefineComponentCall(decl.init)) {
