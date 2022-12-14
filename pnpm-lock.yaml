@@ -14,7 +14,7 @@ importers:
       '@rollup/plugin-typescript': ^10.0.1
       '@types/babel__core': ^7.1.20
       '@types/babel__standalone': ^7.1.4
-      '@types/convert-source-map': ^1.5.2
+      '@types/convert-source-map': ^2.0.0
       '@types/cross-spawn': ^6.0.2
       '@types/debug': ^4.1.7
       '@types/estree': ^1.0.0
@@ -70,7 +70,7 @@ importers:
       '@rollup/plugin-typescript': 10.0.1_w32d2yt4tg6e3zn5worlea7ffu
       '@types/babel__core': 7.1.20
       '@types/babel__standalone': 7.1.4
-      '@types/convert-source-map': 1.5.2
+      '@types/convert-source-map': 2.0.0
       '@types/cross-spawn': 6.0.2
       '@types/debug': 4.1.7
       '@types/estree': 1.0.0
@@ -156,13 +156,13 @@ importers:
 
   playground:
     specifiers:
-      convert-source-map: ^1.9.0
+      convert-source-map: ^2.0.0
       css-color-names: ^1.0.1
       kill-port: ^1.6.1
       node-fetch: ^3.3.0
       sirv: ^2.0.2
     devDependencies:
-      convert-source-map: 1.9.0
+      convert-source-map: 2.0.0
       css-color-names: 1.0.1
       kill-port: 1.6.1
       node-fetch: 3.3.0
@@ -1135,8 +1135,8 @@ packages:
     resolution: {integrity: sha512-KnRanxnpfpjUTqTCXslZSEdLfXExwgNxYPdiO2WGUj8+HDjFi8R3k5RVKPeSCzLjCcshCAtVO2QBbVuAV4kTnw==}
     dev: true
 
-  /@types/convert-source-map/1.5.2:
-    resolution: {integrity: sha512-tHs++ZeXer40kCF2JpE51Hg7t4HPa18B1b1Dzy96S0eCw8QKECNMYMfwa1edK/x8yCN0r4e6ewvLcc5CsVGkdg==}
+  /@types/convert-source-map/2.0.0:
+    resolution: {integrity: sha512-QUm4YOC/ENo0VjPVl2o8HGyTbHHQGDOw8PCg3rXBucYHKyZN/XjXRbPFAV1tB2FvM0/wyFoDct4cTIctzKrQFg==}
     dev: true
 
   /@types/cross-spawn/6.0.2:
@@ -2144,6 +2144,10 @@ packages:
 
   /convert-source-map/1.9.0:
     resolution: {integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==}
+
+  /convert-source-map/2.0.0:
+    resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
+    dev: true
 
   /cookie-signature/1.0.6:
     resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
