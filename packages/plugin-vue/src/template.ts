@@ -175,7 +175,7 @@ export function resolveTemplateCompilerOptions(
     ssr,
     ssrCssVars: cssVars,
     transformAssetUrls,
-    preprocessLang: block.lang,
+    preprocessLang: block.lang === 'html' ? undefined : block.lang,
     preprocessOptions,
     compilerOptions: {
       ...options.template?.compilerOptions,

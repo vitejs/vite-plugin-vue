@@ -264,7 +264,7 @@ async function genTemplateCode(
   // If the template is not using pre-processor AND is not using external src,
   // compile and inline it directly in the main module. When served in vite this
   // saves an extra request per SFC which can improve load performance.
-  if (!template.lang && !template.src) {
+  if ((!template.lang || template.lang === 'html') && !template.src) {
     return transformTemplateInMain(
       template.content,
       descriptor,
