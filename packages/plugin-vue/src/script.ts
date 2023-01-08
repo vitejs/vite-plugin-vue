@@ -65,7 +65,10 @@ export function resolveScript(
     ...options.script,
     id: descriptor.id,
     isProd: options.isProduction,
-    inlineTemplate: isUseInlineTemplate(descriptor, !options.devServer),
+    inlineTemplate: isUseInlineTemplate(
+      descriptor,
+      !options.devServer && !options.devToolsEnabled,
+    ),
     templateOptions: resolveTemplateCompilerOptions(descriptor, options, ssr),
     sourceMap: options.sourceMap,
     genDefaultAs: canInlineMain(descriptor, options)
