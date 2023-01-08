@@ -26,6 +26,7 @@
   <SetupImportTemplate />
   <WorkerTest />
   <Url />
+  <DefaultLangs />
 </template>
 
 <script setup lang="ts">
@@ -46,6 +47,7 @@ import SetupImportTemplate from './setup-import-template/SetupImportTemplate.vue
 import WorkerTest from './worker.vue'
 import { ref } from 'vue'
 import Url from './Url.vue'
+import DefaultLangs from './DefaultLangs.vue'
 
 const time = ref('loading...')
 

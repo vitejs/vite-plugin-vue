@@ -279,3 +279,10 @@ describe('import with ?url', () => {
     )
   })
 })
+
+describe('default langs', () => {
+  test('should work', async () => {
+    expect(await page.textContent('.default-langs')).toBe('foo')
+    expect(await getColor('.default-langs')).toBe('blue')
+  })
+})
