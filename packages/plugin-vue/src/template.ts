@@ -7,7 +7,7 @@ import type {
   SFCTemplateCompileResults,
 } from 'vue/compiler-sfc'
 import type { PluginContext, TransformPluginContext } from 'rollup'
-import { getResolvedScript } from './script'
+import { getResolvedScript, resolveScript } from './script'
 import { createRollupError } from './utils/error'
 import type { ResolvedOptions } from '.'
 
@@ -68,6 +68,7 @@ export function compile(
   ssr: boolean,
 ) {
   const filename = descriptor.filename
+  resolveScript(descriptor, options, ssr)
   const result = options.compiler.compileTemplate({
     ...resolveTemplateCompilerOptions(descriptor, options, ssr)!,
     source: code,
