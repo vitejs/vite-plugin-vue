@@ -133,7 +133,7 @@ describe('asset reference', () => {
   })
 
   test('absolute import', async () => {
-    const el = await page.$('img.relative-import')
+    const el = await page.$('img.absolute-import')
     expect(await el.evaluate((el) => (el as HTMLImageElement).src)).toMatch(
       assetMatch,
     )
