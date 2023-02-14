@@ -10,6 +10,7 @@
   </div>
   <Syntax />
   <PreProcessors />
+  <PreProcessorsHmr />
   <CssModules />
   <Assets />
   <CustomBlock />
@@ -33,6 +34,7 @@ import Hmr from './Hmr.vue'
 import HmrTsx from './HmrTsx.vue'
 import Syntax from './Syntax.vue'
 import PreProcessors from './PreProcessors.vue'
+import PreProcessorsHmr from './PreProcessorsHmr.vue'
 import CssModules from './CssModules.vue'
 import Assets from './Assets.vue'
 import CustomBlock from './CustomBlock.vue'

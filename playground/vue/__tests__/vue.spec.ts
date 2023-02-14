@@ -94,6 +94,16 @@ describe('pre-processors', () => {
     )
     await untilUpdated(() => getColor('p.pug-stylus'), 'orange')
   })
+
+  test('pug hmr', async () => {
+    expect(await page.textContent('p.pug-hmr')).toMatch('pre-hmr')
+    editFile('PreProcessorsHmr.vue', (code) =>
+      code
+        .replace('p.pug-hmr {{ preHmr }}', 'p.pug-hmr {{ postHmr }}')
+        .replace(`const preHmr = 'pre-hmr'`, `const postHmr = 'post-hmr'`),
+    )
+    await untilUpdated(() => page.textContent('p.pug-hmr'), 'post-hmr')
+  })
 })
 
 describe('css modules', () => {
