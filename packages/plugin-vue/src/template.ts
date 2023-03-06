@@ -7,6 +7,7 @@ import type {
   SFCTemplateCompileResults,
 } from 'vue/compiler-sfc'
 import type { PluginContext, TransformPluginContext } from 'rollup'
+import { transformWithEsbuild } from 'vite'
 import { getResolvedScript } from './script'
 import { createRollupError } from './utils/error'
 import type { ResolvedOptions } from '.'
@@ -19,9 +20,14 @@ export async function transformTemplateAsModule(
   pluginContext: TransformPluginContext,
   ssr: boolean,
 ) {
-  const result = compile(code, descriptor, options, pluginContext, ssr)
+  let { code: returnCode, map: returnMap } = compile(
+    code,
+    descriptor,
+    options,
+    pluginContext,
+    ssr,
+  )
 
-  let returnCode = result.code
   if (
     options.devServer &&
     options.devServer.config.server.hmr !== false &&
@@ -33,9 +39,30 @@ export async function transformTemplateAsModule(
     })`
   }
 
+  const lang = descriptor.scriptSetup?.lang || descriptor.script?.lang
+
+  if (
+    lang &&
+    /tsx?$/.test(lang) &&
+    !descriptor.script?.src // only normal script can have src
+  ) {
+    const { code, map } = await transformWithEsbuild(
+      returnCode,
+      descriptor.filename,
+      {
+        loader: 'ts',
+        target: 'esnext',
+        sourcemap: options.sourceMap,
+      },
+      returnMap,
+    )
+    returnCode = code
+    returnMap = returnMap ? (map as any) : returnMap
+  }
+
   return {
     code: returnCode,
-    map: result.map,
+    map: returnMap,
   }
 }
 
