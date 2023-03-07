@@ -1,3 +1,10 @@
+## 4.1.0-beta.0 (2023-03-07)
+
+* fix: upgrade rollup and typescript (#114) ([c8a61e3](https://github.com/vitejs/vite-plugin-vue/commit/c8a61e3)), closes [#114](https://github.com/vitejs/vite-plugin-vue/issues/114)
+* fix(deps): update all non-major dependencies (#50) ([8f4a5dc](https://github.com/vitejs/vite-plugin-vue/commit/8f4a5dc)), closes [#50](https://github.com/vitejs/vite-plugin-vue/issues/50)
+
+
+
 ## 4.0.0 (2022-12-09)
 
 * chore: update vite dep to ^4.0.0 (#49) ([5a2f789](https://github.com/vitejs/vite-plugin-vue/commit/5a2f789)), closes [#49](https://github.com/vitejs/vite-plugin-vue/issues/49)
