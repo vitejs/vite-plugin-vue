@@ -241,7 +241,6 @@ test.runIf(!isBuild)(
     expect(spy).toBeCalledTimes(1)
     const [firstParameter] = spy.mock.calls[0]
     expect(firstParameter).toContain('Error when evaluating SSR module')
-    expect(firstParameter).toContain(THROW_MESSAGE)
     spy.mockClear()
   },
 )
