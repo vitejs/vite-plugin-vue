@@ -1,3 +1,9 @@
+## 4.1.0 (2023-03-16)
+
+* fix: avoid resolving to 2.7 compiler-sfc ([cf36b3e](https://github.com/vitejs/vite-plugin-vue/commit/cf36b3e))
+
+
+
 ## 4.1.0-beta.0 (2023-03-07)
 
 * fix: upgrade rollup and typescript (#114) ([c8a61e3](https://github.com/vitejs/vite-plugin-vue/commit/c8a61e3)), closes [#114](https://github.com/vitejs/vite-plugin-vue/issues/114)
