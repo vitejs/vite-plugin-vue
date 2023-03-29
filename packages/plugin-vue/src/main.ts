@@ -324,12 +324,12 @@ async function genScriptCode(
       const as = '_sfc_main'
       if (options.compiler.rewriteDefaultAST && script.scriptAst) {
         options.compiler.rewriteDefaultAST(script.scriptAst, script.s, as)
+        scriptCode = script.s.toString()
       } else {
-        scriptCode = options.compiler.rewriteDefault(
-          script.content,
-          '_sfc_main',
-          [...defaultPlugins, ...userPlugins],
-        )
+        scriptCode = options.compiler.rewriteDefault(script.content, as, [
+          ...defaultPlugins,
+          ...userPlugins,
+        ])
       }
       map = script.map
     } else {
