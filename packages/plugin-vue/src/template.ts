@@ -11,7 +11,6 @@ import { getResolvedScript } from './script'
 import { createRollupError } from './utils/error'
 import type { ResolvedOptions } from '.'
 
- 
 export async function transformTemplateAsModule(
   code: string,
   descriptor: SFCDescriptor,
