@@ -12,7 +12,12 @@ import {
   getPrevDescriptor,
   setSrcDescriptor,
 } from './utils/descriptorCache'
-import { isUseInlineTemplate, resolveScript } from './script'
+import {
+  canInlineMain,
+  isUseInlineTemplate,
+  resolveScript,
+  scriptIdentifier,
+} from './script'
 import { transformTemplateInMain } from './template'
 import { isEqualBlock, isOnlyTemplateChanged } from './handleHotUpdate'
 import { createRollupError } from './utils/error'
@@ -303,33 +308,31 @@ async function genScriptCode(
   code: string
   map: RawSourceMap | undefined
 }> {
-  let scriptCode = `const _sfc_main = {}`
+  let scriptCode = `const ${scriptIdentifier} = {}`
   let map: RawSourceMap | undefined
 
   const script = resolveScript(descriptor, options, ssr)
   if (script) {
     // If the script is js/ts and has no external src, it can be directly placed
     // in the main module.
-    if (
-      (!script.lang || (script.lang === 'ts' && options.devServer)) &&
-      !script.src
-    ) {
-      const userPlugins = options.script?.babelParserPlugins || []
-      const defaultPlugins =
-        script.lang === 'ts'
-          ? userPlugins.includes('decorators')
-            ? (['typescript'] as const)
-            : (['typescript', 'decorators-legacy'] as const)
-          : []
-      const as = '_sfc_main'
-      if (options.compiler.rewriteDefaultAST && script.scriptAst && script.s) {
-        options.compiler.rewriteDefaultAST(script.scriptAst, script.s, as)
-        scriptCode = script.s.toString()
+    if (canInlineMain(descriptor, options)) {
+      if (!options.compiler.version) {
+        // if compiler-sfc exposes no version, it's < 3.3 and doesn't support
+        // genDefaultAs option.
+        const userPlugins = options.script?.babelParserPlugins || []
+        const defaultPlugins =
+          script.lang === 'ts'
+            ? userPlugins.includes('decorators')
+              ? (['typescript'] as const)
+              : (['typescript', 'decorators-legacy'] as const)
+            : []
+        scriptCode = options.compiler.rewriteDefault(
+          script.content,
+          scriptIdentifier,
+          [...defaultPlugins, ...userPlugins],
+        )
       } else {
-        scriptCode = options.compiler.rewriteDefault(script.content, as, [
-          ...defaultPlugins,
-          ...userPlugins,
-        ])
+        scriptCode = script.content
       }
       map = script.map
     } else {

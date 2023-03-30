@@ -31,6 +31,8 @@ export function isUseInlineTemplate(
   return isProd && !!descriptor.scriptSetup && !descriptor.template?.src
 }
 
+export const scriptIdentifier = `_sfc_main`
+
 export function resolveScript(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
@@ -56,8 +58,30 @@ export function resolveScript(
     reactivityTransform: options.reactivityTransform !== false,
     templateOptions: resolveTemplateCompilerOptions(descriptor, options, ssr),
     sourceMap: options.sourceMap,
+    genDefaultAs: canInlineMain(descriptor, options)
+      ? scriptIdentifier
+      : undefined,
   })
 
   cacheToUse.set(descriptor, resolved)
   return resolved
+}
+
+// If the script is js/ts and has no external src, it can be directly placed
+// in the main module. Skip for build
+export function canInlineMain(
+  descriptor: SFCDescriptor,
+  options: ResolvedOptions,
+): boolean {
+  if (!options.devServer) {
+    return false
+  }
+  if (descriptor.script?.src || descriptor.scriptSetup?.src) {
+    return false
+  }
+  const lang = descriptor.script?.lang || descriptor.scriptSetup?.lang
+  if (lang && lang !== 'ts') {
+    return false
+  }
+  return true
 }

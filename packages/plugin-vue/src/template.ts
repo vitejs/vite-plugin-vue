@@ -11,14 +11,17 @@ import { getResolvedScript } from './script'
 import { createRollupError } from './utils/error'
 import type { ResolvedOptions } from '.'
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+ 
 export async function transformTemplateAsModule(
   code: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   pluginContext: TransformPluginContext,
   ssr: boolean,
-) {
+): Promise<{
+  code: string
+  map: any
+}> {
   const result = compile(code, descriptor, options, pluginContext, ssr)
 
   let returnCode = result.code
