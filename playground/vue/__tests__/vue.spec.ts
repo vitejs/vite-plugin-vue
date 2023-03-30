@@ -279,3 +279,11 @@ describe('import with ?url', () => {
     )
   })
 })
+
+describe('ts expression in the pug template', () => {
+  test('should work', async () => {
+    expect(await page.textContent('.ts-expression')).toMatch('0')
+    await page.click('.ts-expression')
+    expect(await page.textContent('.ts-expression')).toMatch('1')
+  })
+})
