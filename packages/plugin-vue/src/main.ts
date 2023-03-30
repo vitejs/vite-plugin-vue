@@ -322,7 +322,7 @@ async function genScriptCode(
             : (['typescript', 'decorators-legacy'] as const)
           : []
       const as = '_sfc_main'
-      if (options.compiler.rewriteDefaultAST && script.scriptAst) {
+      if (options.compiler.rewriteDefaultAST && script.scriptAst && script.s) {
         options.compiler.rewriteDefaultAST(script.scriptAst, script.s, as)
       } else {
         scriptCode = options.compiler.rewriteDefault(
