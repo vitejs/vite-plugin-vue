@@ -70,7 +70,7 @@
     "unbuild": "^1.1.2",
     "vite": "^4.2.1",
     "vitest": "^0.29.8",
-    "vue": "^3.2.47"
+    "vue": "^3.3.0-alpha.10"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged --concurrent false",
