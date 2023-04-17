@@ -125,8 +125,8 @@ importers:
         specifier: ^0.29.8
         version: 0.29.8
       vue:
-        specifier: ^3.3.0-alpha.10
-        version: 3.3.0-alpha.10
+        specifier: ^3.3.0-alpha.11
+        version: 3.3.0-alpha.11
 
   packages/plugin-vue:
     devDependencies:
@@ -152,8 +152,8 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1
       vue:
-        specifier: ^3.3.0-alpha.10
-        version: 3.3.0-alpha.10
+        specifier: ^3.3.0-alpha.11
+        version: 3.3.0-alpha.11
 
   packages/plugin-vue-jsx:
     dependencies:
@@ -196,13 +196,13 @@ importers:
         version: file:playground/ssr-vue/example-external-component
       pinia:
         specifier: ^2.0.33
-        version: 2.0.33(vue@3.3.0-alpha.10)
+        version: 2.0.33(vue@3.3.0-alpha.11)
       vue:
-        specifier: ^3.3.0-alpha.10
-        version: 3.3.0-alpha.10
+        specifier: ^3.3.0-alpha.11
+        version: 3.3.0-alpha.11
       vue-router:
         specifier: ^4.1.6
-        version: 4.1.6(vue@3.3.0-alpha.10)
+        version: 4.1.6(vue@3.3.0-alpha.11)
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: workspace:*
@@ -233,8 +233,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       vue:
-        specifier: ^3.3.0-alpha.10
-        version: 3.3.0-alpha.10
+        specifier: ^3.3.0-alpha.11
+        version: 3.3.0-alpha.11
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: workspace:*
@@ -258,8 +258,8 @@ importers:
   playground/vue-jsx:
     dependencies:
       vue:
-        specifier: ^3.3.0-alpha.10
-        version: 3.3.0-alpha.10
+        specifier: ^3.3.0-alpha.11
+        version: 3.3.0-alpha.11
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: workspace:*
@@ -271,8 +271,8 @@ importers:
   playground/vue-legacy:
     dependencies:
       vue:
-        specifier: ^3.3.0-alpha.10
-        version: 3.3.0-alpha.10
+        specifier: ^3.3.0-alpha.11
+        version: 3.3.0-alpha.11
     devDependencies:
       '@vitejs/plugin-legacy':
         specifier: ^4.0.2
@@ -284,8 +284,8 @@ importers:
   playground/vue-lib:
     dependencies:
       vue:
-        specifier: ^3.3.0-alpha.10
-        version: 3.3.0-alpha.10
+        specifier: ^3.3.0-alpha.11
+        version: 3.3.0-alpha.11
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: workspace:*
@@ -294,8 +294,8 @@ importers:
   playground/vue-server-origin:
     dependencies:
       vue:
-        specifier: ^3.3.0-alpha.10
-        version: 3.3.0-alpha.10
+        specifier: ^3.3.0-alpha.11
+        version: 3.3.0-alpha.11
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: workspace:*
@@ -304,8 +304,8 @@ importers:
   playground/vue-sourcemap:
     dependencies:
       vue:
-        specifier: ^3.3.0-alpha.10
-        version: 3.3.0-alpha.10
+        specifier: ^3.3.0-alpha.11
+        version: 3.3.0-alpha.11
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: workspace:*
@@ -2225,82 +2225,82 @@ packages:
       - supports-color
     dev: false
 
-  /@vue/compiler-core@3.3.0-alpha.10:
-    resolution: {integrity: sha512-LAXbaPrSiJ/PsuKGXVGC7iils4znV/kuDIRjqPyHeoSv/gyIDDVh9SQMJP7MimBgn8boQE1rtafYyFJoXP5vYA==}
+  /@vue/compiler-core@3.3.0-alpha.11:
+    resolution: {integrity: sha512-Nv5Q6DLuZup8u8Z5J3r9SIryKPhPGJo5Ua0jTyRCTCYDU6sa08SVMpCJX5TmL3OmNftbrdSauqqcLaPq4L09lQ==}
     dependencies:
       '@babel/parser': 7.21.3
-      '@vue/shared': 3.3.0-alpha.10
+      '@vue/shared': 3.3.0-alpha.11
       estree-walker: 2.0.2
       source-map-js: 1.0.2
 
-  /@vue/compiler-dom@3.3.0-alpha.10:
-    resolution: {integrity: sha512-Z4blitL7aJZg+qQeVFzjnViAICMwhjuEt2aYrgyf32F16ARaJ8GU7m7NqtG4lOxdyRj4K693vlrLf3VIqrBVpA==}
+  /@vue/compiler-dom@3.3.0-alpha.11:
+    resolution: {integrity: sha512-q9DHXm/mbSxQE8I1bSjs9GNdFbSjVe31wc1h+LupeJvLdjX7YqdcklYYAjuZuYxHUGnVj0TAjtuAAG9SLhTadQ==}
     dependencies:
-      '@vue/compiler-core': 3.3.0-alpha.10
-      '@vue/shared': 3.3.0-alpha.10
+      '@vue/compiler-core': 3.3.0-alpha.11
+      '@vue/shared': 3.3.0-alpha.11
 
-  /@vue/compiler-sfc@3.3.0-alpha.10:
-    resolution: {integrity: sha512-/Hg/iRl7BQYTgj/kAGyxpQ6wmSCGuJWIQIagZ3khR7ni+yPNjbwERsLpnZoJMM8ExU3fGnx//G1565nehgzEDg==}
+  /@vue/compiler-sfc@3.3.0-alpha.11:
+    resolution: {integrity: sha512-v/KrdUfz9sicXRlWOWO0d3ASdTOPXcv0o94YywLiIuB2c3kRqhxb+88lPxVnQP4xExWA7giIoRJ2SIEy9jwn8A==}
     dependencies:
       '@babel/parser': 7.21.3
-      '@vue/compiler-core': 3.3.0-alpha.10
-      '@vue/compiler-dom': 3.3.0-alpha.10
-      '@vue/compiler-ssr': 3.3.0-alpha.10
-      '@vue/reactivity-transform': 3.3.0-alpha.10
-      '@vue/shared': 3.3.0-alpha.10
+      '@vue/compiler-core': 3.3.0-alpha.11
+      '@vue/compiler-dom': 3.3.0-alpha.11
+      '@vue/compiler-ssr': 3.3.0-alpha.11
+      '@vue/reactivity-transform': 3.3.0-alpha.11
+      '@vue/shared': 3.3.0-alpha.11
       estree-walker: 2.0.2
       magic-string: 0.30.0
       postcss: 8.4.21
       source-map-js: 1.0.2
 
-  /@vue/compiler-ssr@3.3.0-alpha.10:
-    resolution: {integrity: sha512-B8es+IZ3TaTnVlQgEJLSSqN3424JDEnKIee1rNriVdqPddG3dSFYtHJ4hp2RC9OzZSrAV++ZResiYMV6np/A9A==}
+  /@vue/compiler-ssr@3.3.0-alpha.11:
+    resolution: {integrity: sha512-botFNHfxr8piUcccQ0VE4ORNWVu2zkuIG3VYhA5R8yZ6E9WHC4zSi6wbX0hAlVXCOm4Vg9xJbWcrjEnFlMOKAQ==}
     dependencies:
-      '@vue/compiler-dom': 3.3.0-alpha.10
-      '@vue/shared': 3.3.0-alpha.10
+      '@vue/compiler-dom': 3.3.0-alpha.11
+      '@vue/shared': 3.3.0-alpha.11
 
   /@vue/devtools-api@6.5.0:
     resolution: {integrity: sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q==}
     dev: false
 
-  /@vue/reactivity-transform@3.3.0-alpha.10:
-    resolution: {integrity: sha512-vCWKtACMKKMfCNuawp/ZqIG3IewGNtFtUkLq3ZU7dHFvIBExPpnRO4GaEgAmZzSPcUVKMdL9G0plrL3iSsX/Kw==}
+  /@vue/reactivity-transform@3.3.0-alpha.11:
+    resolution: {integrity: sha512-rN2VaF2MJNkIIinzLewQG+oiS6eaLcIYepxzuRtThaJ372RrELYSI0Z5wxEMalOuBGbVJ7T9Y24veBtYtKMPBQ==}
     dependencies:
       '@babel/parser': 7.21.3
-      '@vue/compiler-core': 3.3.0-alpha.10
-      '@vue/shared': 3.3.0-alpha.10
+      '@vue/compiler-core': 3.3.0-alpha.11
+      '@vue/shared': 3.3.0-alpha.11
       estree-walker: 2.0.2
       magic-string: 0.30.0
 
-  /@vue/reactivity@3.3.0-alpha.10:
-    resolution: {integrity: sha512-WhdUvTmaS9XaRMvoqoL+6RokIWLk4w9KfWpsDLy7bWjkMS0Sjoynd+5vVXEIiQ30/udLzXxANF1KrMr0j/+5Iw==}
+  /@vue/reactivity@3.3.0-alpha.11:
+    resolution: {integrity: sha512-qGt7vkRHmo1mybbOylRxrv1DGcDhsYLBCpH9JY4PcwokKxbsoNQGZmlaV9sgGq8fX/fZcSR2dvXlmyKN3FcZAQ==}
     dependencies:
-      '@vue/shared': 3.3.0-alpha.10
+      '@vue/shared': 3.3.0-alpha.11
 
-  /@vue/runtime-core@3.3.0-alpha.10:
-    resolution: {integrity: sha512-mbzvJEi/+mmtCQTlPSUEclD4+1iSTpR6lM8LiJOSL1pY4RxpJhgRjhymVX8PVy0arxjdYyDAVHeabB4/c1hBNw==}
+  /@vue/runtime-core@3.3.0-alpha.11:
+    resolution: {integrity: sha512-uxi8oLsfiwcGRkiZ9Dok2dCpoH7pyZhy9j06UmuqK6vF4JCg9sndYln/74FUikham+akUTqZgtgxc5gtPygh3w==}
     dependencies:
-      '@vue/reactivity': 3.3.0-alpha.10
-      '@vue/shared': 3.3.0-alpha.10
+      '@vue/reactivity': 3.3.0-alpha.11
+      '@vue/shared': 3.3.0-alpha.11
 
-  /@vue/runtime-dom@3.3.0-alpha.10:
-    resolution: {integrity: sha512-sZsRQG2sU9su2/gTNxjmw3lRa08VkDnhk8BTAdtGQ+Vw/rB0mCQweFozWAHAm/9MnQI0p98z6m5zFCfjlV4t7g==}
+  /@vue/runtime-dom@3.3.0-alpha.11:
+    resolution: {integrity: sha512-XCN8wQqtJMLdIy0y2uQEAjlVn83PBPUFsCCnETsN/kCZ3YhP+/o8wJ1iNhCoRb7ZPrIOOI9J/9pVPzlm3WGPTQ==}
     dependencies:
-      '@vue/runtime-core': 3.3.0-alpha.10
-      '@vue/shared': 3.3.0-alpha.10
+      '@vue/runtime-core': 3.3.0-alpha.11
+      '@vue/shared': 3.3.0-alpha.11
       csstype: 3.1.2
 
-  /@vue/server-renderer@3.3.0-alpha.10(vue@3.3.0-alpha.10):
-    resolution: {integrity: sha512-+ijeEW1tYazsfd8GZ0h2wIvt6G86DFLi1Q04o8CldKlQ8vWNvaBzR9YCEXJqpvvVeQr5OiTMH+koS4VuBLJgyA==}
+  /@vue/server-renderer@3.3.0-alpha.11(vue@3.3.0-alpha.11):
+    resolution: {integrity: sha512-ZGq6ujgMQeDvITvIe0M2lAaM0x9TTr5ZQ/OMr7qEMo3HyaWxEDsG3m/KhPmlx0OvJjeGqXCqjs2nzOlO0UC77Q==}
     peerDependencies:
-      vue: 3.3.0-alpha.10
+      vue: 3.3.0-alpha.11
     dependencies:
-      '@vue/compiler-ssr': 3.3.0-alpha.10
-      '@vue/shared': 3.3.0-alpha.10
-      vue: 3.3.0-alpha.10
+      '@vue/compiler-ssr': 3.3.0-alpha.11
+      '@vue/shared': 3.3.0-alpha.11
+      vue: 3.3.0-alpha.11
 
-  /@vue/shared@3.3.0-alpha.10:
-    resolution: {integrity: sha512-nkHwcIdI/RvzBlCfbJBIRIljVDDC9i2GVZ3jXMC5YkgsrQIYnBBz22qgyWPVYqdQEHt8IOQhZKGbxehwE+9+Ng==}
+  /@vue/shared@3.3.0-alpha.11:
+    resolution: {integrity: sha512-bMoJDESDKvjQEuIUthdBi18Z33AvOjQ1Fn3XmdjUY7ZjLcU6Xu7QKZ1wT+qlyeQA1BqSjtEzbAGKomvUsT0uHw==}
 
   /JSONStream@1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
@@ -5291,7 +5291,7 @@ packages:
     dev: true
     optional: true
 
-  /pinia@2.0.33(vue@3.3.0-alpha.10):
+  /pinia@2.0.33(vue@3.3.0-alpha.11):
     resolution: {integrity: sha512-HOj1yVV2itw6rNIrR2f7+MirGNxhORjrULL8GWgRwXsGSvEqIQ+SE0MYt6cwtpegzCda3i+rVTZM+AM7CG+kRg==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
@@ -5304,8 +5304,8 @@ packages:
         optional: true
     dependencies:
       '@vue/devtools-api': 6.5.0
-      vue: 3.3.0-alpha.10
-      vue-demi: 0.13.11(vue@3.3.0-alpha.10)
+      vue: 3.3.0-alpha.11
+      vue-demi: 0.13.11(vue@3.3.0-alpha.11)
     dev: false
 
   /pkg-types@1.0.2:
@@ -6730,7 +6730,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /vue-demi@0.13.11(vue@3.3.0-alpha.10):
+  /vue-demi@0.13.11(vue@3.3.0-alpha.11):
     resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
     engines: {node: '>=12'}
     hasBin: true
@@ -6742,26 +6742,26 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
-      vue: 3.3.0-alpha.10
+      vue: 3.3.0-alpha.11
     dev: false
 
-  /vue-router@4.1.6(vue@3.3.0-alpha.10):
+  /vue-router@4.1.6(vue@3.3.0-alpha.11):
     resolution: {integrity: sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
       '@vue/devtools-api': 6.5.0
-      vue: 3.3.0-alpha.10
+      vue: 3.3.0-alpha.11
     dev: false
 
-  /vue@3.3.0-alpha.10:
-    resolution: {integrity: sha512-sonjrnAapwoszIZmc3t8MgQhjs61WdToCGbpFN34UBwcYd0P2dKQMKMv3yjnGLitfyQ1xlsFh+KKiPvu1LkiIw==}
+  /vue@3.3.0-alpha.11:
+    resolution: {integrity: sha512-w6Fhcu181zGhBM5gBgEX+dJSUV4WB+qppWeQk5mDiVeqtxBL4uRnLwxMLmdED7OIGqVhgVjwAjSV5kqkAqJYcw==}
     dependencies:
-      '@vue/compiler-dom': 3.3.0-alpha.10
-      '@vue/compiler-sfc': 3.3.0-alpha.10
-      '@vue/runtime-dom': 3.3.0-alpha.10
-      '@vue/server-renderer': 3.3.0-alpha.10(vue@3.3.0-alpha.10)
-      '@vue/shared': 3.3.0-alpha.10
+      '@vue/compiler-dom': 3.3.0-alpha.11
+      '@vue/compiler-sfc': 3.3.0-alpha.11
+      '@vue/runtime-dom': 3.3.0-alpha.11
+      '@vue/server-renderer': 3.3.0-alpha.11(vue@3.3.0-alpha.11)
+      '@vue/shared': 3.3.0-alpha.11
 
   /web-streams-polyfill@3.2.1:
     resolution: {integrity: sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==}
