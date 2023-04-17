@@ -1,3 +1,14 @@
+## 4.2.0-beta.0 (2023-04-17)
+
+* fix: check presence of magic-string instance when using rewriteDefaultAST ([094f784](https://github.com/vitejs/vite-plugin-vue/commit/094f784))
+* fix(deps): update all non-major dependencies (#82) ([b274436](https://github.com/vitejs/vite-plugin-vue/commit/b274436)), closes [#82](https://github.com/vitejs/vite-plugin-vue/issues/82)
+* fix(vue): retrieve rewritten code (#139) ([199f0cb](https://github.com/vitejs/vite-plugin-vue/commit/199f0cb)), closes [#139](https://github.com/vitejs/vite-plugin-vue/issues/139)
+* chore: format ([328fc10](https://github.com/vitejs/vite-plugin-vue/commit/328fc10))
+* refactor: reuse script ast for rewriting default (#136) ([9d84656](https://github.com/vitejs/vite-plugin-vue/commit/9d84656)), closes [#136](https://github.com/vitejs/vite-plugin-vue/issues/136)
+* refactor: use compiler-sfc 3.3 genDefaultAs option to avoid rewriteDefault ([2c35a66](https://github.com/vitejs/vite-plugin-vue/commit/2c35a66))
+
+
+
 ## 4.1.0 (2023-03-16)
 
 * fix: avoid resolving to 2.7 compiler-sfc ([cf36b3e](https://github.com/vitejs/vite-plugin-vue/commit/cf36b3e))
