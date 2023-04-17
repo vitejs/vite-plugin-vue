@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest'
+import { version } from 'vue'
 import {
   browserLogs,
   editFile,
@@ -11,7 +12,7 @@ import {
 } from '~utils'
 
 test('should render', async () => {
-  expect(await page.textContent('h1')).toMatch('Vue SFCs')
+  expect(await page.textContent('h1')).toMatch(`Vue version ${version}`)
 })
 
 test('should update', async () => {
@@ -276,6 +277,49 @@ describe('import with ?url', () => {
   test('should work', async () => {
     expect(await page.textContent('.import-with-url-query')).toMatch(
       isBuild ? /^data:/ : '/Null.vue',
+    )
+  })
+})
+
+describe('macro imported types', () => {
+  test('should resolve and render correct props', async () => {
+    expect(await page.textContent('.type-props')).toMatch(
+      JSON.stringify(
+        {
+          msg: 'msg',
+          bar: 'bar',
+          id: 123,
+        },
+        null,
+        2,
+      ),
+    )
+  })
+
+  test('should hmr', async () => {
+    editFile('types.ts', (code) => code.replace('msg: string', ''))
+    await untilUpdated(
+      () => page.textContent('.type-props'),
+      JSON.stringify(
+        {
+          bar: 'bar',
+          id: 123,
+        },
+        null,
+        2,
+      ),
+    )
+
+    editFile('types-aliased.d.ts', (code) => code.replace('id: number', ''))
+    await untilUpdated(
+      () => page.textContent('.type-props'),
+      JSON.stringify(
+        {
+          bar: 'bar',
+        },
+        null,
+        2,
+      ),
     )
   })
 })

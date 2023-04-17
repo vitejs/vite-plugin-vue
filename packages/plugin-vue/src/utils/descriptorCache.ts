@@ -11,7 +11,7 @@ export interface SFCParseResult {
   errors: Array<CompilerError | SyntaxError>
 }
 
-const cache = new Map<string, SFCDescriptor>()
+export const cache = new Map<string, SFCDescriptor>()
 const prevCache = new Map<string, SFCDescriptor | undefined>()
 
 export function createDescriptor(

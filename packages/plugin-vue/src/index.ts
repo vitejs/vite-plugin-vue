@@ -13,9 +13,9 @@ import type * as _compiler from 'vue/compiler-sfc'
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
 import { getDescriptor, getSrcDescriptor } from './utils/descriptorCache'
-import { getResolvedScript } from './script'
+import { getResolvedScript, typeDepToSFCMap } from './script'
 import { transformMain } from './main'
-import { handleHotUpdate } from './handleHotUpdate'
+import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
 import { transformTemplateAsModule } from './template'
 import { transformStyle } from './style'
 import { EXPORT_HELPER_ID, helperCode } from './helper'
@@ -120,10 +120,15 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     name: 'vite:vue',
 
     handleHotUpdate(ctx) {
-      if (!filter(ctx.file)) {
-        return
+      if (options.compiler.invalidateTypeCache) {
+        options.compiler.invalidateTypeCache(ctx.file)
       }
-      return handleHotUpdate(ctx, options)
+      if (typeDepToSFCMap.has(ctx.file)) {
+        return handleTypeDepChange(typeDepToSFCMap.get(ctx.file)!, ctx)
+      }
+      if (filter(ctx.file)) {
+        return handleHotUpdate(ctx, options)
+      }
     },
 
     config(config) {

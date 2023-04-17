@@ -1,10 +1,20 @@
 import type { SFCDescriptor, SFCScriptBlock } from 'vue/compiler-sfc'
 import { resolveTemplateCompilerOptions } from './template'
+import { cache as descriptorCache } from './utils/descriptorCache'
 import type { ResolvedOptions } from '.'
 
 // ssr and non ssr builds would output different script content
 const clientCache = new WeakMap<SFCDescriptor, SFCScriptBlock | null>()
 const ssrCache = new WeakMap<SFCDescriptor, SFCScriptBlock | null>()
+export const depToSFCMap = new Map<string, string>()
+
+export function invalidateScript(filename: string): void {
+  const desc = descriptorCache.get(filename)
+  if (desc) {
+    clientCache.delete(desc)
+    ssrCache.delete(desc)
+  }
+}
 
 export function getResolvedScript(
   descriptor: SFCDescriptor,
@@ -32,6 +42,8 @@ export function isUseInlineTemplate(
 }
 
 export const scriptIdentifier = `_sfc_main`
+
+export const typeDepToSFCMap = new Map<string, Set<string>>()
 
 export function resolveScript(
   descriptor: SFCDescriptor,
@@ -62,6 +74,23 @@ export function resolveScript(
       ? scriptIdentifier
       : undefined,
   })
+
+  if (resolved?.deps) {
+    for (const [key, sfcs] of typeDepToSFCMap) {
+      if (sfcs.has(descriptor.filename) && !resolved.deps.includes(key)) {
+        sfcs.delete(descriptor.filename)
+      }
+    }
+
+    for (const dep of resolved.deps) {
+      const existingSet = typeDepToSFCMap.get(dep)
+      if (!existingSet) {
+        typeDepToSFCMap.set(dep, new Set([descriptor.filename]))
+      } else {
+        existingSet.add(descriptor.filename)
+      }
+    }
+  }
 
   cacheToUse.set(descriptor, resolved)
   return resolved

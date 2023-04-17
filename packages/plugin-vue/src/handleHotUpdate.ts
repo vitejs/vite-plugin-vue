@@ -8,7 +8,11 @@ import {
   getDescriptor,
   setPrevDescriptor,
 } from './utils/descriptorCache'
-import { getResolvedScript, setResolvedScript } from './script'
+import {
+  getResolvedScript,
+  invalidateScript,
+  setResolvedScript,
+} from './script'
 import type { ResolvedOptions } from '.'
 
 const debug = _debug('vite:hmr')
@@ -19,7 +23,7 @@ const directRequestRE = /(?:\?|&)direct\b/
  * Vite-specific HMR handling
  */
 export async function handleHotUpdate(
-  { file, modules, read, server }: HmrContext,
+  { file, modules, read }: HmrContext,
   options: ResolvedOptions,
 ): Promise<ModuleNode[] | void> {
   const prevDescriptor = getDescriptor(file, options, false)
@@ -35,31 +39,12 @@ export async function handleHotUpdate(
 
   let needRerender = false
   const affectedModules = new Set<ModuleNode | undefined>()
-  const mainModule = modules
-    .filter((m) => !/type=/.test(m.url) || /type=script/.test(m.url))
-    // #9341
-    // We pick the module with the shortest URL in order to pick the module
-    // with the lowest number of query parameters.
-    .sort((m1, m2) => {
-      return m1.url.length - m2.url.length
-    })[0]
+  const mainModule = getMainModule(modules)
   const templateModule = modules.find((m) => /type=template/.test(m.url))
 
   const scriptChanged = hasScriptChanged(prevDescriptor, descriptor)
   if (scriptChanged) {
-    let scriptModule: ModuleNode | undefined
-    if (
-      (descriptor.scriptSetup?.lang && !descriptor.scriptSetup.src) ||
-      (descriptor.script?.lang && !descriptor.script.src)
-    ) {
-      const scriptModuleRE = new RegExp(
-        `type=script.*&lang\.${
-          descriptor.scriptSetup?.lang || descriptor.script?.lang
-        }$`,
-      )
-      scriptModule = modules.find((m) => scriptModuleRE.test(m.url))
-    }
-    affectedModules.add(scriptModule || mainModule)
+    affectedModules.add(getScriptModule(modules) || mainModule)
   }
 
   if (!isEqualBlock(descriptor.template, prevDescriptor.template)) {
@@ -217,4 +202,37 @@ function hasScriptChanged(prev: SFCDescriptor, next: SFCDescriptor): boolean {
   }
 
   return false
+}
+
+function getMainModule(modules: ModuleNode[]) {
+  return (
+    modules
+      .filter((m) => !/type=/.test(m.url) || /type=script/.test(m.url))
+      // #9341
+      // We pick the module with the shortest URL in order to pick the module
+      // with the lowest number of query parameters.
+      .sort((m1, m2) => {
+        return m1.url.length - m2.url.length
+      })[0]
+  )
+}
+
+function getScriptModule(modules: ModuleNode[]) {
+  return modules.find((m) => /type=script.*&lang\.\w+$/.test(m.url))
+}
+
+export function handleTypeDepChange(
+  affectedComponents: Set<string>,
+  { modules, server: { moduleGraph } }: HmrContext,
+): ModuleNode[] {
+  const affected = new Set<ModuleNode>()
+  for (const file of affectedComponents) {
+    invalidateScript(file)
+    const mods = moduleGraph.getModulesByFile(file)
+    if (mods) {
+      const arr = [...mods]
+      affected.add(getScriptModule(arr) || getMainModule(arr))
+    }
+  }
+  return [...modules, ...affected]
 }

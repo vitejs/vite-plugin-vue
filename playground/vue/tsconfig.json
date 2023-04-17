@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     // esbuild transpile should ignore this
-    "target": "ES5"
+    "target": "ES5",
+    "jsx": "preserve",
+    "paths": {
+      "~utils": ["../test-utils.ts"],
+      "~types": ["./types-aliased.d.ts"]
+    }
   },
   "include": ["."]
 }
