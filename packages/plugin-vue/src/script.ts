@@ -74,7 +74,7 @@ export function resolveScript(
       : undefined,
   })
 
-  if (resolved?.deps) {
+  if (!options.isProduction && resolved?.deps) {
     for (const [key, sfcs] of typeDepToSFCMap) {
       if (sfcs.has(descriptor.filename) && !resolved.deps.includes(key)) {
         sfcs.delete(descriptor.filename)
