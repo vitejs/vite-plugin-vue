@@ -6,7 +6,8 @@ import type { ResolvedOptions } from '.'
 // ssr and non ssr builds would output different script content
 const clientCache = new WeakMap<SFCDescriptor, SFCScriptBlock | null>()
 const ssrCache = new WeakMap<SFCDescriptor, SFCScriptBlock | null>()
-export const depToSFCMap = new Map<string, string>()
+
+export const typeDepToSFCMap = new Map<string, Set<string>>()
 
 export function invalidateScript(filename: string): void {
   const desc = descriptorCache.get(filename)
@@ -42,8 +43,6 @@ export function isUseInlineTemplate(
 }
 
 export const scriptIdentifier = `_sfc_main`
-
-export const typeDepToSFCMap = new Map<string, Set<string>>()
 
 export function resolveScript(
   descriptor: SFCDescriptor,
