@@ -102,15 +102,15 @@ export function canInlineMain(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
 ): boolean {
-  if (!options.devServer) {
-    return false
-  }
   if (descriptor.script?.src || descriptor.scriptSetup?.src) {
     return false
   }
   const lang = descriptor.script?.lang || descriptor.scriptSetup?.lang
-  if (lang && lang !== 'ts') {
-    return false
+  if (!lang) {
+    return true
   }
-  return true
+  if ((lang === 'ts' || lang === 'tsx') && options.devServer) {
+    return true
+  }
+  return false
 }
