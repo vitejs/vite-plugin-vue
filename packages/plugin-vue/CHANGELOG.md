@@ -1,3 +1,14 @@
+## 4.2.0-beta.1 (2023-04-18)
+
+* perf: only record type deps map in dev ([605b3b0](https://github.com/vitejs/vite-plugin-vue/commit/605b3b0))
+* chore: bump vue dev dep ([1f2155a](https://github.com/vitejs/vite-plugin-vue/commit/1f2155a))
+* chore: bump vue dev dep (trying windows fix) ([6513ecf](https://github.com/vitejs/vite-plugin-vue/commit/6513ecf))
+* chore: remove unused export ([d73c8e7](https://github.com/vitejs/vite-plugin-vue/commit/d73c8e7))
+* fix: ensure canInlineMain logic is identical with before refactor ([e6c5a90](https://github.com/vitejs/vite-plugin-vue/commit/e6c5a90))
+* feat: support 3.3 imported types in SFC macros ([c891652](https://github.com/vitejs/vite-plugin-vue/commit/c891652))
+
+
+
 ## 4.2.0-beta.0 (2023-04-17)
 
 * fix: check presence of magic-string instance when using rewriteDefaultAST ([094f784](https://github.com/vitejs/vite-plugin-vue/commit/094f784))
