@@ -162,15 +162,16 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
 
     configureServer(server) {
       options.devServer = server
-      if (options.compiler.invalidateTypeCache) {
-        server.watcher.on('unlink', (file) => {
-          options.compiler.invalidateTypeCache(file)
-        })
-      }
     },
 
     buildStart() {
-      options.compiler = options.compiler || resolveCompiler(options.root)
+      const compiler = (options.compiler =
+        options.compiler || resolveCompiler(options.root))
+      if (compiler.invalidateTypeCache) {
+        options.devServer?.watcher.on('unlink', (file) => {
+          compiler.invalidateTypeCache(file)
+        })
+      }
     },
 
     async resolveId(id) {
