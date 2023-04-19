@@ -38,7 +38,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
   let needHmr = false
   let needSourceMap = true
 
-  const { include, exclude, babelPlugins = [], ...babelPluginOptions } = options
+  const { include, exclude, babelPlugins = [], babalPluginsAfterTsTransform = [], ...babelPluginOptions } = options
   const filter = createFilter(include || /\.[jt]sx$/, exclude)
 
   return {
@@ -93,6 +93,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
             // @ts-ignore
             { isTSX: true, allowExtensions: true },
           ])
+          plugins.push(...babalPluginsAfterTsTransform)
         }
 
         if (!ssr && !needHmr) {
