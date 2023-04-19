@@ -86,8 +86,8 @@ importers:
         specifier: ^1.32.1
         version: 1.32.1
       pnpm:
-        specifier: ^7.30.5
-        version: 7.30.5
+        specifier: ^8.3.1
+        version: 8.3.1
       prettier:
         specifier: 2.8.7
         version: 2.8.7
@@ -150,7 +150,7 @@ importers:
         version: 0.6.1
       vite:
         specifier: ^4.2.1
-        version: 4.2.1
+        version: 4.2.1(@types/node@18.15.11)
       vue:
         specifier: ^3.3.0-alpha.11
         version: 3.3.0-alpha.11
@@ -169,7 +169,7 @@ importers:
     devDependencies:
       vite:
         specifier: ^4.2.1
-        version: 4.2.1
+        version: 4.2.1(@types/node@18.15.11)
 
   playground:
     devDependencies:
@@ -196,7 +196,7 @@ importers:
         version: file:playground/ssr-vue/example-external-component
       pinia:
         specifier: ^2.0.33
-        version: 2.0.33(vue@3.3.0-alpha.11)
+        version: 2.0.33(typescript@4.9.5)(vue@3.3.0-alpha.11)
       vue:
         specifier: ^3.3.0-alpha.11
         version: 3.3.0-alpha.11
@@ -276,7 +276,7 @@ importers:
     devDependencies:
       '@vitejs/plugin-legacy':
         specifier: ^4.0.2
-        version: 4.0.2
+        version: 4.0.2(vite@4.2.1)
       '@vitejs/plugin-vue':
         specifier: workspace:*
         version: link:../../packages/plugin-vue
@@ -2155,7 +2155,7 @@ packages:
       eslint-visitor-keys: 3.4.0
     dev: true
 
-  /@vitejs/plugin-legacy@4.0.2:
+  /@vitejs/plugin-legacy@4.0.2(vite@4.2.1):
     resolution: {integrity: sha512-ivnt9sCkgwJTYTWLjuvY6H/HTuiQC1EgzAPkiAvi0yNAssiqOJjyjhG3hAK5LFUUorE0w9kGxn8K0f/74DlbxQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -2169,6 +2169,7 @@ packages:
       magic-string: 0.30.0
       regenerator-runtime: 0.13.11
       systemjs: 6.14.1
+      vite: 4.2.1(@types/node@18.15.11)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5291,7 +5292,7 @@ packages:
     dev: true
     optional: true
 
-  /pinia@2.0.33(vue@3.3.0-alpha.11):
+  /pinia@2.0.33(typescript@4.9.5)(vue@3.3.0-alpha.11):
     resolution: {integrity: sha512-HOj1yVV2itw6rNIrR2f7+MirGNxhORjrULL8GWgRwXsGSvEqIQ+SE0MYt6cwtpegzCda3i+rVTZM+AM7CG+kRg==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
@@ -5304,6 +5305,7 @@ packages:
         optional: true
     dependencies:
       '@vue/devtools-api': 6.5.0
+      typescript: 4.9.5
       vue: 3.3.0-alpha.11
       vue-demi: 0.13.11(vue@3.3.0-alpha.11)
     dev: false
@@ -5331,9 +5333,9 @@ packages:
     hasBin: true
     dev: true
 
-  /pnpm@7.30.5:
-    resolution: {integrity: sha512-kXiH7+iGhDcm3UVhjb4pzbRYljoT2KVR8WFL37b+c15F9CuaLau0RTozrXx/9snf1JEmGICjRnMM2XArmM01sg==}
-    engines: {node: '>=14.6'}
+  /pnpm@8.3.1:
+    resolution: {integrity: sha512-0mT2ZAv08J3nz8xUdWhRW88GE89IWgPo/xZhb6acQXK2+aCikl7kT7Bg31ZcnJqOrwYXSed68xjLd/ZoSnBR8w==}
+    engines: {node: '>=16.14'}
     hasBin: true
     dev: true
 
@@ -6425,7 +6427,6 @@ packages:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /ufo@1.1.1:
     resolution: {integrity: sha512-MvlCc4GHrmZdAllBc0iUDowff36Q9Ndw/UzqmEKyrfSzokTd9ZCy1i+IIk5hrYKkjoYVQyNbrw7/F8XJ2rEwTg==}
@@ -6592,39 +6593,6 @@ packages:
       - sugarss
       - supports-color
       - terser
-    dev: true
-
-  /vite@4.2.1:
-    resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      esbuild: 0.17.14
-      postcss: 8.4.21
-      resolve: 1.22.1
-      rollup: 3.20.2
-    optionalDependencies:
-      fsevents: 2.3.2
     dev: true
 
   /vite@4.2.1(@types/node@18.15.11):
