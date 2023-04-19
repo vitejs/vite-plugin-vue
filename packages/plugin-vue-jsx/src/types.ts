@@ -7,4 +7,4 @@ export interface FilterOptions {
 }
 
 export type Options = VueJSXPluginOptions &
-  FilterOptions & { babelPlugins?: any[] }
+  FilterOptions & { babelPlugins?: any[], babalPluginsAfterTsTransform?: any[] }
