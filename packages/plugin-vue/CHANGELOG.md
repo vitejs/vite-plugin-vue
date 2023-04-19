@@ -1,3 +1,9 @@
+## 4.2.0-beta.2 (2023-04-19)
+
+* fix: invalidate type cache on file removal ([e8cc64b](https://github.com/vitejs/vite-plugin-vue/commit/e8cc64b))
+
+
+
 ## 4.2.0-beta.1 (2023-04-18)
 
 * perf: only record type deps map in dev ([605b3b0](https://github.com/vitejs/vite-plugin-vue/commit/605b3b0))
