@@ -35,12 +35,12 @@
   },
   "homepage": "https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx#readme",
   "dependencies": {
-    "@babel/core": "^7.21.3",
+    "@babel/core": "^7.21.4",
     "@babel/plugin-transform-typescript": "^7.21.3",
     "@vue/babel-plugin-jsx": "^1.1.1"
   },
   "devDependencies": {
-    "vite": "^4.2.1"
+    "vite": "^4.3.1"
   },
   "peerDependencies": {
     "vite": "^4.0.0",

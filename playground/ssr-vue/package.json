@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@vitejs/test-example-external-component": "file:example-external-component",
-    "pinia": "^2.0.33",
-    "vue": "^3.3.0-alpha.11",
+    "pinia": "^2.0.35",
+    "vue": "^3.3.0-beta.1",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
