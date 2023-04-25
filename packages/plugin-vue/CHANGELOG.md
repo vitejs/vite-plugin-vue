@@ -1,6 +1,6 @@
 ## 4.2.0 (2023-04-25)
 
-
+* feat: support 3.3 imported types in SFC macros ([c891652](https://github.com/vitejs/vite-plugin-vue/commit/c891652))
 
 
 ## 4.2.0-beta.3 (2023-04-19)
