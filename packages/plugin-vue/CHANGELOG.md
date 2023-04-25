@@ -1,3 +1,8 @@
+## 4.2.0 (2023-04-25)
+
+
+
+
 ## 4.2.0-beta.3 (2023-04-19)
 
 * fix: fix watcher unlink listener setup timing ([2d2c91a](https://github.com/vitejs/vite-plugin-vue/commit/2d2c91a))
