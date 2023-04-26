@@ -1,3 +1,10 @@
+## <small>4.2.1 (2023-04-26)</small>
+
+* fix: lang="tsx" can't be inlined ([c3f5c9c](https://github.com/vitejs/vite-plugin-vue/commit/c3f5c9c)), closes [#159](https://github.com/vitejs/vite-plugin-vue/issues/159)
+* chore: update changelog [ci skip] ([9d0d7a7](https://github.com/vitejs/vite-plugin-vue/commit/9d0d7a7))
+
+
+
 ## 4.2.0 (2023-04-25)
 
 * feat: support 3.3 imported types in SFC macros ([c891652](https://github.com/vitejs/vite-plugin-vue/commit/c891652))
