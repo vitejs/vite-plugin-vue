@@ -108,7 +108,7 @@ export function canInlineMain(
   if (!lang) {
     return true
   }
-  if ((lang === 'ts' || lang === 'tsx') && options.devServer) {
+  if (lang === 'ts' && options.devServer) {
     return true
   }
   return false
