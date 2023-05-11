@@ -1,3 +1,11 @@
+## <small>4.2.2 (2023-05-11)</small>
+
+* fix: ignore generic attribute when generating script import ([3170af1](https://github.com/vitejs/vite-plugin-vue/commit/3170af1))
+* chore: bump vite ([ffe74e5](https://github.com/vitejs/vite-plugin-vue/commit/ffe74e5))
+* chore: bump vue version ([799d875](https://github.com/vitejs/vite-plugin-vue/commit/799d875))
+
+
+
 ## <small>4.2.1 (2023-04-26)</small>
 
 * fix: lang="tsx" can't be inlined ([c3f5c9c](https://github.com/vitejs/vite-plugin-vue/commit/c3f5c9c)), closes [#159](https://github.com/vitejs/vite-plugin-vue/issues/159)
