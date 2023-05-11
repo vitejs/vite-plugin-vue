@@ -13,7 +13,7 @@ export default defineConfig({
     vuePlugin({
       reactivityTransform: true,
       defineModel: true,
-      propDestructure: true,
+      propsDestructure: true,
     }),
     splitVendorChunkPlugin(),
     vueI18nPlugin,
