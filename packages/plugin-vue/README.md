@@ -59,6 +59,20 @@ export interface Options {
   reactivityTransform?: boolean | string | RegExp | (string | RegExp)[]
 
   /**
+   * Enable `defineModel` macro (experimental).
+   * https://github.com/vuejs/rfcs/discussions/503
+   * @default false
+   */
+  defineModel?: boolean
+
+  /**
+   * Enable reactive props destructure (experimental).
+   * https://github.com/vuejs/rfcs/discussions/502
+   * @default false
+   */
+  propsDestructure?: boolean
+
+  /**
    * Use custom compiler-sfc instance. Can be used to force a specific version.
    */
   compiler?: typeof _compiler

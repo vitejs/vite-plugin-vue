@@ -67,6 +67,8 @@ export function resolveScript(
     isProd: options.isProduction,
     inlineTemplate: isUseInlineTemplate(descriptor, !options.devServer),
     reactivityTransform: options.reactivityTransform !== false,
+    defineModel: options.defineModel,
+    propsDestructure: options.propsDestructure,
     templateOptions: resolveTemplateCompilerOptions(descriptor, options, ssr),
     sourceMap: options.sourceMap,
     genDefaultAs: canInlineMain(descriptor, options)
