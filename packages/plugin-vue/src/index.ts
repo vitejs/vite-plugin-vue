@@ -100,8 +100,6 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     exclude,
     customElement = /\.ce\.vue$/,
     reactivityTransform = false,
-    defineModel = false,
-    propsDestructure = false,
   } = rawOptions
 
   const filter = createFilter(include, exclude)
@@ -126,8 +124,6 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     exclude,
     customElement,
     reactivityTransform,
-    defineModel,
-    propsDestructure,
     root: process.cwd(),
     sourceMap: true,
     cssDevSourcemap: false,
