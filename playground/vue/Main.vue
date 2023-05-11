@@ -24,6 +24,7 @@
     <AsyncComponent />
   </Suspense>
   <ReactivityTransform :foo="time" />
+  <PropDestructure :bar="time" />
   <SetupImportTemplate />
   <WorkerTest />
   <Url />
@@ -45,6 +46,7 @@ import ScanDep from './ScanDep.vue'
 import TsImport from './TsImport.vue'
 import AsyncComponent from './AsyncComponent.vue'
 import ReactivityTransform from './ReactivityTransform.vue'
+import PropDestructure from './PropDestructure.vue'
 import SetupImportTemplate from './setup-import-template/SetupImportTemplate.vue'
 import WorkerTest from './worker.vue'
 import { ref } from 'vue'
