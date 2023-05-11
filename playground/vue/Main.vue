@@ -27,10 +27,11 @@
   <SetupImportTemplate />
   <WorkerTest />
   <Url />
+  <TsGeneric msg="hello" />
 </template>
 
 <script setup lang="ts">
-import { version } from 'vue'
+import { version, defineAsyncComponent } from 'vue'
 import Hmr from './Hmr.vue'
 import HmrTsx from './HmrTsx.vue'
 import Syntax from './Syntax.vue'
@@ -49,6 +50,8 @@ import WorkerTest from './worker.vue'
 import { ref } from 'vue'
 import Url from './Url.vue'
 import TypeProps from './TypeProps.vue'
+
+const TsGeneric = defineAsyncComponent(() => import('./TsGeneric.vue'))
 
 const time = ref('loading...')
 

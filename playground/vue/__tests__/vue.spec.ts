@@ -323,3 +323,7 @@ describe('macro imported types', () => {
     )
   })
 })
+
+test('TS with generics', async () => {
+  expect(await page.textContent('.generic')).toMatch('hello')
+})
