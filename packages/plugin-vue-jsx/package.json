@@ -40,7 +40,7 @@
     "@vue/babel-plugin-jsx": "^1.1.1"
   },
   "devDependencies": {
-    "vite": "^4.2.1"
+    "vite": "^4.3.5"
   },
   "peerDependencies": {
     "vite": "^4.0.0",
