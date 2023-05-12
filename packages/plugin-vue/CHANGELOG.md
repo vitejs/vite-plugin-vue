@@ -1,3 +1,9 @@
+## <small>4.2.3 (2023-05-12)</small>
+
+* fix(types): widen allowed script options for 3.3 features ([3ac08e4](https://github.com/vitejs/vite-plugin-vue/commit/3ac08e4))
+
+
+
 ## <small>4.2.2 (2023-05-11)</small>
 
 * fix: ignore generic attribute when generating script import ([3170af1](https://github.com/vitejs/vite-plugin-vue/commit/3170af1))
