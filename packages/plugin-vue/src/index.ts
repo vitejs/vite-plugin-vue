@@ -53,7 +53,7 @@ export interface Options {
   customElement?: boolean | string | RegExp | (string | RegExp)[]
 
   /**
-   * Enable Vue reactivity transform (deprecated).
+   * Enable Vue reactivity transform (experimental).
    * https://vuejs.org/guide/extras/reactivity-transform.html
    * - `true`: transform will be enabled for all vue,js(x),ts(x) files except
    *           those inside node_modules
@@ -61,6 +61,7 @@ export interface Options {
    *                      node_modules, so specify directories if necessary)
    * - `false`: disable in all cases
    *
+   * @experimental
    * @deprecated
    * @default false
    */
