@@ -46,7 +46,7 @@ export interface Options {
   customElement?: boolean | string | RegExp | (string | RegExp)[]
 
   /**
-   * Enable Vue reactivity transform (experimental).
+   * Enable Vue reactivity transform (deprecated).
    * https://vuejs.org/guide/extras/reactivity-transform.html
    * - `true`: transform will be enabled for all vue,js(x),ts(x) files except
    *           those inside node_modules
@@ -54,6 +54,7 @@ export interface Options {
    *                      node_modules, so specify directories if necessary)
    * - `false`: disable in all cases
    *
+   * @deprecated
    * @default false
    */
   reactivityTransform?: boolean | string | RegExp | (string | RegExp)[]
@@ -61,6 +62,8 @@ export interface Options {
   /**
    * Enable `defineModel` macro (experimental).
    * https://github.com/vuejs/rfcs/discussions/503
+   *
+   * @experimental
    * @default false
    */
   defineModel?: boolean
@@ -68,6 +71,8 @@ export interface Options {
   /**
    * Enable reactive props destructure (experimental).
    * https://github.com/vuejs/rfcs/discussions/502
+   *
+   * @experimental
    * @default false
    */
   propsDestructure?: boolean
