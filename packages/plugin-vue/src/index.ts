@@ -130,6 +130,15 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
   return {
     name: 'vite:vue',
 
+    api: {
+      get options() {
+        return options
+      },
+      set options(value) {
+        options = value
+      },
+    },
+
     handleHotUpdate(ctx) {
       if (options.compiler.invalidateTypeCache) {
         options.compiler.invalidateTypeCache(ctx.file)
