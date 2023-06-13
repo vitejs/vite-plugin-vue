@@ -19,6 +19,7 @@ import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
 import { transformTemplateAsModule } from './template'
 import { transformStyle } from './style'
 import { EXPORT_HELPER_ID, helperCode } from './helper'
+import { createOptimizeDeps, patchOptimizeDeps } from './prebundle'
 
 export { parseVueRequest } from './utils/query'
 export type { VueQuery } from './utils/query'
@@ -78,6 +79,13 @@ export interface Options {
    * Use custom compiler-sfc instance. Can be used to force a specific version.
    */
   compiler?: typeof _compiler
+
+  /**
+   * Prebundle SFC libs
+   *
+   * @default true
+   */
+  prebundleSfc?: boolean
 }
 
 export interface ResolvedOptions extends Options {
@@ -140,7 +148,9 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       }
     },
 
-    config(config) {
+    config(config, env) {
+      options.prebundleSfc ??= env.command === 'serve'
+
       return {
         resolve: {
           dedupe: config.build?.ssr ? [] : ['vue'],
@@ -154,6 +164,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
             ? ['vue', '@vue/server-renderer']
             : [],
         },
+        optimizeDeps: createOptimizeDeps(config, options),
       }
     },
 
@@ -167,6 +178,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         devToolsEnabled:
           !!config.define!.__VUE_PROD_DEVTOOLS__ || !config.isProduction,
       }
+
+      patchOptimizeDeps(config, options)
     },
 
     configureServer(server) {
