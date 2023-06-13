@@ -150,7 +150,7 @@ importers:
         version: 0.6.1
       vite:
         specifier: ^4.3.5
-        version: 4.3.5(@types/node@18.15.11)
+        version: 4.3.5
       vue:
         specifier: ^3.3.0-beta.5
         version: 3.3.0-beta.5
@@ -169,7 +169,7 @@ importers:
     devDependencies:
       vite:
         specifier: ^4.3.5
-        version: 4.3.5(@types/node@18.15.11)
+        version: 4.3.5
 
   playground:
     devDependencies:
@@ -189,6 +189,21 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
 
+  playground/prebundle-vue-sfc-lib:
+    dependencies:
+      '@vitejs/test-lib-component':
+        specifier: file:./lib-component
+        version: file:playground/prebundle-vue-sfc-lib/lib-component
+      vue:
+        specifier: ^3.3.0-beta.5
+        version: 3.3.0-beta.5
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue
+
+  playground/prebundle-vue-sfc-lib/lib-component: {}
+
   playground/ssr-vue:
     dependencies:
       '@vitejs/test-example-external-component':
@@ -196,7 +211,7 @@ importers:
         version: file:playground/ssr-vue/example-external-component
       pinia:
         specifier: ^2.0.33
-        version: 2.0.33(typescript@4.9.5)(vue@3.3.0-beta.5)
+        version: 2.0.33(vue@3.3.0-beta.5)
       vue:
         specifier: ^3.3.0-beta.5
         version: 3.3.0-beta.5
@@ -276,7 +291,7 @@ importers:
     devDependencies:
       '@vitejs/plugin-legacy':
         specifier: ^4.0.2
-        version: 4.0.2(vite@4.3.5)
+        version: 4.0.2
       '@vitejs/plugin-vue':
         specifier: workspace:*
         version: link:../../packages/plugin-vue
@@ -2155,7 +2170,7 @@ packages:
       eslint-visitor-keys: 3.4.0
     dev: true
 
-  /@vitejs/plugin-legacy@4.0.2(vite@4.3.5):
+  /@vitejs/plugin-legacy@4.0.2:
     resolution: {integrity: sha512-ivnt9sCkgwJTYTWLjuvY6H/HTuiQC1EgzAPkiAvi0yNAssiqOJjyjhG3hAK5LFUUorE0w9kGxn8K0f/74DlbxQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -2169,7 +2184,6 @@ packages:
       magic-string: 0.30.0
       regenerator-runtime: 0.13.11
       systemjs: 6.14.1
-      vite: 4.3.5(@types/node@18.15.11)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5292,7 +5306,7 @@ packages:
     dev: true
     optional: true
 
-  /pinia@2.0.33(typescript@4.9.5)(vue@3.3.0-beta.5):
+  /pinia@2.0.33(vue@3.3.0-beta.5):
     resolution: {integrity: sha512-HOj1yVV2itw6rNIrR2f7+MirGNxhORjrULL8GWgRwXsGSvEqIQ+SE0MYt6cwtpegzCda3i+rVTZM+AM7CG+kRg==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
@@ -5305,7 +5319,6 @@ packages:
         optional: true
     dependencies:
       '@vue/devtools-api': 6.5.0
-      typescript: 4.9.5
       vue: 3.3.0-beta.5
       vue-demi: 0.13.11(vue@3.3.0-beta.5)
     dev: false
@@ -6444,6 +6457,7 @@ packages:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+    dev: true
 
   /ufo@1.1.1:
     resolution: {integrity: sha512-MvlCc4GHrmZdAllBc0iUDowff36Q9Ndw/UzqmEKyrfSzokTd9ZCy1i+IIk5hrYKkjoYVQyNbrw7/F8XJ2rEwTg==}
@@ -6610,6 +6624,38 @@ packages:
       - sugarss
       - supports-color
       - terser
+    dev: true
+
+  /vite@4.3.5:
+    resolution: {integrity: sha512-0gEnL9wiRFxgz40o/i/eTBwm+NEbpUeTWhzKrZDSdKm6nplj+z4lKz8ANDgildxHm47Vg8EUia0aicKbawUVVA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      esbuild: 0.17.14
+      postcss: 8.4.23
+      rollup: 3.21.6
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /vite@4.3.5(@types/node@18.15.11):
@@ -6888,6 +6934,12 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  file:playground/prebundle-vue-sfc-lib/lib-component:
+    resolution: {directory: playground/prebundle-vue-sfc-lib/lib-component, type: directory}
+    name: '@vitejs/test-lib-component'
+    version: 0.0.0
+    dev: false
 
   file:playground/ssr-vue/example-external-component:
     resolution: {directory: playground/ssr-vue/example-external-component, type: directory}

@@ -317,3 +317,22 @@ export async function killProcess(
     serverProcess.kill('SIGTERM', { forceKillAfterTimeout: 2000 })
   }
 }
+
+export function readVitePrebundleFile(file: string): string {
+  const paths = [
+    `node_modules/.vite/${file}`,
+    `node_modules/.vite/deps/${file}`, // vite 2.9
+  ]
+
+  for (const p of paths) {
+    try {
+      const fullpath = path.resolve(testDir, p)
+      const content = fs.readFileSync(fullpath, 'utf8')
+      return content
+    } catch {
+      // ignore
+    }
+  }
+
+  throw new Error(`Unable to find vite prebundle file (${file})`)
+}
