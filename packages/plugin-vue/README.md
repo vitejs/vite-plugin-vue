@@ -23,7 +23,18 @@ export interface Options {
   isProduction?: boolean
 
   // options to pass on to vue/compiler-sfc
-  script?: Partial<Pick<SFCScriptCompileOptions, 'babelParserPlugins'>>
+  script?: Partial<
+    Pick<
+      SFCScriptCompileOptions,
+      | 'babelParserPlugins'
+      | 'globalTypeFiles'
+      | 'defineModel'
+      | 'propsDestructure'
+      | 'fs'
+      | 'reactivityTransform'
+    >
+  >
+
   template?: Partial<
     Pick<
       SFCTemplateCompileOptions,
