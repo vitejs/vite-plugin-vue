@@ -327,3 +327,15 @@ describe('macro imported types', () => {
 test('TS with generics', async () => {
   expect(await page.textContent('.generic')).toMatch('hello')
 })
+
+describe('pre-compiled components', () => {
+  test('should work', async () => {
+    expect(await getColor('.pre-compiled-title')).toBe('red')
+  })
+  test('should work with external scoped style', async () => {
+    expect(await getColor('.pre-compiled-external-scoped-title')).toBe('red')
+  })
+  test('should work with external css modules', async () => {
+    expect(await getColor('.pre-compiled-external-cssmodules')).toBe('red')
+  })
+})

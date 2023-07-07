@@ -28,6 +28,9 @@
   <WorkerTest />
   <Url />
   <TsGeneric msg="hello" />
+  <PreCompiled />
+  <PreCompiledExternalScoped />
+  <PreCompiledExternalCssModules />
 </template>
 
 <script setup lang="ts">
@@ -50,6 +53,9 @@ import WorkerTest from './worker.vue'
 import { ref } from 'vue'
 import Url from './Url.vue'
 import TypeProps from './TypeProps.vue'
+import PreCompiled from './pre-compiled/foo.vue'
+import PreCompiledExternalScoped from './pre-compiled/external-scoped.vue'
+import PreCompiledExternalCssModules from './pre-compiled/external-cssmodules.vue'
 
 const TsGeneric = defineAsyncComponent(() => import('./TsGeneric.vue'))
 
