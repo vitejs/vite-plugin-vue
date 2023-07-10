@@ -38,6 +38,7 @@ export interface Options {
       | 'propsDestructure'
       | 'fs'
       | 'reactivityTransform'
+      | 'hoistStatic'
     >
   >
   template?: Partial<
