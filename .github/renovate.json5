@@ -4,7 +4,6 @@
   "ignorePaths": ["**/__tests__/**"],
   "pin": false,
   "rangeStrategy": "bump",
-  "node": false,
   "packageRules": [
     {
       "depTypeList": ["peerDependencies"],
