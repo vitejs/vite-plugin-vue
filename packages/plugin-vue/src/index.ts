@@ -257,7 +257,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           options,
           this,
           ssr,
-          customElementFilter(filename),
+          customElementFilter(filename) || 'customElement' in query,
         )
       } else {
         // sub block request
