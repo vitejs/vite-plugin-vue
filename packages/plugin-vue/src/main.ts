@@ -12,12 +12,7 @@ import {
   getPrevDescriptor,
   setSrcDescriptor,
 } from './utils/descriptorCache'
-import {
-  canInlineMain,
-  isUseInlineTemplate,
-  resolveScript,
-  scriptIdentifier,
-} from './script'
+import { isUseInlineTemplate, resolveScript, scriptIdentifier } from './script'
 import { transformTemplateInMain } from './template'
 import { isEqualBlock, isOnlyTemplateChanged } from './handleHotUpdate'
 import { createRollupError } from './utils/error'
@@ -313,41 +308,17 @@ async function genScriptCode(
 
   const script = resolveScript(descriptor, options, ssr)
   if (script) {
-    // If the script is js/ts and has no external src, it can be directly placed
-    // in the main module.
-    if (canInlineMain(descriptor, options)) {
-      if (!options.compiler.version) {
-        // if compiler-sfc exposes no version, it's < 3.3 and doesn't support
-        // genDefaultAs option.
-        const userPlugins = options.script?.babelParserPlugins || []
-        const defaultPlugins =
-          script.lang === 'ts'
-            ? userPlugins.includes('decorators')
-              ? (['typescript'] as const)
-              : (['typescript', 'decorators-legacy'] as const)
-            : []
-        scriptCode = options.compiler.rewriteDefault(
-          script.content,
-          scriptIdentifier,
-          [...defaultPlugins, ...userPlugins],
-        )
-      } else {
-        scriptCode = script.content
-      }
-      map = script.map
-    } else {
-      if (script.src) {
-        await linkSrcToDescriptor(script.src, descriptor, pluginContext, false)
-      }
-      const src = script.src || descriptor.filename
-      const langFallback = (script.src && path.extname(src).slice(1)) || 'js'
-      const attrsQuery = attrsToQuery(script.attrs, langFallback)
-      const srcQuery = script.src ? `&src=true` : ``
-      const query = `?vue&type=script${srcQuery}${attrsQuery}`
-      const request = JSON.stringify(src + query)
-      scriptCode =
-        `import _sfc_main from ${request}\n` + `export * from ${request}` // support named exports
+    if (script.src) {
+      await linkSrcToDescriptor(script.src, descriptor, pluginContext, false)
     }
+    const src = script.src || descriptor.filename
+    const langFallback = (script.src && path.extname(src).slice(1)) || 'js'
+    const attrsQuery = attrsToQuery(script.attrs, langFallback)
+    const srcQuery = script.src ? `&src=true` : ``
+    const query = `?vue&type=script${srcQuery}${attrsQuery}`
+    const request = JSON.stringify(src + query)
+    scriptCode =
+      `import _sfc_main from ${request}\n` + `export * from ${request}` // support named exports
   }
   return {
     code: scriptCode,

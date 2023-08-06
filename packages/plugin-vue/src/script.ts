@@ -69,9 +69,6 @@ export function resolveScript(
     reactivityTransform: options.reactivityTransform !== false,
     templateOptions: resolveTemplateCompilerOptions(descriptor, options, ssr),
     sourceMap: options.sourceMap,
-    genDefaultAs: canInlineMain(descriptor, options)
-      ? scriptIdentifier
-      : undefined,
   })
 
   if (!options.isProduction && resolved?.deps) {
@@ -93,23 +90,4 @@ export function resolveScript(
 
   cacheToUse.set(descriptor, resolved)
   return resolved
-}
-
-// If the script is js/ts and has no external src, it can be directly placed
-// in the main module. Skip for build
-export function canInlineMain(
-  descriptor: SFCDescriptor,
-  options: ResolvedOptions,
-): boolean {
-  if (descriptor.script?.src || descriptor.scriptSetup?.src) {
-    return false
-  }
-  const lang = descriptor.script?.lang || descriptor.scriptSetup?.lang
-  if (!lang) {
-    return true
-  }
-  if (lang === 'ts' && options.devServer) {
-    return true
-  }
-  return false
 }
