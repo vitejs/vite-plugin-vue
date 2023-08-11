@@ -337,3 +337,10 @@ describe('macro imported types', () => {
 test('TS with generics', async () => {
   expect(await page.textContent('.generic')).toMatch('hello')
 })
+
+describe('default langs', () => {
+  test('should work', async () => {
+    expect(await page.textContent('.default-langs')).toBe('foo')
+    expect(await getColor('.default-langs')).toBe('blue')
+  })
+})
