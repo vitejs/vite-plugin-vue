@@ -9,6 +9,7 @@ import { addMapping, fromMap, toEncodedMap } from '@jridgewell/gen-mapping'
 import { normalizePath, transformWithEsbuild } from 'vite'
 import {
   createDescriptor,
+  getDescriptor,
   getPrevDescriptor,
   setSrcDescriptor,
 } from './utils/descriptorCache'
@@ -35,9 +36,11 @@ export async function transformMain(
 ) {
   const { devServer, isProduction, devToolsEnabled } = options
 
-  // prev descriptor is only set and used for hmr
   const prevDescriptor = getPrevDescriptor(filename)
   const { descriptor, errors } = createDescriptor(filename, code, options)
+
+  // set descriptor for HMR if it's not set yet
+  getDescriptor(filename, options, true, true)
 
   if (errors.length) {
     errors.forEach((error) =>
@@ -264,7 +267,7 @@ async function genTemplateCode(
   // If the template is not using pre-processor AND is not using external src,
   // compile and inline it directly in the main module. When served in vite this
   // saves an extra request per SFC which can improve load performance.
-  if (!template.lang && !template.src) {
+  if ((!template.lang || template.lang === 'html') && !template.src) {
     return transformTemplateInMain(
       template.content,
       descriptor,
