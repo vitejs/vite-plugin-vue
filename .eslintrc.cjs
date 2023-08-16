@@ -8,6 +8,7 @@ module.exports = defineConfig({
     'eslint:recommended',
     'plugin:node/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/stylistic',
     'plugin:regexp/recommended',
   ],
   plugins: ['import', 'regexp'],
@@ -73,7 +74,6 @@ module.exports = defineConfig({
     ],
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-explicit-any': 'off', // maybe we should turn this on in a new PR
-    '@typescript-eslint/no-extra-semi': 'off', // conflicts with prettier
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off', // maybe we should turn this on in a new PR
     '@typescript-eslint/no-unused-vars': 'off', // maybe we should turn this on in a new PR
@@ -89,6 +89,7 @@ module.exports = defineConfig({
     ],
     'import/no-duplicates': 'error',
     'import/order': 'error',
+    'no-extra-semi': 'off', // conflicts with prettier
     'sort-imports': [
       'error',
       {
