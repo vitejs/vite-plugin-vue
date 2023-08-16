@@ -62,6 +62,7 @@ module.exports = defineConfig({
     'node/no-unpublished-require': 'off',
     'node/no-unsupported-features/es-syntax': 'off',
 
+    '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
     '@typescript-eslint/ban-ts-comment': 'off', // TODO: we should turn this on in a new PR
     '@typescript-eslint/ban-types': 'off', // TODO: we should turn this on in a new PR
     '@typescript-eslint/explicit-module-boundary-types': [
