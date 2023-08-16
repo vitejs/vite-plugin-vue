@@ -8,7 +8,7 @@ import type { ResolvedOptions, VueQuery } from '..'
 // compiler-sfc should be exported so it can be re-used
 export interface SFCParseResult {
   descriptor: SFCDescriptor
-  errors: Array<CompilerError | SyntaxError>
+  errors: (CompilerError | SyntaxError)[]
 }
 
 export const cache = new Map<string, SFCDescriptor>()
