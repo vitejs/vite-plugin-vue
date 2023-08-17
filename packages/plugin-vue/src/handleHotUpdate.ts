@@ -6,7 +6,7 @@ import { isCSSRequest } from 'vite'
 import {
   createDescriptor,
   getDescriptor,
-  invalidateDescriptor,
+  setPrevDescriptor,
 } from './utils/descriptorCache'
 import {
   getResolvedScript,
@@ -26,14 +26,16 @@ export async function handleHotUpdate(
   { file, modules, read }: HmrContext,
   options: ResolvedOptions,
 ): Promise<ModuleNode[] | void> {
-  const prevDescriptor = getDescriptor(file, options, false, true)
+  const prevDescriptor = getDescriptor(file, options, false)
   if (!prevDescriptor) {
     // file hasn't been requested yet (e.g. async component)
     return
   }
 
+  setPrevDescriptor(file, prevDescriptor)
+
   const content = await read()
-  const { descriptor } = createDescriptor(file, content, options, true)
+  const { descriptor } = createDescriptor(file, content, options)
 
   let needRerender = false
   const affectedModules = new Set<ModuleNode | undefined>()
@@ -148,9 +150,6 @@ export async function handleHotUpdate(
     updateType.push(`style`)
   }
   if (updateType.length) {
-    // invalidate the descriptor cache so that the next transform will
-    // re-analyze the file and pick up the changes.
-    invalidateDescriptor(file)
     debug(`[vue:update(${updateType.join('&')})] ${file}`)
   }
   return [...affectedModules].filter(Boolean) as ModuleNode[]
