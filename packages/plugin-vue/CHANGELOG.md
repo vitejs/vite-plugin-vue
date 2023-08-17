@@ -1,3 +1,9 @@
+## <small>4.3.1 (2023-08-17)</small>
+
+* fix: revert "fix(plugin-vue): distinguish HMR and transform descriptor (#227)" ([0c28448](https://github.com/vitejs/vite-plugin-vue/commit/0c28448)), closes [#227](https://github.com/vitejs/vite-plugin-vue/issues/227)
+
+
+
 ## 4.3.0 (2023-08-17)
 
 * docs: add example for transforming custom blocks (#221) ([a6e013e](https://github.com/vitejs/vite-plugin-vue/commit/a6e013e)), closes [#221](https://github.com/vitejs/vite-plugin-vue/issues/221)
