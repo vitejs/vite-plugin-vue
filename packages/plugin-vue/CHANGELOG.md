@@ -1,3 +1,9 @@
+## <small>4.3.2 (2023-08-21)</small>
+
+* fix(plugin-vue): distinguish HMR and transform descriptor (#232) ([9119d4d](https://github.com/vitejs/vite-plugin-vue/commit/9119d4d)), closes [#232](https://github.com/vitejs/vite-plugin-vue/issues/232)
+
+
+
 ## <small>4.3.1 (2023-08-17)</small>
 
 * fix: revert "fix(plugin-vue): distinguish HMR and transform descriptor (#227)" ([0c28448](https://github.com/vitejs/vite-plugin-vue/commit/0c28448)), closes [#227](https://github.com/vitejs/vite-plugin-vue/issues/227)
