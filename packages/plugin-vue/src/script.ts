@@ -48,7 +48,7 @@ export function resolveScript(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   ssr: boolean,
-  asCustomElement: boolean,
+  customElement: boolean,
 ): SFCScriptBlock | null {
   if (!descriptor.script && !descriptor.scriptSetup) {
     return null
