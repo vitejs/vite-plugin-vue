@@ -266,7 +266,14 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           : getDescriptor(filename, options)!
 
         if (query.type === 'template') {
-          return transformTemplateAsModule(code, descriptor, options, this, ssr)
+          return transformTemplateAsModule(
+            code,
+            descriptor,
+            options,
+            this,
+            ssr,
+            customElementFilter(filename),
+          )
         } else if (query.type === 'style') {
           return transformStyle(
             code,

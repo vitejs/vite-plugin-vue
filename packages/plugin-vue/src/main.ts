@@ -61,6 +61,7 @@ export async function transformMain(
     options,
     pluginContext,
     ssr,
+    asCustomElement,
   )
 
   // template
@@ -75,6 +76,7 @@ export async function transformMain(
       options,
       pluginContext,
       ssr,
+      asCustomElement,
     ))
   }
 
@@ -262,6 +264,7 @@ async function genTemplateCode(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
+  asCustomElement: boolean,
 ) {
   const template = descriptor.template!
   const hasScoped = descriptor.styles.some((style) => style.scoped)
@@ -276,6 +279,7 @@ async function genTemplateCode(
       options,
       pluginContext,
       ssr,
+      asCustomElement,
     )
   } else {
     if (template.src) {
@@ -309,6 +313,7 @@ async function genScriptCode(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
+  asCustomElement: boolean,
 ): Promise<{
   code: string
   map: RawSourceMap | undefined
@@ -316,7 +321,7 @@ async function genScriptCode(
   let scriptCode = `const ${scriptIdentifier} = {}`
   let map: RawSourceMap | undefined
 
-  const script = resolveScript(descriptor, options, ssr)
+  const script = resolveScript(descriptor, options, ssr, asCustomElement)
   if (script) {
     // If the script is js/ts and has no external src, it can be directly placed
     // in the main module.

@@ -48,6 +48,7 @@ export function resolveScript(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   ssr: boolean,
+  asCustomElement: boolean,
 ): SFCScriptBlock | null {
   if (!descriptor.script && !descriptor.scriptSetup) {
     return null
@@ -72,6 +73,7 @@ export function resolveScript(
     genDefaultAs: canInlineMain(descriptor, options)
       ? scriptIdentifier
       : undefined,
+    customElement: asCustomElement,
   })
 
   if (!options.isProduction && resolved?.deps) {
