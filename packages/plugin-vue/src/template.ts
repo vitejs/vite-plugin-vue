@@ -17,7 +17,7 @@ export async function transformTemplateAsModule(
   options: ResolvedOptions,
   pluginContext: TransformPluginContext,
   ssr: boolean,
-  asCustomElement: boolean,
+  customElement: boolean,
 ): Promise<{
   code: string
   map: any
@@ -28,7 +28,7 @@ export async function transformTemplateAsModule(
     options,
     pluginContext,
     ssr,
-    asCustomElement,
+    customElement,
   )
 
   let returnCode = result.code
@@ -58,7 +58,7 @@ export function transformTemplateInMain(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
-  asCustomElement: boolean,
+  customElement: boolean,
 ): SFCTemplateCompileResults {
   const result = compile(
     code,
@@ -66,7 +66,7 @@ export function transformTemplateInMain(
     options,
     pluginContext,
     ssr,
-    asCustomElement,
+    customElement,
   )
   return {
     ...result,
@@ -84,10 +84,10 @@ export function compile(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
-  asCustomElement: boolean,
+  customElement: boolean,
 ) {
   const filename = descriptor.filename
-  resolveScript(descriptor, options, ssr, asCustomElement)
+  resolveScript(descriptor, options, ssr, customElement)
   const result = options.compiler.compileTemplate({
     ...resolveTemplateCompilerOptions(descriptor, options, ssr)!,
     source: code,
