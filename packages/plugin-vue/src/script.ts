@@ -73,7 +73,7 @@ export function resolveScript(
     genDefaultAs: canInlineMain(descriptor, options)
       ? scriptIdentifier
       : undefined,
-    customElement: asCustomElement,
+    customElement,
   })
 
   if (!options.isProduction && resolved?.deps) {
