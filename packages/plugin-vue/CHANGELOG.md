@@ -1,3 +1,9 @@
+## <small>4.3.3 (2023-08-22)</small>
+
+* fix: conditionally get descriptor on hmr (#236) ([b7b1383](https://github.com/vitejs/vite-plugin-vue/commit/b7b1383)), closes [#236](https://github.com/vitejs/vite-plugin-vue/issues/236)
+
+
+
 ## <small>4.3.2 (2023-08-21)</small>
 
 * fix(plugin-vue): distinguish HMR and transform descriptor (#232) ([9119d4d](https://github.com/vitejs/vite-plugin-vue/commit/9119d4d)), closes [#232](https://github.com/vitejs/vite-plugin-vue/issues/232)
