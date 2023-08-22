@@ -1,4 +1,5 @@
 import path from 'node:path'
+import fs from 'node:fs'
 import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
 import type { PluginContext, TransformPluginContext } from 'rollup'
 import type { RawSourceMap } from 'source-map'
@@ -39,8 +40,9 @@ export async function transformMain(
   const prevDescriptor = getPrevDescriptor(filename)
   const { descriptor, errors } = createDescriptor(filename, code, options)
 
-  // set descriptor for HMR if it's not set yet
-  getDescriptor(filename, options, true, true)
+  if (fs.existsSync(filename))
+    // set descriptor for HMR if it's not set yet
+    getDescriptor(filename, options, true, true)
 
   if (errors.length) {
     errors.forEach((error) =>
