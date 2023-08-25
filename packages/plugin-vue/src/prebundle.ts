@@ -8,14 +8,14 @@ import type { ResolvedOptions } from './index'
 
 type ESBuildPlugin = NonNullable<
   NonNullable<DepOptimizationOptions['esbuildOptions']>['plugins']
->[0]
+>[number]
 
 const FACADE_PLUGIN: ESBuildPlugin = {
-  name: 'vite-plugin-vue:facade-prebundle',
+  name: 'vite-vue:facade-prebundle',
   setup: () => {},
 }
 
-const PLUGIN_NAME = 'vite-plugin-vue:prebundle'
+const PLUGIN_NAME = 'vite-vue:prebundle'
 
 export function createOptimizeDeps(
   config: UserConfig,
