@@ -111,7 +111,7 @@ function createCustomElementFilter(options: ResolvedOptions) {
   const { customElement } = options
 
   return typeof customElement === 'boolean'
-    ? () => !!customElement
+    ? () => customElement
     : createFilter(customElement)
 }
 
