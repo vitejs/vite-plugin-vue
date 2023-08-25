@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
 import type { DepOptimizationOptions, ResolvedConfig, UserConfig } from 'vite'
 import { createFilter, normalizePath } from 'vite'
@@ -27,7 +27,9 @@ export function createOptimizeDeps(
 
   const nextOptimizeDeps = (config.optimizeDeps ||= {})
   const exts = (nextOptimizeDeps.extensions ||= [])
-  exts.push('.vue')
+  if (!exts.includes('.vue')) {
+    exts.push('.vue')
+  }
 
   const esbuildOpts = (nextOptimizeDeps.esbuildOptions ||= {})
   const plugins = (esbuildOpts.plugins ||= [])
@@ -81,7 +83,7 @@ function createPrebundlePlugin(options: ResolvedOptions): ESBuildPlugin {
 
           const { errors, warnings, pluginContext } = createFakeContext()
           const resolveDir = dirname(filename)
-          const code = readFileSync(filename, 'utf8')
+          const code = await readFile(filename, 'utf8')
           const asCustomElement = customElementFilter(filename)
           const transformed = await transformMain(
             code,
