@@ -12,12 +12,14 @@ export interface SFCParseResult {
 }
 
 export const cache = new Map<string, SFCDescriptor>()
+export const hmrCache = new Map<string, SFCDescriptor>()
 const prevCache = new Map<string, SFCDescriptor | undefined>()
 
 export function createDescriptor(
   filename: string,
   source: string,
   { root, isProduction, sourceMap, compiler }: ResolvedOptions,
+  hmr = false,
 ): SFCParseResult {
   const { descriptor, errors } = compiler.parse(source, {
     filename,
@@ -28,8 +30,7 @@ export function createDescriptor(
   // project (relative to root) and on different systems.
   const normalizedPath = slash(path.normalize(path.relative(root, filename)))
   descriptor.id = getHash(normalizedPath + (isProduction ? source : ''))
-
-  cache.set(filename, descriptor)
+  ;(hmr ? hmrCache : cache).set(filename, descriptor)
   return { descriptor, errors }
 }
 
@@ -37,28 +38,33 @@ export function getPrevDescriptor(filename: string): SFCDescriptor | undefined {
   return prevCache.get(filename)
 }
 
-export function setPrevDescriptor(
-  filename: string,
-  entry: SFCDescriptor,
-): void {
-  prevCache.set(filename, entry)
+export function invalidateDescriptor(filename: string, hmr = false): void {
+  const _cache = hmr ? hmrCache : cache
+  const prev = _cache.get(filename)
+  _cache.delete(filename)
+  if (prev) {
+    prevCache.set(filename, prev)
+  }
 }
 
 export function getDescriptor(
   filename: string,
   options: ResolvedOptions,
   createIfNotFound = true,
+  hmr = false,
 ): SFCDescriptor | undefined {
-  if (cache.has(filename)) {
-    return cache.get(filename)!
+  const _cache = hmr ? hmrCache : cache
+  if (_cache.has(filename)) {
+    return _cache.get(filename)!
   }
   if (createIfNotFound) {
     const { descriptor, errors } = createDescriptor(
       filename,
       fs.readFileSync(filename, 'utf-8'),
       options,
+      hmr,
     )
-    if (errors.length) {
+    if (errors.length && !hmr) {
       throw errors[0]
     }
     return descriptor

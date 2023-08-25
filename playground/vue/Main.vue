@@ -11,6 +11,7 @@
   <TypeProps msg="msg" bar="bar" :id="123" />
   <Syntax />
   <PreProcessors />
+  <PreProcessorsHmr />
   <CssModules />
   <Assets />
   <CustomBlock />
@@ -28,6 +29,7 @@
   <WorkerTest />
   <Url />
   <TsGeneric msg="hello" />
+  <DefaultLangs />
 </template>
 
 <script setup lang="ts">
@@ -36,6 +38,7 @@ import Hmr from './Hmr.vue'
 import HmrTsx from './HmrTsx.vue'
 import Syntax from './Syntax.vue'
 import PreProcessors from './PreProcessors.vue'
+import PreProcessorsHmr from './PreProcessorsHmr.vue'
 import CssModules from './CssModules.vue'
 import Assets from './Assets.vue'
 import CustomBlock from './CustomBlock.vue'
@@ -50,6 +53,7 @@ import WorkerTest from './worker.vue'
 import { ref } from 'vue'
 import Url from './Url.vue'
 import TypeProps from './TypeProps.vue'
+import DefaultLangs from './DefaultLangs.vue'
 
 const TsGeneric = defineAsyncComponent(() => import('./TsGeneric.vue'))
 

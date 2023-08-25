@@ -1,3 +1,14 @@
+## <small>3.0.2 (2023-08-17)</small>
+
+* chore: bump vite ([ffe74e5](https://github.com/vitejs/vite-plugin-vue/commit/ffe74e5))
+* chore: remove unused function parameter (#56) ([28bb84b](https://github.com/vitejs/vite-plugin-vue/commit/28bb84b)), closes [#56](https://github.com/vitejs/vite-plugin-vue/issues/56)
+* fix(build): ensure correct typing for node esm (#179) ([8a19ee4](https://github.com/vitejs/vite-plugin-vue/commit/8a19ee4)), closes [#179](https://github.com/vitejs/vite-plugin-vue/issues/179)
+* fix(deps): update all non-major dependencies (#163) ([3c8193d](https://github.com/vitejs/vite-plugin-vue/commit/3c8193d)), closes [#163](https://github.com/vitejs/vite-plugin-vue/issues/163)
+* fix(deps): update all non-major dependencies (#205) ([e014680](https://github.com/vitejs/vite-plugin-vue/commit/e014680)), closes [#205](https://github.com/vitejs/vite-plugin-vue/issues/205)
+* fix(deps): update all non-major dependencies (#82) ([b274436](https://github.com/vitejs/vite-plugin-vue/commit/b274436)), closes [#82](https://github.com/vitejs/vite-plugin-vue/issues/82)
+
+
+
 ## <small>3.0.1 (2023-03-16)</small>
 
 * fix(deps): update all non-major dependencies (#50) ([8f4a5dc](https://github.com/vitejs/vite-plugin-vue/commit/8f4a5dc)), closes [#50](https://github.com/vitejs/vite-plugin-vue/issues/50)

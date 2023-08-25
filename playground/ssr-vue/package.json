@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "@vitejs/test-example-external-component": "file:example-external-component",
-    "pinia": "^2.0.33",
-    "vue": "^3.3.0-beta.5",
-    "vue-router": "^4.1.6"
+    "pinia": "^2.1.6",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*",
