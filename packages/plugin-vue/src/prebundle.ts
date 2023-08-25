@@ -3,7 +3,7 @@ import { dirname } from 'node:path'
 import type { DepOptimizationOptions, ResolvedConfig, UserConfig } from 'vite'
 import { createFilter, normalizePath } from 'vite'
 import { transformMain } from './main'
-import { EXPORT_HELPER_ID, helperCode } from './helper'
+import { EXPORT_HELPER_ID, EXPORT_HELPER_ID_RE, helperCode } from './helper'
 import type { ResolvedOptions } from './index'
 
 type ESBuildPlugin = NonNullable<
@@ -50,7 +50,7 @@ export function patchOptimizeDeps(
 }
 
 function createPrebundlePlugin(options: ResolvedOptions): ESBuildPlugin {
-  const helperFilter = createHelperFilter()
+  const helperFilter = EXPORT_HELPER_ID_RE
   const transformFilter = createTransformLoadFilter(options)
   const customElementFilter = createCustomElementFilter(options)
 
@@ -103,10 +103,6 @@ function createPrebundlePlugin(options: ResolvedOptions): ESBuildPlugin {
       )
     },
   }
-}
-
-function createHelperFilter() {
-  return new RegExp(`${EXPORT_HELPER_ID}$`)
 }
 
 function createTransformLoadFilter(options: ResolvedOptions) {
