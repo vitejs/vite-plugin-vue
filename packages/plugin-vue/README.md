@@ -64,11 +64,11 @@ export interface Options {
   compiler?: typeof _compiler
 
   /**
-   * Prebundle SFC libs
+   * Pre-bundle SFC files
    *
    * @default true
    */
-  prebundleSfc?: boolean
+  prebundle?: boolean
 }
 ```
 

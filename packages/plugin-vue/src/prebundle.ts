@@ -21,7 +21,7 @@ export function createOptimizeDeps(
   config: UserConfig,
   options: ResolvedOptions,
 ): DepOptimizationOptions | undefined {
-  if (!options.prebundleSfc) {
+  if (!options.prebundle) {
     return config.optimizeDeps
   }
 

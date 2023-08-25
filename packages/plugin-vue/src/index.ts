@@ -85,7 +85,7 @@ export interface Options {
    *
    * @default true
    */
-  prebundleSfc?: boolean
+  prebundle?: boolean
 }
 
 export interface ResolvedOptions extends Options {
@@ -149,7 +149,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
 
     config(config, env) {
-      options.prebundleSfc ??= env.command === 'serve'
+      options.prebundle ??= env.command === 'serve'
 
       return {
         resolve: {
