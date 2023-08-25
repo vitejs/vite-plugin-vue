@@ -19,7 +19,7 @@ import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
 import { transformTemplateAsModule } from './template'
 import { transformStyle } from './style'
 import { EXPORT_HELPER_ID, helperCode } from './helper'
-import { createOptimizeDeps, patchOptimizeDeps } from './prebundle'
+import { createOptimizeDeps } from './prebundle'
 
 export { parseVueRequest } from './utils/query'
 export type { VueQuery } from './utils/query'
@@ -164,7 +164,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
             ? ['vue', '@vue/server-renderer']
             : [],
         },
-        optimizeDeps: createOptimizeDeps(config, options),
+        optimizeDeps: createOptimizeDeps(config, () => options),
       }
     },
 
@@ -178,8 +178,6 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         devToolsEnabled:
           !!config.define!.__VUE_PROD_DEVTOOLS__ || !config.isProduction,
       }
-
-      patchOptimizeDeps(config, options)
     },
 
     configureServer(server) {

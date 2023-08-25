@@ -10,18 +10,14 @@ type ESBuildPlugin = NonNullable<
   NonNullable<DepOptimizationOptions['esbuildOptions']>['plugins']
 >[number]
 
-const FACADE_PLUGIN: ESBuildPlugin = {
-  name: 'vite-vue:facade-prebundle',
-  setup: () => {},
-}
-
 const PLUGIN_NAME = 'vite-vue:prebundle'
 
 export function createOptimizeDeps(
   config: UserConfig,
-  options: ResolvedOptions,
+  options: () => ResolvedOptions,
 ): DepOptimizationOptions | undefined {
-  if (!options.prebundle) {
+  const opts = options()
+  if (!opts.prebundle) {
     return config.optimizeDeps
   }
 
@@ -33,28 +29,16 @@ export function createOptimizeDeps(
 
   const esbuildOpts = (nextOptimizeDeps.esbuildOptions ||= {})
   const plugins = (esbuildOpts.plugins ||= [])
-  plugins.push(FACADE_PLUGIN)
+  plugins.push(createPrebundlePlugin(options))
 
   return nextOptimizeDeps
 }
 
-export function patchOptimizeDeps(
-  config: ResolvedConfig,
-  options: ResolvedOptions,
-): void {
-  const plugins = config.optimizeDeps.esbuildOptions?.plugins
-  if (!Array.isArray(plugins)) return
-
-  const index = plugins.indexOf(FACADE_PLUGIN)
-  if (index == null || index < 0) return
-
-  plugins.splice(index, 1, createPrebundlePlugin(options))
-}
-
-function createPrebundlePlugin(options: ResolvedOptions): ESBuildPlugin {
+function createPrebundlePlugin(options: () => ResolvedOptions): ESBuildPlugin {
+  const opts = options()
   const helperFilter = EXPORT_HELPER_ID_RE
-  const transformFilter = createTransformLoadFilter(options)
-  const customElementFilter = createCustomElementFilter(options)
+  const transformFilter = createTransformLoadFilter(opts)
+  const customElementFilter = createCustomElementFilter(opts)
 
   return {
     name: PLUGIN_NAME,
@@ -88,7 +72,7 @@ function createPrebundlePlugin(options: ResolvedOptions): ESBuildPlugin {
           const transformed = await transformMain(
             code,
             filename,
-            options,
+            options(),
             pluginContext,
             false,
             asCustomElement,
