@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
-import type { DepOptimizationOptions, ResolvedConfig, UserConfig } from 'vite'
+import type { DepOptimizationOptions, UserConfig } from 'vite'
 import { createFilter, normalizePath } from 'vite'
 import { transformMain } from './main'
 import { EXPORT_HELPER_ID, EXPORT_HELPER_ID_RE, helperCode } from './helper'

@@ -123,7 +123,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
 
   let options: ResolvedOptions = {
     isProduction: process.env.NODE_ENV === 'production',
-    compiler: null as any, // to be set in buildStart
+    compiler: null as any, // to be set in configResolved or buildStart
     ...rawOptions,
     include,
     exclude,
@@ -180,6 +180,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         devToolsEnabled:
           !!config.define!.__VUE_PROD_DEVTOOLS__ || !config.isProduction,
       }
+      options.compiler = options.compiler || resolveCompiler(options.root)
     },
 
     configureServer(server) {
@@ -187,6 +188,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
 
     buildStart() {
+      // compatible with Rollup
       const compiler = (options.compiler =
         options.compiler || resolveCompiler(options.root))
       if (compiler.invalidateTypeCache) {
