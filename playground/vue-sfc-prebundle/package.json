@@ -1,5 +1,5 @@
 {
-  "name": "@vitejs/test-prebundle-vue-sfc-lib",
+  "name": "@vitejs/test-vue-sfc-prebundle",
   "private": true,
   "version": "0.0.0",
   "scripts": {
