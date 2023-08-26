@@ -85,7 +85,7 @@ export interface Options {
   /**
    * Prebundle SFC libs
    *
-   * @default true
+   * @default false
    */
   prebundle?: boolean
 }
@@ -151,7 +151,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
 
     config(config, env) {
-      options.prebundle ??= env.command === 'serve'
+      options.prebundle = false // experimental feature, set disabled first
 
       return {
         resolve: {
