@@ -150,9 +150,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       }
     },
 
-    config(config, env) {
-      options.prebundle = false // experimental feature, set disabled first
-
+    config(config) {
       return {
         resolve: {
           dedupe: config.build?.ssr ? [] : ['vue'],
