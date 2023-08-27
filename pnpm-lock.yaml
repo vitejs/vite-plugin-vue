@@ -333,7 +333,7 @@ importers:
         specifier: file:./lib-component
         version: file:playground/vue-sfc-prebundle/lib-component
       vue:
-        specifier: ^3.3.0-beta.5
+        specifier: ^3.3.4
         version: 3.3.4
     devDependencies:
       '@vitejs/plugin-vue':

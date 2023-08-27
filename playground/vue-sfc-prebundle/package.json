@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@vitejs/test-lib-component": "file:./lib-component",
-    "vue": "^3.3.0-beta.5"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*"

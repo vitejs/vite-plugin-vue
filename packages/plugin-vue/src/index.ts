@@ -19,6 +19,7 @@ import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
 import { transformTemplateAsModule } from './template'
 import { transformStyle } from './style'
 import { EXPORT_HELPER_ID, helperCode } from './helper'
+import type { SharedHooks } from './prebundle'
 import { createOptimizeDeps } from './prebundle'
 
 export { parseVueRequest } from './utils/query'
@@ -135,57 +136,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     devToolsEnabled: process.env.NODE_ENV !== 'production',
   }
 
-  return {
-    name: 'vite:vue',
-
-    handleHotUpdate(ctx) {
-      if (options.compiler.invalidateTypeCache) {
-        options.compiler.invalidateTypeCache(ctx.file)
-      }
-      if (typeDepToSFCMap.has(ctx.file)) {
-        return handleTypeDepChange(typeDepToSFCMap.get(ctx.file)!, ctx)
-      }
-      if (filter(ctx.file)) {
-        return handleHotUpdate(ctx, options)
-      }
-    },
-
-    config(config) {
-      return {
-        resolve: {
-          dedupe: config.build?.ssr ? [] : ['vue'],
-        },
-        define: {
-          __VUE_OPTIONS_API__: config.define?.__VUE_OPTIONS_API__ ?? true,
-          __VUE_PROD_DEVTOOLS__: config.define?.__VUE_PROD_DEVTOOLS__ ?? false,
-        },
-        ssr: {
-          external: config.legacy?.buildSsrCjsExternalHeuristics
-            ? ['vue', '@vue/server-renderer']
-            : [],
-        },
-        optimizeDeps: createOptimizeDeps(config, () => options),
-      }
-    },
-
-    configResolved(config) {
-      options = {
-        ...options,
-        root: config.root,
-        sourceMap: config.command === 'build' ? !!config.build.sourcemap : true,
-        cssDevSourcemap: config.css?.devSourcemap ?? false,
-        isProduction: config.isProduction,
-        devToolsEnabled:
-          !!config.define!.__VUE_PROD_DEVTOOLS__ || !config.isProduction,
-      }
-      options.compiler = options.compiler || resolveCompiler(options.root)
-    },
-
-    configureServer(server) {
-      options.devServer = server
-    },
-
-    buildStart() {
+  const hooks: SharedHooks = {
+    buildStart: () => {
       // compatible with Rollup
       const compiler = (options.compiler =
         options.compiler || resolveCompiler(options.root))
@@ -195,8 +147,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         })
       }
     },
-
-    async resolveId(id) {
+    resolveId: (id) => {
       // component export helper
       if (id === EXPORT_HELPER_ID) {
         return id
@@ -206,8 +157,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         return id
       }
     },
-
-    load(id, opt) {
+    load: (id, opt) => {
       const ssr = opt?.ssr === true
       if (id === EXPORT_HELPER_ID) {
         return helperCode
@@ -239,8 +189,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         }
       }
     },
-
-    transform(code, id, opt) {
+    transform: (pluginContext, code, id, opt) => {
       const ssr = opt?.ssr === true
       const { filename, query } = parseVueRequest(id)
       if (query.raw || query.url) {
@@ -266,7 +215,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           code,
           filename,
           options,
-          this,
+          pluginContext,
           ssr,
           customElementFilter(filename),
         )
@@ -277,18 +226,90 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           : getDescriptor(filename, options)!
 
         if (query.type === 'template') {
-          return transformTemplateAsModule(code, descriptor, options, this, ssr)
+          return transformTemplateAsModule(
+            code,
+            descriptor,
+            options,
+            pluginContext,
+            ssr,
+          )
         } else if (query.type === 'style') {
           return transformStyle(
             code,
             descriptor,
             Number(query.index),
             options,
-            this,
+            pluginContext,
             filename,
           )
         }
       }
+    },
+  }
+
+  return {
+    name: 'vite:vue',
+
+    handleHotUpdate(ctx) {
+      if (options.compiler.invalidateTypeCache) {
+        options.compiler.invalidateTypeCache(ctx.file)
+      }
+      if (typeDepToSFCMap.has(ctx.file)) {
+        return handleTypeDepChange(typeDepToSFCMap.get(ctx.file)!, ctx)
+      }
+      if (filter(ctx.file)) {
+        return handleHotUpdate(ctx, options)
+      }
+    },
+
+    config(config) {
+      return {
+        resolve: {
+          dedupe: config.build?.ssr ? [] : ['vue'],
+        },
+        define: {
+          __VUE_OPTIONS_API__: config.define?.__VUE_OPTIONS_API__ ?? true,
+          __VUE_PROD_DEVTOOLS__: config.define?.__VUE_PROD_DEVTOOLS__ ?? false,
+        },
+        ssr: {
+          external: config.legacy?.buildSsrCjsExternalHeuristics
+            ? ['vue', '@vue/server-renderer']
+            : [],
+        },
+        optimizeDeps: createOptimizeDeps(config, options, hooks),
+      }
+    },
+
+    configResolved(config) {
+      options = {
+        ...options,
+        root: config.root,
+        sourceMap: config.command === 'build' ? !!config.build.sourcemap : true,
+        cssDevSourcemap: config.css?.devSourcemap ?? false,
+        isProduction: config.isProduction,
+        devToolsEnabled:
+          !!config.define!.__VUE_PROD_DEVTOOLS__ || !config.isProduction,
+      }
+    },
+
+    configureServer(server) {
+      options.devServer = server
+    },
+
+    buildStart() {
+      hooks.buildStart()
+    },
+
+    resolveId(id) {
+      return hooks.resolveId(id)
+    },
+
+    load(id, opt) {
+      return hooks.load(id, opt)
+    },
+
+    transform(code, id, opt) {
+      return hooks.transform(this, code, id, opt)
     },
   }
 }
