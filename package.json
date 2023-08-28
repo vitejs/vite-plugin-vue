@@ -6,6 +6,10 @@
     "node": "^14.18.0 || >=16.0.0"
   },
   "homepage": "https://github.com/vitejs/vite-plugin-vue/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitejs/vite-plugin-vue.git"
+  },
   "keywords": [
     "frontend",
     "hmr",
