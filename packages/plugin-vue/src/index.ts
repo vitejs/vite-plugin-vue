@@ -10,6 +10,7 @@ import type {
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
 /* eslint-enable import/no-duplicates */
+import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
 import { getDescriptor, getSrcDescriptor } from './utils/descriptorCache'
@@ -137,6 +138,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       set options(value) {
         options = value
       },
+      version,
     },
 
     handleHotUpdate(ctx) {
