@@ -70,7 +70,7 @@ export function getPackageInfo(pkgName: string): {
 export async function run(
   bin: string,
   args: string[],
-  opts: ExecaOptions<string> = {},
+  opts: ExecaOptions = {},
 ): Promise<ExecaReturnValue<string>> {
   return execa(bin, args, { stdio: 'inherit', ...opts })
 }
@@ -78,7 +78,7 @@ export async function run(
 export async function dryRun(
   bin: string,
   args: string[],
-  opts?: ExecaOptions<string>,
+  opts?: ExecaOptions,
 ): Promise<void> {
   return console.log(
     colors.blue(`[dryrun] ${bin} ${args.join(' ')}`),
