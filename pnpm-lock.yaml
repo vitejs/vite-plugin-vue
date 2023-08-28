@@ -327,6 +327,21 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-vue
 
+  playground/vue-sfc-prebundle:
+    dependencies:
+      '@vitejs/test-lib-component':
+        specifier: file:./lib-component
+        version: file:playground/vue-sfc-prebundle/lib-component
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue
+
+  playground/vue-sfc-prebundle/lib-component: {}
+
   playground/vue-sourcemap:
     dependencies:
       vue:
@@ -7948,5 +7963,11 @@ packages:
   file:playground/ssr-vue/example-external-component:
     resolution: {directory: playground/ssr-vue/example-external-component, type: directory}
     name: '@vitejs/test-example-external-component'
+    version: 0.0.0
+    dev: false
+
+  file:playground/vue-sfc-prebundle/lib-component:
+    resolution: {directory: playground/vue-sfc-prebundle/lib-component, type: directory}
+    name: '@vitejs/test-lib-component'
     version: 0.0.0
     dev: false

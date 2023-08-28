@@ -73,6 +73,13 @@ export interface Options {
    * Use custom compiler-sfc instance. Can be used to force a specific version.
    */
   compiler?: typeof _compiler
+
+  /**
+   * Pre-bundle SFC files
+   *
+   * @default true
+   */
+  prebundle?: boolean
 }
 ```
 
