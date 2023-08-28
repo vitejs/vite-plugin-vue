@@ -26,27 +26,21 @@ importers:
       '@types/fs-extra':
         specifier: ^11.0.1
         version: 11.0.1
-      '@types/minimist':
-        specifier: ^1.2.2
-        version: 1.2.2
       '@types/node':
         specifier: ^18.17.6
         version: 18.17.6
-      '@types/prompts':
-        specifier: ^2.4.4
-        version: 2.4.4
       '@types/resolve':
         specifier: ^1.20.2
         version: 1.20.2
-      '@types/semver':
-        specifier: ^7.5.0
-        version: 7.5.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.4.0
         version: 6.4.1(@typescript-eslint/parser@6.4.1)(eslint@8.47.0)(typescript@4.9.5)
       '@typescript-eslint/parser':
         specifier: ^6.4.0
         version: 6.4.1(eslint@8.47.0)(typescript@4.9.5)
+      '@vitejs/release-scripts':
+        specifier: ^1.2.1
+        version: 1.2.1
       conventional-changelog-cli:
         specifier: ^4.0.0
         version: 4.0.0
@@ -77,9 +71,6 @@ importers:
       lint-staged:
         specifier: ^14.0.1
         version: 14.0.1
-      minimist:
-        specifier: ^1.2.8
-        version: 1.2.8
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -95,9 +86,6 @@ importers:
       prettier:
         specifier: 3.0.2
         version: 3.0.2
-      prompts:
-        specifier: ^2.4.2
-        version: 2.4.2
       resolve:
         specifier: ^1.22.4
         version: 1.22.4
@@ -107,9 +95,6 @@ importers:
       rollup-plugin-license:
         specifier: ^2.9.1
         version: 2.9.1(rollup@3.28.0)
-      semver:
-        specifier: ^7.5.4
-        version: 7.5.4
       simple-git-hooks:
         specifier: ^2.9.0
         version: 2.9.0
@@ -2624,10 +2609,6 @@ packages:
       '@types/node': 18.17.6
     dev: true
 
-  /@types/minimist@1.2.2:
-    resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
-    dev: true
-
   /@types/ms@0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: true
@@ -2638,13 +2619,6 @@ packages:
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
-    dev: true
-
-  /@types/prompts@2.4.4:
-    resolution: {integrity: sha512-p5N9uoTH76lLvSAaYSZtBCdEXzpOOufsRjnhjVSrZGXikVGHX9+cc9ERtHRV4hvBKHyZb1bg4K+56Bd2TqUn4A==}
-    dependencies:
-      '@types/node': 18.17.6
-      kleur: 3.0.3
     dev: true
 
   /@types/resolve@1.20.2:
@@ -2802,6 +2776,17 @@ packages:
       systemjs: 6.14.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@vitejs/release-scripts@1.2.1:
+    resolution: {integrity: sha512-GXwVFOQaedtoEQOpCR3+V5ZDSL6HSvhK6JvDmo3nBTxpMObBX/ohrsOCYeXMVtBVfLuHWaZQBJsDKeb804003g==}
+    dependencies:
+      execa: 7.2.0
+      mri: 1.2.0
+      picocolors: 1.0.0
+      prompts: 2.4.2
+      publint: 0.1.16
+      semver: 7.5.4
     dev: true
 
   /@vitest/expect@0.34.2:
@@ -4825,6 +4810,13 @@ packages:
     dev: true
     optional: true
 
+  /ignore-walk@5.0.1:
+    resolution: {integrity: sha512-yemi4pMf51WKT7khInJqAvsIGzoqYXblnsz0ql8tM+yi1EKYTY1evX4NAbJrLL/Aanr2HyZeluqU+Oi7MGHokw==}
+    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+    dependencies:
+      minimatch: 5.1.6
+    dev: true
+
   /ignore@5.2.4:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
     engines: {node: '>= 4'}
@@ -5606,6 +5598,29 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /npm-bundled@2.0.1:
+    resolution: {integrity: sha512-gZLxXdjEzE/+mOstGDqR6b0EkhJ+kM6fxM6vUuckuctuVPh80Q6pw/rSZj9s4Gex9GxWtIicO1pc8DB9KZWudw==}
+    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+    dependencies:
+      npm-normalize-package-bin: 2.0.0
+    dev: true
+
+  /npm-normalize-package-bin@2.0.0:
+    resolution: {integrity: sha512-awzfKUO7v0FscrSpRoogyNm0sajikhBWpU0QMrW09AMi9n1PoKU6WaIqUzuJSQnpciZZmJ/jMZ2Egfmb/9LiWQ==}
+    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+    dev: true
+
+  /npm-packlist@5.1.3:
+    resolution: {integrity: sha512-263/0NGrn32YFYi4J533qzrQ/krmmrWwhKkzwTuM4f/07ug51odoaNjUexxO4vxlzURHcmYMH1QjvHjsNDKLVg==}
+    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+    hasBin: true
+    dependencies:
+      glob: 8.1.0
+      ignore-walk: 5.0.1
+      npm-bundled: 2.0.1
+      npm-normalize-package-bin: 2.0.0
+    dev: true
+
   /npm-run-all@4.1.5:
     resolution: {integrity: sha512-Oo82gJDAVcaMdi3nuoKFavkIHBRVqQ1qvMb+9LHk/cF4P6B2m8aP04hGf7oL6wZ9BuGwX1onlLhpuoofSyoQDQ==}
     engines: {node: '>= 4'}
@@ -6087,6 +6102,16 @@ packages:
     dev: true
     optional: true
 
+  /publint@0.1.16:
+    resolution: {integrity: sha512-wJgk7HnXDT5Ap0DjFYbGz78kPkN44iQvDiaq8P63IEEyNU9mYXvaMd2cAyIM6OgqXM/IA3CK6XWIsRq+wjNpgw==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      npm-packlist: 5.1.3
+      picocolors: 1.0.0
+      sade: 1.8.1
+    dev: true
+
   /pug-attrs@3.0.0:
     resolution: {integrity: sha512-azINV9dUtzPMFQktvTXciNAfAuVh/L/JCl0vtPCwvOA21uZrC08K/UnmrL+SXGEVc1FwzjW62+xw5S/uaLj6cA==}
     dependencies:
@@ -6422,6 +6447,13 @@ packages:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
     dependencies:
       queue-microtask: 1.2.3
+
+  /sade@1.8.1:
+    resolution: {integrity: sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A==}
+    engines: {node: '>=6'}
+    dependencies:
+      mri: 1.2.0
+    dev: true
 
   /safe-array-concat@1.0.0:
     resolution: {integrity: sha512-9dVEFruWIsnie89yym+xWTAYASdpw3CJV7Li/6zBewGf9z2i1j31rP6jnY0pHEO4QZh6N0K11bFjWmdR8UGdPQ==}
