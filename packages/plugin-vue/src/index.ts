@@ -101,40 +101,36 @@ export interface ResolvedOptions extends Options {
 }
 
 export default function vuePlugin(rawOptions: Options = {}): Plugin {
-  const {
-    include = /\.vue$/,
-    exclude,
-    customElement = /\.ce\.vue$/,
-    reactivityTransform = false,
-  } = rawOptions
-
-  const filter = createFilter(include, exclude)
-
-  const customElementFilter =
-    typeof customElement === 'boolean'
-      ? () => customElement
-      : createFilter(customElement)
-
-  const refTransformFilter =
-    reactivityTransform === false
-      ? () => false
-      : reactivityTransform === true
-      ? createFilter(/\.(j|t)sx?$/, /node_modules/)
-      : createFilter(reactivityTransform)
-
   let options: ResolvedOptions = {
     isProduction: process.env.NODE_ENV === 'production',
     compiler: null as any, // to be set in buildStart
+    include: /\.vue$/,
+    customElement: /\.ce\.vue$/,
+    reactivityTransform: false,
     ...rawOptions,
-    include,
-    exclude,
-    customElement,
-    reactivityTransform,
     root: process.cwd(),
     sourceMap: true,
     cssDevSourcemap: false,
     devToolsEnabled: process.env.NODE_ENV !== 'production',
   }
+
+  function buildFilter() {
+    return {
+      filter: createFilter(options.include, options.exclude),
+      customElementFilter:
+        typeof options.customElement === 'boolean'
+          ? () => options.customElement as boolean
+          : createFilter(options.customElement),
+      refTransformFilter:
+        options.reactivityTransform === false
+          ? () => false
+          : options.reactivityTransform === true
+          ? createFilter(/\.(j|t)sx?$/, /node_modules/)
+          : createFilter(options.reactivityTransform),
+    }
+  }
+
+  let { filter, customElementFilter, refTransformFilter } = buildFilter()
 
   return {
     name: 'vite:vue',
@@ -145,6 +141,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       },
       set options(value) {
         options = value
+        ;({ filter, customElementFilter, refTransformFilter } = buildFilter())
       },
       version,
     },
