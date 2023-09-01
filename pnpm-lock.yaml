@@ -80,9 +80,6 @@ importers:
       playwright-chromium:
         specifier: ^1.37.1
         version: 1.37.1
-      pnpm:
-        specifier: ^7.33.6
-        version: 7.33.6
       prettier:
         specifier: 3.0.2
         version: 3.0.2
@@ -5944,12 +5941,6 @@ packages:
   /playwright-core@1.37.1:
     resolution: {integrity: sha512-17EuQxlSIYCmEMwzMqusJ2ztDgJePjrbttaefgdsiqeLWidjYz9BxXaTaZWxH1J95SHGk6tjE+dwgWILJoUZfA==}
     engines: {node: '>=16'}
-    hasBin: true
-    dev: true
-
-  /pnpm@7.33.6:
-    resolution: {integrity: sha512-kOJ/04BH8YWD8zQveEzD8Yf01MqsievB//rhjc17Ld52eKC/I3SBvLj36OZhNfo0gDhW5OssRCzggv+rXZ0kHw==}
-    engines: {node: '>=14.6'}
     hasBin: true
     dev: true
 
