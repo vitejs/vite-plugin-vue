@@ -131,9 +131,9 @@ importers:
       slash:
         specifier: ^5.1.0
         version: 5.1.0
-      source-map:
-        specifier: ^0.6.1
-        version: 0.6.1
+      source-map-js:
+        specifier: ^1.0.2
+        version: 1.0.2
       vite:
         specifier: ^4.4.9
         version: 4.4.9
