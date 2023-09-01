@@ -73,6 +73,10 @@ export interface Options {
    *                      node_modules, so specify directories if necessary)
    * - `false`: disable in all cases
    *
+   * @deprecated the Reactivity Transform proposal has been dropped. This
+   * feature will be removed from Vue core in 3.4. If you intend to continue
+   * using it, disable this and switch to the [Vue Macros implementation](https://vue-macros.sxzz.moe/features/reactivity-transform.html).
+   *
    * @default false
    */
   reactivityTransform?: boolean | string | RegExp | (string | RegExp)[]
