@@ -10,6 +10,7 @@ import type {
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
 /* eslint-enable import/no-duplicates */
+import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
 import { getDescriptor, getSrcDescriptor } from './utils/descriptorCache'
@@ -72,6 +73,10 @@ export interface Options {
    *                      node_modules, so specify directories if necessary)
    * - `false`: disable in all cases
    *
+   * @deprecated the Reactivity Transform proposal has been dropped. This
+   * feature will be removed from Vue core in 3.4. If you intend to continue
+   * using it, disable this and switch to the [Vue Macros implementation](https://vue-macros.sxzz.moe/features/reactivity-transform.html).
+   *
    * @default false
    */
   reactivityTransform?: boolean | string | RegExp | (string | RegExp)[]
@@ -129,6 +134,16 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
 
   return {
     name: 'vite:vue',
+
+    api: {
+      get options() {
+        return options
+      },
+      set options(value) {
+        options = value
+      },
+      version,
+    },
 
     handleHotUpdate(ctx) {
       if (options.compiler.invalidateTypeCache) {

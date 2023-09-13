@@ -1,6 +1,6 @@
 {
   "name": "@vitejs/plugin-vue",
-  "version": "4.3.3",
+  "version": "4.3.4",
   "license": "MIT",
   "author": "Evan You",
   "files": [
@@ -43,7 +43,7 @@
     "debug": "^4.3.4",
     "rollup": "^3.17.2",
     "slash": "^5.1.0",
-    "source-map": "^0.6.1",
+    "source-map-js": "^1.0.2",
     "vite": "^4.4.9",
     "vue": "^3.3.4"
   }

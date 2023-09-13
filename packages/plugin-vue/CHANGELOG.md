@@ -1,3 +1,10 @@
+## <small>4.3.4 (2023-08-28)</small>
+
+* chore(deps): update typescript-eslint monorepo to v6 (major) (#210) ([fb07b5b](https://github.com/vitejs/vite-plugin-vue/commit/fb07b5b)), closes [#210](https://github.com/vitejs/vite-plugin-vue/issues/210)
+* feat(plugin-vue): expose options in `api` (#177) ([269121e](https://github.com/vitejs/vite-plugin-vue/commit/269121e)), closes [#177](https://github.com/vitejs/vite-plugin-vue/issues/177)
+
+
+
 ## <small>4.3.3 (2023-08-22)</small>
 
 * fix: conditionally get descriptor on hmr (#236) ([b7b1383](https://github.com/vitejs/vite-plugin-vue/commit/b7b1383)), closes [#236](https://github.com/vitejs/vite-plugin-vue/issues/236)
