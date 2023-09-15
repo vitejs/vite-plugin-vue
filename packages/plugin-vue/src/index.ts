@@ -167,6 +167,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           __VUE_PROD_DEVTOOLS__: config.define?.__VUE_PROD_DEVTOOLS__ ?? false,
         },
         ssr: {
+          // @ts-ignore -- config.legacy.buildSsrCjsExternalHeuristics will be removed in Vite 5
           external: config.legacy?.buildSsrCjsExternalHeuristics
             ? ['vue', '@vue/server-renderer']
             : [],
