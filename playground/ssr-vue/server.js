@@ -20,7 +20,10 @@ export async function createServer(
 
   const manifest = isProd
     ? JSON.parse(
-        fs.readFileSync(resolve('dist/client/ssr-manifest.json'), 'utf-8'),
+        fs.readFileSync(
+          resolve('dist/client/.vite/ssr-manifest.json'),
+          'utf-8',
+        ),
       )
     : {}
 
