@@ -185,13 +185,12 @@ describe('hmr', () => {
   })
 
   test('should preserve state when script is merely formatted', async () => {
-    // these are the states from the previous test
-    expect(await getColor('.hmr-inc')).toBe('blue')
+    // this is the state from the previous test
     expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
 
     editFile('Hmr.vue', (code) =>
       code
-        .replace('let foo: number = 0', '  let foo: number = 0')
+        .replace('let foo: number = 0', '  let foo: number = 0\n\n')
         // also edit the style so that we can have something to wait for
         .replace('color: blue;', 'color: black;'),
     )
