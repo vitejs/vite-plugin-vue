@@ -61,8 +61,7 @@ export function transformTemplateInMain(
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function compile(
+function compile(
   code: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,

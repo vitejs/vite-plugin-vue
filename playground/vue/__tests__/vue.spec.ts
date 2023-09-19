@@ -184,6 +184,22 @@ describe('hmr', () => {
     expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
   })
 
+  test('should preserve state when script is merely formatted', async () => {
+    // these are the states from the previous test
+    expect(await getColor('.hmr-inc')).toBe('blue')
+    expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
+
+    editFile('Hmr.vue', (code) =>
+      code
+        .replace('let foo: number = 0', '  let foo: number = 0')
+        // also edit the style so that we can have something to wait for
+        .replace('color: blue;', 'color: black;'),
+    )
+    await untilUpdated(() => getColor('.hmr-inc'), 'black')
+    // should preserve state
+    expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
+  })
+
   test('should reload and reset state when script is edited', async () => {
     editFile('Hmr.vue', (code) =>
       code.replace('let foo: number = 0', 'let foo: number = 100'),
