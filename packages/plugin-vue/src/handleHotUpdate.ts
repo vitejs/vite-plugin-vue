@@ -149,8 +149,9 @@ export async function handleHotUpdate(
   }
   if (updateType.length) {
     // invalidate the descriptor cache so that the next transform will
-    // re-analyze the file and pick up the changes.
     invalidateDescriptor(file)
+    // re-analyze the file and pick up the changes.
+    createDescriptor(file, content, options)
     debug(`[vue:update(${updateType.join('&')})] ${file}`)
   }
   return [...affectedModules].filter(Boolean) as ModuleNode[]
