@@ -206,7 +206,7 @@ test.runIf(isBuild)('dynamic css file should be preloaded', async () => {
     await import(
       resolve(
         process.cwd(),
-        './playground-temp/ssr-vue/dist/client/ssr-manifest.json',
+        './playground-temp/ssr-vue/dist/client/.vite/ssr-manifest.json',
       )
     )
   ).default
