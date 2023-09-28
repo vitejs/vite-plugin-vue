@@ -47,7 +47,7 @@ jobs:
     name: "Build&Test: node-${{ matrix.node_version }}, ${{ matrix.os }}"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install pnpm
         if: ${{ matrix.node_version != 14 }}
@@ -101,7 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Lint: node-LTS, ubuntu-latest"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
