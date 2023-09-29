@@ -10,7 +10,7 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 const toAbsolute = (p) => path.resolve(__dirname, p)
 
 const manifest = JSON.parse(
-  fs.readFileSync(toAbsolute('dist/static/ssr-manifest.json'), 'utf-8'),
+  fs.readFileSync(toAbsolute('dist/static/.vite/ssr-manifest.json'), 'utf-8'),
 )
 const template = fs.readFileSync(toAbsolute('dist/static/index.html'), 'utf-8')
 const { render } = await import('./dist/server/entry-server.js')
@@ -37,6 +37,6 @@ const routesToPrerender = fs
     console.log('pre-rendered:', filePath)
   }
 
-  // done, delete ssr manifest
-  fs.unlinkSync(toAbsolute('dist/static/ssr-manifest.json'))
+  // done, delete .vite directory including ssr manifest
+  fs.rmSync(toAbsolute('dist/static/.vite'), { recursive: true })
 })()

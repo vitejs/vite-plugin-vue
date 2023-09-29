@@ -1,6 +1,6 @@
 import type { SFCDescriptor } from 'vue/compiler-sfc'
 import type { ExistingRawSourceMap, TransformPluginContext } from 'rollup'
-import type { RawSourceMap } from 'source-map'
+import type { RawSourceMap } from 'source-map-js'
 import { formatPostcssSourceMap } from 'vite'
 import type { ResolvedOptions } from '.'
 

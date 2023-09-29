@@ -1,3 +1,42 @@
+## <small>4.3.4 (2023-08-28)</small>
+
+* chore(deps): update typescript-eslint monorepo to v6 (major) (#210) ([fb07b5b](https://github.com/vitejs/vite-plugin-vue/commit/fb07b5b)), closes [#210](https://github.com/vitejs/vite-plugin-vue/issues/210)
+* feat(plugin-vue): expose options in `api` (#177) ([269121e](https://github.com/vitejs/vite-plugin-vue/commit/269121e)), closes [#177](https://github.com/vitejs/vite-plugin-vue/issues/177)
+
+
+
+## <small>4.3.3 (2023-08-22)</small>
+
+* fix: conditionally get descriptor on hmr (#236) ([b7b1383](https://github.com/vitejs/vite-plugin-vue/commit/b7b1383)), closes [#236](https://github.com/vitejs/vite-plugin-vue/issues/236)
+
+
+
+## <small>4.3.2 (2023-08-21)</small>
+
+* fix(plugin-vue): distinguish HMR and transform descriptor (#232) ([9119d4d](https://github.com/vitejs/vite-plugin-vue/commit/9119d4d)), closes [#232](https://github.com/vitejs/vite-plugin-vue/issues/232)
+
+
+
+## <small>4.3.1 (2023-08-17)</small>
+
+* fix: revert "fix(plugin-vue): distinguish HMR and transform descriptor (#227)" ([0c28448](https://github.com/vitejs/vite-plugin-vue/commit/0c28448)), closes [#227](https://github.com/vitejs/vite-plugin-vue/issues/227)
+
+
+
+## 4.3.0 (2023-08-17)
+
+* docs: add example for transforming custom blocks (#221) ([a6e013e](https://github.com/vitejs/vite-plugin-vue/commit/a6e013e)), closes [#221](https://github.com/vitejs/vite-plugin-vue/issues/221)
+* fix: make it work when a default lang was specified (#223) ([ff68ed3](https://github.com/vitejs/vite-plugin-vue/commit/ff68ed3)), closes [#223](https://github.com/vitejs/vite-plugin-vue/issues/223) [#17](https://github.com/vitejs/vite-plugin-vue/issues/17)
+* fix: missing typescript declaration for globalTypeFiles (#189) ([1e8d16e](https://github.com/vitejs/vite-plugin-vue/commit/1e8d16e)), closes [#189](https://github.com/vitejs/vite-plugin-vue/issues/189)
+* fix(build): ensure correct typing for node esm (#179) ([8a19ee4](https://github.com/vitejs/vite-plugin-vue/commit/8a19ee4)), closes [#179](https://github.com/vitejs/vite-plugin-vue/issues/179)
+* fix(deps): update all non-major dependencies (#163) ([3c8193d](https://github.com/vitejs/vite-plugin-vue/commit/3c8193d)), closes [#163](https://github.com/vitejs/vite-plugin-vue/issues/163)
+* fix(deps): update all non-major dependencies (#205) ([e014680](https://github.com/vitejs/vite-plugin-vue/commit/e014680)), closes [#205](https://github.com/vitejs/vite-plugin-vue/issues/205)
+* fix(plugin-vue): distinguish HMR and transform descriptor (#227) ([aa2b59d](https://github.com/vitejs/vite-plugin-vue/commit/aa2b59d)), closes [#227](https://github.com/vitejs/vite-plugin-vue/issues/227)
+* fix(plugin-vue): hmr not working when updating script+template at the same time with a template prep ([93c444c](https://github.com/vitejs/vite-plugin-vue/commit/93c444c)), closes [#106](https://github.com/vitejs/vite-plugin-vue/issues/106) [#28](https://github.com/vitejs/vite-plugin-vue/issues/28) [#76](https://github.com/vitejs/vite-plugin-vue/issues/76)
+* feat(types): expose `hoistStatic` option for script compilation (#198) ([7466b4f](https://github.com/vitejs/vite-plugin-vue/commit/7466b4f)), closes [#198](https://github.com/vitejs/vite-plugin-vue/issues/198)
+
+
+
 ## <small>4.2.3 (2023-05-12)</small>
 
 * fix(types): widen allowed script options for 3.3 features ([3ac08e4](https://github.com/vitejs/vite-plugin-vue/commit/3ac08e4))

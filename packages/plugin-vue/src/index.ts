@@ -10,6 +10,7 @@ import type {
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
 /* eslint-enable import/no-duplicates */
+import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
 import {
@@ -38,10 +39,12 @@ export interface Options {
     Pick<
       SFCScriptCompileOptions,
       | 'babelParserPlugins'
+      | 'globalTypeFiles'
       | 'defineModel'
       | 'propsDestructure'
       | 'fs'
       | 'reactivityTransform'
+      | 'hoistStatic'
     >
   >
   template?: Partial<
@@ -73,6 +76,10 @@ export interface Options {
    * - `string | RegExp`: apply to vue + only matched files (will include
    *                      node_modules, so specify directories if necessary)
    * - `false`: disable in all cases
+   *
+   * @deprecated the Reactivity Transform proposal has been dropped. This
+   * feature will be removed from Vue core in 3.4. If you intend to continue
+   * using it, disable this and switch to the [Vue Macros implementation](https://vue-macros.sxzz.moe/features/reactivity-transform.html).
    *
    * @default false
    */
@@ -132,6 +139,16 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
   return {
     name: 'vite:vue',
 
+    api: {
+      get options() {
+        return options
+      },
+      set options(value) {
+        options = value
+      },
+      version,
+    },
+
     handleHotUpdate(ctx) {
       if (options.compiler.invalidateTypeCache) {
         options.compiler.invalidateTypeCache(ctx.file)
@@ -154,6 +171,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           __VUE_PROD_DEVTOOLS__: config.define?.__VUE_PROD_DEVTOOLS__ ?? false,
         },
         ssr: {
+          // @ts-ignore -- config.legacy.buildSsrCjsExternalHeuristics will be removed in Vite 5
           external: config.legacy?.buildSsrCjsExternalHeuristics
             ? ['vue', '@vue/server-renderer']
             : [],

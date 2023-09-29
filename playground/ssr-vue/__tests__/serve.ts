@@ -22,7 +22,7 @@ export async function serve(): Promise<{ close(): Promise<void> }> {
       build: {
         target: 'esnext',
         minify: false,
-        ssrManifest: true,
+        ssrManifest: '.vite/ssr-manifest.json',
         outDir: 'dist/client',
       },
     })

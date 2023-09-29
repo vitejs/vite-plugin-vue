@@ -35,22 +35,27 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node_version: [14, 16, 18]
+        node_version: [14, 16, 18, 20]
         include:
           # Active LTS + other OS
           - os: macos-latest
-            node_version: 16
+            node_version: 18
           - os: windows-latest
-            node_version: 16
+            node_version: 18
       fail-fast: false
 
     name: "Build&Test: node-${{ matrix.node_version }}, ${{ matrix.os }}"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
+        if: ${{ matrix.node_version != 14 }}
+        uses: pnpm/action-setup@v2
+
+      - name: Install pnpm 8 (node 14)
+        if: ${{ matrix.node_version == 14 }}
+        run: npm install -g @pnpm/exe@next-8
 
       - name: Set node version to ${{ matrix.node_version }}
         uses: actions/setup-node@v3
@@ -94,19 +99,19 @@ jobs:
     if: github.repository == 'vitejs/vite-plugin-vue'
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    name: "Lint: node-16, ubuntu-latest"
+    name: "Lint: node-LTS, ubuntu-latest"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v2
 
-      - name: Set node version to 16
+      - name: Set node version to LTS
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: lts/*
           cache: "pnpm"
 
       - name: Install deps

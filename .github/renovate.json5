@@ -4,7 +4,6 @@
   "ignorePaths": ["**/__tests__/**"],
   "pin": false,
   "rangeStrategy": "bump",
-  "node": false,
   "packageRules": [
     {
       "depTypeList": ["peerDependencies"],
@@ -18,7 +17,6 @@
     "typescript",
 
     // breaking changes
-    "source-map", // `source-map:v0.7.0+` needs more investigation
     "kill-port", // `kill-port:^2.0.0 has perf issues (#8392)
   ],
 }

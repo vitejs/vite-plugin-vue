@@ -23,7 +23,18 @@ export interface Options {
   isProduction?: boolean
 
   // options to pass on to vue/compiler-sfc
-  script?: Partial<Pick<SFCScriptCompileOptions, 'babelParserPlugins'>>
+  script?: Partial<
+    Pick<
+      SFCScriptCompileOptions,
+      | 'babelParserPlugins'
+      | 'globalTypeFiles'
+      | 'defineModel'
+      | 'propsDestructure'
+      | 'fs'
+      | 'reactivityTransform'
+    >
+  >
+
   template?: Partial<
     Pick<
       SFCTemplateCompileOptions,
@@ -129,12 +140,15 @@ import yaml from 'js-yaml'
 const vueI18nPlugin = {
   name: 'vue-i18n',
   transform(code, id) {
+    // if .vue file don't have <i18n> block, just return
     if (!/vue&type=i18n/.test(id)) {
       return
     }
+    // parse yaml
     if (/\.ya?ml$/.test(id)) {
       code = JSON.stringify(yaml.load(code.trim()))
     }
+    // mount the value on the i18n property of the component instance
     return `export default Comp => {
       Comp.i18n = ${code}
     }`
@@ -144,6 +158,30 @@ const vueI18nPlugin = {
 export default {
   plugins: [vue(), vueI18nPlugin],
 }
+```
+
+Create a file named `Demo.vue`, add `lang="yaml"` to the `<i18n>` blocks, then you can use the syntax of `YAML`:
+
+```vue
+<template>Hello</template>
+
+<i18n lang="yaml">
+message: 'world'
+fullWord: 'hello world'
+</i18n>
+```
+
+`message` is mounted on the i18n property of the component instance, you can use like this:
+
+```vue
+<script setup lang="ts">
+import Demo from 'components/Demo.vue'
+</script>
+
+<template>
+  <Demo /> {{ Demo.i18n.message }}
+  <div>{{ Demo.i18n.fullWord }}</div>
+</template>
 ```
 
 ## Using Vue SFCs as Custom Elements

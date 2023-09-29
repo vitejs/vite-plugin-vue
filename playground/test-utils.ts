@@ -193,18 +193,18 @@ type UntilBrowserLogAfterCallback = (logs: string[]) => PromiseLike<void> | void
 
 export async function untilBrowserLogAfter(
   operation: () => any,
-  target: string | RegExp | Array<string | RegExp>,
+  target: string | RegExp | (string | RegExp)[],
   expectOrder?: boolean,
   callback?: UntilBrowserLogAfterCallback,
 ): Promise<string[]>
 export async function untilBrowserLogAfter(
   operation: () => any,
-  target: string | RegExp | Array<string | RegExp>,
+  target: string | RegExp | (string | RegExp)[],
   callback?: UntilBrowserLogAfterCallback,
 ): Promise<string[]>
 export async function untilBrowserLogAfter(
   operation: () => any,
-  target: string | RegExp | Array<string | RegExp>,
+  target: string | RegExp | (string | RegExp)[],
   arg3?: boolean | UntilBrowserLogAfterCallback,
   arg4?: UntilBrowserLogAfterCallback,
 ): Promise<string[]> {
@@ -221,7 +221,7 @@ export async function untilBrowserLogAfter(
 }
 
 async function untilBrowserLog(
-  target?: string | RegExp | Array<string | RegExp>,
+  target?: string | RegExp | (string | RegExp)[],
   expectOrder = true,
 ): Promise<string[]> {
   let resolve: () => void
