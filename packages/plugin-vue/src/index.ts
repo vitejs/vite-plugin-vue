@@ -9,12 +9,14 @@ import type {
   SFCTemplateCompileOptions,
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
-import type { ExistingRawSourceMap } from 'rollup'
-import type { RawSourceMap } from 'source-map'
 /* eslint-enable import/no-duplicates */
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
-import { getDescriptor, getSrcDescriptor } from './utils/descriptorCache'
+import {
+  getDescriptor,
+  getSrcDescriptor,
+  getTempSrcDescriptor,
+} from './utils/descriptorCache'
 import { getResolvedScript, typeDepToSFCMap } from './script'
 import { transformMain } from './main'
 import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
@@ -204,11 +206,6 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
 
       const { filename, query } = parseVueRequest(id)
 
-      // external scoped style
-      if (!query.vue && query.scoped) {
-        return fs.readFileSync(filename, 'utf-8')
-      }
-
       // select corresponding block for sub-part virtual modules
       if (query.vue) {
         if (query.src) {
@@ -243,26 +240,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         return
       }
 
-      if (!query.vue && query.scoped) {
-        // external scoped style
-        const result = options.compiler.compileStyle({
-          filename,
-          source: code,
-          id: `data-v-${query.id}`,
-          scoped: true,
-          isProd: options.isProduction,
-        })
-        return {
-          code: result.code,
-          map: result.map as Omit<
-            RawSourceMap,
-            'version'
-          > as ExistingRawSourceMap,
-        }
-      }
-
       if (!filter(filename) && !query.vue) {
-        // transform ref necessarily
         if (
           !query.vue &&
           refTransformFilter(filename) &&
@@ -289,7 +267,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       } else {
         // sub block request
         const descriptor = query.src
-          ? getSrcDescriptor(filename, query)!
+          ? getSrcDescriptor(filename, query) ||
+            getTempSrcDescriptor(filename, query)
           : getDescriptor(filename, options)!
 
         if (query.type === 'template') {
@@ -298,7 +277,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           return transformStyle(
             code,
             descriptor,
-            Number(query.index),
+            Number(query.index || 0),
             options,
             this,
             filename,
