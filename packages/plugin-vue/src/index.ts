@@ -10,6 +10,7 @@ import type {
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
 /* eslint-enable import/no-duplicates */
+import { computed, shallowRef } from 'vue'
 import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
@@ -101,7 +102,7 @@ export interface ResolvedOptions extends Options {
 }
 
 export default function vuePlugin(rawOptions: Options = {}): Plugin {
-  let options: ResolvedOptions = {
+  const options = shallowRef<ResolvedOptions>({
     isProduction: process.env.NODE_ENV === 'production',
     compiler: null as any, // to be set in buildStart
     include: /\.vue$/,
@@ -112,49 +113,46 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     sourceMap: true,
     cssDevSourcemap: false,
     devToolsEnabled: process.env.NODE_ENV !== 'production',
-  }
+  })
 
-  function buildFilter() {
-    return {
-      filter: createFilter(options.include, options.exclude),
-      customElementFilter:
-        typeof options.customElement === 'boolean'
-          ? () => options.customElement as boolean
-          : createFilter(options.customElement),
-      refTransformFilter:
-        options.reactivityTransform === false
-          ? () => false
-          : options.reactivityTransform === true
-          ? createFilter(/\.(j|t)sx?$/, /node_modules/)
-          : createFilter(options.reactivityTransform),
-    }
-  }
-
-  let { filter, customElementFilter, refTransformFilter } = buildFilter()
+  const filter = computed(() =>
+    createFilter(options.value.include, options.value.exclude),
+  )
+  const customElementFilter = computed(() =>
+    typeof options.value.customElement === 'boolean'
+      ? () => options.value.customElement as boolean
+      : createFilter(options.value.customElement),
+  )
+  const refTransformFilter = computed(() =>
+    options.value.reactivityTransform === false
+      ? () => false
+      : options.value.reactivityTransform === true
+      ? createFilter(/\.(j|t)sx?$/, /node_modules/)
+      : createFilter(options.value.reactivityTransform),
+  )
 
   return {
     name: 'vite:vue',
 
     api: {
       get options() {
-        return options
+        return options.value
       },
       set options(value) {
-        options = value
-        ;({ filter, customElementFilter, refTransformFilter } = buildFilter())
+        options.value = value
       },
       version,
     },
 
     handleHotUpdate(ctx) {
-      if (options.compiler.invalidateTypeCache) {
-        options.compiler.invalidateTypeCache(ctx.file)
+      if (options.value.compiler.invalidateTypeCache) {
+        options.value.compiler.invalidateTypeCache(ctx.file)
       }
       if (typeDepToSFCMap.has(ctx.file)) {
         return handleTypeDepChange(typeDepToSFCMap.get(ctx.file)!, ctx)
       }
-      if (filter(ctx.file)) {
-        return handleHotUpdate(ctx, options)
+      if (filter.value(ctx.file)) {
+        return handleHotUpdate(ctx, options.value)
       }
     },
 
@@ -177,8 +175,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
 
     configResolved(config) {
-      options = {
-        ...options,
+      options.value = {
+        ...options.value,
         root: config.root,
         sourceMap: config.command === 'build' ? !!config.build.sourcemap : true,
         cssDevSourcemap: config.css?.devSourcemap ?? false,
@@ -189,14 +187,14 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
 
     configureServer(server) {
-      options.devServer = server
+      options.value.devServer = server
     },
 
     buildStart() {
-      const compiler = (options.compiler =
-        options.compiler || resolveCompiler(options.root))
+      const compiler = (options.value.compiler =
+        options.value.compiler || resolveCompiler(options.value.root))
       if (compiler.invalidateTypeCache) {
-        options.devServer?.watcher.on('unlink', (file) => {
+        options.value.devServer?.watcher.on('unlink', (file) => {
           compiler.invalidateTypeCache(file)
         })
       }
@@ -226,7 +224,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         if (query.src) {
           return fs.readFileSync(filename, 'utf-8')
         }
-        const descriptor = getDescriptor(filename, options)!
+        const descriptor = getDescriptor(filename, options.value)!
         let block: SFCBlock | null | undefined
         if (query.type === 'script') {
           // handle <script> + <script setup> merge via compileScript()
@@ -255,13 +253,13 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         return
       }
 
-      if (!filter(filename) && !query.vue) {
+      if (!filter.value(filename) && !query.vue) {
         if (
           !query.vue &&
-          refTransformFilter(filename) &&
-          options.compiler.shouldTransformRef(code)
+          refTransformFilter.value(filename) &&
+          options.value.compiler.shouldTransformRef(code)
         ) {
-          return options.compiler.transformRef(code, {
+          return options.value.compiler.transformRef(code, {
             filename,
             sourceMap: true,
           })
@@ -274,26 +272,32 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         return transformMain(
           code,
           filename,
-          options,
+          options.value,
           this,
           ssr,
-          customElementFilter(filename),
+          customElementFilter.value(filename),
         )
       } else {
         // sub block request
         const descriptor = query.src
           ? getSrcDescriptor(filename, query) ||
             getTempSrcDescriptor(filename, query)
-          : getDescriptor(filename, options)!
+          : getDescriptor(filename, options.value)!
 
         if (query.type === 'template') {
-          return transformTemplateAsModule(code, descriptor, options, this, ssr)
+          return transformTemplateAsModule(
+            code,
+            descriptor,
+            options.value,
+            this,
+            ssr,
+          )
         } else if (query.type === 'style') {
           return transformStyle(
             code,
             descriptor,
             Number(query.index || 0),
-            options,
+            options.value,
             this,
             filename,
           )
