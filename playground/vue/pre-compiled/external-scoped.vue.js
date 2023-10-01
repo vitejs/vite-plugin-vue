@@ -1,24 +1,23 @@
 import './external.css?vue&type=style&scoped=true&id=0d49ede6&src=0d49ede6&lang.css'
 
-import { ref } from 'vue'
+import {
+  Fragment as _Fragment,
+  createElementBlock as _createElementBlock,
+  createElementVNode as _createElementVNode,
+  openBlock as _openBlock,
+  popScopeId as _popScopeId,
+  pushScopeId as _pushScopeId,
+  toDisplayString as _toDisplayString,
+  vModelText as _vModelText,
+  withDirectives as _withDirectives,
+  ref,
+} from 'vue'
 const __sfc__ = {
   setup() {
     const msg = ref('Hello World!')
     return { msg }
   },
 }
-
-import {
-  toDisplayString as _toDisplayString,
-  createElementVNode as _createElementVNode,
-  vModelText as _vModelText,
-  withDirectives as _withDirectives,
-  Fragment as _Fragment,
-  openBlock as _openBlock,
-  createElementBlock as _createElementBlock,
-  pushScopeId as _pushScopeId,
-  popScopeId as _popScopeId,
-} from 'vue'
 
 const _withScopeId = (n) => (
   _pushScopeId('data-v-0d49ede6'), (n = n()), _popScopeId(), n

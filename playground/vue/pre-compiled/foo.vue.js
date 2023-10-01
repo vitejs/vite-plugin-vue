@@ -1,6 +1,15 @@
 import './foo.vue__0.css'
 
-import { ref } from 'vue'
+import {
+  Fragment as _Fragment,
+  createElementBlock as _createElementBlock,
+  createElementVNode as _createElementVNode,
+  openBlock as _openBlock,
+  toDisplayString as _toDisplayString,
+  vModelText as _vModelText,
+  withDirectives as _withDirectives,
+  ref,
+} from 'vue'
 const __sfc__ = {
   setup() {
     const msg = ref('Hello World!')
@@ -8,15 +17,6 @@ const __sfc__ = {
   },
 }
 
-import {
-  toDisplayString as _toDisplayString,
-  createElementVNode as _createElementVNode,
-  vModelText as _vModelText,
-  withDirectives as _withDirectives,
-  Fragment as _Fragment,
-  openBlock as _openBlock,
-  createElementBlock as _createElementBlock,
-} from 'vue'
 const _hoisted_1 = { class: 'pre-compiled-title' }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {

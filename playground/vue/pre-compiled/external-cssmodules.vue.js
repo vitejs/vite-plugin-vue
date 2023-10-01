@@ -1,3 +1,11 @@
+import {
+  Fragment as _Fragment,
+  createElementBlock as _createElementBlock,
+  createElementVNode as _createElementVNode,
+  normalizeClass as _normalizeClass,
+  openBlock as _openBlock,
+} from 'vue'
+
 import style0 from './external.module.css?module=true&lang.module.css'
 
 const __sfc__ = {
@@ -7,14 +15,6 @@ const __sfc__ = {
     }
   },
 }
-
-import {
-  normalizeClass as _normalizeClass,
-  createElementVNode as _createElementVNode,
-  Fragment as _Fragment,
-  openBlock as _openBlock,
-  createElementBlock as _createElementBlock,
-} from 'vue'
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (
