@@ -13,7 +13,11 @@ import type * as _compiler from 'vue/compiler-sfc'
 import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
-import { getDescriptor, getSrcDescriptor } from './utils/descriptorCache'
+import {
+  getDescriptor,
+  getSrcDescriptor,
+  getTempSrcDescriptor,
+} from './utils/descriptorCache'
 import { getResolvedScript, typeDepToSFCMap } from './script'
 import { transformMain } from './main'
 import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
@@ -219,6 +223,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       }
 
       const { filename, query } = parseVueRequest(id)
+
       // select corresponding block for sub-part virtual modules
       if (query.vue) {
         if (query.src) {
@@ -248,9 +253,11 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     transform(code, id, opt) {
       const ssr = opt?.ssr === true
       const { filename, query } = parseVueRequest(id)
+
       if (query.raw || query.url) {
         return
       }
+
       if (!filter(filename) && !query.vue) {
         if (
           !query.vue &&
@@ -278,7 +285,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       } else {
         // sub block request
         const descriptor = query.src
-          ? getSrcDescriptor(filename, query)!
+          ? getSrcDescriptor(filename, query) ||
+            getTempSrcDescriptor(filename, query)
           : getDescriptor(filename, options)!
 
         if (query.type === 'template') {
@@ -287,7 +295,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           return transformStyle(
             code,
             descriptor,
-            Number(query.index),
+            Number(query.index || 0),
             options,
             this,
             filename,

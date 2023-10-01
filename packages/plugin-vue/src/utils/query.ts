@@ -7,6 +7,7 @@ export interface VueQuery {
   raw?: boolean
   url?: boolean
   scoped?: boolean
+  id?: string
 }
 
 export function parseVueRequest(id: string): {
