@@ -209,6 +209,18 @@ The `customElement` plugin option can be used to configure the behavior:
 - `{ customElement: true }` will import all `*.vue` files in custom element mode.
 - Use a string or regex pattern to change how files should be loaded as Custom Elements (this check is applied after `include` and `exclude` matches).
 
+### Special Query
+
+Special query can be used to load the Vue component as a custom element without changing the file extension or global configuration:
+
+```js
+import { defineCustomElement } from 'vue'
+import Example from './Example.vue?customElement'
+
+// register
+customElements.define('my-example', defineCustomElement(Example))
+```
+
 ## License
 
 MIT
