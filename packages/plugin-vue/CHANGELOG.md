@@ -1,3 +1,13 @@
+## 4.4.0 (2023-10-02)
+
+* fix(plugin-vue): re-create filters after updating options (#246) ([c383503](https://github.com/vitejs/vite-plugin-vue/commit/c383503)), closes [#246](https://github.com/vitejs/vite-plugin-vue/issues/246)
+* feat: support generated JS imports for external scoped style (#196) ([bd5055d](https://github.com/vitejs/vite-plugin-vue/commit/bd5055d)), closes [#196](https://github.com/vitejs/vite-plugin-vue/issues/196)
+* chore: add `@ts-ignore` when accessing `legacy?.buildSsrCjsExternalHeuristics` (#255) ([04c3b0b](https://github.com/vitejs/vite-plugin-vue/commit/04c3b0b)), closes [#255](https://github.com/vitejs/vite-plugin-vue/issues/255)
+* refactor(plugin-vue): deprecate reactivity transform ([38f8ea5](https://github.com/vitejs/vite-plugin-vue/commit/38f8ea5))
+* refactor(plugin-vue): use source-map-js (#247) ([b43690d](https://github.com/vitejs/vite-plugin-vue/commit/b43690d)), closes [#247](https://github.com/vitejs/vite-plugin-vue/issues/247)
+
+
+
 ## <small>4.3.4 (2023-08-28)</small>
 
 * chore(deps): update typescript-eslint monorepo to v6 (major) (#210) ([fb07b5b](https://github.com/vitejs/vite-plugin-vue/commit/fb07b5b)), closes [#210](https://github.com/vitejs/vite-plugin-vue/issues/210)
