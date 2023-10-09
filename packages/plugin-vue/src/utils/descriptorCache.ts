@@ -81,6 +81,25 @@ export function getSrcDescriptor(
   return cache.get(filename)!
 }
 
+export function getTempSrcDescriptor(
+  filename: string,
+  query: VueQuery,
+): SFCDescriptor {
+  // this is only used for pre-compiled <style src> with scoped flag
+  return {
+    filename,
+    id: query.id || '',
+    styles: [
+      {
+        scoped: query.scoped,
+        loc: {
+          start: { line: 0, column: 0 },
+        },
+      },
+    ],
+  } as SFCDescriptor
+}
+
 export function setSrcDescriptor(
   filename: string,
   entry: SFCDescriptor,

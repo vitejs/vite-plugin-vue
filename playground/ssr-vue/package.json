@@ -7,10 +7,10 @@
     "dev": "node server",
     "build": "npm run build:client && npm run build:server",
     "build:noExternal": "npm run build:client && npm run build:server:noExternal",
-    "build:client": "vite build --ssrManifest --outDir dist/client",
+    "build:client": "vite build --ssrManifest .vite/ssr-manifest.json --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.js --outDir dist/server",
     "build:server:noExternal": "vite build --config vite.config.noexternal.js --ssr src/entry-server.js --outDir dist/server",
-    "generate": "vite build --ssrManifest --outDir dist/static && npm run build:server && node prerender",
+    "generate": "vite build --ssrManifest .vite/ssr-manifest.json --outDir dist/static && npm run build:server && node prerender",
     "serve": "NODE_ENV=production node server",
     "debug": "node --inspect-brk server"
   },
@@ -18,7 +18,7 @@
     "@vitejs/test-example-external-component": "file:example-external-component",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*",
