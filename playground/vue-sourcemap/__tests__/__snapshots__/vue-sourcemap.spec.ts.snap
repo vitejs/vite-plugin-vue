@@ -145,7 +145,7 @@ exports[`serve:vue-sourcemap > js > serve-js 1`] = `
 {
   "mappings": "AAKA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;AAGP;AACd,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;;;;;wBARlB,oBAAiB,WAAd,MAAU",
   "sources": [
-    "/root/Js.vue",
+    "Js.vue",
   ],
   "sourcesContent": [
     "<template>
@@ -192,7 +192,7 @@ exports[`serve:vue-sourcemap > no script > serve-no-script 1`] = `
   "mappings": ";;;wBACE,oBAAwB,WAArB,aAAiB",
   "sourceRoot": "",
   "sources": [
-    "/root/NoScript.vue",
+    "NoScript.vue",
   ],
   "sourcesContent": [
     "<template>
@@ -208,7 +208,7 @@ exports[`serve:vue-sourcemap > no template > serve-no-template 1`] = `
 {
   "mappings": "AACA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;AAGP;AACd,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;",
   "sources": [
-    "/root/NoTemplate.vue",
+    "NoTemplate.vue",
   ],
   "sourcesContent": [
     "<script>
@@ -314,7 +314,7 @@ exports[`serve:vue-sourcemap > ts > serve-ts 1`] = `
 {
   "mappings": ";AAKA,QAAQ,IAAI,WAAW;;;;;AAIvB,YAAQ,IAAI,UAAU;;;;;;;;uBARpB,oBAAiB,WAAd,MAAU",
   "sources": [
-    "/root/Ts.vue",
+    "Ts.vue",
   ],
   "sourcesContent": [
     "<template>

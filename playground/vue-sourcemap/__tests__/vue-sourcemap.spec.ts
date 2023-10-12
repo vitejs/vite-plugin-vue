@@ -21,16 +21,14 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     throw new Error('Style not found: ' + content)
   }
 
-  // Temporal skip after https://github.com/vitejs/vite/pull/12079
-  test.skip('js', async () => {
+  test('js', async () => {
     const res = await page.request.get(new URL('./Js.vue', page.url()).href)
     const js = await res.text()
     const map = extractSourcemap(js)
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot('serve-js')
   })
 
-  // Temporal skip after https://github.com/vitejs/vite/pull/12079
-  test.skip('ts', async () => {
+  test('ts', async () => {
     const res = await page.request.get(new URL('./Ts.vue', page.url()).href)
     const js = await res.text()
     const map = extractSourcemap(js)
@@ -93,8 +91,7 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     )
   })
 
-  // Temporal skip after https://github.com/vitejs/vite/pull/12079
-  test.skip('no script', async () => {
+  test('no script', async () => {
     const res = await page.request.get(
       new URL('./NoScript.vue', page.url()).href,
     )
@@ -103,8 +100,7 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot('serve-no-script')
   })
 
-  // Temporal skip after https://github.com/vitejs/vite/pull/12079
-  test.skip('no template', async () => {
+  test('no template', async () => {
     const res = await page.request.get(
       new URL('./NoTemplate.vue', page.url()).href,
     )
