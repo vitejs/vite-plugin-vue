@@ -17,6 +17,8 @@ export async function transformTemplateAsModule(
   options: ResolvedOptions,
   pluginContext: TransformPluginContext,
   ssr: boolean,
+  filename: string,
+  isSrc: boolean,
 ): Promise<{
   code: string
   map: any
@@ -33,6 +35,15 @@ export async function transformTemplateAsModule(
     returnCode += `\nimport.meta.hot.accept(({ render }) => {
       __VUE_HMR_RUNTIME__.rerender(${JSON.stringify(descriptor.id)}, render)
     })`
+  }
+
+  if (result.map && isSrc) {
+    const vueFileIndex = result.map.sources.findIndex(
+      (source) => source === descriptor.filename,
+    )
+    if (vueFileIndex >= 0) {
+      result.map.sources[vueFileIndex] = filename
+    }
   }
 
   return {

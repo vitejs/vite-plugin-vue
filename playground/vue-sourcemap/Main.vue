@@ -7,6 +7,7 @@
   <SassWithImport />
   <Less />
   <SrcImport />
+  <SrcImportHtml />
   <NoScript />
   <NoTemplate />
 </template>
@@ -19,6 +20,7 @@ import Sass from './Sass.vue'
 import SassWithImport from './SassWithImport.vue'
 import Less from './Less.vue'
 import SrcImport from './src-import/SrcImport.vue'
+import SrcImportHtml from './src-import-html/SrcImportHtml.vue'
 import NoScript from './NoScript.vue'
 import NoTemplate from './NoTemplate.vue'
 </script>
