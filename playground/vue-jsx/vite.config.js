@@ -1,10 +1,10 @@
-const vueJsxPlugin = require('@vitejs/plugin-vue-jsx')
-const vuePlugin = require('@vitejs/plugin-vue')
+import vueJsxPlugin from '@vitejs/plugin-vue-jsx'
+import vuePlugin from '@vitejs/plugin-vue'
 
 /**
  * @type {import('vite').UserConfig}
  */
-module.exports = {
+export default {
   plugins: [
     vueJsxPlugin({
       include: [/\.tesx$/, /\.[jt]sx$/],
