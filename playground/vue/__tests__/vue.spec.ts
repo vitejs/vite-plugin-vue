@@ -127,7 +127,7 @@ describe('css modules', () => {
 
 describe('asset reference', () => {
   const assetMatch = isBuild
-    ? /\/assets\/asset-\w{8}\.png/
+    ? /\/assets\/asset-[-\w]{8}\.png/
     : '/assets/asset.png'
 
   test('should not 404', () => {
@@ -164,7 +164,7 @@ describe('asset reference', () => {
 
   test('relative url from <style>', async () => {
     const assetMatch = isBuild
-      ? /\/assets\/asset-\w{8}\.png/
+      ? /\/assets\/asset-[-\w]{8}\.png/
       : '/assets/asset.png'
     expect(await getBg('.relative-style-url')).toMatch(assetMatch)
   })
