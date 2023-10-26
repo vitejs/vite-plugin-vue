@@ -9,6 +9,7 @@ import type {
   SFCTemplateCompileOptions,
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
+import type { ExistingRawSourceMap } from 'rollup'
 /* eslint-enable import/no-duplicates */
 import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
@@ -258,10 +259,13 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           refTransformFilter.value(filename) &&
           options.value.compiler.shouldTransformRef(code)
         ) {
-          return options.value.compiler.transformRef(code, {
+          const result = options.value.compiler.transformRef(code, {
             filename,
             sourceMap: true,
           })
+          return result as Omit<typeof result, 'map'> & {
+            map: ExistingRawSourceMap | null
+          }
         }
         return
       }
