@@ -1,6 +1,7 @@
+<!--
 <template>
   <h1>Vue version {{ version }}</h1>
-  <div class="comments"><!--hello--></div>
+  <div class="comments">&lt;!&ndash;hello&ndash;&gt;</div>
   <pre>{{ time as string }}</pre>
   <div class="hmr-block">
     <Hmr />
@@ -72,3 +73,10 @@ window.addEventListener('load', () => {
   }, 0)
 })
 </script>
+-->
+<script setup>
+import ceC from './CustomElementC.vue'
+</script>
+<template>
+  <ceC></ceC>
+</template>

@@ -202,6 +202,11 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
 
     async resolveId(id) {
+
+      if(id.includes('CustomElementC.vue')){
+        return id
+      }
+
       // component export helper
       if (id === EXPORT_HELPER_ID) {
         return id
@@ -214,6 +219,11 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
 
     load(id, opt) {
       const ssr = opt?.ssr === true
+
+      if(id.includes('CustomElementC.vue')){
+        return `<template>1</template>`
+      }
+
       if (id === EXPORT_HELPER_ID) {
         return helperCode
       }
@@ -273,6 +283,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
 
       if (!query.vue) {
         // main request
+        code = code.replace('import ceC from \'\0CustomElementC.vue\'', 'import ceC from \'./CustomElementC.vue\'')
+        debugger
         return transformMain(
           code,
           filename,
