@@ -41,7 +41,7 @@
     "@types/convert-source-map": "^2.0.1",
     "@types/debug": "^4.1.9",
     "@types/fs-extra": "^11.0.2",
-    "@types/node": "^18.18.0",
+    "@types/node": "^20.8.9",
     "@types/resolve": "^1.20.3",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
