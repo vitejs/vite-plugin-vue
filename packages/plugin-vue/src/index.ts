@@ -132,6 +132,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       : createFilter(options.value.reactivityTransform),
   )
 
+  const ceChildRecord = new Map<string, string>()
   return {
     name: 'vite:vue',
 
@@ -202,8 +203,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
 
     async resolveId(id) {
-
-      if(id.includes('CustomElementC.vue')){
+      console.log(id)
+      if(id.startsWith('\0virtual:ce')){
         return id
       }
 
@@ -220,8 +221,10 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     load(id, opt) {
       const ssr = opt?.ssr === true
 
-      if(id.includes('CustomElementC.vue')){
-        return `<template>1</template>`
+      if(id.startsWith('\0virtual:ce')){
+        const path = ceChildRecord.get(`"${id}"`)
+        if(!path) return
+        return fs.readFileSync(path, 'utf-8')
       }
 
       if (id === EXPORT_HELPER_ID) {
@@ -283,8 +286,6 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
 
       if (!query.vue) {
         // main request
-        code = code.replace('import ceC from \'\0CustomElementC.vue\'', 'import ceC from \'./CustomElementC.vue\'')
-        debugger
         return transformMain(
           code,
           filename,
@@ -292,6 +293,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           this,
           ssr,
           customElementFilter.value(filename),
+          ceChildRecord,
         )
       } else {
         // sub block request

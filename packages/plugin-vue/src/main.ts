@@ -8,6 +8,8 @@ import { TraceMap, eachMapping } from '@jridgewell/trace-mapping'
 import type { EncodedSourceMap as GenEncodedSourceMap } from '@jridgewell/gen-mapping'
 import { addMapping, fromMap, toEncodedMap } from '@jridgewell/gen-mapping'
 import { normalizePath, transformWithEsbuild } from 'vite'
+// eslint-disable-next-line node/no-extraneous-import
+import type { ImportDeclaration, StringLiteral } from '@babel/types';
 import {
   createDescriptor,
   getDescriptor,
@@ -34,6 +36,7 @@ export async function transformMain(
   pluginContext: TransformPluginContext,
   ssr: boolean,
   asCustomElement: boolean,
+  ceChildRecord: Map<string, string>
 ) {
   const { devServer, isProduction, devToolsEnabled } = options
 
@@ -61,6 +64,9 @@ export async function transformMain(
     options,
     pluginContext,
     ssr,
+    asCustomElement,
+    ceChildRecord,
+    filename,
   )
 
   // template
@@ -309,6 +315,9 @@ async function genScriptCode(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
+  asCustomElement: boolean,
+  ceChildRecord: Map<string, string>,
+  filename: string
 ): Promise<{
   code: string
   map: RawSourceMap | undefined
@@ -354,6 +363,11 @@ async function genScriptCode(
         `import _sfc_main from ${request}\n` + `export * from ${request}` // support named exports
     }
   }
+
+  if(asCustomElement){
+    scriptCode = transformCEImportSFC(scriptCode, options, ceChildRecord, filename)
+  }
+
   return {
     code: scriptCode,
     map,
@@ -525,4 +539,28 @@ function attrsToQuery(
         : `&lang.${langFallback}`
   }
   return query
+}
+
+function transformCEImportSFC(
+  code: string,
+  options: ResolvedOptions,
+  ceChildRecord: Map<string, string>,
+  filename: string
+){
+  const s = new options.compiler.MagicString(code)
+  const ast = options.compiler.babelParse(code, {
+    sourceType: 'module',
+    plugins: ['typescript'],
+  })
+  options.compiler.walk(ast, {
+    enter(node: StringLiteral, parent: ImportDeclaration){
+      if(node.type === 'StringLiteral' && parent.type === 'ImportDeclaration'){
+        const virtualModule = `"\0virtual:ce${node.value}"`
+        const pathSFC = normalizePath(path.resolve(path.dirname(filename), node.value))
+        ceChildRecord.set(virtualModule, pathSFC)
+        s.overwrite(node.start!, node.end!, virtualModule)
+      }
+    }
+  })
+  return s.toString()
 }

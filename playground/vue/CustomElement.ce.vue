@@ -5,6 +5,7 @@
 
 <script setup>
 import ceC from './CustomElementC.vue'
+console.log(ceC)
 </script>
 
 <style lang="scss">
