@@ -1,26 +1,16 @@
 <template>
-  <h2>Custom Element</h2>
-  <button class="custom-element" type="button" @click="state.count++">
-    {{ label }}: {{ state.count }}
-  </button>
+  <h2 class="custom-element">Custom Element</h2>
+  <ceC></ceC>
 </template>
 
 <script setup>
-import { reactive, onBeforeMount } from 'vue'
-
-defineProps({
-  label: String,
-})
-
-const state = reactive({ count: 0 })
-
-onBeforeMount(() => {
-  state.count = 1
-})
+import ceC from './CustomElementC.vue'
 </script>
 
-<style scoped>
+<style lang="scss">
+$color: magenta;
+
 .custom-element {
-  color: green;
+  color: $color;
 }
 </style>

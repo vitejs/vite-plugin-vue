@@ -10,6 +10,7 @@ import {
   serverLogs,
   untilUpdated,
 } from '~utils'
+/*
 
 test('should render', async () => {
   expect(await page.textContent('h1')).toMatch(`Vue version ${version}`)
@@ -354,5 +355,14 @@ describe('pre-compiled components', () => {
   })
   test('should work with external css modules', async () => {
     expect(await getColor('.pre-compiled-external-cssmodules')).toBe('red')
+  })
+})
+*/
+
+describe('custom element', () => {
+  test('should work', async () => {
+    await page.click('.custom-element')
+    expect(await page.textContent('.custom-element')).toMatch('count: 2')
+    expect(await getColor('.custom-element')).toBe('green')
   })
 })

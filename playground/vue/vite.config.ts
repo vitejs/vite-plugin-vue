@@ -1,7 +1,7 @@
 import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
 import { vueI18nPlugin } from './CustomBlockPlugin'
-
+import Inspect from 'vite-plugin-inspect'
 export default defineConfig({
   resolve: {
     alias: {
@@ -10,6 +10,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    Inspect(),
     vuePlugin({
       reactivityTransform: true,
     }),
