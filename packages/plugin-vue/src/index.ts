@@ -26,7 +26,7 @@ import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
 import { transformTemplateAsModule } from './template'
 import { transformStyle } from './style'
 import { EXPORT_HELPER_ID, helperCode } from './helper'
-import { VIRTUAL_CE_MODULE, VIRTUAL_CE } from './virtualCE'
+import { VIRTUAL_CE, VIRTUAL_CE_MODULE } from './virtualCE'
 export { parseVueRequest } from './utils/query'
 export type { VueQuery } from './utils/query'
 
@@ -206,7 +206,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     async resolveId(id) {
       // Virtual module that handles
       // child components of custom element
-      if(id.startsWith(VIRTUAL_CE)){
+      if (id.startsWith(VIRTUAL_CE)) {
         return `\0${id}`
       }
 
@@ -225,9 +225,9 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
 
       // Returns the virtual module content of
       // the custom element's child component
-      if(id.startsWith(VIRTUAL_CE_MODULE)){
+      if (id.startsWith(VIRTUAL_CE_MODULE)) {
         const path = ceChildRecord.get(id)
-        if(!path) return
+        if (!path) return
         return fs.readFileSync(path, 'utf-8')
       }
 
@@ -269,8 +269,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
 
       // The virtual module of the custom element's child component
       // is converted into a legal SFC module id.
-      if(id.startsWith(VIRTUAL_CE_MODULE)){
-        finalId = finalId.replace(VIRTUAL_CE_MODULE, '')
+      if (id.startsWith(VIRTUAL_CE_MODULE)) {
+        finalId = ceChildRecord.get(id)!
       }
 
       const { filename, query } = parseVueRequest(finalId)
@@ -296,6 +296,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       }
 
       if (!query.vue) {
+        const isCustomElement =
+          customElementFilter.value(filename) || ceChildRecord.has(id)
         // main request
         return transformMain(
           code,
@@ -303,7 +305,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
           options.value,
           this,
           ssr,
-          customElementFilter.value(filename),
+          isCustomElement,
           ceChildRecord,
         )
       } else {
@@ -336,6 +338,5 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
   }
 }
 
-// TODO: styles 单测
 // TODO: attrs
 // TODO: attrs 单测

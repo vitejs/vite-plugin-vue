@@ -9,7 +9,7 @@ import type { EncodedSourceMap as GenEncodedSourceMap } from '@jridgewell/gen-ma
 import { addMapping, fromMap, toEncodedMap } from '@jridgewell/gen-mapping'
 import { normalizePath, transformWithEsbuild } from 'vite'
 // eslint-disable-next-line node/no-extraneous-import
-import type { ImportDeclaration, StringLiteral } from '@babel/types';
+import type { ImportDeclaration, StringLiteral } from '@babel/types'
 import {
   createDescriptor,
   getDescriptor,
@@ -26,7 +26,6 @@ import { transformTemplateInMain } from './template'
 import { isEqualBlock, isOnlyTemplateChanged } from './handleHotUpdate'
 import { createRollupError } from './utils/error'
 import { EXPORT_HELPER_ID } from './helper'
-import { VIRTUAL_CE_MODULE } from './virtualCE'
 import type { ResolvedOptions } from '.'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -37,14 +36,12 @@ export async function transformMain(
   pluginContext: TransformPluginContext,
   ssr: boolean,
   asCustomElement: boolean,
-  ceChildRecord: Map<string, string>
+  ceChildRecord: Map<string, string>,
 ) {
   const { devServer, isProduction, devToolsEnabled } = options
 
   const prevDescriptor = getPrevDescriptor(filename)
   const { descriptor, errors } = createDescriptor(filename, code, options)
-
-  const isCustomElement = asCustomElement || ceChildRecord.has(`${VIRTUAL_CE_MODULE}${filename}`)
 
   if (fs.existsSync(filename))
     // set descriptor for HMR if it's not set yet
@@ -67,7 +64,7 @@ export async function transformMain(
     options,
     pluginContext,
     ssr,
-    isCustomElement,
+    asCustomElement,
     ceChildRecord,
     filename,
   )
@@ -106,7 +103,7 @@ export async function transformMain(
   const stylesCode = await genStyleCode(
     descriptor,
     pluginContext,
-    isCustomElement,
+    asCustomElement,
     attachedProps,
   )
 
@@ -320,7 +317,7 @@ async function genScriptCode(
   ssr: boolean,
   asCustomElement: boolean,
   ceChildRecord: Map<string, string>,
-  filename: string
+  filename: string,
 ): Promise<{
   code: string
   map: RawSourceMap | undefined
@@ -367,8 +364,13 @@ async function genScriptCode(
     }
   }
 
-  if(asCustomElement){
-    scriptCode = transformCEImportSFC(scriptCode, options, ceChildRecord, filename)
+  if (asCustomElement) {
+    scriptCode = transformCEImportSFC(
+      scriptCode,
+      options,
+      ceChildRecord,
+      filename,
+    )
   }
 
   return {
@@ -548,22 +550,28 @@ function transformCEImportSFC(
   code: string,
   options: ResolvedOptions,
   ceChildRecord: Map<string, string>,
-  filename: string
-){
+  filename: string,
+) {
   const s = new options.compiler.MagicString(code)
   const ast = options.compiler.babelParse(code, {
     sourceType: 'module',
     plugins: ['typescript'],
   })
   options.compiler.walk(ast, {
-    enter(node: StringLiteral, parent: ImportDeclaration){
-      if(node.type === 'StringLiteral' && parent.type === 'ImportDeclaration'){
+    enter(node: StringLiteral, parent: ImportDeclaration) {
+      if (
+        node.type === 'StringLiteral' &&
+        parent.type === 'ImportDeclaration' &&
+        /\.vue$/.test(node.value)
+      ) {
         const virtualModule = `virtual:ce${node.value}`
-        const pathSFC = normalizePath(path.resolve(path.dirname(filename), node.value))
+        const pathSFC = normalizePath(
+          path.resolve(path.dirname(filename), node.value),
+        )
         ceChildRecord.set(`\0${virtualModule}`, pathSFC)
         s.overwrite(node.start!, node.end!, `"${virtualModule}"`)
       }
-    }
+    },
   })
   return s.toString()
 }

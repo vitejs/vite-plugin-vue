@@ -1,7 +1,6 @@
-<!--
 <template>
   <h1>Vue version {{ version }}</h1>
-  <div class="comments">&lt;!&ndash;hello&ndash;&gt;</div>
+  <div class="comments"><!--hello--></div>
   <pre>{{ time as string }}</pre>
   <div class="hmr-block">
     <Hmr />
@@ -61,7 +60,6 @@ import DefaultLangs from './DefaultLangs.vue'
 import PreCompiled from './pre-compiled/foo.vue'
 import PreCompiledExternalScoped from './pre-compiled/external-scoped.vue'
 import PreCompiledExternalCssModules from './pre-compiled/external-cssmodules.vue'
-
 const TsGeneric = defineAsyncComponent(() => import('./TsGeneric.vue'))
 
 const time = ref('loading...')
@@ -73,10 +71,3 @@ window.addEventListener('load', () => {
   }, 0)
 })
 </script>
--->
-<script setup>
-import ceC from './CustomElementC.vue'
-</script>
-<template>
-  <ceC></ceC>
-</template>
