@@ -58,7 +58,7 @@ jobs:
         run: npm install -g @pnpm/exe@next-8
 
       - name: Set node version to ${{ matrix.node_version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node_version }}
           cache: "pnpm"
@@ -109,7 +109,7 @@ jobs:
         uses: pnpm/action-setup@v2
 
       - name: Set node version to LTS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: "pnpm"
