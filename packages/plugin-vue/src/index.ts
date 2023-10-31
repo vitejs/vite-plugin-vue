@@ -26,7 +26,7 @@ import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
 import { transformTemplateAsModule } from './template'
 import { transformStyle } from './style'
 import { EXPORT_HELPER_ID, helperCode } from './helper'
-
+import { VIRTUAL_CE_MODULE, VIRTUAL_CE } from './virtualCE'
 export { parseVueRequest } from './utils/query'
 export type { VueQuery } from './utils/query'
 
@@ -131,8 +131,9 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       ? createFilter(/\.(j|t)sx?$/, /node_modules/)
       : createFilter(options.value.reactivityTransform),
   )
-
+  // Record the child components of custom element
   const ceChildRecord = new Map<string, string>()
+
   return {
     name: 'vite:vue',
 
@@ -203,9 +204,10 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
 
     async resolveId(id) {
-      console.log(id)
-      if(id.startsWith('\0virtual:ce')){
-        return id
+      // Virtual module that handles
+      // child components of custom element
+      if(id.startsWith(VIRTUAL_CE)){
+        return `\0${id}`
       }
 
       // component export helper
@@ -221,8 +223,10 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     load(id, opt) {
       const ssr = opt?.ssr === true
 
-      if(id.startsWith('\0virtual:ce')){
-        const path = ceChildRecord.get(`"${id}"`)
+      // Returns the virtual module content of
+      // the custom element's child component
+      if(id.startsWith(VIRTUAL_CE_MODULE)){
+        const path = ceChildRecord.get(id)
         if(!path) return
         return fs.readFileSync(path, 'utf-8')
       }
@@ -260,9 +264,16 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
 
     transform(code, id, opt) {
+      let finalId = id
       const ssr = opt?.ssr === true
-      const { filename, query } = parseVueRequest(id)
 
+      // The virtual module of the custom element's child component
+      // is converted into a legal SFC module id.
+      if(id.startsWith(VIRTUAL_CE_MODULE)){
+        finalId = finalId.replace(VIRTUAL_CE_MODULE, '')
+      }
+
+      const { filename, query } = parseVueRequest(finalId)
       if (query.raw || query.url) {
         return
       }
@@ -324,3 +335,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
   }
 }
+
+// TODO: styles 单测
+// TODO: attrs
+// TODO: attrs 单测

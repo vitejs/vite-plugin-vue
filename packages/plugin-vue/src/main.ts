@@ -26,6 +26,7 @@ import { transformTemplateInMain } from './template'
 import { isEqualBlock, isOnlyTemplateChanged } from './handleHotUpdate'
 import { createRollupError } from './utils/error'
 import { EXPORT_HELPER_ID } from './helper'
+import { VIRTUAL_CE_MODULE } from './virtualCE'
 import type { ResolvedOptions } from '.'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -42,6 +43,8 @@ export async function transformMain(
 
   const prevDescriptor = getPrevDescriptor(filename)
   const { descriptor, errors } = createDescriptor(filename, code, options)
+
+  const isCustomElement = asCustomElement || ceChildRecord.has(`${VIRTUAL_CE_MODULE}${filename}`)
 
   if (fs.existsSync(filename))
     // set descriptor for HMR if it's not set yet
@@ -64,7 +67,7 @@ export async function transformMain(
     options,
     pluginContext,
     ssr,
-    asCustomElement,
+    isCustomElement,
     ceChildRecord,
     filename,
   )
@@ -103,7 +106,7 @@ export async function transformMain(
   const stylesCode = await genStyleCode(
     descriptor,
     pluginContext,
-    asCustomElement,
+    isCustomElement,
     attachedProps,
   )
 
@@ -555,10 +558,10 @@ function transformCEImportSFC(
   options.compiler.walk(ast, {
     enter(node: StringLiteral, parent: ImportDeclaration){
       if(node.type === 'StringLiteral' && parent.type === 'ImportDeclaration'){
-        const virtualModule = `"\0virtual:ce${node.value}"`
+        const virtualModule = `virtual:ce${node.value}`
         const pathSFC = normalizePath(path.resolve(path.dirname(filename), node.value))
-        ceChildRecord.set(virtualModule, pathSFC)
-        s.overwrite(node.start!, node.end!, virtualModule)
+        ceChildRecord.set(`\0${virtualModule}`, pathSFC)
+        s.overwrite(node.start!, node.end!, `"${virtualModule}"`)
       }
     }
   })
