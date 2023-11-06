@@ -15,7 +15,7 @@ const base = '/test/'
 globalThis.__vite_test_filename = __filename
 globalThis.__vite_test_dirname = __dirname
 
-export default defineConfig(({ command, ssrBuild }) => ({
+export default defineConfig(({ command, ssrBuild, isSsrBuild }) => ({
   base,
   plugins: [
     vuePlugin(),
@@ -30,9 +30,9 @@ export default defineConfig(({ command, ssrBuild }) => ({
       load(id, options) {
         const ssrFromOptions = options?.ssr ?? false
         if (id === '@foo') {
-          // Force a mismatch error if ssrBuild is different from ssrFromOptions
+          // Force a mismatch error if ssrBuild/isSsrBuild is different from ssrFromOptions
           return `export default { msg: '${
-            command === 'build' && !!ssrBuild !== ssrFromOptions
+            command === 'build' && !!(ssrBuild ?? isSsrBuild) !== ssrFromOptions
               ? `defineConfig ssrBuild !== ssr from load options`
               : 'hi'
           }' }`
