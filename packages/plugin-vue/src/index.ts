@@ -337,6 +337,3 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     },
   }
 }
-
-// TODO: attrs
-// TODO: attrs 单测
