@@ -1,3 +1,10 @@
+## <small>4.4.1 (2023-11-08)</small>
+
+* fix: fix style block hmr for vitepress md files ([a26a854](https://github.com/vitejs/vite-plugin-vue/commit/a26a854)), closes [vuejs/vitepress#3129](https://github.com/vuejs/vitepress/issues/3129)
+* chore: make tests pass with rollup4 (#271) ([298d419](https://github.com/vitejs/vite-plugin-vue/commit/298d419)), closes [#271](https://github.com/vitejs/vite-plugin-vue/issues/271)
+
+
+
 ## 4.4.0 (2023-10-02)
 
 * fix(plugin-vue): re-create filters after updating options (#246) ([c383503](https://github.com/vitejs/vite-plugin-vue/commit/c383503)), closes [#246](https://github.com/vitejs/vite-plugin-vue/issues/246)
