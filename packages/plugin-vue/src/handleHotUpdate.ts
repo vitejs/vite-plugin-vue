@@ -4,6 +4,7 @@ import type { HmrContext, ModuleNode } from 'vite'
 import { isCSSRequest } from 'vite'
 
 import {
+  cache,
   createDescriptor,
   getDescriptor,
   invalidateDescriptor,
@@ -148,9 +149,20 @@ export async function handleHotUpdate(
     updateType.push(`style`)
   }
   if (updateType.length) {
-    // invalidate the descriptor cache so that the next transform will
-    // re-analyze the file and pick up the changes.
-    invalidateDescriptor(file)
+    if (file.endsWith('.vue')) {
+      // invalidate the descriptor cache so that the next transform will
+      // re-analyze the file and pick up the changes.
+      invalidateDescriptor(file)
+    } else {
+      // https://github.com/vuejs/vitepress/issues/3129
+      // For non-vue files, e.g. .md files in VitePress, invalidating the
+      // descriptor will cause the main `load()` hook to attempt to read and
+      // parse a descriptor from a non-vue source file, leading to errors.
+      // To fix that we need to provide the descriptor we parsed here in the
+      // main cache. This assumes no other plugin is applying pre-transform to
+      // the file type - not impossible, but should be extremely unlikely.
+      cache.set(file, descriptor)
+    }
     debug(`[vue:update(${updateType.join('&')})] ${file}`)
   }
   return [...affectedModules].filter(Boolean) as ModuleNode[]

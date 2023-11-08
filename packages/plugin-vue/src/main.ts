@@ -40,9 +40,22 @@ export async function transformMain(
   const prevDescriptor = getPrevDescriptor(filename)
   const { descriptor, errors } = createDescriptor(filename, code, options)
 
-  if (fs.existsSync(filename))
-    // set descriptor for HMR if it's not set yet
-    getDescriptor(filename, options, true, true)
+  if (fs.existsSync(filename)) {
+    // populate descriptor cache for HMR if it's not set yet
+    getDescriptor(
+      filename,
+      options,
+      true,
+      true,
+      // for vue files, create descriptor from fs read to be consistent with
+      // logic in handleHotUpdate()
+      // for non vue files, e.g. md files in vitepress, we assume
+      // `hmrContext.read` is overwriten so handleHotUpdate() is dealing with
+      // post-transform code, so we populate the descriptor with post-transform
+      // code here as well.
+      filename.endsWith('.vue') ? undefined : code,
+    )
+  }
 
   if (errors.length) {
     errors.forEach((error) =>
