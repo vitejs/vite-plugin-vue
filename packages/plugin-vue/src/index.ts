@@ -128,8 +128,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     options.value.reactivityTransform === false
       ? () => false
       : options.value.reactivityTransform === true
-      ? createFilter(/\.(j|t)sx?$/, /node_modules/)
-      : createFilter(options.value.reactivityTransform),
+        ? createFilter(/\.(j|t)sx?$/, /node_modules/)
+        : createFilter(options.value.reactivityTransform),
   )
 
   return {
