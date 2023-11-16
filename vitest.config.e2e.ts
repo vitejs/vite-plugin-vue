@@ -21,7 +21,4 @@ export default defineConfig({
         return false
     },
   },
-  esbuild: {
-    target: 'node14',
-  },
 })
