@@ -227,7 +227,6 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               .join(',')
 
             code += `\nimport.meta.hot.accept(({${newCompNames}}) => {${callbackCode}\n})`
-
             result.code = code
           }
 
