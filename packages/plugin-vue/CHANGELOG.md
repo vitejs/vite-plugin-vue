@@ -1,3 +1,11 @@
+## 4.5.0 (2023-11-16)
+
+* chore: update peerDependencies to support Vite 5 (#290) ([f92861a](https://github.com/vitejs/vite-plugin-vue/commit/f92861a)), closes [#290](https://github.com/vitejs/vite-plugin-vue/issues/290)
+* chore: upgrade deps ([c046eba](https://github.com/vitejs/vite-plugin-vue/commit/c046eba))
+* fix(deps): update all non-major dependencies (#262) ([c316d43](https://github.com/vitejs/vite-plugin-vue/commit/c316d43)), closes [#262](https://github.com/vitejs/vite-plugin-vue/issues/262)
+
+
+
 ## <small>4.4.1 (2023-11-08)</small>
 
 * fix: fix style block hmr for vitepress md files ([a26a854](https://github.com/vitejs/vite-plugin-vue/commit/a26a854)), closes [vuejs/vitepress#3129](https://github.com/vuejs/vitepress/issues/3129)
