@@ -36,8 +36,8 @@ jobs:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
 
         # https://github.com/npm/cli/pull/6978
-      - name: Downgrade npm
-        run: npm i -g npm@9.7.2
+      - name: Pin npm
+        run: npm i -g npm@10.2.4
 
       - name: Publish package
         run: pnpm run ci-publish ${{ github.ref_name }}
