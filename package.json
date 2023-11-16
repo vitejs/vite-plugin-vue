@@ -62,7 +62,7 @@
     "prettier": "3.1.0",
     "resolve": "^1.22.8",
     "rollup": "^3.28.0",
-    "rollup-plugin-license": "^2.9.1",
+    "rollup-plugin-license": "^3.2.0",
     "simple-git-hooks": "^2.9.0",
     "tsx": "^3.14.0",
     "typescript": "^5.2.2",
