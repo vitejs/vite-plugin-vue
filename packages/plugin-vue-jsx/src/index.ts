@@ -222,10 +222,11 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               callbackCode += `\n__VUE_HMR_RUNTIME__.reload("${id}", __${exported})`
             }
 
-            code += `\nimport.meta.hot.accept(({${hotComponents
+            const newCompNames = hotComponents
               .map((c) => `${c.exported}: __${c.exported}`)
-              .join(',')}}) => {${callbackCode}\n})`
+              .join(',')
 
+            code += `\nimport.meta.hot.accept(({${newCompNames}}) => {${callbackCode}\n})`
             result.code = code
           }
 
