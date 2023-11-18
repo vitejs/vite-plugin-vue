@@ -141,13 +141,13 @@ module.exports = defineConfig({
         'node/no-unsupported-features/es-builtins': [
           'error',
           {
-            version: '^14.18.0 || >=16.0.0',
+            version: '^18.0.0 || >=20.0.0',
           },
         ],
         'node/no-unsupported-features/node-builtins': [
           'error',
           {
-            version: '^14.18.0 || >=16.0.0',
+            version: '^18.0.0 || >=20.0.0',
           },
         ],
         '@typescript-eslint/explicit-module-boundary-types': 'off',
