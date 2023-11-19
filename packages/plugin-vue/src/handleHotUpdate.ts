@@ -4,7 +4,7 @@ import type { HmrContext, ModuleNode } from 'vite'
 import { isCSSRequest } from 'vite'
 
 // eslint-disable-next-line node/no-extraneous-import
-import type * as _babel_types from '@babel/types'
+import type * as t from '@babel/types'
 
 import {
   createDescriptor,
@@ -225,10 +225,7 @@ function deepEqual(obj1: any, obj2: any, excludeProps: string[] = []): boolean {
   return true
 }
 
-function isEqualAst(
-  prev?: _babel_types.Statement[],
-  next?: _babel_types.Statement[],
-): boolean {
+function isEqualAst(prev?: t.Statement[], next?: t.Statement[]): boolean {
   if (typeof prev === 'undefined' || typeof next === 'undefined') {
     return prev === next
   }
