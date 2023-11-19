@@ -3,6 +3,9 @@ import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
 import type { HmrContext, ModuleNode } from 'vite'
 import { isCSSRequest } from 'vite'
 
+// eslint-disable-next-line node/no-extraneous-import
+import type * as t from '@babel/types'
+
 import {
   cache,
   createDescriptor,
@@ -12,6 +15,7 @@ import {
 import {
   getResolvedScript,
   invalidateScript,
+  resolveScript,
   setResolvedScript,
 } from './script'
 import type { ResolvedOptions } from '.'
@@ -41,6 +45,8 @@ export async function handleHotUpdate(
   const mainModule = getMainModule(modules)
   const templateModule = modules.find((m) => /type=template/.test(m.url))
 
+  // trigger resolveScript for descriptor so that we'll have the AST ready
+  resolveScript(descriptor, options, false)
   const scriptChanged = hasScriptChanged(prevDescriptor, descriptor)
   if (scriptChanged) {
     affectedModules.add(getScriptModule(modules) || mainModule)
@@ -195,11 +201,89 @@ export function isOnlyTemplateChanged(
   )
 }
 
+function deepEqual(obj1: any, obj2: any, excludeProps: string[] = []): boolean {
+  // Check if both objects are of the same type
+  if (typeof obj1 !== typeof obj2) {
+    return false
+  }
+
+  // Check if both objects are primitive types or null
+  if (obj1 == null || obj2 == null || typeof obj1 !== 'object') {
+    return obj1 === obj2
+  }
+
+  // Get the keys of the objects
+  const keys1 = Object.keys(obj1)
+  const keys2 = Object.keys(obj2)
+
+  // Check if the number of keys is the same
+  if (keys1.length !== keys2.length) {
+    return false
+  }
+
+  // Iterate through the keys and recursively compare the values
+  for (const key of keys1) {
+    // Check if the current key should be excluded
+    if (excludeProps.includes(key)) {
+      continue
+    }
+
+    if (!deepEqual(obj1[key], obj2[key], excludeProps)) {
+      return false
+    }
+  }
+
+  // If all comparisons passed, the objects are deep equal
+  return true
+}
+
+function isEqualAst(prev?: t.Statement[], next?: t.Statement[]): boolean {
+  if (typeof prev === 'undefined' || typeof next === 'undefined') {
+    return prev === next
+  }
+
+  // deep equal, but ignore start/end/loc/range/leadingComments/trailingComments/innerComments
+  if (prev.length !== next.length) {
+    return false
+  }
+
+  for (let i = 0; i < prev.length; i++) {
+    const prevNode = prev[i]
+    const nextNode = next[i]
+    if (
+      !deepEqual(prevNode, nextNode, [
+        'start',
+        'end',
+        'loc',
+        'range',
+        'leadingComments',
+        'trailingComments',
+        'innerComments',
+      ])
+    ) {
+      return false
+    }
+  }
+
+  return true
+}
+
 function hasScriptChanged(prev: SFCDescriptor, next: SFCDescriptor): boolean {
-  if (!isEqualBlock(prev.script, next.script)) {
+  // check for scriptAst/scriptSetupAst changes
+  // note that the next ast is not available yet, so we need to trigger parsing
+  const prevScript = getResolvedScript(prev, false)
+  const nextScript = getResolvedScript(next, false)
+
+  if (
+    !isEqualBlock(prev.script, next.script) &&
+    !isEqualAst(prevScript?.scriptAst, nextScript?.scriptAst)
+  ) {
     return true
   }
-  if (!isEqualBlock(prev.scriptSetup, next.scriptSetup)) {
+  if (
+    !isEqualBlock(prev.scriptSetup, next.scriptSetup) &&
+    !isEqualAst(prevScript?.scriptSetupAst, nextScript?.scriptSetupAst)
+  ) {
     return true
   }
 
