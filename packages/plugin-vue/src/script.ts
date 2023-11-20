@@ -53,8 +53,7 @@ export function resolveScript(
     return null
   }
 
-  const cacheToUse = ssr ? ssrCache : clientCache
-  const cached = cacheToUse.get(descriptor)
+  const cached = getResolvedScript(descriptor, ssr)
   if (cached) {
     return cached
   }
@@ -91,7 +90,7 @@ export function resolveScript(
     }
   }
 
-  cacheToUse.set(descriptor, resolved)
+  setResolvedScript(descriptor, resolved, ssr)
   return resolved
 }
 
