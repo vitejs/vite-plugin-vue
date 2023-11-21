@@ -9,7 +9,6 @@ import type {
   SFCTemplateCompileOptions,
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
-import type { ExistingRawSourceMap } from 'rollup'
 /* eslint-enable import/no-duplicates */
 import { computed, shallowRef } from 'vue'
 import { version } from '../package.json'
@@ -123,13 +122,6 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     typeof options.value.customElement === 'boolean'
       ? () => options.value.customElement as boolean
       : createFilter(options.value.customElement),
-  )
-  const refTransformFilter = computed(() =>
-    options.value.reactivityTransform === false
-      ? () => false
-      : options.value.reactivityTransform === true
-        ? createFilter(/\.(j|t)sx?$/, /node_modules/)
-        : createFilter(options.value.reactivityTransform),
   )
 
   return {
@@ -255,19 +247,6 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
       }
 
       if (!filter.value(filename) && !query.vue) {
-        if (
-          !query.vue &&
-          refTransformFilter.value(filename) &&
-          options.value.compiler.shouldTransformRef(code)
-        ) {
-          const result = options.value.compiler.transformRef(code, {
-            filename,
-            sourceMap: true,
-          })
-          return result as Omit<typeof result, 'map'> & {
-            map: ExistingRawSourceMap | null
-          }
-        }
         return
       }
 

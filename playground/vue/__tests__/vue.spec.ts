@@ -268,14 +268,6 @@ describe('async component', () => {
   })
 })
 
-describe('ref transform', () => {
-  test('should work', async () => {
-    expect(await page.textContent('.ref-transform')).toMatch('0')
-    await page.click('.ref-transform')
-    expect(await page.textContent('.ref-transform')).toMatch('1')
-  })
-})
-
 describe('custom element', () => {
   test('should work', async () => {
     await page.click('.custom-element')
