@@ -9,13 +9,7 @@ export default defineConfig({
       '@': __dirname,
     },
   },
-  plugins: [
-    vuePlugin({
-      reactivityTransform: true,
-    }),
-    splitVendorChunkPlugin(),
-    vueI18nPlugin,
-  ],
+  plugins: [vuePlugin(), splitVendorChunkPlugin(), vueI18nPlugin],
   build: {
     // to make tests faster
     minify: false,

@@ -44,7 +44,6 @@ export interface Options {
       | 'defineModel'
       | 'propsDestructure'
       | 'fs'
-      | 'reactivityTransform'
       | 'hoistStatic'
     >
   >
@@ -70,23 +69,6 @@ export interface Options {
   customElement?: boolean | string | RegExp | (string | RegExp)[]
 
   /**
-   * Enable Vue reactivity transform (experimental).
-   * https://vuejs.org/guide/extras/reactivity-transform.html
-   * - `true`: transform will be enabled for all vue,js(x),ts(x) files except
-   *           those inside node_modules
-   * - `string | RegExp`: apply to vue + only matched files (will include
-   *                      node_modules, so specify directories if necessary)
-   * - `false`: disable in all cases
-   *
-   * @deprecated the Reactivity Transform proposal has been dropped. This
-   * feature will be removed from Vue core in 3.4. If you intend to continue
-   * using it, disable this and switch to the [Vue Macros implementation](https://vue-macros.sxzz.moe/features/reactivity-transform.html).
-   *
-   * @default false
-   */
-  reactivityTransform?: boolean | string | RegExp | (string | RegExp)[]
-
-  /**
    * Use custom compiler-sfc instance. Can be used to force a specific version.
    */
   compiler?: typeof _compiler
@@ -107,7 +89,6 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
     compiler: null as any, // to be set in buildStart
     include: /\.vue$/,
     customElement: /\.ce\.vue$/,
-    reactivityTransform: false,
     ...rawOptions,
     root: process.cwd(),
     sourceMap: true,
