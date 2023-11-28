@@ -1,3 +1,25 @@
+## 5.0.0-alpha.0 (2023-11-28)
+
+* fix(plugin-vue): dts for cjs and esm ([c6050ea](https://github.com/vitejs/vite-plugin-vue/commit/c6050ea))
+* feat: skip hmr when script is merely formatted (#258) ([8383f49](https://github.com/vitejs/vite-plugin-vue/commit/8383f49)), closes [#258](https://github.com/vitejs/vite-plugin-vue/issues/258)
+* feat: support template AST reuse from Vue 3.4 parser ([ba1bab9](https://github.com/vitejs/vite-plugin-vue/commit/ba1bab9))
+* feat(plugin-vue): add api type to plugin ([028617d](https://github.com/vitejs/vite-plugin-vue/commit/028617d))
+* chore: remove leftover references to reactivity transform ([66d81ce](https://github.com/vitejs/vite-plugin-vue/commit/66d81ce))
+* chore(deps): update upstream (#302) ([9c93426](https://github.com/vitejs/vite-plugin-vue/commit/9c93426)), closes [#302](https://github.com/vitejs/vite-plugin-vue/issues/302)
+* chore(deps): update upstream (major) (#295) ([f5d8a29](https://github.com/vitejs/vite-plugin-vue/commit/f5d8a29)), closes [#295](https://github.com/vitejs/vite-plugin-vue/issues/295)
+* feat!: drop reactivity transform support ([85b2f5b](https://github.com/vitejs/vite-plugin-vue/commit/85b2f5b))
+* refactor!: drop node 14&16 (#296) ([4b7be52](https://github.com/vitejs/vite-plugin-vue/commit/4b7be52)), closes [#296](https://github.com/vitejs/vite-plugin-vue/issues/296)
+* refactor!: drop vite 4 ([fcabfa5](https://github.com/vitejs/vite-plugin-vue/commit/fcabfa5))
+* refactor(plugin-vue): simplify logic of resolving script (#300) ([2ac1045](https://github.com/vitejs/vite-plugin-vue/commit/2ac1045)), closes [#300](https://github.com/vitejs/vite-plugin-vue/issues/300)
+
+
+### BREAKING CHANGE
+
+* Reactivity Transform is no longer supported as part of
+this plugin, in coordination with Vue 3.4. Use VueMacros if you wish to
+continue using this feature.
+
+
 ## 4.5.0 (2023-11-16)
 
 * chore: update peerDependencies to support Vite 5 (#290) ([f92861a](https://github.com/vitejs/vite-plugin-vue/commit/f92861a)), closes [#290](https://github.com/vitejs/vite-plugin-vue/issues/290)
