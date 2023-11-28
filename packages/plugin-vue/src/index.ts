@@ -83,7 +83,13 @@ export interface ResolvedOptions extends Options {
   devToolsEnabled?: boolean
 }
 
-export default function vuePlugin(rawOptions: Options = {}): Plugin {
+export interface Api {
+  get options(): ResolvedOptions
+  set options(value: ResolvedOptions)
+  version: string
+}
+
+export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
   const options = shallowRef<ResolvedOptions>({
     isProduction: process.env.NODE_ENV === 'production',
     compiler: null as any, // to be set in buildStart
