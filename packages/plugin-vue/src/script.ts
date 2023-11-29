@@ -54,8 +54,7 @@ export function resolveScript(
     return null
   }
 
-  const cacheToUse = ssr ? ssrCache : clientCache
-  const cached = cacheToUse.get(descriptor)
+  const cached = getResolvedScript(descriptor, ssr)
   if (cached) {
     return cached
   }
@@ -67,7 +66,6 @@ export function resolveScript(
     id: descriptor.id,
     isProd: options.isProduction,
     inlineTemplate: isUseInlineTemplate(descriptor, !options.devServer),
-    reactivityTransform: options.reactivityTransform !== false,
     templateOptions: resolveTemplateCompilerOptions(descriptor, options, ssr),
     sourceMap: options.sourceMap,
     genDefaultAs: canInlineMain(descriptor, options)
@@ -93,7 +91,7 @@ export function resolveScript(
     }
   }
 
-  cacheToUse.set(descriptor, resolved)
+  setResolvedScript(descriptor, resolved, ssr)
   return resolved
 }
 

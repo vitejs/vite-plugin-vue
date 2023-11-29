@@ -1,5 +1,6 @@
 <template src="./template.html"></template>
 <script setup>
-let count = $ref(0)
-const inc = () => count++
+import { ref } from 'vue'
+const count = ref(0)
+const inc = () => count.value++
 </script>

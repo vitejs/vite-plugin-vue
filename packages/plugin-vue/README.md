@@ -31,7 +31,6 @@ export interface Options {
       | 'defineModel'
       | 'propsDestructure'
       | 'fs'
-      | 'reactivityTransform'
     >
   >
 
@@ -55,19 +54,6 @@ export interface Options {
    * @default /\.ce\.vue$/
    */
   customElement?: boolean | string | RegExp | (string | RegExp)[]
-
-  /**
-   * Enable Vue reactivity transform (experimental).
-   * https://vuejs.org/guide/extras/reactivity-transform.html
-   * - `true`: transform will be enabled for all vue,js(x),ts(x) files except
-   *           those inside node_modules
-   * - `string | RegExp`: apply to vue + only matched files (will include
-   *                      node_modules, so specify directories if necessary)
-   * - `false`: disable in all cases
-   *
-   * @default false
-   */
-  reactivityTransform?: boolean | string | RegExp | (string | RegExp)[]
 
   /**
    * Use custom compiler-sfc instance. Can be used to force a specific version.
