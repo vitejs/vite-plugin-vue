@@ -1,3 +1,12 @@
+## 3.1.0 (2023-11-16)
+
+* refactor(plugin-vue-jsx): improve the readability (#289) ([a13cfbd](https://github.com/vitejs/vite-plugin-vue/commit/a13cfbd)), closes [#289](https://github.com/vitejs/vite-plugin-vue/issues/289)
+* fix(deps): update all non-major dependencies (#242) ([5b2f9c8](https://github.com/vitejs/vite-plugin-vue/commit/5b2f9c8)), closes [#242](https://github.com/vitejs/vite-plugin-vue/issues/242)
+* fix(deps): update all non-major dependencies (#262) ([c316d43](https://github.com/vitejs/vite-plugin-vue/commit/c316d43)), closes [#262](https://github.com/vitejs/vite-plugin-vue/issues/262)
+* chore: vite 5 peerDep for vite-plugin-vue-jsx (#291) ([a74db21](https://github.com/vitejs/vite-plugin-vue/commit/a74db21)), closes [#291](https://github.com/vitejs/vite-plugin-vue/issues/291)
+
+
+
 ## <small>3.0.2 (2023-08-17)</small>
 
 * chore: bump vite ([ffe74e5](https://github.com/vitejs/vite-plugin-vue/commit/ffe74e5))

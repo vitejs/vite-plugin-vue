@@ -24,7 +24,6 @@
   <Suspense>
     <AsyncComponent />
   </Suspense>
-  <ReactivityTransform :foo="time" />
   <SetupImportTemplate />
   <WorkerTest />
   <Url />
@@ -50,7 +49,6 @@ import Slotted from './Slotted.vue'
 import ScanDep from './ScanDep.vue'
 import TsImport from './TsImport.vue'
 import AsyncComponent from './AsyncComponent.vue'
-import ReactivityTransform from './ReactivityTransform.vue'
 import SetupImportTemplate from './setup-import-template/SetupImportTemplate.vue'
 import WorkerTest from './worker.vue'
 import { ref } from 'vue'

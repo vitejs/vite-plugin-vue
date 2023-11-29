@@ -12,6 +12,10 @@ export interface SFCParseResult {
 }
 
 export const cache = new Map<string, SFCDescriptor>()
+// we use a separate descriptor cache for HMR purposes.
+// The main cached descriptors are parsed from SFCs that may have been
+// transformed by other plugins, e.g. vue-macros;
+// The HMR cached descriptors are based on the raw, pre-transform SFCs.
 export const hmrCache = new Map<string, SFCDescriptor>()
 const prevCache = new Map<string, SFCDescriptor | undefined>()
 
@@ -52,6 +56,7 @@ export function getDescriptor(
   options: ResolvedOptions,
   createIfNotFound = true,
   hmr = false,
+  code?: string,
 ): SFCDescriptor | undefined {
   const _cache = hmr ? hmrCache : cache
   if (_cache.has(filename)) {
@@ -60,7 +65,7 @@ export function getDescriptor(
   if (createIfNotFound) {
     const { descriptor, errors } = createDescriptor(
       filename,
-      fs.readFileSync(filename, 'utf-8'),
+      code ?? fs.readFileSync(filename, 'utf-8'),
       options,
       hmr,
     )

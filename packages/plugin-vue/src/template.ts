@@ -168,6 +168,8 @@ export function resolveTemplateCompilerOptions(
   return {
     ...options.template,
     id,
+    // @ts-ignore TODO remove ignore when dep is updated to 3.4
+    ast: descriptor.template?.ast,
     filename,
     scoped: hasScoped,
     slotted: descriptor.slotted,
