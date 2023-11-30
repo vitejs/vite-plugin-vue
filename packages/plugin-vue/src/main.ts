@@ -42,7 +42,7 @@ export async function transformMain(
 
   if (fs.existsSync(filename)) {
     // populate descriptor cache for HMR if it's not set yet
-    getDescriptor(
+    await getDescriptor(
       filename,
       options,
       true,
