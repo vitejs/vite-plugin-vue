@@ -1,3 +1,9 @@
+## <small>4.5.1 (2023-12-01)</small>
+
+* fix: respect vite base config for absolute URLs during dev ([44d3eb0](https://github.com/vitejs/vite-plugin-vue/commit/44d3eb0))
+
+
+
 ## 4.5.0 (2023-11-16)
 
 * chore: update peerDependencies to support Vite 5 (#290) ([f92861a](https://github.com/vitejs/vite-plugin-vue/commit/f92861a)), closes [#290](https://github.com/vitejs/vite-plugin-vue/issues/290)
