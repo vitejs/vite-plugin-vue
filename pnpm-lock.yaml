@@ -263,6 +263,16 @@ importers:
         specifier: ^0.61.0
         version: 0.61.0
 
+  playground/vue-asset-base:
+    dependencies:
+      vue:
+        specifier: ^3.3.8
+        version: 3.3.8(typescript@5.2.2)
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue
+
   playground/vue-jsx:
     dependencies:
       vue:
