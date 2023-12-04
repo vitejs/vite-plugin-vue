@@ -159,6 +159,9 @@ importers:
 
   playground:
     devDependencies:
+      '@types/node':
+        specifier: ^20.9.0
+        version: 20.9.0
       convert-source-map:
         specifier: ^2.0.0
         version: 2.0.0
