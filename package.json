@@ -36,40 +36,40 @@
     "ci-publish": "tsx scripts/publishCI.ts"
   },
   "devDependencies": {
-    "@babel/types": "^7.23.3",
-    "@types/babel__core": "^7.20.4",
+    "@babel/types": "^7.23.5",
+    "@types/babel__core": "^7.20.5",
     "@types/convert-source-map": "^2.0.3",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^20.9.0",
-    "@types/resolve": "^1.20.5",
-    "@typescript-eslint/eslint-plugin": "^6.11.0",
-    "@typescript-eslint/parser": "^6.11.0",
+    "@types/node": "^20.10.3",
+    "@types/resolve": "^1.20.6",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
     "@vitejs/release-scripts": "^1.3.1",
     "conventional-changelog-cli": "^4.1.0",
-    "eslint": "^8.53.0",
+    "eslint": "^8.55.0",
     "eslint-define-config": "^1.24.1",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-regexp": "^2.1.1",
+    "eslint-plugin-regexp": "^2.1.2",
     "execa": "^8.0.1",
     "fast-glob": "^3.3.2",
-    "fs-extra": "^11.1.1",
-    "lint-staged": "^15.1.0",
+    "fs-extra": "^11.2.0",
+    "lint-staged": "^15.2.0",
     "npm-run-all": "^4.1.5",
     "picocolors": "^1.0.0",
-    "playwright-chromium": "^1.39.0",
+    "playwright-chromium": "^1.40.1",
     "prettier": "3.1.0",
     "resolve": "^1.22.8",
     "rollup": "^4.6.0",
     "rollup-plugin-license": "^3.2.0",
     "simple-git-hooks": "^2.9.0",
-    "tsx": "^4.1.4",
-    "typescript": "^5.2.2",
+    "tsx": "^4.6.2",
+    "typescript": "^5.3.3",
     "unbuild": "2.0.0",
     "vite": "^5.0.2",
     "vitest": "^0.34.6",
-    "vue": "^3.3.8"
+    "vue": "^3.3.10"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged --concurrent false"
@@ -88,7 +88,7 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@8.10.5",
+  "packageManager": "pnpm@8.11.0",
   "pnpm": {
     "overrides": {
       "@vitejs/plugin-vue": "workspace:*"
