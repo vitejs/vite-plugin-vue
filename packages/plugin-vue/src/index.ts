@@ -10,6 +10,7 @@ import type {
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
 /* eslint-enable import/no-duplicates */
+import { computed, shallowRef } from 'vue'
 import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
