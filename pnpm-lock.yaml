@@ -159,6 +159,9 @@ importers:
 
   playground:
     devDependencies:
+      '@types/node':
+        specifier: ^20.9.0
+        version: 20.9.0
       convert-source-map:
         specifier: ^2.0.0
         version: 2.0.0
@@ -228,6 +231,9 @@ importers:
         specifier: ^4.2.5
         version: 4.2.5(vue@3.3.8)
     devDependencies:
+      '@types/node':
+        specifier: ^20.9.0
+        version: 20.9.0
       '@vitejs/plugin-vue':
         specifier: workspace:*
         version: link:../../packages/plugin-vue
@@ -262,6 +268,16 @@ importers:
       stylus:
         specifier: ^0.61.0
         version: 0.61.0
+
+  playground/vue-asset-base:
+    dependencies:
+      vue:
+        specifier: ^3.3.8
+        version: 3.3.8(typescript@5.2.2)
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue
 
   playground/vue-jsx:
     dependencies:

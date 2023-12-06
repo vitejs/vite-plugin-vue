@@ -142,6 +142,7 @@ export function resolveTemplateCompilerOptions(
           (options.devServer.config.server?.origin ?? '') +
           devBase +
           slash(path.relative(options.root, path.dirname(filename))),
+        includeAbsolute: !!devBase,
       }
     }
   } else if (transformAssetUrls !== false) {
