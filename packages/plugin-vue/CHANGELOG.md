@@ -1,3 +1,9 @@
+## <small>4.5.2 (2023-12-07)</small>
+
+* feat(plugin-vue): add `customElement` option to compiler (#238) ([c29cb49](https://github.com/vitejs/vite-plugin-vue/commit/c29cb49)), closes [#238](https://github.com/vitejs/vite-plugin-vue/issues/238)
+
+
+
 ## <small>4.5.1 (2023-12-01)</small>
 
 * fix: respect vite base config for absolute URLs during dev ([44d3eb0](https://github.com/vitejs/vite-plugin-vue/commit/44d3eb0))
