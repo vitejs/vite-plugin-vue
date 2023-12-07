@@ -17,11 +17,19 @@ export async function transformTemplateAsModule(
   options: ResolvedOptions,
   pluginContext: TransformPluginContext,
   ssr: boolean,
+  customElement: boolean,
 ): Promise<{
   code: string
   map: any
 }> {
-  const result = compile(code, descriptor, options, pluginContext, ssr)
+  const result = compile(
+    code,
+    descriptor,
+    options,
+    pluginContext,
+    ssr,
+    customElement,
+  )
 
   let returnCode = result.code
   if (
@@ -50,8 +58,16 @@ export function transformTemplateInMain(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
+  customElement: boolean,
 ): SFCTemplateCompileResults {
-  const result = compile(code, descriptor, options, pluginContext, ssr)
+  const result = compile(
+    code,
+    descriptor,
+    options,
+    pluginContext,
+    ssr,
+    customElement,
+  )
   return {
     ...result,
     code: result.code.replace(
@@ -68,9 +84,10 @@ export function compile(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
+  customElement: boolean,
 ) {
   const filename = descriptor.filename
-  resolveScript(descriptor, options, ssr)
+  resolveScript(descriptor, options, ssr, customElement)
   const result = options.compiler.compileTemplate({
     ...resolveTemplateCompilerOptions(descriptor, options, ssr)!,
     source: code,

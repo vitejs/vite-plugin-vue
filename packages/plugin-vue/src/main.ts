@@ -33,7 +33,7 @@ export async function transformMain(
   options: ResolvedOptions,
   pluginContext: TransformPluginContext,
   ssr: boolean,
-  asCustomElement: boolean,
+  customElement: boolean,
 ) {
   const { devServer, isProduction, devToolsEnabled } = options
 
@@ -74,6 +74,7 @@ export async function transformMain(
     options,
     pluginContext,
     ssr,
+    customElement,
   )
 
   // template
@@ -88,6 +89,7 @@ export async function transformMain(
       options,
       pluginContext,
       ssr,
+      customElement,
     ))
   }
 
@@ -110,7 +112,7 @@ export async function transformMain(
   const stylesCode = await genStyleCode(
     descriptor,
     pluginContext,
-    asCustomElement,
+    customElement,
     attachedProps,
   )
 
@@ -275,6 +277,7 @@ async function genTemplateCode(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
+  customElement: boolean,
 ) {
   const template = descriptor.template!
   const hasScoped = descriptor.styles.some((style) => style.scoped)
@@ -289,6 +292,7 @@ async function genTemplateCode(
       options,
       pluginContext,
       ssr,
+      customElement,
     )
   } else {
     if (template.src) {
@@ -322,6 +326,7 @@ async function genScriptCode(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
+  customElement: boolean,
 ): Promise<{
   code: string
   map: RawSourceMap | undefined
@@ -329,7 +334,7 @@ async function genScriptCode(
   let scriptCode = `const ${scriptIdentifier} = {}`
   let map: RawSourceMap | undefined
 
-  const script = resolveScript(descriptor, options, ssr)
+  const script = resolveScript(descriptor, options, ssr, customElement)
   if (script) {
     // If the script is js/ts and has no external src, it can be directly placed
     // in the main module.
@@ -376,7 +381,7 @@ async function genScriptCode(
 async function genStyleCode(
   descriptor: SFCDescriptor,
   pluginContext: PluginContext,
-  asCustomElement: boolean,
+  customElement: boolean,
   attachedProps: [string, string][],
 ) {
   let stylesCode = ``
@@ -401,12 +406,12 @@ async function genStyleCode(
           ? `&src=${descriptor.id}`
           : '&src=true'
         : ''
-      const directQuery = asCustomElement ? `&inline` : ``
+      const directQuery = customElement ? `&inline` : ``
       const scopedQuery = style.scoped ? `&scoped=${descriptor.id}` : ``
       const query = `?vue&type=style&index=${i}${srcQuery}${directQuery}${scopedQuery}`
       const styleRequest = src + query + attrsQuery
       if (style.module) {
-        if (asCustomElement) {
+        if (customElement) {
           throw new Error(
             `<style module> is not supported in custom elements mode.`,
           )
@@ -419,7 +424,7 @@ async function genStyleCode(
         stylesCode += importCode
         Object.assign((cssModulesMap ||= {}), nameMap)
       } else {
-        if (asCustomElement) {
+        if (customElement) {
           stylesCode += `\nimport _style_${i} from ${JSON.stringify(
             styleRequest,
           )}`
@@ -429,7 +434,7 @@ async function genStyleCode(
       }
       // TODO SSR critical CSS collection
     }
-    if (asCustomElement) {
+    if (customElement) {
       attachedProps.push([
         `styles`,
         `[${descriptor.styles.map((_, i) => `_style_${i}`).join(',')}]`,

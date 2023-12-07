@@ -261,6 +261,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
             options.value,
             this,
             ssr,
+            customElementFilter.value(filename),
           )
         } else if (query.type === 'style') {
           return transformStyle(
