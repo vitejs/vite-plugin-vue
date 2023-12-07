@@ -1,3 +1,13 @@
+## 5.0.0-beta.0 (2023-12-07)
+
+* chore: upgrade vitest ([db4cf1c](https://github.com/vitejs/vite-plugin-vue/commit/db4cf1c))
+* chore(deps): update dependency rollup to ^4.6.1 (#308) ([1a5df4f](https://github.com/vitejs/vite-plugin-vue/commit/1a5df4f)), closes [#308](https://github.com/vitejs/vite-plugin-vue/issues/308)
+* feat(plugin-vue): add `customElement` option to compiler (#238) ([99564d5](https://github.com/vitejs/vite-plugin-vue/commit/99564d5)), closes [#238](https://github.com/vitejs/vite-plugin-vue/issues/238)
+* fix: respect vite base config for absolute URLs during dev ([515b171](https://github.com/vitejs/vite-plugin-vue/commit/515b171))
+* fix(deps): update all non-major dependencies (#298) ([cad0825](https://github.com/vitejs/vite-plugin-vue/commit/cad0825)), closes [#298](https://github.com/vitejs/vite-plugin-vue/issues/298)
+
+
+
 ## 5.0.0-alpha.0 (2023-11-28)
 
 * fix(plugin-vue): dts for cjs and esm ([c6050ea](https://github.com/vitejs/vite-plugin-vue/commit/c6050ea))
