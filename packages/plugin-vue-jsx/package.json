@@ -39,7 +39,7 @@
     "@vue/babel-plugin-jsx": "^1.1.5"
   },
   "devDependencies": {
-    "vite": "^5.0.2"
+    "vite": "^5.0.6"
   },
   "peerDependencies": {
     "vite": "^5.0.0",

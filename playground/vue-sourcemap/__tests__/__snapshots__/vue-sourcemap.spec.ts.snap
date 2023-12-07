@@ -8,10 +8,10 @@ exports[`serve:vue-sourcemap > css > serve-css 1`] = `
   ],
   "sourcesContent": [
     "<template>
-  <p class=\\"css\\">&lt;css&gt;</p>
-  <p :class=\\"$style['css-module']\\">&lt;css&gt; module</p>
-  <p class=\\"css-scoped\\">&lt;css&gt; scoped</p>
-  <p class=\\"css-scoped-nested\\">&lt;css&gt; scoped with nested</p>
+  <p class="css">&lt;css&gt;</p>
+  <p :class="$style['css-module']">&lt;css&gt; module</p>
+  <p class="css-scoped">&lt;css&gt; scoped</p>
+  <p class="css-scoped-nested">&lt;css&gt; scoped with nested</p>
 </template>
 
 <style>
@@ -55,10 +55,10 @@ exports[`serve:vue-sourcemap > css module > serve-css-module 1`] = `
   ],
   "sourcesContent": [
     "<template>
-  <p class=\\"css\\">&lt;css&gt;</p>
-  <p :class=\\"$style['css-module']\\">&lt;css&gt; module</p>
-  <p class=\\"css-scoped\\">&lt;css&gt; scoped</p>
-  <p class=\\"css-scoped-nested\\">&lt;css&gt; scoped with nested</p>
+  <p class="css">&lt;css&gt;</p>
+  <p :class="$style['css-module']">&lt;css&gt; module</p>
+  <p class="css-scoped">&lt;css&gt; scoped</p>
+  <p class="css-scoped-nested">&lt;css&gt; scoped with nested</p>
 </template>
 
 <style>
@@ -102,10 +102,10 @@ exports[`serve:vue-sourcemap > css scoped > serve-css-scoped 1`] = `
   ],
   "sourcesContent": [
     "<template>
-  <p class=\\"css\\">&lt;css&gt;</p>
-  <p :class=\\"$style['css-module']\\">&lt;css&gt; module</p>
-  <p class=\\"css-scoped\\">&lt;css&gt; scoped</p>
-  <p class=\\"css-scoped-nested\\">&lt;css&gt; scoped with nested</p>
+  <p class="css">&lt;css&gt;</p>
+  <p :class="$style['css-module']">&lt;css&gt; module</p>
+  <p class="css-scoped">&lt;css&gt; scoped</p>
+  <p class="css-scoped-nested">&lt;css&gt; scoped with nested</p>
 </template>
 
 <style>
@@ -173,10 +173,10 @@ exports[`serve:vue-sourcemap > less with additionalData > serve-less-with-additi
   ],
   "sourcesContent": [
     "<template>
-  <p class=\\"less\\">&lt;less&gt; with additionalData</p>
+  <p class="less">&lt;less&gt; with additionalData</p>
 </template>
 
-<style lang=\\"less\\">
+<style lang="less">
 .less {
   color: @color;
 }
@@ -232,10 +232,10 @@ exports[`serve:vue-sourcemap > sass > serve-sass 1`] = `
   ],
   "sourcesContent": [
     "<template>
-  <p class=\\"sass\\">&lt;sass&gt;</p>
+  <p class="sass">&lt;sass&gt;</p>
 </template>
 
-<style lang=\\"sass\\">
+<style lang="sass">
 .sass
   color: red
 </style>
@@ -257,11 +257,11 @@ exports[`serve:vue-sourcemap > sass with import > serve-sass-with-import 1`] = `
   color: red
 ",
     "<template>
-  <p class=\\"sass-with-import\\">&lt;sass&gt; with import</p>
-  <p class=\\"sass-with-import-imported\\">&lt;sass&gt; with import (imported)</p>
+  <p class="sass-with-import">&lt;sass&gt; with import</p>
+  <p class="sass-with-import-imported">&lt;sass&gt; with import (imported)</p>
 </template>
 
-<style lang=\\"sass\\">
+<style lang="sass">
 @import './sassWithImportImported'
 
 .sass-with-import
@@ -321,11 +321,11 @@ exports[`serve:vue-sourcemap > ts > serve-ts 1`] = `
   <p>&lt;ts&gt;</p>
 </template>
 
-<script lang=\\"ts\\">
+<script lang="ts">
 console.log('ts script')
 </script>
 
-<script lang=\\"ts\\" setup>
+<script lang="ts" setup>
 console.log('ts setup')
 </script>
 ",
