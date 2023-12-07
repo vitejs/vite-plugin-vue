@@ -91,6 +91,18 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     )
   })
 
+  test('src imported html', async () => {
+    const res = await page.request.get(
+      new URL(
+        './src-import-html/src-import.html?import&vue&type=template&src=true&lang.js',
+        page.url(),
+      ).href,
+    )
+    const js = await res.text()
+    const map = extractSourcemap(js)
+    expect(formatSourcemapForSnapshot(map)).toMatchSnapshot('serve-html')
+  })
+
   test('no script', async () => {
     const res = await page.request.get(
       new URL('./NoScript.vue', page.url()).href,
