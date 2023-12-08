@@ -165,6 +165,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin {
         define: {
           __VUE_OPTIONS_API__: config.define?.__VUE_OPTIONS_API__ ?? true,
           __VUE_PROD_DEVTOOLS__: config.define?.__VUE_PROD_DEVTOOLS__ ?? false,
+          __VUE_PROD_HYDRATION_MISMATCH_DETAILS__:
+            config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ ?? false,
         },
         ssr: {
           // @ts-ignore -- config.legacy.buildSsrCjsExternalHeuristics will be removed in Vite 5
