@@ -41,12 +41,17 @@ export interface Options {
       SFCScriptCompileOptions,
       | 'babelParserPlugins'
       | 'globalTypeFiles'
-      | 'defineModel'
       | 'propsDestructure'
       | 'fs'
       | 'hoistStatic'
     >
-  >
+  > & {
+    /**
+     * @deprecated defineModel is now a stable feature and always enabled if
+     * using Vue 3.4 or above.
+     */
+    defineModel?: boolean
+  }
   template?: Partial<
     Pick<
       SFCTemplateCompileOptions,
