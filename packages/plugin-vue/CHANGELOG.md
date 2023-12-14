@@ -1,3 +1,10 @@
+## 5.0.0-beta.1 (2023-12-14)
+
+* chore: deprecate defineModel option ([0d52a27](https://github.com/vitejs/vite-plugin-vue/commit/0d52a27))
+* feat: provide default value for __VUE_PROD_HYDRATION_MISMATCH_DETAILS__ (new in Vue 3.4) ([0fbc4a4](https://github.com/vitejs/vite-plugin-vue/commit/0fbc4a4))
+
+
+
 ## 5.0.0-beta.0 (2023-12-07)
 
 * chore: upgrade vitest ([db4cf1c](https://github.com/vitejs/vite-plugin-vue/commit/db4cf1c))
