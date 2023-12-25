@@ -1,3 +1,10 @@
+## 4.6.0 (2023-12-25)
+
+* feat: provide default value for __VUE_PROD_HYDRATION_MISMATCH_DETAILS__ (new in Vue 3.4) ([0d29bbe](https://github.com/vitejs/vite-plugin-vue/commit/0d29bbe))
+* feat: support template AST reuse from Vue 3.4 parser ([f75de2e](https://github.com/vitejs/vite-plugin-vue/commit/f75de2e))
+
+
+
 ## <small>4.5.2 (2023-12-07)</small>
 
 * feat(plugin-vue): add `customElement` option to compiler (#238) ([c29cb49](https://github.com/vitejs/vite-plugin-vue/commit/c29cb49)), closes [#238](https://github.com/vitejs/vite-plugin-vue/issues/238)
