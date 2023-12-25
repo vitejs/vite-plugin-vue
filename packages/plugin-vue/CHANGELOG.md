@@ -1,12 +1,17 @@
 ## 5.0.0 (2023-12-25)
 
-
-
+* **Breaking:** drop `reactivityTransform` support
+* **Breaking:** drop Node 14/16 support
+* **Breaking:** drop Vite 4.x support
+* Vue 3.4 template AST reuse support
+* Vue 3.4 compile-time flag `__VUE_PROD_HYDRATION_MISMATCH_DETAILS__` support
+* Added `customElement` option
+* Deprecated `defineModel` option
 
 ## 5.0.0-beta.1 (2023-12-14)
 
 * chore: deprecate defineModel option ([0d52a27](https://github.com/vitejs/vite-plugin-vue/commit/0d52a27))
-* feat: provide default value for __VUE_PROD_HYDRATION_MISMATCH_DETAILS__ (new in Vue 3.4) ([0fbc4a4](https://github.com/vitejs/vite-plugin-vue/commit/0fbc4a4))
+* feat: provide default value for `__VUE_PROD_HYDRATION_MISMATCH_DETAILS__` (new in Vue 3.4) ([0fbc4a4](https://github.com/vitejs/vite-plugin-vue/commit/0fbc4a4))
 
 
 
