@@ -1,3 +1,8 @@
+## 5.0.0 (2023-12-25)
+
+
+
+
 ## 5.0.0-beta.1 (2023-12-14)
 
 * chore: deprecate defineModel option ([0d52a27](https://github.com/vitejs/vite-plugin-vue/commit/0d52a27))
