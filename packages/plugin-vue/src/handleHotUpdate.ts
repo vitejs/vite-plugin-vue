@@ -212,6 +212,11 @@ function deepEqual(obj1: any, obj2: any, excludeProps: string[] = []): boolean {
     return obj1 === obj2
   }
 
+  // Check if both equals object
+  if (obj1 === obj2) {
+    return true
+  }
+
   // Get the keys of the objects
   const keys1 = Object.keys(obj1)
   const keys2 = Object.keys(obj2)
