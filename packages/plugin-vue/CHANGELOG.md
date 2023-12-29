@@ -1,3 +1,10 @@
+## <small>5.0.1 (2023-12-29)</small>
+
+* fix: Revert "feat: support template AST reuse from Vue 3.4 parser" ([5d68fbd](https://github.com/vitejs/vite-plugin-vue/commit/5d68fbd)), closes [#322](https://github.com/vitejs/vite-plugin-vue/issues/322) [/github.com/vuejs/core/blob/a41c5f1f4367a9f41bcdb8c4e02f54b2378e577d/packages/compiler-sfc/src/parse.ts#L133-L139](https://github.com//github.com/vuejs/core/blob/a41c5f1f4367a9f41bcdb8c4e02f54b2378e577d/packages/compiler-sfc/src/parse.ts/issues/L133-L139) [/github.com/vitejs/vite-plugin-vue/blob/f75de2e5284af6036efa45d5c9ec37757485e3a0/packages/plugin-vue/src/template.ts#L186-L190](https://github.com//github.com/vitejs/vite-plugin-vue/blob/f75de2e5284af6036efa45d5c9ec37757485e3a0/packages/plugin-vue/src/template.ts/issues/L186-L190)
+* chore: aggregated changelog for 5.0 [ci skip] ([2b33c32](https://github.com/vitejs/vite-plugin-vue/commit/2b33c32))
+
+
+
 ## 5.0.0 (2023-12-25)
 
 * **Breaking:** drop `reactivityTransform` support
