@@ -186,6 +186,7 @@ export function resolveTemplateCompilerOptions(
   return {
     ...options.template,
     id,
+    ast: descriptor.template?.ast,
     filename,
     scoped: hasScoped,
     slotted: descriptor.slotted,
