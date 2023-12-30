@@ -356,3 +356,11 @@ describe('pre-compiled components', () => {
     expect(await getColor('.pre-compiled-external-cssmodules')).toBe('red')
   })
 })
+
+describe('template parse options', () => {
+  test('isCustomElement', async () => {
+    expect(await page.textContent('.custom-element-from-options')).toMatch(
+      'custom',
+    )
+  })
+})

@@ -12,6 +12,11 @@ export default defineConfig({
   plugins: [
     vuePlugin({
       reactivityTransform: true,
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith('my-'),
+        },
+      },
     }),
     splitVendorChunkPlugin(),
     vueI18nPlugin,
