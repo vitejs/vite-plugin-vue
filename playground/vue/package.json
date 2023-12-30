@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "vue": "^3.4.2"
+    "vue": "^3.4.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*",
