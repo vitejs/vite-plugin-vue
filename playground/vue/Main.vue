@@ -32,6 +32,7 @@
   <PreCompiled />
   <PreCompiledExternalScoped />
   <PreCompiledExternalCssModules />
+  <ParserOptions />
 </template>
 
 <script setup lang="ts">
@@ -58,6 +59,7 @@ import DefaultLangs from './DefaultLangs.vue'
 import PreCompiled from './pre-compiled/foo.vue'
 import PreCompiledExternalScoped from './pre-compiled/external-scoped.vue'
 import PreCompiledExternalCssModules from './pre-compiled/external-cssmodules.vue'
+import ParserOptions from './ParserOptions.vue'
 
 const TsGeneric = defineAsyncComponent(() => import('./TsGeneric.vue'))
 
