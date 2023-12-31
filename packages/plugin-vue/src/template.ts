@@ -186,6 +186,7 @@ export function resolveTemplateCompilerOptions(
   return {
     ...options.template,
     id,
+    // @ts-ignore only available in vue 3.4+
     ast: canReuseAST(options.compiler.version)
       ? descriptor.template?.ast
       : undefined,

@@ -28,6 +28,7 @@ export function createDescriptor(
   const { descriptor, errors } = compiler.parse(source, {
     filename,
     sourceMap,
+    // @ts-ignore only available in Vue 3.4+
     templateParseOptions: template?.compilerOptions,
   })
 
