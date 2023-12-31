@@ -1,3 +1,11 @@
+## <small>4.6.2 (2023-12-31)</small>
+
+* chore: fix 3.4 types ([9f3d75f](https://github.com/vitejs/vite-plugin-vue/commit/9f3d75f))
+* fix: ensure consistent user template options when reusing AST ([36351fa](https://github.com/vitejs/vite-plugin-vue/commit/36351fa)), closes [#322](https://github.com/vitejs/vite-plugin-vue/issues/322)
+* fix: only enable ast reuse for vue 3.4.3+ ([7f242e6](https://github.com/vitejs/vite-plugin-vue/commit/7f242e6))
+
+
+
 ## <small>4.6.1 (2023-12-29)</small>
 
 * fix: Revert "feat: support template AST reuse from Vue 3.4 parser" ([8d9dd67](https://github.com/vitejs/vite-plugin-vue/commit/8d9dd67)), closes [#322](https://github.com/vitejs/vite-plugin-vue/issues/322) [/github.com/vuejs/core/blob/a41c5f1f4367a9f41bcdb8c4e02f54b2378e577d/packages/compiler-sfc/src/parse.ts#L133-L139](https://github.com//github.com/vuejs/core/blob/a41c5f1f4367a9f41bcdb8c4e02f54b2378e577d/packages/compiler-sfc/src/parse.ts/issues/L133-L139) [/github.com/vitejs/vite-plugin-vue/blob/f75de2e5284af6036efa45d5c9ec37757485e3a0/packages/plugin-vue/src/template.ts#L186-L190](https://github.com//github.com/vitejs/vite-plugin-vue/blob/f75de2e5284af6036efa45d5c9ec37757485e3a0/packages/plugin-vue/src/template.ts/issues/L186-L190)
