@@ -17,11 +17,19 @@ export async function transformTemplateAsModule(
   options: ResolvedOptions,
   pluginContext: TransformPluginContext,
   ssr: boolean,
+  customElement: boolean,
 ): Promise<{
   code: string
   map: any
 }> {
-  const result = compile(code, descriptor, options, pluginContext, ssr)
+  const result = compile(
+    code,
+    descriptor,
+    options,
+    pluginContext,
+    ssr,
+    customElement,
+  )
 
   let returnCode = result.code
   if (
@@ -50,8 +58,16 @@ export function transformTemplateInMain(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
+  customElement: boolean,
 ): SFCTemplateCompileResults {
-  const result = compile(code, descriptor, options, pluginContext, ssr)
+  const result = compile(
+    code,
+    descriptor,
+    options,
+    pluginContext,
+    ssr,
+    customElement,
+  )
   return {
     ...result,
     code: result.code.replace(
@@ -68,9 +84,10 @@ export function compile(
   options: ResolvedOptions,
   pluginContext: PluginContext,
   ssr: boolean,
+  customElement: boolean,
 ) {
   const filename = descriptor.filename
-  resolveScript(descriptor, options, ssr)
+  resolveScript(descriptor, options, ssr, customElement)
   const result = options.compiler.compileTemplate({
     ...resolveTemplateCompilerOptions(descriptor, options, ssr)!,
     source: code,
@@ -125,6 +142,7 @@ export function resolveTemplateCompilerOptions(
           (options.devServer.config.server?.origin ?? '') +
           devBase +
           slash(path.relative(options.root, path.dirname(filename))),
+        includeAbsolute: !!devBase,
       }
     }
   } else if (transformAssetUrls !== false) {
@@ -168,8 +186,9 @@ export function resolveTemplateCompilerOptions(
   return {
     ...options.template,
     id,
-    // @ts-ignore TODO remove ignore when dep is updated to 3.4
-    ast: descriptor.template?.ast,
+    ast: canReuseAST(options.compiler.version)
+      ? descriptor.template?.ast
+      : undefined,
     filename,
     scoped: hasScoped,
     slotted: descriptor.slotted,
@@ -188,4 +207,18 @@ export function resolveTemplateCompilerOptions(
       sourceMap: options.sourceMap,
     },
   }
+}
+
+/**
+ * Versions before 3.4.3 have issues when the user has passed additional
+ * tempalte parse options e.g. `isCustomElement`.
+ */
+function canReuseAST(version: string | undefined) {
+  if (version) {
+    const [_, minor, patch] = version.split('.').map(Number)
+    if (minor >= 4 && patch >= 3) {
+      return true
+    }
+  }
+  return false
 }

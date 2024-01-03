@@ -22,12 +22,13 @@ const prevCache = new Map<string, SFCDescriptor | undefined>()
 export function createDescriptor(
   filename: string,
   source: string,
-  { root, isProduction, sourceMap, compiler }: ResolvedOptions,
+  { root, isProduction, sourceMap, compiler, template }: ResolvedOptions,
   hmr = false,
 ): SFCParseResult {
   const { descriptor, errors } = compiler.parse(source, {
     filename,
     sourceMap,
+    templateParseOptions: template?.compilerOptions,
   })
 
   // ensure the path is normalized in a way that is consistent inside

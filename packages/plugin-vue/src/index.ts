@@ -41,12 +41,17 @@ export interface Options {
       SFCScriptCompileOptions,
       | 'babelParserPlugins'
       | 'globalTypeFiles'
-      | 'defineModel'
       | 'propsDestructure'
       | 'fs'
       | 'hoistStatic'
     >
-  >
+  > & {
+    /**
+     * @deprecated defineModel is now a stable feature and always enabled if
+     * using Vue 3.4 or above.
+     */
+    defineModel?: boolean
+  }
   template?: Partial<
     Pick<
       SFCTemplateCompileOptions,
@@ -147,6 +152,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         define: {
           __VUE_OPTIONS_API__: config.define?.__VUE_OPTIONS_API__ ?? true,
           __VUE_PROD_DEVTOOLS__: config.define?.__VUE_PROD_DEVTOOLS__ ?? false,
+          __VUE_PROD_HYDRATION_MISMATCH_DETAILS__:
+            config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ ?? false,
         },
         ssr: {
           // @ts-ignore -- config.legacy.buildSsrCjsExternalHeuristics will be removed in Vite 5
@@ -289,6 +296,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
             options.value,
             this,
             ssr,
+            customElementFilter.value(filename),
           )
         } else if (query.type === 'style') {
           return transformStyle(

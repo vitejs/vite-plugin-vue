@@ -1,3 +1,45 @@
+## <small>5.0.2 (2023-12-30)</small>
+
+* fix: ensure consistent user template options when reusing AST ([bc0ad64](https://github.com/vitejs/vite-plugin-vue/commit/bc0ad64)), closes [#322](https://github.com/vitejs/vite-plugin-vue/issues/322)
+* fix: only enable ast reuse for vue 3.4.3+ ([4a53b6f](https://github.com/vitejs/vite-plugin-vue/commit/4a53b6f))
+* chore: bump vue to 3.4.2 ([97002e1](https://github.com/vitejs/vite-plugin-vue/commit/97002e1))
+
+
+
+## <small>5.0.1 (2023-12-29)</small>
+
+* fix: Revert "feat: support template AST reuse from Vue 3.4 parser" ([5d68fbd](https://github.com/vitejs/vite-plugin-vue/commit/5d68fbd)), closes [#322](https://github.com/vitejs/vite-plugin-vue/issues/322) [/github.com/vuejs/core/blob/a41c5f1f4367a9f41bcdb8c4e02f54b2378e577d/packages/compiler-sfc/src/parse.ts#L133-L139](https://github.com//github.com/vuejs/core/blob/a41c5f1f4367a9f41bcdb8c4e02f54b2378e577d/packages/compiler-sfc/src/parse.ts/issues/L133-L139) [/github.com/vitejs/vite-plugin-vue/blob/f75de2e5284af6036efa45d5c9ec37757485e3a0/packages/plugin-vue/src/template.ts#L186-L190](https://github.com//github.com/vitejs/vite-plugin-vue/blob/f75de2e5284af6036efa45d5c9ec37757485e3a0/packages/plugin-vue/src/template.ts/issues/L186-L190)
+* chore: aggregated changelog for 5.0 [ci skip] ([2b33c32](https://github.com/vitejs/vite-plugin-vue/commit/2b33c32))
+
+
+
+## 5.0.0 (2023-12-25)
+
+* **Breaking:** drop `reactivityTransform` support
+* **Breaking:** drop Node 14/16 support
+* **Breaking:** drop Vite 4.x support
+* Vue 3.4 template AST reuse support
+* Vue 3.4 compile-time flag `__VUE_PROD_HYDRATION_MISMATCH_DETAILS__` support
+* Added `customElement` option
+* Deprecated `defineModel` option
+
+## 5.0.0-beta.1 (2023-12-14)
+
+* chore: deprecate defineModel option ([0d52a27](https://github.com/vitejs/vite-plugin-vue/commit/0d52a27))
+* feat: provide default value for `__VUE_PROD_HYDRATION_MISMATCH_DETAILS__` (new in Vue 3.4) ([0fbc4a4](https://github.com/vitejs/vite-plugin-vue/commit/0fbc4a4))
+
+
+
+## 5.0.0-beta.0 (2023-12-07)
+
+* chore: upgrade vitest ([db4cf1c](https://github.com/vitejs/vite-plugin-vue/commit/db4cf1c))
+* chore(deps): update dependency rollup to ^4.6.1 (#308) ([1a5df4f](https://github.com/vitejs/vite-plugin-vue/commit/1a5df4f)), closes [#308](https://github.com/vitejs/vite-plugin-vue/issues/308)
+* feat(plugin-vue): add `customElement` option to compiler (#238) ([99564d5](https://github.com/vitejs/vite-plugin-vue/commit/99564d5)), closes [#238](https://github.com/vitejs/vite-plugin-vue/issues/238)
+* fix: respect vite base config for absolute URLs during dev ([515b171](https://github.com/vitejs/vite-plugin-vue/commit/515b171))
+* fix(deps): update all non-major dependencies (#298) ([cad0825](https://github.com/vitejs/vite-plugin-vue/commit/cad0825)), closes [#298](https://github.com/vitejs/vite-plugin-vue/issues/298)
+
+
+
 ## 5.0.0-alpha.0 (2023-11-28)
 
 * fix(plugin-vue): dts for cjs and esm ([c6050ea](https://github.com/vitejs/vite-plugin-vue/commit/c6050ea))
