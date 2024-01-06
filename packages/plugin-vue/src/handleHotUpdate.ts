@@ -30,6 +30,7 @@ const directRequestRE = /(?:\?|&)direct\b/
 export async function handleHotUpdate(
   { file, modules, read }: HmrContext,
   options: ResolvedOptions,
+  customElement: boolean,
 ): Promise<ModuleNode[] | void> {
   const prevDescriptor = getDescriptor(file, options, false, true)
   if (!prevDescriptor) {
@@ -46,7 +47,7 @@ export async function handleHotUpdate(
   const templateModule = modules.find((m) => /type=template/.test(m.url))
 
   // trigger resolveScript for descriptor so that we'll have the AST ready
-  resolveScript(descriptor, options, false)
+  resolveScript(descriptor, options, false, customElement)
   const scriptChanged = hasScriptChanged(prevDescriptor, descriptor)
   if (scriptChanged) {
     affectedModules.add(getScriptModule(modules) || mainModule)
