@@ -203,6 +203,11 @@ export function isOnlyTemplateChanged(
 }
 
 function deepEqual(obj1: any, obj2: any, excludeProps: string[] = []): boolean {
+  // Check if both equals object
+  if (obj1 === obj2) {
+    return true
+  }
+
   // Check if both objects are of the same type
   if (typeof obj1 !== typeof obj2) {
     return false
