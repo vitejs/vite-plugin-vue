@@ -137,7 +137,11 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         return handleTypeDepChange(typeDepToSFCMap.get(ctx.file)!, ctx)
       }
       if (filter.value(ctx.file)) {
-        return handleHotUpdate(ctx, options.value)
+        return handleHotUpdate(
+          ctx,
+          options.value,
+          customElementFilter.value(ctx.file),
+        )
       }
     },
 

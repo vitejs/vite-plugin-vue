@@ -211,7 +211,7 @@ export function resolveTemplateCompilerOptions(
 
 /**
  * Versions before 3.4.3 have issues when the user has passed additional
- * tempalte parse options e.g. `isCustomElement`.
+ * template parse options e.g. `isCustomElement`.
  */
 function canReuseAST(version: string | undefined) {
   if (version) {
