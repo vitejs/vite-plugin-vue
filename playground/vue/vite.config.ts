@@ -13,7 +13,7 @@ export default defineConfig({
   plugins: [
     vuePlugin({
       script: {
-        globalTypeFiles: [resolve(__dirname, 'HmrTypeScopeFile.d.ts')],
+        globalTypeFiles: [resolve(__dirname, 'HmrCircularReferenceFile.d.ts')],
       },
       template: {
         compilerOptions: {
