@@ -202,14 +202,25 @@ export function isOnlyTemplateChanged(
   )
 }
 
-function deepEqual(obj1: any, obj2: any, excludeProps: string[] = []): boolean {
+function deepEqual(
+  obj1: any,
+  obj2: any,
+  excludeProps: string[] = [],
+  deepParentsOfObj1: any[] = [],
+): boolean {
   // Check if both objects are of the same type
   if (typeof obj1 !== typeof obj2) {
     return false
   }
 
   // Check if both objects are primitive types or null
-  if (obj1 == null || obj2 == null || typeof obj1 !== 'object') {
+  // or circular reference
+  if (
+    obj1 == null ||
+    obj2 == null ||
+    typeof obj1 !== 'object' ||
+    deepParentsOfObj1.includes(obj1)
+  ) {
     return obj1 === obj2
   }
 
@@ -229,7 +240,12 @@ function deepEqual(obj1: any, obj2: any, excludeProps: string[] = []): boolean {
       continue
     }
 
-    if (!deepEqual(obj1[key], obj2[key], excludeProps)) {
+    if (
+      !deepEqual(obj1[key], obj2[key], excludeProps, [
+        ...deepParentsOfObj1,
+        obj1,
+      ])
+    ) {
       return false
     }
   }

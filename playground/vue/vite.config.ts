@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
 import { vueI18nPlugin } from './CustomBlockPlugin'
@@ -11,6 +12,9 @@ export default defineConfig({
   },
   plugins: [
     vuePlugin({
+      script: {
+        globalTypeFiles: [resolve(__dirname, 'HmrCircularReferenceFile.d.ts')],
+      },
       template: {
         compilerOptions: {
           isCustomElement: (tag) => tag.startsWith('my-'),
