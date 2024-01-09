@@ -225,6 +225,20 @@ describe('hmr', () => {
       'updatedCount is 0',
     )
   })
+
+  test('should handle circular reference (issue 325)', async () => {
+    editFile('Hmr.vue', (code) =>
+      code.replace(
+        'let foo: number = 0',
+        'defineProps<App.User>()\nlet foo: number = 0',
+      ),
+    )
+    await untilUpdated(() => page.textContent('.hmr-inc'), 'count is 0')
+    editFile('Hmr.vue', (code) =>
+      code.replace('let foo: number = 0', 'let foo: number = 100'),
+    )
+    await untilUpdated(() => page.textContent('.hmr-inc'), 'count is 100')
+  })
 })
 
 describe('src imports', () => {
