@@ -1,3 +1,13 @@
+## <small>5.0.3 (2024-01-10)</small>
+
+* fix(deps): update all non-major dependencies (#309) ([8c694f6](https://github.com/vitejs/vite-plugin-vue/commit/8c694f6)), closes [#309](https://github.com/vitejs/vite-plugin-vue/issues/309)
+* fix(plugin-vue): handle circular references in HMR check (#334) ([eddcfa8](https://github.com/vitejs/vite-plugin-vue/commit/eddcfa8)), closes [#334](https://github.com/vitejs/vite-plugin-vue/issues/334) [#325](https://github.com/vitejs/vite-plugin-vue/issues/325)
+* fix(plugin-vue): handle custom element when hot update ([6ffee6d](https://github.com/vitejs/vite-plugin-vue/commit/6ffee6d))
+* chore: fix typo ([0a3b9a5](https://github.com/vitejs/vite-plugin-vue/commit/0a3b9a5))
+* chore(deps): update upstream (#310) ([90eb484](https://github.com/vitejs/vite-plugin-vue/commit/90eb484)), closes [#310](https://github.com/vitejs/vite-plugin-vue/issues/310)
+
+
+
 ## <small>5.0.2 (2023-12-30)</small>
 
 * fix: ensure consistent user template options when reusing AST ([bc0ad64](https://github.com/vitejs/vite-plugin-vue/commit/bc0ad64)), closes [#322](https://github.com/vitejs/vite-plugin-vue/issues/322)
