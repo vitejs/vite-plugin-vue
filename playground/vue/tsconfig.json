@@ -6,8 +6,8 @@
     "allowJs": true,
     "paths": {
       "~utils": ["../test-utils.ts"],
-      "~types": ["./types-aliased.d.ts"]
-    }
+      "~types": ["./types-aliased.d.ts"],
+    },
   },
-  "include": ["."]
+  "include": ["."],
 }

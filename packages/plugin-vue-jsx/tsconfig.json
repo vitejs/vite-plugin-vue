@@ -10,6 +10,6 @@
     "declaration": true,
     "sourceMap": true,
     "noUnusedLocals": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+  },
 }
