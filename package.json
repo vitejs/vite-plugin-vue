@@ -59,7 +59,7 @@
     "npm-run-all2": "^6.1.2",
     "picocolors": "^1.0.0",
     "playwright-chromium": "^1.41.1",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "resolve": "^1.22.8",
     "rollup": "^4.9.6",
     "rollup-plugin-license": "^3.2.0",
