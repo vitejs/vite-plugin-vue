@@ -27,8 +27,8 @@ importers:
         specifier: ^11.0.4
         version: 11.0.4
       '@types/node':
-        specifier: ^20.11.15
-        version: 20.11.15
+        specifier: ^20.11.16
+        version: 20.11.16
       '@types/resolve':
         specifier: ^1.20.6
         version: 1.20.6
@@ -78,8 +78,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       playwright-chromium:
-        specifier: ^1.41.1
-        version: 1.41.1
+        specifier: ^1.41.2
+        version: 1.41.2
       prettier:
         specifier: 3.2.5
         version: 3.2.5
@@ -106,10 +106,10 @@ importers:
         version: 2.0.0(typescript@5.3.3)
       vite:
         specifier: ^5.0.10
-        version: 5.0.10(@types/node@20.11.15)
+        version: 5.0.10(@types/node@20.11.16)
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.15)
+        version: 1.2.2(@types/node@20.11.16)
       vue:
         specifier: ^3.4.15
         version: 3.4.15(typescript@5.3.3)
@@ -136,7 +136,7 @@ importers:
         version: 1.0.2
       vite:
         specifier: ^5.0.10
-        version: 5.0.10(@types/node@20.11.15)
+        version: 5.0.10(@types/node@20.11.16)
       vue:
         specifier: ^3.4.15
         version: 3.4.15(typescript@5.3.3)
@@ -155,13 +155,13 @@ importers:
     devDependencies:
       vite:
         specifier: ^5.0.10
-        version: 5.0.10(@types/node@20.11.15)
+        version: 5.0.10(@types/node@20.11.16)
 
   playground:
     devDependencies:
       '@types/node':
-        specifier: ^20.11.15
-        version: 20.11.15
+        specifier: ^20.11.16
+        version: 20.11.16
       convert-source-map:
         specifier: ^2.0.0
         version: 2.0.0
@@ -232,14 +232,14 @@ importers:
         version: 4.2.5(vue@3.4.15)
     devDependencies:
       '@types/node':
-        specifier: ^20.11.15
-        version: 20.11.15
+        specifier: ^20.11.16
+        version: 20.11.16
       '@vitejs/plugin-vue':
         specifier: workspace:*
         version: link:../../packages/plugin-vue
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@20.11.15)(typescript@5.3.3)
+        version: 10.9.2(@types/node@20.11.16)(typescript@5.3.3)
 
   playground/vue:
     dependencies:
@@ -2371,7 +2371,7 @@ packages:
     resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 20.11.15
+      '@types/node': 20.11.16
     dev: true
 
   /@types/json-schema@7.0.15:
@@ -2385,15 +2385,15 @@ packages:
   /@types/jsonfile@6.1.4:
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
     dependencies:
-      '@types/node': 20.11.15
+      '@types/node': 20.11.16
     dev: true
 
   /@types/ms@0.7.34:
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
     dev: true
 
-  /@types/node@20.11.15:
-    resolution: {integrity: sha512-gscmuADZfvNULx1eyirVbr3kVOVZtpQtzKMCZpeSZcN6MfbkRXAR4s9/gsQ4CzxLHw6EStDtKLNtSDL3vbq05A==}
+  /@types/node@20.11.16:
+    resolution: {integrity: sha512-gKb0enTmRCzXSSUJDq6/sPcqrfCv2mkkG6Jt/clpn5eiCbKTY+SgZUxo+p8ZKMof5dCp9vHQUAB7wOUTod22wQ==}
     dependencies:
       undici-types: 5.26.5
 
@@ -2564,7 +2564,7 @@ packages:
       magic-string: 0.30.5
       regenerator-runtime: 0.14.1
       systemjs: 6.14.3
-      vite: 5.0.10(@types/node@20.11.15)
+      vite: 5.0.10(@types/node@20.11.16)
     transitivePeerDependencies:
       - esbuild
       - supports-color
@@ -5777,17 +5777,17 @@ packages:
       pathe: 1.1.1
     dev: true
 
-  /playwright-chromium@1.41.1:
-    resolution: {integrity: sha512-Nr1/rnmRB4QzoAQwCors1Qsa9PLSdipsKiI4FZCQjSDzoBVBzoQqfXGtcIEnoAXEEEpzxuCPqjJNQwCVA66tCw==}
+  /playwright-chromium@1.41.2:
+    resolution: {integrity: sha512-1XoW4aGGRbS2BJLldtLcv2QW3deMv8myE5iCtfGRPq99BWqmBLJvJTgY/SyfBCoklwQvl91zUWYWHjCAuvKGkw==}
     engines: {node: '>=16'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      playwright-core: 1.41.1
+      playwright-core: 1.41.2
     dev: true
 
-  /playwright-core@1.41.1:
-    resolution: {integrity: sha512-/KPO5DzXSMlxSX77wy+HihKGOunh3hqndhqeo/nMxfigiKzogn8kfL0ZBDu0L1RKgan5XHCPmn6zXd2NUJgjhg==}
+  /playwright-core@1.41.2:
+    resolution: {integrity: sha512-VaTvwCA4Y8kxEe+kfm2+uUUw5Lubf38RxF7FpBxLPmGe5sdNkSg5e3ChEigaGrX7qdqT3pt2m/98LiyvU2x6CA==}
     engines: {node: '>=16'}
     hasBin: true
     dev: true
@@ -5899,7 +5899,7 @@ packages:
     dependencies:
       lilconfig: 3.0.0
       postcss: 8.4.32
-      ts-node: 10.9.2(@types/node@20.11.15)(typescript@5.3.3)
+      ts-node: 10.9.2(@types/node@20.11.16)(typescript@5.3.3)
       yaml: 2.3.4
     dev: false
 
@@ -7134,7 +7134,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: false
 
-  /ts-node@10.9.2(@types/node@20.11.15)(typescript@5.3.3):
+  /ts-node@10.9.2(@types/node@20.11.16)(typescript@5.3.3):
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
     hasBin: true
     peerDependencies:
@@ -7153,7 +7153,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.11.15
+      '@types/node': 20.11.16
       acorn: 8.11.2
       acorn-walk: 8.3.1
       arg: 4.1.3
@@ -7416,7 +7416,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vite-node@1.2.2(@types/node@20.11.15):
+  /vite-node@1.2.2(@types/node@20.11.16):
     resolution: {integrity: sha512-1as4rDTgVWJO3n1uHmUYqq7nsFgINQ9u+mRcXpjeOMJUmviqNKjcZB7UfRZrlM7MjYXMKpuWp5oGkjaFLnjawg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -7425,7 +7425,7 @@ packages:
       debug: 4.3.4
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.10(@types/node@20.11.15)
+      vite: 5.0.10(@types/node@20.11.16)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -7437,7 +7437,7 @@ packages:
       - terser
     dev: true
 
-  /vite@5.0.10(@types/node@20.11.15):
+  /vite@5.0.10(@types/node@20.11.16):
     resolution: {integrity: sha512-2P8J7WWgmc355HUMlFrwofacvr98DAjoE52BfdbwQtyLH06XKwaL/FMnmKM2crF0iX4MpmMKoDlNCB1ok7zHCw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -7465,7 +7465,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.15
+      '@types/node': 20.11.16
       esbuild: 0.19.8
       postcss: 8.4.32
       rollup: 4.9.6
@@ -7473,7 +7473,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitest@1.2.2(@types/node@20.11.15):
+  /vitest@1.2.2(@types/node@20.11.16):
     resolution: {integrity: sha512-d5Ouvrnms3GD9USIK36KG8OZ5bEvKEkITFtnGv56HFaSlbItJuYr7hv2Lkn903+AvRAgSixiamozUVfORUekjw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -7498,7 +7498,7 @@ packages:
       jsdom:
         optional: true
     dependencies:
-      '@types/node': 20.11.15
+      '@types/node': 20.11.16
       '@vitest/expect': 1.2.2
       '@vitest/runner': 1.2.2
       '@vitest/snapshot': 1.2.2
@@ -7517,8 +7517,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.2
-      vite: 5.0.10(@types/node@20.11.15)
-      vite-node: 1.2.2(@types/node@20.11.15)
+      vite: 5.0.10(@types/node@20.11.16)
+      vite-node: 1.2.2(@types/node@20.11.16)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
