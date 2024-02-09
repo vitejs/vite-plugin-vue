@@ -1,3 +1,15 @@
+## <small>5.0.4 (2024-02-09)</small>
+
+* chore(deps-dev): bump vite from 5.0.10 to 5.0.12 (#354) ([0294b9d](https://github.com/vitejs/vite-plugin-vue/commit/0294b9d)), closes [#354](https://github.com/vitejs/vite-plugin-vue/issues/354)
+* chore(deps): update dependency prettier to v3.2.4 (#347) ([e957179](https://github.com/vitejs/vite-plugin-vue/commit/e957179)), closes [#347](https://github.com/vitejs/vite-plugin-vue/issues/347)
+* chore(deps): update dependency prettier to v3.2.5 (#352) ([a9f5b11](https://github.com/vitejs/vite-plugin-vue/commit/a9f5b11)), closes [#352](https://github.com/vitejs/vite-plugin-vue/issues/352)
+* chore(deps): update upstream (#333) ([573420d](https://github.com/vitejs/vite-plugin-vue/commit/573420d)), closes [#333](https://github.com/vitejs/vite-plugin-vue/issues/333)
+* types: omit overridden options ([0c7432b](https://github.com/vitejs/vite-plugin-vue/commit/0c7432b))
+* fix(deps): update all non-major dependencies (#332) ([70e5df9](https://github.com/vitejs/vite-plugin-vue/commit/70e5df9)), closes [#332](https://github.com/vitejs/vite-plugin-vue/issues/332)
+* fix(plugin-vue): allow disabling transformAssetUrls (#326) ([0ff6fb7](https://github.com/vitejs/vite-plugin-vue/commit/0ff6fb7)), closes [#326](https://github.com/vitejs/vite-plugin-vue/issues/326)
+
+
+
 ## <small>5.0.3 (2024-01-10)</small>
 
 * fix(deps): update all non-major dependencies (#309) ([8c694f6](https://github.com/vitejs/vite-plugin-vue/commit/8c694f6)), closes [#309](https://github.com/vitejs/vite-plugin-vue/issues/309)
