@@ -37,13 +37,16 @@ export interface Options {
 
   // options to pass on to vue/compiler-sfc
   script?: Partial<
-    Pick<
+    Omit<
       SFCScriptCompileOptions,
-      | 'babelParserPlugins'
-      | 'globalTypeFiles'
-      | 'propsDestructure'
-      | 'fs'
-      | 'hoistStatic'
+      | 'id'
+      | 'isProd'
+      | 'inlineTemplate'
+      | 'templateOptions'
+      | 'sourceMap'
+      | 'genDefaultAs'
+      | 'customElement'
+      | 'defineModel'
     >
   > & {
     /**
@@ -53,17 +56,38 @@ export interface Options {
     defineModel?: boolean
   }
   template?: Partial<
-    Pick<
+    Omit<
       SFCTemplateCompileOptions,
-      | 'compiler'
-      | 'compilerOptions'
-      | 'preprocessOptions'
-      | 'preprocessCustomRequire'
-      | 'transformAssetUrls'
+      | 'id'
+      | 'source'
+      | 'ast'
+      | 'filename'
+      | 'scoped'
+      | 'slotted'
+      | 'isProd'
+      | 'inMap'
+      | 'ssr'
+      | 'ssrCssVars'
+      | 'preprocessLang'
     >
   >
-  style?: Partial<Pick<SFCStyleCompileOptions, 'trim'>>
-
+  style?: Partial<
+    Omit<
+      SFCStyleCompileOptions,
+      | 'filename'
+      | 'id'
+      | 'isProd'
+      | 'source'
+      | 'scoped'
+      | 'cssDevSourcemap'
+      | 'postcssOptions'
+      | 'map'
+      | 'postcssPlugins'
+      | 'preprocessCustomRequire'
+      | 'preprocessLang'
+      | 'preprocessOptions'
+    >
+  >
   /**
    * Transform Vue SFCs into custom elements.
    * - `true`: all `*.vue` imports are converted into custom elements
