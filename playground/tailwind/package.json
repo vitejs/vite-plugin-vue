@@ -11,11 +11,11 @@
   "dependencies": {
     "autoprefixer": "^10.4.17",
     "tailwindcss": "^3.4.1",
-    "vue": "^3.4.15",
+    "vue": "^3.4.19",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@types/node": "^20.11.16",
+    "@types/node": "^20.11.19",
     "@vitejs/plugin-vue": "workspace:*",
     "ts-node": "^10.9.2"
   }
