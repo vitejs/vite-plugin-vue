@@ -41,10 +41,10 @@
     "@types/convert-source-map": "^2.0.3",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^20.11.16",
+    "@types/node": "^20.11.19",
     "@types/resolve": "^1.20.6",
-    "@typescript-eslint/eslint-plugin": "^7.0.1",
-    "@typescript-eslint/parser": "^7.0.1",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
     "@vitejs/release-scripts": "^1.3.1",
     "conventional-changelog-cli": "^4.1.0",
     "eslint": "^8.56.0",
@@ -55,7 +55,7 @@
     "execa": "^8.0.1",
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
-    "lint-staged": "^15.2.1",
+    "lint-staged": "^15.2.2",
     "npm-run-all2": "^6.1.2",
     "picocolors": "^1.0.0",
     "playwright-chromium": "^1.41.2",
@@ -64,12 +64,12 @@
     "rollup": "^4.12.0",
     "rollup-plugin-license": "^3.2.0",
     "simple-git-hooks": "^2.9.0",
-    "tsx": "^4.7.0",
+    "tsx": "^4.7.1",
     "typescript": "^5.3.3",
     "unbuild": "2.0.0",
     "vite": "^5.1.3",
-    "vitest": "^1.2.2",
-    "vue": "^3.4.15"
+    "vitest": "^1.3.1",
+    "vue": "^3.4.19"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged --concurrent false"
@@ -88,7 +88,7 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@8.15.1",
+  "packageManager": "pnpm@8.15.3",
   "pnpm": {
     "overrides": {
       "@vitejs/plugin-vue": "workspace:*"
