@@ -38,13 +38,13 @@
     "vue": "^3.2.25"
   },
   "devDependencies": {
-    "@jridgewell/gen-mapping": "^0.3.3",
-    "@jridgewell/trace-mapping": "^0.3.22",
+    "@jridgewell/gen-mapping": "^0.3.5",
+    "@jridgewell/trace-mapping": "^0.3.25",
     "debug": "^4.3.4",
     "rollup": "^4.12.0",
     "slash": "^5.1.0",
     "source-map-js": "^1.0.2",
     "vite": "^5.1.4",
-    "vue": "^3.4.19"
+    "vue": "^3.4.21"
   }
 }

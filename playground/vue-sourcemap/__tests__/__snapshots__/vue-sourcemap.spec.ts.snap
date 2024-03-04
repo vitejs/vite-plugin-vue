@@ -143,6 +143,7 @@ exports[`serve:vue-sourcemap > css scoped > serve-css-scoped 1`] = `
 
 exports[`serve:vue-sourcemap > js > serve-js 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAIQ;AACR,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;AAGP;AACd,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;;;;;wBARlB,oBAAiB,WAAd,MAAU",
   "sources": [
     "Js.vue",
