@@ -8,6 +8,7 @@ import JsxSetupSyntax from './setup-syntax-jsx.vue'
 // eslint-disable-next-line
 import JsxWithQuery from './Query.jsx?query=true'
 import TsImport from './TsImport.vue'
+import ExportDefault from './ExportDefault'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <JsxSetupSyntax />
       <JsxWithQuery />
       <TsImport />
+      <ExportDefault />
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto'
 import path from 'node:path'
-import type { types } from '@babel/core'
+import { types } from '@babel/core'
 import * as babel from '@babel/core'
 import jsx from '@vue/babel-plugin-jsx'
 import { createFilter, normalizePath } from 'vite'
@@ -112,6 +112,36 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               },
             }
           })
+        } else {
+          plugins.push(() => {
+            return {
+              visitor: {
+                ExportDefaultDeclaration: {
+                  enter(_path: babel.NodePath<types.ExportDefaultDeclaration>) {
+                    if (isDefineComponentCall(_path.node.declaration)) {
+                      const declaration = _path.node
+                        .declaration as CallExpression
+                      const nodesPath = _path.replaceWithMultiple([
+                        types.variableDeclaration('const', [
+                          types.variableDeclarator(
+                            types.identifier('__default__'),
+                            types.callExpression(
+                              declaration.callee,
+                              declaration.arguments,
+                            ),
+                          ),
+                        ]),
+                        types.exportDefaultDeclaration(
+                          types.identifier('__default__'),
+                        ),
+                      ])
+                      _path.scope.registerDeclaration(nodesPath[0])
+                    }
+                  },
+                },
+              },
+            }
+          })
         }
 
         const result = babel.transformSync(code, {
@@ -140,7 +170,6 @@ function vueJsxPlugin(options: Options = {}): Plugin {
         // check for hmr injection
         const declaredComponents: string[] = []
         const hotComponents: HotComponent[] = []
-        let hasDefault = false
 
         for (const node of result.ast!.program.body) {
           if (node.type === 'VariableDeclaration') {
@@ -195,7 +224,6 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                 })
               }
             } else if (isDefineComponentCall(node.declaration)) {
-              hasDefault = true
               hotComponents.push({
                 local: '__default__',
                 exported: 'default',
@@ -206,14 +234,6 @@ function vueJsxPlugin(options: Options = {}): Plugin {
         }
 
         if (hotComponents.length) {
-          if (hasDefault && (needHmr || ssr)) {
-            result.code =
-              result.code!.replace(
-                /export default defineComponent/g,
-                `const __default__ = defineComponent`,
-              ) + `\nexport default __default__`
-          }
-
           if (needHmr && !ssr && !/\?vue&type=script/.test(id)) {
             let code = result.code
             let callbackCode = ``
