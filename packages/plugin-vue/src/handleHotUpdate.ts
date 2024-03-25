@@ -32,7 +32,7 @@ export async function handleHotUpdate(
   options: ResolvedOptions,
   customElement: boolean,
 ): Promise<ModuleNode[] | void> {
-  const prevDescriptor = getDescriptor(file, options, false, true)
+  const prevDescriptor = await getDescriptor(file, options, false, true)
   if (!prevDescriptor) {
     // file hasn't been requested yet (e.g. async component)
     return

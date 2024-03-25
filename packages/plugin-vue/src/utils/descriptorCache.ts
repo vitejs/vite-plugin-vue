@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
 import slash from 'slash'
+import type { Plugin } from 'vite'
 import type { CompilerError, SFCDescriptor } from 'vue/compiler-sfc'
 import type { ResolvedOptions, VueQuery } from '..'
 
@@ -52,13 +53,13 @@ export function invalidateDescriptor(filename: string, hmr = false): void {
   }
 }
 
-export function getDescriptor(
+export async function getDescriptor(
   filename: string,
   options: ResolvedOptions,
   createIfNotFound = true,
   hmr = false,
   code?: string,
-): SFCDescriptor | undefined {
+): Promise<SFCDescriptor | undefined> {
   const _cache = hmr ? hmrCache : cache
   if (_cache.has(filename)) {
     return _cache.get(filename)!
@@ -66,7 +67,7 @@ export function getDescriptor(
   if (createIfNotFound) {
     const { descriptor, errors } = createDescriptor(
       filename,
-      code ?? fs.readFileSync(filename, 'utf-8'),
+      code ?? await options.readCode(filename),
       options,
       hmr,
     )
@@ -118,6 +119,25 @@ export function setSrcDescriptor(
     return
   }
   cache.set(filename, entry)
+}
+
+type TransformCode = (filename: string, code: string) => Promise<string | null>
+
+export function getReadCode(plugins: readonly Plugin<{ transformCode?: TransformCode }>[]): (filename: string) => Promise<string> {
+  const transformCodeFns = (plugins || []).reduce<TransformCode[]>((fns, plugin) => {
+    if (plugin.name.endsWith(':api') && typeof plugin.api?.transformCode === 'function') {
+      fns.push(plugin.api.transformCode)
+    }
+    return fns
+  }, [])
+
+  return async (filename: string) => {
+    let code = fs.readFileSync(filename, 'utf-8')
+    for (const transformCode of transformCodeFns) {
+      code = (await transformCode(filename, code)) || code
+    }
+    return code
+  }
 }
 
 function getHash(text: string): string {
