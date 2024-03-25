@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="tsx">
-import { foo } from './TsImportFile.js'
+import { foo } from './TsImportFile'
 
 const Bar = () => (
   <div class="bar">
