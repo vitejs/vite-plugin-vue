@@ -8,6 +8,7 @@
   <div class="hmr-tsx-block">
     <HmrTsx />
   </div>
+  <HmrCircularReference name="test" />
   <TypeProps msg="msg" bar="bar" :id="123" />
   <Syntax />
   <PreProcessors />
@@ -60,6 +61,7 @@ import PreCompiled from './pre-compiled/foo.vue'
 import PreCompiledExternalScoped from './pre-compiled/external-scoped.vue'
 import PreCompiledExternalCssModules from './pre-compiled/external-cssmodules.vue'
 import ParserOptions from './ParserOptions.vue'
+import HmrCircularReference from './HmrCircularReference.vue'
 
 const TsGeneric = defineAsyncComponent(() => import('./TsGeneric.vue'))
 

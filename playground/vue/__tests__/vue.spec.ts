@@ -225,6 +225,16 @@ describe('hmr', () => {
       'updatedCount is 0',
     )
   })
+
+  test('should handle circular reference (issue 325)', async () => {
+    editFile('HmrCircularReference.vue', (code) =>
+      code.replace('let foo: number = 0', 'let foo: number = 100'),
+    )
+    await untilUpdated(
+      () => page.textContent('.hmr-circular-reference-inc'),
+      'count is 100',
+    )
+  })
 })
 
 describe('src imports', () => {

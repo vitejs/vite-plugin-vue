@@ -1,6 +1,6 @@
 {
   "name": "@vitejs/plugin-vue",
-  "version": "5.0.2",
+  "version": "5.0.4",
   "license": "MIT",
   "author": "Evan You",
   "files": [
@@ -38,13 +38,13 @@
     "vue": "^3.2.25"
   },
   "devDependencies": {
-    "@jridgewell/gen-mapping": "^0.3.3",
-    "@jridgewell/trace-mapping": "^0.3.20",
+    "@jridgewell/gen-mapping": "^0.3.5",
+    "@jridgewell/trace-mapping": "^0.3.25",
     "debug": "^4.3.4",
-    "rollup": "^4.9.2",
+    "rollup": "^4.13.0",
     "slash": "^5.1.0",
     "source-map-js": "^1.0.2",
-    "vite": "^5.0.10",
-    "vue": "^3.4.1"
+    "vite": "^5.1.6",
+    "vue": "^3.4.21"
   }
 }

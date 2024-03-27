@@ -6,7 +6,7 @@ import jsx from '@vue/babel-plugin-jsx'
 import { createFilter, normalizePath } from 'vite'
 import type { ComponentOptions } from 'vue'
 import type { Plugin } from 'vite'
-// eslint-disable-next-line node/no-extraneous-import
+// eslint-disable-next-line n/no-extraneous-import
 import type { CallExpression, Identifier } from '@babel/types'
 import type { Options } from './types'
 

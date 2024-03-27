@@ -131,7 +131,9 @@ export function resolveTemplateCompilerOptions(
   let transformAssetUrls = options.template?.transformAssetUrls
   // compiler-sfc should export `AssetURLOptions`
   let assetUrlOptions //: AssetURLOptions | undefined
-  if (options.devServer) {
+  if (transformAssetUrls === false) {
+    // if explicitly disabled, let assetUrlOptions be undefined
+  } else if (options.devServer) {
     // during dev, inject vite base so that compiler-sfc can transform
     // relative paths directly to absolute paths without incurring an extra import
     // request
@@ -145,7 +147,7 @@ export function resolveTemplateCompilerOptions(
         includeAbsolute: !!devBase,
       }
     }
-  } else if (transformAssetUrls !== false) {
+  } else {
     // build: force all asset urls into import requests so that they go through
     // the assets plugin for asset registration
     assetUrlOptions = {
@@ -211,7 +213,7 @@ export function resolveTemplateCompilerOptions(
 
 /**
  * Versions before 3.4.3 have issues when the user has passed additional
- * tempalte parse options e.g. `isCustomElement`.
+ * template parse options e.g. `isCustomElement`.
  */
 function canReuseAST(version: string | undefined) {
   if (version) {

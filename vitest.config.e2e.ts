@@ -3,6 +3,10 @@ import { defineConfig } from 'vitest/config'
 
 const timeout = process.env.CI ? 50000 : 30000
 
+process.env.NODE_ENV = process.env.VITE_TEST_BUILD
+  ? 'production'
+  : 'development'
+
 export default defineConfig({
   resolve: {
     alias: {

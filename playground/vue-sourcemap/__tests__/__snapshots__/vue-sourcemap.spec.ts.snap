@@ -2,6 +2,7 @@
 
 exports[`serve:vue-sourcemap > css > serve-css 1`] = `
 {
+  "ignoreList": [],
   "mappings": ";AAQA;EACE,UAAU;AACZ",
   "sources": [
     "/root/Css.vue",
@@ -49,6 +50,7 @@ exports[`serve:vue-sourcemap > css > serve-css 1`] = `
 
 exports[`serve:vue-sourcemap > css module > serve-css-module 1`] = `
 {
+  "ignoreList": [],
   "mappings": ";AAcA;EACE,UAAU;AACZ",
   "sources": [
     "/root/Css.vue",
@@ -96,6 +98,7 @@ exports[`serve:vue-sourcemap > css module > serve-css-module 1`] = `
 
 exports[`serve:vue-sourcemap > css scoped > serve-css-scoped 1`] = `
 {
+  "ignoreList": [],
   "mappings": ";AAoBA;EACE,UAAU;AACZ",
   "sources": [
     "/root/Css.vue",
@@ -143,6 +146,7 @@ exports[`serve:vue-sourcemap > css scoped > serve-css-scoped 1`] = `
 
 exports[`serve:vue-sourcemap > js > serve-js 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAIQ;AACR,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;AAGP;AACd,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;;;;;wBARlB,oBAAiB,WAAd,MAAU",
   "sources": [
     "Js.vue",
@@ -167,6 +171,7 @@ console.log('setup')
 
 exports[`serve:vue-sourcemap > less with additionalData > serve-less-with-additionalData 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAKA;EACE",
   "sources": [
     "/root/Less.vue",
@@ -225,6 +230,7 @@ console.log('setup')
 
 exports[`serve:vue-sourcemap > sass > serve-sass 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAKA;EACE",
   "sources": [
     "/root/Sass.vue",
@@ -246,6 +252,7 @@ exports[`serve:vue-sourcemap > sass > serve-sass 1`] = `
 
 exports[`serve:vue-sourcemap > sass with import > serve-sass-with-import 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAAA;EACE;;ACOF;EACE",
   "sources": [
     "/root/sassWithImportImported.sass",
@@ -274,6 +281,7 @@ exports[`serve:vue-sourcemap > sass with import > serve-sass-with-import 1`] = `
 
 exports[`serve:vue-sourcemap > src imported > serve-src-imported 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAAA;EACE,UAAU;AACZ",
   "sources": [
     "/root/src-import/src-import.css",
@@ -290,6 +298,7 @@ exports[`serve:vue-sourcemap > src imported > serve-src-imported 1`] = `
 
 exports[`serve:vue-sourcemap > src imported sass > serve-src-imported-sass 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAAA;EACE;;ACCF;EACE",
   "sources": [
     "/root/src-import/src-import-imported.sass",
@@ -311,6 +320,7 @@ exports[`serve:vue-sourcemap > src imported sass > serve-src-imported-sass 1`] =
 
 exports[`serve:vue-sourcemap > ts > serve-ts 1`] = `
 {
+  "ignoreList": [],
   "mappings": ";AAKA,QAAQ,IAAI,WAAW;;;;;AAIvB,YAAQ,IAAI,UAAU;;;;;;;;uBARpB,oBAAiB,WAAd,MAAU",
   "sources": [
     "Ts.vue",

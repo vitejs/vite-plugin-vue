@@ -3,7 +3,7 @@ import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
 import type { HmrContext, ModuleNode } from 'vite'
 import { isCSSRequest } from 'vite'
 
-// eslint-disable-next-line node/no-extraneous-import
+// eslint-disable-next-line n/no-extraneous-import
 import type * as t from '@babel/types'
 
 import {
@@ -30,6 +30,7 @@ const directRequestRE = /(?:\?|&)direct\b/
 export async function handleHotUpdate(
   { file, modules, read }: HmrContext,
   options: ResolvedOptions,
+  customElement: boolean,
 ): Promise<ModuleNode[] | void> {
   const prevDescriptor = getDescriptor(file, options, false, true)
   if (!prevDescriptor) {
@@ -46,7 +47,7 @@ export async function handleHotUpdate(
   const templateModule = modules.find((m) => /type=template/.test(m.url))
 
   // trigger resolveScript for descriptor so that we'll have the AST ready
-  resolveScript(descriptor, options, false)
+  resolveScript(descriptor, options, false, customElement)
   const scriptChanged = hasScriptChanged(prevDescriptor, descriptor)
   if (scriptChanged) {
     affectedModules.add(getScriptModule(modules) || mainModule)
@@ -201,14 +202,25 @@ export function isOnlyTemplateChanged(
   )
 }
 
-function deepEqual(obj1: any, obj2: any, excludeProps: string[] = []): boolean {
+function deepEqual(
+  obj1: any,
+  obj2: any,
+  excludeProps: string[] = [],
+  deepParentsOfObj1: any[] = [],
+): boolean {
   // Check if both objects are of the same type
   if (typeof obj1 !== typeof obj2) {
     return false
   }
 
   // Check if both objects are primitive types or null
-  if (obj1 == null || obj2 == null || typeof obj1 !== 'object') {
+  // or circular reference
+  if (
+    obj1 == null ||
+    obj2 == null ||
+    typeof obj1 !== 'object' ||
+    deepParentsOfObj1.includes(obj1)
+  ) {
     return obj1 === obj2
   }
 
@@ -228,7 +240,12 @@ function deepEqual(obj1: any, obj2: any, excludeProps: string[] = []): boolean {
       continue
     }
 
-    if (!deepEqual(obj1[key], obj2[key], excludeProps)) {
+    if (
+      !deepEqual(obj1[key], obj2[key], excludeProps, [
+        ...deepParentsOfObj1,
+        obj1,
+      ])
+    ) {
       return false
     }
   }
