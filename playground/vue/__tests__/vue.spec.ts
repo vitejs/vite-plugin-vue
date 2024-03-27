@@ -284,6 +284,14 @@ describe('custom element', () => {
     expect(await page.textContent('.custom-element')).toMatch('count: 2')
     expect(await getColor('.custom-element')).toBe('green')
   })
+
+  test('child component should have styles', async () => {
+    await page.click('.custom-element-c')
+    expect(await page.textContent('.custom-element-c')).toMatch('count: 2')
+    expect(await page.textContent('.custom-element-c')).toMatch(
+      '[\n' + '  ".custom-element-c {\\n  color: red;\\n}"\n' + ']',
+    )
+  })
 })
 
 describe('setup import template', () => {
