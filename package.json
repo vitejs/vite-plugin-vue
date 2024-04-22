@@ -88,7 +88,7 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@8.15.4",
+  "packageManager": "pnpm@9.0.5",
   "pnpm": {
     "overrides": {
       "@vitejs/plugin-vue": "workspace:*"
