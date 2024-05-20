@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/core": "^7.24.0",
     "@babel/plugin-transform-typescript": "^7.23.6",
-    "@vue/babel-plugin-jsx": "^1.2.1"
+    "@vue/babel-plugin-jsx": "^1.2.2"
   },
   "devDependencies": {
     "vite": "^5.1.6"
