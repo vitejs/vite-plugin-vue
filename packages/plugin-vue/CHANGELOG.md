@@ -1,3 +1,19 @@
+## <small>5.0.5 (2024-05-30)</small>
+
+* fix(deps): update all non-major dependencies (#360) ([ed4970a](https://github.com/vitejs/vite-plugin-vue/commit/ed4970a)), closes [#360](https://github.com/vitejs/vite-plugin-vue/issues/360)
+* fix(deps): update all non-major dependencies (#371) ([0a484c7](https://github.com/vitejs/vite-plugin-vue/commit/0a484c7)), closes [#371](https://github.com/vitejs/vite-plugin-vue/issues/371)
+* fix(plugin-vue): don't inline template when `__VUE_PROD_DEVTOOLS__` (#81) ([277a3ab](https://github.com/vitejs/vite-plugin-vue/commit/277a3ab)), closes [#81](https://github.com/vitejs/vite-plugin-vue/issues/81)
+* refactor(plugin-vue): use normalizePath from vite (#395) ([2848174](https://github.com/vitejs/vite-plugin-vue/commit/2848174)), closes [#395](https://github.com/vitejs/vite-plugin-vue/issues/395)
+* chore(deps): replace dependency eslint-plugin-node with eslint-plugin-n ^14.0.0 (#378) ([997f9bb](https://github.com/vitejs/vite-plugin-vue/commit/997f9bb)), closes [#378](https://github.com/vitejs/vite-plugin-vue/issues/378)
+* chore(deps): update all non-major dependencies (#355) ([4faec3d](https://github.com/vitejs/vite-plugin-vue/commit/4faec3d)), closes [#355](https://github.com/vitejs/vite-plugin-vue/issues/355)
+* chore(deps): update upstream (#356) ([cf7d91e](https://github.com/vitejs/vite-plugin-vue/commit/cf7d91e)), closes [#356](https://github.com/vitejs/vite-plugin-vue/issues/356)
+* chore(deps): update upstream (#361) ([a28c46e](https://github.com/vitejs/vite-plugin-vue/commit/a28c46e)), closes [#361](https://github.com/vitejs/vite-plugin-vue/issues/361)
+* chore(deps): update upstream (#367) ([2050ad3](https://github.com/vitejs/vite-plugin-vue/commit/2050ad3)), closes [#367](https://github.com/vitejs/vite-plugin-vue/issues/367)
+* chore(deps): update upstream (#379) ([96c82e9](https://github.com/vitejs/vite-plugin-vue/commit/96c82e9)), closes [#379](https://github.com/vitejs/vite-plugin-vue/issues/379)
+* chore(plugin-vue): update options on docs ([3f8b472](https://github.com/vitejs/vite-plugin-vue/commit/3f8b472))
+
+
+
 ## <small>5.0.4 (2024-02-09)</small>
 
 * chore(deps-dev): bump vite from 5.0.10 to 5.0.12 (#354) ([0294b9d](https://github.com/vitejs/vite-plugin-vue/commit/0294b9d)), closes [#354](https://github.com/vitejs/vite-plugin-vue/issues/354)
