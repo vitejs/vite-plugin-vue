@@ -37,9 +37,14 @@ export function setResolvedScript(
 // inlined template cannot be individually hot updated.
 export function isUseInlineTemplate(
   descriptor: SFCDescriptor,
-  isProd: boolean,
+  options: ResolvedOptions,
 ): boolean {
-  return isProd && !!descriptor.scriptSetup && !descriptor.template?.src
+  return (
+    !options.devServer &&
+    !options.devToolsEnabled &&
+    !!descriptor.scriptSetup &&
+    !descriptor.template?.src
+  )
 }
 
 export const scriptIdentifier = `_sfc_main`
@@ -65,10 +70,7 @@ export function resolveScript(
     ...options.script,
     id: descriptor.id,
     isProd: options.isProduction,
-    inlineTemplate: isUseInlineTemplate(
-      descriptor,
-      !options.devServer && !options.devToolsEnabled,
-    ),
+    inlineTemplate: isUseInlineTemplate(descriptor, options),
     templateOptions: resolveTemplateCompilerOptions(descriptor, options, ssr),
     sourceMap: options.sourceMap,
     genDefaultAs: canInlineMain(descriptor, options)
