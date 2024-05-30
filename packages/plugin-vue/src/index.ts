@@ -16,6 +16,7 @@ import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
 import {
   getDescriptor,
+  getReadCode,
   getSrcDescriptor,
   getTempSrcDescriptor,
 } from './utils/descriptorCache'
@@ -110,6 +111,7 @@ export interface ResolvedOptions extends Options {
   cssDevSourcemap: boolean
   devServer?: ViteDevServer
   devToolsEnabled?: boolean
+  readCode: ReturnType<typeof getReadCode>
 }
 
 export interface Api {
@@ -129,6 +131,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     sourceMap: true,
     cssDevSourcemap: false,
     devToolsEnabled: process.env.NODE_ENV !== 'production',
+    readCode: getReadCode([]),
   })
 
   const filter = computed(() =>
@@ -192,6 +195,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     configResolved(config) {
       options.value = {
         ...options.value,
+        readCode: getReadCode(config.plugins),
         root: config.root,
         sourceMap: config.command === 'build' ? !!config.build.sourcemap : true,
         cssDevSourcemap: config.css?.devSourcemap ?? false,
@@ -226,7 +230,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       }
     },
 
-    load(id, opt) {
+    async load(id, opt) {
       const ssr = opt?.ssr === true
       if (id === EXPORT_HELPER_ID) {
         return helperCode
@@ -239,7 +243,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         if (query.src) {
           return fs.readFileSync(filename, 'utf-8')
         }
-        const descriptor = getDescriptor(filename, options.value)!
+        const descriptor = (await getDescriptor(filename, options.value))!
         let block: SFCBlock | null | undefined
         if (query.type === 'script') {
           // handle <script> + <script setup> merge via compileScript()
@@ -260,7 +264,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       }
     },
 
-    transform(code, id, opt) {
+    async transform(code, id, opt) {
       const ssr = opt?.ssr === true
       const { filename, query } = parseVueRequest(id)
 
@@ -287,7 +291,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         const descriptor = query.src
           ? getSrcDescriptor(filename, query) ||
             getTempSrcDescriptor(filename, query)
-          : getDescriptor(filename, options.value)!
+          : (await getDescriptor(filename, options.value))!
 
         if (query.type === 'template') {
           return transformTemplateAsModule(
