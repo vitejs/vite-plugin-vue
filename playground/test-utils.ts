@@ -298,6 +298,7 @@ export const formatSourcemapForSnapshot = (map: any): any => {
   const m = { ...map }
   delete m.file
   delete m.names
+  delete m.sourceRoot
   m.sources = m.sources.map((source) => source.replace(root, '/root'))
   return m
 }
