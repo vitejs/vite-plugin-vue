@@ -1,3 +1,28 @@
+## 4.0.0 (2024-05-30)
+
+* chore: upgrade vitest ([db4cf1c](https://github.com/vitejs/vite-plugin-vue/commit/db4cf1c))
+* chore(deps-dev): bump vite from 5.0.10 to 5.0.12 (#354) ([0294b9d](https://github.com/vitejs/vite-plugin-vue/commit/0294b9d)), closes [#354](https://github.com/vitejs/vite-plugin-vue/issues/354)
+* chore(deps): replace dependency eslint-plugin-node with eslint-plugin-n ^14.0.0 (#378) ([997f9bb](https://github.com/vitejs/vite-plugin-vue/commit/997f9bb)), closes [#378](https://github.com/vitejs/vite-plugin-vue/issues/378)
+* chore(deps): update dependency prettier to v3.2.4 (#347) ([e957179](https://github.com/vitejs/vite-plugin-vue/commit/e957179)), closes [#347](https://github.com/vitejs/vite-plugin-vue/issues/347)
+* chore(deps): update dependency prettier to v3.2.5 (#352) ([a9f5b11](https://github.com/vitejs/vite-plugin-vue/commit/a9f5b11)), closes [#352](https://github.com/vitejs/vite-plugin-vue/issues/352)
+* chore(deps): update upstream (#302) ([9c93426](https://github.com/vitejs/vite-plugin-vue/commit/9c93426)), closes [#302](https://github.com/vitejs/vite-plugin-vue/issues/302)
+* chore(deps): update upstream (#310) ([90eb484](https://github.com/vitejs/vite-plugin-vue/commit/90eb484)), closes [#310](https://github.com/vitejs/vite-plugin-vue/issues/310)
+* chore(deps): update upstream (#356) ([cf7d91e](https://github.com/vitejs/vite-plugin-vue/commit/cf7d91e)), closes [#356](https://github.com/vitejs/vite-plugin-vue/issues/356)
+* chore(deps): update upstream (#361) ([a28c46e](https://github.com/vitejs/vite-plugin-vue/commit/a28c46e)), closes [#361](https://github.com/vitejs/vite-plugin-vue/issues/361)
+* chore(deps): update upstream (#367) ([2050ad3](https://github.com/vitejs/vite-plugin-vue/commit/2050ad3)), closes [#367](https://github.com/vitejs/vite-plugin-vue/issues/367)
+* chore(deps): update upstream (#379) ([96c82e9](https://github.com/vitejs/vite-plugin-vue/commit/96c82e9)), closes [#379](https://github.com/vitejs/vite-plugin-vue/issues/379)
+* chore(deps): update upstream (major) (#295) ([f5d8a29](https://github.com/vitejs/vite-plugin-vue/commit/f5d8a29)), closes [#295](https://github.com/vitejs/vite-plugin-vue/issues/295)
+* fix(deps): update all non-major dependencies (#298) ([cad0825](https://github.com/vitejs/vite-plugin-vue/commit/cad0825)), closes [#298](https://github.com/vitejs/vite-plugin-vue/issues/298)
+* fix(deps): update all non-major dependencies (#309) ([8c694f6](https://github.com/vitejs/vite-plugin-vue/commit/8c694f6)), closes [#309](https://github.com/vitejs/vite-plugin-vue/issues/309)
+* fix(deps): update all non-major dependencies (#332) ([70e5df9](https://github.com/vitejs/vite-plugin-vue/commit/70e5df9)), closes [#332](https://github.com/vitejs/vite-plugin-vue/issues/332)
+* fix(deps): update all non-major dependencies (#360) ([ed4970a](https://github.com/vitejs/vite-plugin-vue/commit/ed4970a)), closes [#360](https://github.com/vitejs/vite-plugin-vue/issues/360)
+* fix(deps): update all non-major dependencies (#371) ([0a484c7](https://github.com/vitejs/vite-plugin-vue/commit/0a484c7)), closes [#371](https://github.com/vitejs/vite-plugin-vue/issues/371)
+* feat: provide default value for __VUE_PROD_HYDRATION_MISMATCH_DETAILS__ (new in Vue 3.4) ([0fbc4a4](https://github.com/vitejs/vite-plugin-vue/commit/0fbc4a4))
+* refactor!: drop node 14&16 (#296) ([4b7be52](https://github.com/vitejs/vite-plugin-vue/commit/4b7be52)), closes [#296](https://github.com/vitejs/vite-plugin-vue/issues/296)
+* refactor!: drop vite 4 ([fcabfa5](https://github.com/vitejs/vite-plugin-vue/commit/fcabfa5))
+
+
+
 ## 3.1.0 (2023-11-16)
 
 * refactor(plugin-vue-jsx): improve the readability (#289) ([a13cfbd](https://github.com/vitejs/vite-plugin-vue/commit/a13cfbd)), closes [#289](https://github.com/vitejs/vite-plugin-vue/issues/289)
