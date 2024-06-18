@@ -50,6 +50,7 @@ export interface Options {
       | 'genDefaultAs'
       | 'customElement'
       | 'defineModel'
+      | 'propsDestructure'
     >
   > & {
     /**
@@ -91,12 +92,9 @@ export interface Options {
       | 'preprocessOptions'
     >
   >
+
   /**
-   * Transform Vue SFCs into custom elements.
-   * - `true`: all `*.vue` imports are converted into custom elements
-   * - `string | RegExp`: matched files are converted into custom elements
-   *
-   * @default /\.ce\.vue$/
+   * @deprecated moved to `features.customElement`.
    */
   customElement?: boolean | string | RegExp | (string | RegExp)[]
 
@@ -109,6 +107,21 @@ export interface Options {
     optionsAPI?: boolean
     prodDevtools?: boolean
     prodHydrationMismatchDetails?: boolean
+    /**
+     * Enable reactive destructure for `defineProps`.
+     * - Available in Vue 3.4 and later.
+     * - Defaults to true in Vue 3.5+
+     * - Defaults to false in Vue 3.4 (**experimental**)
+     */
+    propsDestructure?: boolean
+    /**
+     * Transform Vue SFCs into custom elements.
+     * - `true`: all `*.vue` imports are converted into custom elements
+     * - `string | RegExp`: matched files are converted into custom elements
+     *
+     * @default /\.ce\.vue$/
+     */
+    customElement?: boolean | string | RegExp | (string | RegExp)[]
   }
 }
 
@@ -142,11 +155,13 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
   const filter = computed(() =>
     createFilter(options.value.include, options.value.exclude),
   )
-  const customElementFilter = computed(() =>
-    typeof options.value.customElement === 'boolean'
-      ? () => options.value.customElement as boolean
-      : createFilter(options.value.customElement),
-  )
+  const customElementFilter = computed(() => {
+    const customElement =
+      options.value.features?.customElement || options.value.customElement
+    return typeof customElement === 'boolean'
+      ? () => customElement
+      : createFilter(customElement)
+  })
 
   return {
     name: 'vite:vue',
