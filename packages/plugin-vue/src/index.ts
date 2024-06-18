@@ -94,35 +94,52 @@ export interface Options {
   >
 
   /**
-   * @deprecated moved to `features.customElement`.
-   */
-  customElement?: boolean | string | RegExp | (string | RegExp)[]
-
-  /**
    * Use custom compiler-sfc instance. Can be used to force a specific version.
    */
   compiler?: typeof _compiler
 
+  /**
+   * Requires @vitejs/plugin-vue@^5.1.0
+   */
   features?: {
-    optionsAPI?: boolean
-    prodDevtools?: boolean
-    prodHydrationMismatchDetails?: boolean
     /**
      * Enable reactive destructure for `defineProps`.
      * - Available in Vue 3.4 and later.
-     * - Defaults to true in Vue 3.5+
-     * - Defaults to false in Vue 3.4 (**experimental**)
+     * - **default:** `false` in Vue 3.4 (**experimental**), `true` in Vue 3.5+
      */
     propsDestructure?: boolean
     /**
      * Transform Vue SFCs into custom elements.
      * - `true`: all `*.vue` imports are converted into custom elements
      * - `string | RegExp`: matched files are converted into custom elements
-     *
-     * @default /\.ce\.vue$/
+     * - **default:** /\.ce\.vue$/
      */
     customElement?: boolean | string | RegExp | (string | RegExp)[]
+    /**
+     * Set to `false` to disable Options API support and allow related code in
+     * Vue core to be dropped via dead-code elimination in production builds,
+     * resulting in smaller bundles.
+     * - **default:** `true`
+     */
+    optionsAPI?: boolean
+    /**
+     * Set to `true` to enable devtools support in production builds.
+     * Results in slightly larger bundles.
+     * - **default:** `false`
+     */
+    prodDevtools?: boolean
+    /**
+     * Set to `true` to enable detailed information for hydration mismatch
+     * errors in production builds. Results in slightly larger bundles.
+     * - **default:** `false`
+     */
+    prodHydrationMismatchDetails?: boolean
   }
+
+  /**
+   * @deprecated moved to `features.customElement`.
+   */
+  customElement?: boolean | string | RegExp | (string | RegExp)[]
 }
 
 export interface ResolvedOptions extends Options {
