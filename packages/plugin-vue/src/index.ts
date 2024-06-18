@@ -33,6 +33,9 @@ export interface Options {
   include?: string | RegExp | (string | RegExp)[]
   exclude?: string | RegExp | (string | RegExp)[]
 
+  /**
+   * In Vite, this option follows Vite's config.
+   */
   isProduction?: boolean
 
   // options to pass on to vue/compiler-sfc
@@ -47,6 +50,7 @@ export interface Options {
       | 'genDefaultAs'
       | 'customElement'
       | 'defineModel'
+      | 'propsDestructure'
     >
   > & {
     /**
@@ -88,12 +92,9 @@ export interface Options {
       | 'preprocessOptions'
     >
   >
+
   /**
-   * Transform Vue SFCs into custom elements.
-   * - `true`: all `*.vue` imports are converted into custom elements
-   * - `string | RegExp`: matched files are converted into custom elements
-   *
-   * @default /\.ce\.vue$/
+   * @deprecated moved to `features.customElement`.
    */
   customElement?: boolean | string | RegExp | (string | RegExp)[]
 
@@ -101,6 +102,27 @@ export interface Options {
    * Use custom compiler-sfc instance. Can be used to force a specific version.
    */
   compiler?: typeof _compiler
+
+  features?: {
+    optionsAPI?: boolean
+    prodDevtools?: boolean
+    prodHydrationMismatchDetails?: boolean
+    /**
+     * Enable reactive destructure for `defineProps`.
+     * - Available in Vue 3.4 and later.
+     * - Defaults to true in Vue 3.5+
+     * - Defaults to false in Vue 3.4 (**experimental**)
+     */
+    propsDestructure?: boolean
+    /**
+     * Transform Vue SFCs into custom elements.
+     * - `true`: all `*.vue` imports are converted into custom elements
+     * - `string | RegExp`: matched files are converted into custom elements
+     *
+     * @default /\.ce\.vue$/
+     */
+    customElement?: boolean | string | RegExp | (string | RegExp)[]
+  }
 }
 
 export interface ResolvedOptions extends Options {
@@ -128,17 +150,18 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     root: process.cwd(),
     sourceMap: true,
     cssDevSourcemap: false,
-    devToolsEnabled: process.env.NODE_ENV !== 'production',
   })
 
   const filter = computed(() =>
     createFilter(options.value.include, options.value.exclude),
   )
-  const customElementFilter = computed(() =>
-    typeof options.value.customElement === 'boolean'
-      ? () => options.value.customElement as boolean
-      : createFilter(options.value.customElement),
-  )
+  const customElementFilter = computed(() => {
+    const customElement =
+      options.value.features?.customElement || options.value.customElement
+    return typeof customElement === 'boolean'
+      ? () => customElement
+      : createFilter(customElement)
+  })
 
   return {
     name: 'vite:vue',
@@ -175,10 +198,18 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           dedupe: config.build?.ssr ? [] : ['vue'],
         },
         define: {
-          __VUE_OPTIONS_API__: config.define?.__VUE_OPTIONS_API__ ?? true,
-          __VUE_PROD_DEVTOOLS__: config.define?.__VUE_PROD_DEVTOOLS__ ?? false,
+          __VUE_OPTIONS_API__:
+            (options.value.features?.optionsAPI ||
+              config.define?.__VUE_OPTIONS_API__) ??
+            true,
+          __VUE_PROD_DEVTOOLS__:
+            (options.value.features?.prodDevtools ||
+              config.define?.__VUE_PROD_DEVTOOLS__) ??
+            false,
           __VUE_PROD_HYDRATION_MISMATCH_DETAILS__:
-            config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ ?? false,
+            (options.value.features?.prodHydrationMismatchDetails ||
+              config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__) ??
+            false,
         },
         ssr: {
           // @ts-ignore -- config.legacy.buildSsrCjsExternalHeuristics will be removed in Vite 5
@@ -196,8 +227,11 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         sourceMap: config.command === 'build' ? !!config.build.sourcemap : true,
         cssDevSourcemap: config.css?.devSourcemap ?? false,
         isProduction: config.isProduction,
-        devToolsEnabled:
-          !!config.define!.__VUE_PROD_DEVTOOLS__ || !config.isProduction,
+        devToolsEnabled: !!(
+          options.value.features?.prodDevtools ||
+          config.define!.__VUE_PROD_DEVTOOLS__ ||
+          !config.isProduction
+        ),
       }
     },
 

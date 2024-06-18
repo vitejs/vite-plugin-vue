@@ -77,6 +77,7 @@ export function resolveScript(
       ? scriptIdentifier
       : undefined,
     customElement,
+    propsDestructure: options.features?.propsDestructure,
   })
 
   if (!options.isProduction && resolved?.deps) {
