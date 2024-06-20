@@ -25,7 +25,7 @@ import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
 import { transformTemplateAsModule } from './template'
 import { transformStyle } from './style'
 import { EXPORT_HELPER_ID, helperCode } from './helper'
-
+import { VIRTUAL_CE, VIRTUAL_CE_MODULE } from './virtualCE'
 export { parseVueRequest } from './utils/query'
 export type { VueQuery } from './utils/query'
 
@@ -180,6 +180,9 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       : createFilter(customElement)
   })
 
+  // Record the child components of custom element
+  const ceChildRecord = new Map<string, string>()
+
   return {
     name: 'vite:vue',
 
@@ -267,6 +270,12 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     async resolveId(id) {
+      // Virtual module that handles
+      // child components of custom element
+      if (id.startsWith(VIRTUAL_CE)) {
+        return `\0${id}`
+      }
+
       // component export helper
       if (id === EXPORT_HELPER_ID) {
         return id
@@ -279,6 +288,15 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
 
     load(id, opt) {
       const ssr = opt?.ssr === true
+
+      // Returns the virtual module content of
+      // the custom element's child component
+      if (id.startsWith(VIRTUAL_CE_MODULE)) {
+        const path = ceChildRecord.get(id)
+        if (!path) return
+        return fs.readFileSync(path, 'utf-8')
+      }
+
       if (id === EXPORT_HELPER_ID) {
         return helperCode
       }
@@ -312,9 +330,16 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     transform(code, id, opt) {
+      let finalId = id
       const ssr = opt?.ssr === true
-      const { filename, query } = parseVueRequest(id)
 
+      // The virtual module of the custom element's child component
+      // is converted into a legal SFC module id.
+      if (id.startsWith(VIRTUAL_CE_MODULE)) {
+        finalId = ceChildRecord.get(id)!
+      }
+
+      const { filename, query } = parseVueRequest(finalId)
       if (query.raw || query.url) {
         return
       }
@@ -324,6 +349,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       }
 
       if (!query.vue) {
+        const isCustomElement =
+          customElementFilter.value(filename) || ceChildRecord.has(id)
         // main request
         return transformMain(
           code,
@@ -331,7 +358,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           options.value,
           this,
           ssr,
-          customElementFilter.value(filename),
+          isCustomElement,
+          ceChildRecord,
         )
       } else {
         // sub block request
