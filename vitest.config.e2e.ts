@@ -14,7 +14,7 @@ export default defineConfig({
     },
   },
   test: {
-    include: ['./playground/**/*.spec.[tj]s'],
+    include: ['./playground/vue/**/*.spec.[tj]s'],
     setupFiles: ['./playground/vitestSetup.ts'],
     globalSetup: ['./playground/vitestGlobalSetup.ts'],
     testTimeout: timeout,

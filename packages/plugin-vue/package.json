@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#readme",
   "peerDependencies": {
-    "vite": "^5.0.0",
+    "vite": "/Users/likui/Github/rolldown-vite/packages/vite",
     "vue": "^3.2.25"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
     "rollup": "^4.18.0",
     "slash": "^5.1.0",
     "source-map-js": "^1.2.0",
-    "vite": "^5.2.12",
+    "vite": "/Users/likui/Github/rolldown-vite/packages/vite",
     "vue": "^3.4.29"
   }
 }
