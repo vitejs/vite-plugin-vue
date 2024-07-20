@@ -41,10 +41,10 @@
     "@jridgewell/gen-mapping": "^0.3.5",
     "@jridgewell/trace-mapping": "^0.3.25",
     "debug": "^4.3.5",
-    "rollup": "^4.18.0",
+    "rollup": "^4.19.0",
     "slash": "^5.1.0",
     "source-map-js": "^1.2.0",
-    "vite": "^5.2.12",
+    "vite": "^5.3.4",
     "vue": "^3.4.29"
   }
 }
