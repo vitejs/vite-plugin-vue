@@ -19,7 +19,7 @@ import {
   getSrcDescriptor,
   getTempSrcDescriptor,
 } from './utils/descriptorCache'
-import { getResolvedScript, typeDepToSFCMap } from './script'
+import { clearScriptCache, getResolvedScript, typeDepToSFCMap } from './script'
 import { transformMain } from './main'
 import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
 import { transformTemplateAsModule } from './template'
@@ -360,6 +360,9 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           )
         }
       }
+    },
+    buildEnd() {
+      clearScriptCache()
     },
   }
 }
