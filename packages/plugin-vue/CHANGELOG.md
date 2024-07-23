@@ -1,3 +1,13 @@
+## 5.1.0 (2024-07-23)
+
+* fix(deps): update all non-major dependencies (#412) ([8cb2ea9](https://github.com/vitejs/vite-plugin-vue/commit/8cb2ea9)), closes [#412](https://github.com/vitejs/vite-plugin-vue/issues/412)
+* fix(plugin-vue): clear cache after build end ([96dbb22](https://github.com/vitejs/vite-plugin-vue/commit/96dbb22))
+* chore: update documentation for new features option ([7fc7994](https://github.com/vitejs/vite-plugin-vue/commit/7fc7994))
+* chore(deps): update upstream (#416) ([02a3edd](https://github.com/vitejs/vite-plugin-vue/commit/02a3edd)), closes [#416](https://github.com/vitejs/vite-plugin-vue/issues/416)
+* feat(plugin-vue): add `features` option (#419) ([3e839e2](https://github.com/vitejs/vite-plugin-vue/commit/3e839e2)), closes [#419](https://github.com/vitejs/vite-plugin-vue/issues/419)
+
+
+
 ## <small>5.0.5 (2024-05-30)</small>
 
 * fix(deps): update all non-major dependencies (#360) ([ed4970a](https://github.com/vitejs/vite-plugin-vue/commit/ed4970a)), closes [#360](https://github.com/vitejs/vite-plugin-vue/issues/360)
