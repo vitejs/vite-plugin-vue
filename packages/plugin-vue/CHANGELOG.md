@@ -1,3 +1,9 @@
+## <small>5.1.1 (2024-07-27)</small>
+
+* fix(plugin-vue): clear script cache if recall ([f5eb5ac](https://github.com/vitejs/vite-plugin-vue/commit/f5eb5ac)), closes [#431](https://github.com/vitejs/vite-plugin-vue/issues/431)
+
+
+
 ## 5.1.0 (2024-07-23)
 
 * fix(deps): update all non-major dependencies (#412) ([8cb2ea9](https://github.com/vitejs/vite-plugin-vue/commit/8cb2ea9)), closes [#412](https://github.com/vitejs/vite-plugin-vue/issues/412)
