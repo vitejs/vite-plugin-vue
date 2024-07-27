@@ -158,6 +158,8 @@ export interface Api {
 }
 
 export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
+  clearScriptCache()
+
   const options = shallowRef<ResolvedOptions>({
     isProduction: process.env.NODE_ENV === 'production',
     compiler: null as any, // to be set in buildStart
@@ -360,9 +362,6 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           )
         }
       }
-    },
-    buildEnd() {
-      clearScriptCache()
     },
   }
 }
