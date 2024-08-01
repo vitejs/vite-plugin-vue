@@ -58,6 +58,10 @@ export interface Options {
      * using Vue 3.4 or above.
      */
     defineModel?: boolean
+    /**
+     * @deprecated moved to `features.propsDestructure`.
+     */
+    propsDestructure?: boolean
   }
   template?: Partial<
     Omit<

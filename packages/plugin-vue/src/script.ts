@@ -82,7 +82,8 @@ export function resolveScript(
       ? scriptIdentifier
       : undefined,
     customElement,
-    propsDestructure: options.features?.propsDestructure,
+    propsDestructure:
+      options.features?.propsDestructure ?? options.script?.propsDestructure,
   })
 
   if (!options.isProduction && resolved?.deps) {
