@@ -1,6 +1,7 @@
 {
   "name": "@vitejs/plugin-vue",
   "version": "5.1.1",
+  "type": "commonjs",
   "license": "MIT",
   "author": "Evan You",
   "files": [
