@@ -1,3 +1,11 @@
+## <small>5.1.2 (2024-08-01)</small>
+
+* refactor(plugin-vue): add `type` field ([a6b7e3f](https://github.com/vitejs/vite-plugin-vue/commit/a6b7e3f))
+* fix(plugin-vue): add deprecated `script.propsDestructure` option ([1e24322](https://github.com/vitejs/vite-plugin-vue/commit/1e24322)), closes [#431](https://github.com/vitejs/vite-plugin-vue/issues/431)
+* chore(deps): update upstream (#432) ([5d592cd](https://github.com/vitejs/vite-plugin-vue/commit/5d592cd)), closes [#432](https://github.com/vitejs/vite-plugin-vue/issues/432)
+
+
+
 ## <small>5.1.1 (2024-07-27)</small>
 
 * fix(plugin-vue): clear script cache if recall ([f5eb5ac](https://github.com/vitejs/vite-plugin-vue/commit/f5eb5ac)), closes [#431](https://github.com/vitejs/vite-plugin-vue/issues/431)
