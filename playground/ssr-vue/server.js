@@ -90,6 +90,7 @@ export async function createServer(
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       vite && vite.ssrFixStacktrace(e)
       console.log(e.stack)
       res.status(500).end(e.stack)

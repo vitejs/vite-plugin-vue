@@ -63,7 +63,6 @@ module.exports = defineConfig({
     'n/no-unsupported-features/es-syntax': 'off',
 
     '@typescript-eslint/ban-ts-comment': 'off', // TODO: we should turn this on in a new PR
-    '@typescript-eslint/ban-types': 'off', // TODO: we should turn this on in a new PR
     '@typescript-eslint/explicit-module-boundary-types': [
       'error',
       { allowArgumentsExplicitlyTypedAsAny: true },
@@ -72,12 +71,12 @@ module.exports = defineConfig({
       'error',
       { allow: ['arrowFunctions'] },
     ],
-    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-empty-object-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off', // maybe we should turn this on in a new PR
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off', // maybe we should turn this on in a new PR
     '@typescript-eslint/no-unused-vars': 'off', // maybe we should turn this on in a new PR
-    '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-require-imports': 'off',
     '@typescript-eslint/consistent-type-imports': [
       'error',
       { prefer: 'type-imports' },
