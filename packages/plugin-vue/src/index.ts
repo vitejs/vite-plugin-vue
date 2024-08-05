@@ -153,6 +153,7 @@ export interface ResolvedOptions extends Options {
   cssDevSourcemap: boolean
   devServer?: ViteDevServer
   devToolsEnabled?: boolean
+  disableTemplateCache?: boolean
 }
 
 export interface Api {
