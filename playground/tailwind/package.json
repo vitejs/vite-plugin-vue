@@ -9,13 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.19",
-    "tailwindcss": "^3.4.4",
-    "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "autoprefixer": "^10.4.20",
+    "tailwindcss": "^3.4.9",
+    "vue": "^3.4.37",
+    "vue-router": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.14",
     "@vitejs/plugin-vue": "workspace:*",
     "ts-node": "^10.9.2"
   }

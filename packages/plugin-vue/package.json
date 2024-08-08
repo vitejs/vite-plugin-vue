@@ -41,11 +41,11 @@
   "devDependencies": {
     "@jridgewell/gen-mapping": "^0.3.5",
     "@jridgewell/trace-mapping": "^0.3.25",
-    "debug": "^4.3.5",
+    "debug": "^4.3.6",
     "rollup": "^4.19.2",
     "slash": "^5.1.0",
     "source-map-js": "^1.2.0",
     "vite": "^5.3.5",
-    "vue": "^3.4.29"
+    "vue": "^3.4.37"
   }
 }
