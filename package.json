@@ -61,7 +61,7 @@
     "playwright-chromium": "^1.44.1",
     "prettier": "3.3.3",
     "resolve": "^1.22.8",
-    "rollup": "^4.19.2",
+    "rollup": "^4.20.0",
     "rollup-plugin-license": "^3.5.2",
     "simple-git-hooks": "^2.11.1",
     "tsx": "^4.15.5",
