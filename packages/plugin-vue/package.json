@@ -45,7 +45,7 @@
     "rollup": "^4.19.2",
     "slash": "^5.1.0",
     "source-map-js": "^1.2.0",
-    "vite": "^5.3.5",
-    "vue": "^3.4.29"
+    "vite": "catalog:",
+    "vue": "catalog:"
   }
 }

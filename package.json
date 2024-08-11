@@ -67,9 +67,9 @@
     "tsx": "^4.15.5",
     "typescript": "^5.4.5",
     "unbuild": "2.0.0",
-    "vite": "^5.3.5",
+    "vite": "catalog:",
     "vitest": "^1.6.0",
-    "vue": "^3.4.29"
+    "vue": "catalog:"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged --concurrent false"
@@ -88,7 +88,7 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@9.3.0",
+  "packageManager": "pnpm@9.7.0",
   "pnpm": {
     "overrides": {
       "@vitejs/plugin-vue": "workspace:*"
