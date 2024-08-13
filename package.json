@@ -61,15 +61,15 @@
     "playwright-chromium": "^1.44.1",
     "prettier": "3.3.3",
     "resolve": "^1.22.8",
-    "rollup": "^4.19.2",
+    "rollup": "^4.20.0",
     "rollup-plugin-license": "^3.5.2",
     "simple-git-hooks": "^2.11.1",
     "tsx": "^4.15.5",
     "typescript": "^5.4.5",
     "unbuild": "2.0.0",
-    "vite": "^5.3.5",
-    "vitest": "^1.6.0",
-    "vue": "^3.4.29"
+    "vite": "catalog:",
+    "vitest": "^2.0.0",
+    "vue": "catalog:"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged --concurrent false"
@@ -88,7 +88,7 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@9.3.0",
+  "packageManager": "pnpm@9.7.0",
   "pnpm": {
     "overrides": {
       "@vitejs/plugin-vue": "workspace:*"
