@@ -38,7 +38,13 @@ function vueJsxPlugin(options: Options = {}): Plugin {
   let needHmr = false
   let needSourceMap = true
 
-  const { include, exclude, babelPlugins = [], ...babelPluginOptions } = options
+  const {
+    include,
+    exclude,
+    babelPlugins = [],
+    defineComponentName = ['defineComponent'],
+    ...babelPluginOptions
+  } = options
   const filter = createFilter(include || /\.[jt]sx$/, exclude)
 
   return {
@@ -103,7 +109,9 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               visitor: {
                 CallExpression: {
                   enter(_path: babel.NodePath<CallExpression>) {
-                    if (isDefineComponentCall(_path.node)) {
+                    if (
+                      isDefineComponentCall(_path.node, defineComponentName)
+                    ) {
                       const callee = _path.node.callee as Identifier
                       callee.name = `/* @__PURE__ */ ${callee.name}`
                     }
@@ -144,7 +152,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
 
         for (const node of result.ast!.program.body) {
           if (node.type === 'VariableDeclaration') {
-            const names = parseComponentDecls(node)
+            const names = parseComponentDecls(node, defineComponentName)
             if (names.length) {
               declaredComponents.push(...names)
             }
@@ -156,7 +164,10 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               node.declaration.type === 'VariableDeclaration'
             ) {
               hotComponents.push(
-                ...parseComponentDecls(node.declaration).map((name) => ({
+                ...parseComponentDecls(
+                  node.declaration,
+                  defineComponentName,
+                ).map((name) => ({
                   local: name,
                   exported: name,
                   id: getHash(id + name),
@@ -194,7 +205,9 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                   id: getHash(id + 'default'),
                 })
               }
-            } else if (isDefineComponentCall(node.declaration)) {
+            } else if (
+              isDefineComponentCall(node.declaration, defineComponentName)
+            ) {
               hasDefault = true
               hotComponents.push({
                 local: '__default__',
@@ -254,22 +267,31 @@ function vueJsxPlugin(options: Options = {}): Plugin {
   }
 }
 
-function parseComponentDecls(node: types.VariableDeclaration) {
+function parseComponentDecls(
+  node: types.VariableDeclaration,
+  fnNames: string[],
+) {
   const names = []
   for (const decl of node.declarations) {
-    if (decl.id.type === 'Identifier' && isDefineComponentCall(decl.init)) {
+    if (
+      decl.id.type === 'Identifier' &&
+      isDefineComponentCall(decl.init, fnNames)
+    ) {
       names.push(decl.id.name)
     }
   }
   return names
 }
 
-function isDefineComponentCall(node?: types.Node | null) {
+function isDefineComponentCall(
+  node: types.Node | null | undefined,
+  names: string[],
+) {
   return (
     node &&
     node.type === 'CallExpression' &&
     node.callee.type === 'Identifier' &&
-    node.callee.name === 'defineComponent'
+    names.includes(node.callee.name)
   )
 }
 
