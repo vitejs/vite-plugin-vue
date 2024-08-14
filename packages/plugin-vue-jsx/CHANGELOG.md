@@ -1,3 +1,14 @@
+## <small>4.0.1 (2024-08-14)</small>
+
+* chore: use pnpm catalog for shared deps ([0735e18](https://github.com/vitejs/vite-plugin-vue/commit/0735e18))
+* chore(deps): update upstream (#416) ([02a3edd](https://github.com/vitejs/vite-plugin-vue/commit/02a3edd)), closes [#416](https://github.com/vitejs/vite-plugin-vue/issues/416)
+* chore(deps): update upstream (#432) ([5d592cd](https://github.com/vitejs/vite-plugin-vue/commit/5d592cd)), closes [#432](https://github.com/vitejs/vite-plugin-vue/issues/432)
+* chore(vue-jsx): add `type` package field ([a2fe479](https://github.com/vitejs/vite-plugin-vue/commit/a2fe479))
+* feat(vue-jsx): add `defineComponentName` option ([0f71911](https://github.com/vitejs/vite-plugin-vue/commit/0f71911))
+* fix(deps): update all non-major dependencies (#412) ([8cb2ea9](https://github.com/vitejs/vite-plugin-vue/commit/8cb2ea9)), closes [#412](https://github.com/vitejs/vite-plugin-vue/issues/412)
+
+
+
 ## 4.0.0 (2024-05-30)
 
 * chore: upgrade vitest ([db4cf1c](https://github.com/vitejs/vite-plugin-vue/commit/db4cf1c))
