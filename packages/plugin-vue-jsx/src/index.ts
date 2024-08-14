@@ -6,8 +6,6 @@ import jsx from '@vue/babel-plugin-jsx'
 import { createFilter, normalizePath } from 'vite'
 import type { ComponentOptions } from 'vue'
 import type { Plugin } from 'vite'
-// eslint-disable-next-line n/no-extraneous-import
-import type { CallExpression, Identifier } from '@babel/types'
 import type { Options } from './types'
 
 export * from './types'
@@ -108,11 +106,11 @@ function vueJsxPlugin(options: Options = {}): Plugin {
             return {
               visitor: {
                 CallExpression: {
-                  enter(_path: babel.NodePath<CallExpression>) {
+                  enter(_path: babel.NodePath<types.CallExpression>) {
                     if (
                       isDefineComponentCall(_path.node, defineComponentName)
                     ) {
-                      const callee = _path.node.callee as Identifier
+                      const callee = _path.node.callee as types.Identifier
                       callee.name = `/* @__PURE__ */ ${callee.name}`
                     }
                   },
