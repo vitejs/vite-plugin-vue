@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@vitejs/test-example-external-component": "file:example-external-component",
-    "pinia": "^2.1.7",
+    "pinia": "^2.2.1",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
