@@ -9,7 +9,7 @@ import type {
 import type { PluginContext, TransformPluginContext } from 'rollup'
 import { getResolvedScript, resolveScript } from './script'
 import { createRollupError } from './utils/error'
-import type { ResolvedOptions } from '.'
+import type { ResolvedOptions } from './index'
 
 export async function transformTemplateAsModule(
   code: string,

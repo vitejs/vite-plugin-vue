@@ -18,7 +18,7 @@ import {
   resolveScript,
   setResolvedScript,
 } from './script'
-import type { ResolvedOptions } from '.'
+import type { ResolvedOptions } from './index'
 
 const debug = _debug('vite:hmr')
 

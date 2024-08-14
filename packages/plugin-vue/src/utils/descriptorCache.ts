@@ -3,7 +3,7 @@ import path from 'node:path'
 import { createHash } from 'node:crypto'
 import type { CompilerError, SFCDescriptor } from 'vue/compiler-sfc'
 import { normalizePath } from 'vite'
-import type { ResolvedOptions, VueQuery } from '..'
+import type { ResolvedOptions, VueQuery } from '../index'
 
 // compiler-sfc should be exported so it can be re-used
 export interface SFCParseResult {
