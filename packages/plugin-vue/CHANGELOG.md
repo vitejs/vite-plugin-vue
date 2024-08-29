@@ -1,3 +1,14 @@
+## <small>5.1.3 (2024-08-29)</small>
+
+* chore: upgrade to eslint 9 ([236a40f](https://github.com/vitejs/vite-plugin-vue/commit/236a40f))
+* chore: use pnpm catalog for shared deps ([0735e18](https://github.com/vitejs/vite-plugin-vue/commit/0735e18))
+* chore(deps): update dependency rollup to ^4.20.0 (#433) ([37c9073](https://github.com/vitejs/vite-plugin-vue/commit/37c9073)), closes [#433](https://github.com/vitejs/vite-plugin-vue/issues/433)
+* chore(deps): update upstream (#436) ([b75a46f](https://github.com/vitejs/vite-plugin-vue/commit/b75a46f)), closes [#436](https://github.com/vitejs/vite-plugin-vue/issues/436)
+* fix(deps): update all non-major dependencies (#421) ([e3a7fec](https://github.com/vitejs/vite-plugin-vue/commit/e3a7fec)), closes [#421](https://github.com/vitejs/vite-plugin-vue/issues/421)
+* fix(plugin-vue): default value for `__VUE_OPTIONS_API__` ([acb57c9](https://github.com/vitejs/vite-plugin-vue/commit/acb57c9)), closes [#438](https://github.com/vitejs/vite-plugin-vue/issues/438)
+
+
+
 ## <small>5.1.2 (2024-08-01)</small>
 
 * refactor(plugin-vue): add `type` field ([a6b7e3f](https://github.com/vitejs/vite-plugin-vue/commit/a6b7e3f))
