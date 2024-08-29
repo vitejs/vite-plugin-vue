@@ -15,7 +15,7 @@
     "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^20.16.2",
+    "@types/node": "^22.5.1",
     "@vitejs/plugin-vue": "workspace:*",
     "ts-node": "^10.9.2"
   }
