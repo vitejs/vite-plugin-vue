@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "devDependencies": {
-    "@types/node": "^20.14.15",
+    "@types/node": "^20.16.2",
     "convert-source-map": "^2.0.0",
     "css-color-names": "^1.0.1",
     "kill-port": "^1.6.1",
