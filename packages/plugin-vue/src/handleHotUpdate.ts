@@ -259,7 +259,7 @@ function isEqualAst(prev?: t.Statement[], next?: t.Statement[]): boolean {
     return prev === next
   }
 
-  // deep equal, but ignore start/end/loc/range/leadingComments/trailingComments/innerComments
+  // deep equal, but ignore start/end/loc/range/leadingComments/trailingComments/innerComments/typeParameters
   if (prev.length !== next.length) {
     return false
   }
