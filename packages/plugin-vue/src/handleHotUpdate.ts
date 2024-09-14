@@ -276,6 +276,8 @@ function isEqualAst(prev?: t.Statement[], next?: t.Statement[]): boolean {
         'leadingComments',
         'trailingComments',
         'innerComments',
+         // https://github.com/vuejs/core/issues/11923
+         // avoid comparing typeParameters, as it may be imported from 3rd lib and complex to compare
         'typeParameters',
       ])
     ) {
