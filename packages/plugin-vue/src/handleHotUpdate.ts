@@ -276,6 +276,7 @@ function isEqualAst(prev?: t.Statement[], next?: t.Statement[]): boolean {
         'leadingComments',
         'trailingComments',
         'innerComments',
+        'typeParameters',
       ])
     ) {
       return false
