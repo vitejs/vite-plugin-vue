@@ -208,6 +208,7 @@ export function resolveTemplateCompilerOptions(
       expressionPlugins,
       sourceMap: options.sourceMap,
     },
+    vapor: descriptor.vapor,
   }
 }
 

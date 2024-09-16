@@ -49,6 +49,7 @@ export interface Options {
       | 'customElement'
       | 'defineModel'
       | 'propsDestructure'
+      | 'vapor'
     >
   > & {
     /**
@@ -75,6 +76,7 @@ export interface Options {
       | 'ssr'
       | 'ssrCssVars'
       | 'preprocessLang'
+      | 'vapor'
     >
   >
   style?: Partial<

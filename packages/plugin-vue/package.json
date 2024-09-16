@@ -46,6 +46,6 @@
     "slash": "^5.1.0",
     "source-map-js": "^1.2.1",
     "vite": "catalog:",
-    "vue": "catalog:"
+    "vue": "https://pkg.pr.new/vuejs/core-vapor/vue@b871358"
   }
 }
