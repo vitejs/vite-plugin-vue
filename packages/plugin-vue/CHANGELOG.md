@@ -1,3 +1,12 @@
+## <small>5.1.4 (2024-09-16)</small>
+
+* chore: format ([07b29a6](https://github.com/vitejs/vite-plugin-vue/commit/07b29a6))
+* chore(deps): update dependency rollup to ^4.21.3 (#440) ([98766c2](https://github.com/vitejs/vite-plugin-vue/commit/98766c2)), closes [#440](https://github.com/vitejs/vite-plugin-vue/issues/440)
+* fix: skip checking private properties of typeParameters (#443) ([e4f5fff](https://github.com/vitejs/vite-plugin-vue/commit/e4f5fff)), closes [#443](https://github.com/vitejs/vite-plugin-vue/issues/443)
+* fix(plugin-vue): allow overwrite esbuild config (#444) ([1344294](https://github.com/vitejs/vite-plugin-vue/commit/1344294)), closes [#444](https://github.com/vitejs/vite-plugin-vue/issues/444)
+
+
+
 ## <small>5.1.3 (2024-08-29)</small>
 
 * chore: upgrade to eslint 9 ([236a40f](https://github.com/vitejs/vite-plugin-vue/commit/236a40f))
