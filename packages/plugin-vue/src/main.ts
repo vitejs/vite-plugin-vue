@@ -250,7 +250,7 @@ export async function transformMain(
       filename,
       {
         target: 'esnext',
-        // #430 Support decorators in .vue file. https://github.com/vitejs/vite-plugin-vue/issues/430
+        // #430 support decorators in .vue file
         // target can be overridden by esbuild config target
         ...options.devServer?.config.esbuild,
         loader: 'ts',
