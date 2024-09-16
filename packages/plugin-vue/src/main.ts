@@ -108,6 +108,10 @@ export async function transformMain(
     }
   }
 
+  if (descriptor.vapor) {
+    attachedProps.push(['vapor', 'true'])
+  }
+
   // styles
   const stylesCode = await genStyleCode(
     descriptor,
