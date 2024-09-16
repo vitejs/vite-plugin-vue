@@ -249,8 +249,11 @@ export async function transformMain(
       resolvedCode,
       filename,
       {
-        loader: 'ts',
         target: 'esnext',
+        // #430 support decorators in .vue file
+        // target can be overridden by esbuild config target
+        ...options.devServer?.config.esbuild,
+        loader: 'ts',
         sourcemap: options.sourceMap,
       },
       resolvedMap,
