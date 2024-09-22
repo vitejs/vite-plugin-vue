@@ -149,7 +149,7 @@ export async function transformMain(
         `__VUE_HMR_RUNTIME__.createRecord(_sfc_main.__hmrId, _sfc_main)`,
     )
     // check if the template is the only thing that changed
-    if (prevDescriptor && isOnlyTemplateChanged(prevDescriptor, descriptor)) {
+    if (!options.disableTemplateCache && prevDescriptor && isOnlyTemplateChanged(prevDescriptor, descriptor)) {
       output.push(`export const _rerender_only = true`)
     }
     output.push(
