@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { createHash } from 'node:crypto'
+import crypto from 'node:crypto'
 import type { CompilerError, SFCDescriptor } from 'vue/compiler-sfc'
 import { normalizePath } from 'vite'
 import type { ResolvedOptions, VueQuery } from '../index'
@@ -120,6 +120,15 @@ export function setSrcDescriptor(
   cache.set(filename, entry)
 }
 
+const hash =
+  // eslint-disable-next-line n/no-unsupported-features/node-builtins -- crypto.hash is supported in Node 21.7.0+, 20.12.0+
+  crypto.hash ??
+  ((
+    algorithm: string,
+    data: crypto.BinaryLike,
+    outputEncoding: crypto.BinaryToTextEncoding,
+  ) => crypto.createHash(algorithm).update(data).digest(outputEncoding))
+
 function getHash(text: string): string {
-  return createHash('sha256').update(text).digest('hex').substring(0, 8)
+  return hash('sha256', text, 'hex').substring(0, 8)
 }
