@@ -349,6 +349,20 @@ describe('macro imported types', () => {
       ),
     )
   })
+
+  test('should hmr with lang=tsx', async () => {
+    editFile('types.ts', (code) => code.replace('msg: string', ''))
+    await untilUpdated(
+      () => page.textContent('.type-props-tsx'),
+      JSON.stringify(
+        {
+          bar: 'bar',
+        },
+        null,
+        2,
+      ),
+    )
+  })
 })
 
 test('TS with generics', async () => {
