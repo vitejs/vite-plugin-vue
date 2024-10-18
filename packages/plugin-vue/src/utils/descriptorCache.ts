@@ -22,7 +22,14 @@ const prevCache = new Map<string, SFCDescriptor | undefined>()
 export function createDescriptor(
   filename: string,
   source: string,
-  { root, isProduction, sourceMap, compiler, template }: ResolvedOptions,
+  {
+    root,
+    isProduction,
+    sourceMap,
+    compiler,
+    template,
+    features,
+  }: ResolvedOptions,
   hmr = false,
 ): SFCParseResult {
   const { descriptor, errors } = compiler.parse(source, {
@@ -34,7 +41,8 @@ export function createDescriptor(
   // ensure the path is normalized in a way that is consistent inside
   // project (relative to root) and on different systems.
   const normalizedPath = normalizePath(path.relative(root, filename))
-  descriptor.id = getHash(normalizedPath + (isProduction ? source : ''))
+  const hash = getHash(normalizedPath + (isProduction ? source : ''))
+  descriptor.id = `${hash}${features?.dataAttributeSalt ?? ''}`
   ;(hmr ? hmrCache : cache).set(filename, descriptor)
   return { descriptor, errors }
 }
