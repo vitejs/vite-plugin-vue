@@ -41,6 +41,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
     exclude,
     babelPlugins = [],
     defineComponentName = ['defineComponent'],
+    tsPluginOptions = {},
     ...babelPluginOptions
   } = options
   const filter = createFilter(include || /\.[jt]sx$/, exclude)
@@ -97,7 +98,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               (r) => r.default,
             ),
             // @ts-ignore
-            { isTSX: true, allowExtensions: true },
+            { ...tsPluginOptions, isTSX: true, allowExtensions: true },
           ])
         }
 
