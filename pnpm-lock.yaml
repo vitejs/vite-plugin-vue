@@ -276,6 +276,16 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-vue
 
+  playground/vue-custom-id:
+    dependencies:
+      vue:
+        specifier: 'catalog:'
+        version: 3.5.3(typescript@5.5.4)
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue
+
   playground/vue-jsx:
     dependencies:
       vue:
