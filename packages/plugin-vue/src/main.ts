@@ -50,7 +50,7 @@ export async function transformMain(
       // for vue files, create descriptor from fs read to be consistent with
       // logic in handleHotUpdate()
       // for non vue files, e.g. md files in vitepress, we assume
-      // `hmrContext.read` is overwriten so handleHotUpdate() is dealing with
+      // `hmrContext.read` is overwritten so handleHotUpdate() is dealing with
       // post-transform code, so we populate the descriptor with post-transform
       // code here as well.
       filename.endsWith('.vue') ? undefined : code,
