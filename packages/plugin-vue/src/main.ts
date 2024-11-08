@@ -150,7 +150,7 @@ export async function transformMain(
     )
     output.push(
       `import.meta.hot.on('file-changed', ({ file }) => {`,
-      `  window.__VUE_HMR_CHANGED_FILE = file`,
+      `  __VUE_HMR_RUNTIME__.CHANGED_FILE = file`,
       `})`,
     )
     // check if the template is the only thing that changed
@@ -159,7 +159,7 @@ export async function transformMain(
       // is triggered by changes in other files that the current component
       // relies on, a reload is required.
       output.push(
-        `export const _rerender_only = window.__VUE_HMR_CHANGED_FILE === ${JSON.stringify(filename)}`,
+        `export const _rerender_only = __VUE_HMR_RUNTIME__.CHANGED_FILE === ${JSON.stringify(filename)}`,
       )
     }
     output.push(

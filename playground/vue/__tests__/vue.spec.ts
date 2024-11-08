@@ -213,7 +213,7 @@ describe('hmr', () => {
     await untilUpdated(() => page.textContent('.hmr-number'), '100')
 
     // reload
-    editFile('lib.js', (code) => code.replace('return 100', 'return 200'))
+    editFile('lib.js', (code) => code.replace('100', '200'))
     await untilUpdated(() => page.textContent('.hmr-number'), '200')
   })
 
