@@ -200,6 +200,12 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     handleHotUpdate(ctx) {
+      ctx.server.ws.send({
+        type: 'custom',
+        event: 'file-changed',
+        data: { file: ctx.file },
+      })
+
       if (options.value.compiler.invalidateTypeCache) {
         options.value.compiler.invalidateTypeCache(ctx.file)
       }
