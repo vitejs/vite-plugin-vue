@@ -159,7 +159,7 @@ export async function transformMain(
       // is triggered by changes in other files that the current component
       // relies on, a reload is required.
       output.push(
-        `export const _rerender_only = __VUE_HMR_RUNTIME__.CHANGED_FILE === ${JSON.stringify(filename)}`,
+        `export const _rerender_only = __VUE_HMR_RUNTIME__.CHANGED_FILE === ${JSON.stringify(normalizePath(filename))}`,
       )
     }
     output.push(

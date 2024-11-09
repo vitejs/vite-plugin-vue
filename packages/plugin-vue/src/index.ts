@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import type { Plugin, ViteDevServer } from 'vite'
-import { createFilter } from 'vite'
+import { createFilter, normalizePath } from 'vite'
 /* eslint-disable import/no-duplicates */
 import type {
   SFCBlock,
@@ -203,7 +203,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       ctx.server.ws.send({
         type: 'custom',
         event: 'file-changed',
-        data: { file: ctx.file },
+        data: { file: normalizePath(ctx.file) },
       })
 
       if (options.value.compiler.invalidateTypeCache) {
