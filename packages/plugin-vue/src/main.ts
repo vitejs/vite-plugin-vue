@@ -155,9 +155,10 @@ export async function transformMain(
     )
     // check if the template is the only thing that changed
     if (prevDescriptor && isOnlyTemplateChanged(prevDescriptor, descriptor)) {
-      // #7 vite will cache the transform result. If the current hot update
-      // is triggered by changes in other files that the current component
-      // relies on, a reload is required.
+      // #7 only consider re-render if the HMR is triggered by the current component,
+      // otherwise reload. Due to vite will cache the transform result. If the HMR
+      // is triggered by other files that the current component relies on, a reload
+      // is required.
       output.push(
         `export const _rerender_only = __VUE_HMR_RUNTIME__.CHANGED_FILE === ${JSON.stringify(normalizePath(filename))}`,
       )
