@@ -1,3 +1,16 @@
+## <small>5.1.5 (2024-11-11)</small>
+
+* chore: fix typo (#464) ([4a811b0](https://github.com/vitejs/vite-plugin-vue/commit/4a811b0)), closes [#464](https://github.com/vitejs/vite-plugin-vue/issues/464)
+* chore(deps): update dependency rollup to ^4.24.0 (#448) ([0fc9cd0](https://github.com/vitejs/vite-plugin-vue/commit/0fc9cd0)), closes [#448](https://github.com/vitejs/vite-plugin-vue/issues/448)
+* chore(deps): update dependency rollup to ^4.25.0 (#472) ([91210cc](https://github.com/vitejs/vite-plugin-vue/commit/91210cc)), closes [#472](https://github.com/vitejs/vite-plugin-vue/issues/472)
+* chore(deps): update upstream (#462) ([5625fc9](https://github.com/vitejs/vite-plugin-vue/commit/5625fc9)), closes [#462](https://github.com/vitejs/vite-plugin-vue/issues/462)
+* fix(deps): update all non-major dependencies (#439) ([e432bcb](https://github.com/vitejs/vite-plugin-vue/commit/e432bcb)), closes [#439](https://github.com/vitejs/vite-plugin-vue/issues/439)
+* fix(hmr): re-resolve script after type dep changed (#446) ([8f9c624](https://github.com/vitejs/vite-plugin-vue/commit/8f9c624)), closes [#446](https://github.com/vitejs/vite-plugin-vue/issues/446)
+* fix(hmr): should reload if relies file changed after re-render (#471) ([62b17f3](https://github.com/vitejs/vite-plugin-vue/commit/62b17f3)), closes [#471](https://github.com/vitejs/vite-plugin-vue/issues/471)
+* perf: use `hash` to replace `createHash` (#460) ([de88394](https://github.com/vitejs/vite-plugin-vue/commit/de88394)), closes [#460](https://github.com/vitejs/vite-plugin-vue/issues/460)
+
+
+
 ## <small>5.1.4 (2024-09-16)</small>
 
 * chore: format ([07b29a6](https://github.com/vitejs/vite-plugin-vue/commit/07b29a6))
