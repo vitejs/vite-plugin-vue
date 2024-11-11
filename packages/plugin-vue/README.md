@@ -58,6 +58,10 @@ export interface Options {
      * - **default:** `false`
      */
     prodHydrationMismatchDetails?: boolean
+    /**
+     * Custom value to add to data-attribute for components with `scoped` styles
+     */
+    dataAttributeSalt?: string
   }
 
   // `script`, `template` and `style` are lower-level compiler options

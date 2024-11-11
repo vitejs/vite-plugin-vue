@@ -138,6 +138,11 @@ export interface Options {
      * - **default:** `false`
      */
     prodHydrationMismatchDetails?: boolean
+
+    /**
+     * Custom value to add to data-attribute for components with `scoped` styles
+     */
+    dataAttributeSalt?: string
   }
 
   /**
