@@ -10,4 +10,5 @@ export interface Options extends VueJSXPluginOptions, FilterOptions {
   babelPlugins?: any[]
   /** @default ['defineComponent'] */
   defineComponentName?: string[]
+  tsPluginOptions?: any
 }
