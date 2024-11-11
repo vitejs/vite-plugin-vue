@@ -8853,7 +8853,7 @@ snapshots:
     dependencies:
       esbuild: 0.24.0
       postcss: 8.4.47
-      rollup: 4.24.3
+      rollup: 4.25.0
     optionalDependencies:
       '@types/node': 22.9.0
       jiti: 1.21.6
