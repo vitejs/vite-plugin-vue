@@ -19,7 +19,7 @@ import {
   getSrcDescriptor,
   getTempSrcDescriptor,
 } from './utils/descriptorCache'
-import { clearScriptCache, getResolvedScript, typeDepToSFCMap } from './script'
+import { clearScriptCache, resolveScript, typeDepToSFCMap } from './script'
 import { transformMain } from './main'
 import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
 import { transformTemplateAsModule } from './template'
@@ -300,7 +300,12 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         let block: SFCBlock | null | undefined
         if (query.type === 'script') {
           // handle <script> + <script setup> merge via compileScript()
-          block = getResolvedScript(descriptor, ssr)
+          block = resolveScript(
+            descriptor,
+            options.value,
+            ssr,
+            customElementFilter.value(filename),
+          )
         } else if (query.type === 'template') {
           block = descriptor.template!
         } else if (query.type === 'style') {
