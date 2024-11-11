@@ -13,7 +13,10 @@ export * from './types'
 const ssrRegisterHelperId = '/__vue-jsx-ssr-register-helper'
 const ssrRegisterHelperCode =
   `import { useSSRContext } from "vue"\n` +
-  `export ${ssrRegisterHelper.toString()}`
+  // the const here is just to work around the Bun bug where
+  // Function.toString() isn't working as intended
+  // https://github.com/oven-sh/bun/issues/9543
+  `export const ssrRegisterHelper = ${ssrRegisterHelper.toString()}`
 
 /**
  * This function is serialized with toString() and evaluated as a virtual
