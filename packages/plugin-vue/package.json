@@ -41,10 +41,10 @@
   "devDependencies": {
     "@jridgewell/gen-mapping": "^0.3.5",
     "@jridgewell/trace-mapping": "^0.3.25",
-    "debug": "^4.3.6",
+    "debug": "^4.3.7",
     "rollup": "^4.24.3",
     "slash": "^5.1.0",
-    "source-map-js": "^1.2.0",
+    "source-map-js": "^1.2.1",
     "vite": "catalog:",
     "vue": "catalog:"
   }
