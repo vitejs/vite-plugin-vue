@@ -1,3 +1,9 @@
+## 5.2.0 (2024-11-13)
+
+* feat: add a feature option to support custom component id generator (#461) ([7a1fc4c](https://github.com/vitejs/vite-plugin-vue/commit/7a1fc4c)), closes [#461](https://github.com/vitejs/vite-plugin-vue/issues/461)
+
+
+
 ## <small>5.1.5 (2024-11-11)</small>
 
 * chore: fix typo (#464) ([4a811b0](https://github.com/vitejs/vite-plugin-vue/commit/4a811b0)), closes [#464](https://github.com/vitejs/vite-plugin-vue/issues/464)
