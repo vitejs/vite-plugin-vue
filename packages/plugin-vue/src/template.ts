@@ -204,7 +204,7 @@ export function resolveTemplateCompilerOptions(
     compilerOptions: {
       ...options.template?.compilerOptions,
       scopeId: hasScoped ? `data-v-${id}` : undefined,
-      bindingMetadata: resolvedScript ? resolvedScript.bindings : undefined,
+      bindingMetadata: resolvedScript ? resolvedScript.bindings : {},
       expressionPlugins,
       sourceMap: options.sourceMap,
     },
