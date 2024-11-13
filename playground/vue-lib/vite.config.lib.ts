@@ -11,6 +11,9 @@ export default defineConfig({
       name: 'MyVueLib',
       formats: ['es'],
       fileName: 'my-vue-lib',
+      // Vite 6 only property to give a specific name to the css file.
+      // Set as "style" to match Vite 5 for testing purposes.
+      cssFileName: 'style',
     },
     rollupOptions: {
       external: ['vue'],

@@ -206,6 +206,17 @@ describe('hmr', () => {
     await untilUpdated(() => page.textContent('.hmr-inc'), 'count is 100')
   })
 
+  test('should reload when relies file changed', async () => {
+    // rerender
+    editFile('Hmr.vue', (code) => code.replace('HMR', 'HMR updated'))
+    await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated')
+    await untilUpdated(() => page.textContent('.hmr-number'), '100')
+
+    // reload
+    editFile('lib.js', (code) => code.replace('100', '200'))
+    await untilUpdated(() => page.textContent('.hmr-number'), '200')
+  })
+
   test('global hmr for some scenarios', async () => {
     editFile('Hmr.vue', (code) =>
       code.replace('</template>', '  <Node/>\n' + '</template>'),
@@ -340,6 +351,20 @@ describe('macro imported types', () => {
     editFile('types-aliased.d.ts', (code) => code.replace('id: number', ''))
     await untilUpdated(
       () => page.textContent('.type-props'),
+      JSON.stringify(
+        {
+          bar: 'bar',
+        },
+        null,
+        2,
+      ),
+    )
+  })
+
+  test('should hmr with lang=tsx', async () => {
+    editFile('types.ts', (code) => code.replace('msg: string', ''))
+    await untilUpdated(
+      () => page.textContent('.type-props-tsx'),
       JSON.stringify(
         {
           bar: 'bar',

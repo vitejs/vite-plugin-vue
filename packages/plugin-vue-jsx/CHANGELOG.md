@@ -1,3 +1,14 @@
+## 4.1.0 (2024-11-11)
+
+* feat: support tsPluginOptions (#445) ([fdb3590](https://github.com/vitejs/vite-plugin-vue/commit/fdb3590)), closes [#445](https://github.com/vitejs/vite-plugin-vue/issues/445)
+* fix(deps): update all non-major dependencies (#421) ([e3a7fec](https://github.com/vitejs/vite-plugin-vue/commit/e3a7fec)), closes [#421](https://github.com/vitejs/vite-plugin-vue/issues/421)
+* fix(deps): update all non-major dependencies (#439) ([e432bcb](https://github.com/vitejs/vite-plugin-vue/commit/e432bcb)), closes [#439](https://github.com/vitejs/vite-plugin-vue/issues/439)
+* fix(plugin-jsx): work around bun bug for ssrRegisterHelper (#380) ([9c2b620](https://github.com/vitejs/vite-plugin-vue/commit/9c2b620)), closes [#380](https://github.com/vitejs/vite-plugin-vue/issues/380) [#376](https://github.com/vitejs/vite-plugin-vue/issues/376)
+* perf: use `hash` to replace `createHash` (#460) ([de88394](https://github.com/vitejs/vite-plugin-vue/commit/de88394)), closes [#460](https://github.com/vitejs/vite-plugin-vue/issues/460)
+* refactor(vue-jsx): remove extraneous import ([ab2516a](https://github.com/vitejs/vite-plugin-vue/commit/ab2516a))
+
+
+
 ## <small>4.0.1 (2024-08-14)</small>
 
 * chore: use pnpm catalog for shared deps ([0735e18](https://github.com/vitejs/vite-plugin-vue/commit/0735e18))

@@ -147,7 +147,7 @@ exports[`serve:vue-sourcemap > css scoped > serve-css-scoped 1`] = `
 exports[`serve:vue-sourcemap > js > serve-js 1`] = `
 {
   "ignoreList": [],
-  "mappings": "AAIQ;AACR,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;AAGP;AACd,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;;;;;wBARlB,oBAAiB,WAAd,MAAU",
+  "mappings": ";AAKA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;AAIpB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;;;;;wBARjB,oBAAiB,WAAd,MAAU",
   "sources": [
     "Js.vue",
   ],
@@ -210,7 +210,7 @@ exports[`serve:vue-sourcemap > no script > serve-no-script 1`] = `
 
 exports[`serve:vue-sourcemap > no template > serve-no-template 1`] = `
 {
-  "mappings": "AAAQ;AACR,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;AAGP;AACd,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;",
+  "mappings": ";AACA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;AAIpB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;",
   "sources": [
     "NoTemplate.vue",
   ],
@@ -268,7 +268,7 @@ exports[`serve:vue-sourcemap > sass with import > serve-sass-with-import 1`] = `
 </template>
 
 <style lang="sass">
-@import './sassWithImportImported'
+@use './sassWithImportImported'
 
 .sass-with-import
   color: red
@@ -308,7 +308,7 @@ exports[`serve:vue-sourcemap > src imported sass > serve-src-imported-sass 1`] =
     ".src-import-sass-imported
   color: red
 ",
-    "@import './src-import-imported'
+    "@use './src-import-imported'
 
 .src-import-sass
   color: red

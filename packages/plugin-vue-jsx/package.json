@@ -1,6 +1,6 @@
 {
   "name": "@vitejs/plugin-vue-jsx",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "type": "commonjs",
   "license": "MIT",
   "author": "Evan You",
@@ -35,9 +35,9 @@
   },
   "homepage": "https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx#readme",
   "dependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/plugin-transform-typescript": "^7.25.2",
-    "@vue/babel-plugin-jsx": "^1.2.2"
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-transform-typescript": "^7.25.9",
+    "@vue/babel-plugin-jsx": "^1.2.5"
   },
   "devDependencies": {
     "vite": "catalog:"

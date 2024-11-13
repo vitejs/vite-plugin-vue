@@ -2,6 +2,7 @@
   "name": "@vitejs/test-vue-sourcemap",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,8 +12,8 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*",
     "less": "^4.2.0",
-    "postcss-nested": "^6.2.0",
-    "sass": "^1.77.8"
+    "postcss-nested": "^7.0.2",
+    "sass": "^1.80.6"
   },
   "dependencies": {
     "vue": "catalog:"

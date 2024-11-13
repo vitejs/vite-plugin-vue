@@ -10,6 +10,7 @@
   </div>
   <HmrCircularReference name="test" />
   <TypeProps msg="msg" bar="bar" :id="123" />
+  <TypePropsTsx msg="msg" bar="bar" />
   <Syntax />
   <PreProcessors />
   <PreProcessorsHmr />
@@ -56,6 +57,7 @@ import WorkerTest from './worker.vue'
 import { ref } from 'vue'
 import Url from './Url.vue'
 import TypeProps from './TypeProps.vue'
+import TypePropsTsx from './TypePropsTsx.vue'
 import DefaultLangs from './DefaultLangs.vue'
 import PreCompiled from './pre-compiled/foo.vue'
 import PreCompiledExternalScoped from './pre-compiled/external-scoped.vue'

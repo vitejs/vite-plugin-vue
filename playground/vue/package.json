@@ -2,6 +2,7 @@
   "name": "@vitejs/test-vue",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -17,7 +18,7 @@
     "js-yaml": "^4.1.0",
     "less": "^4.2.0",
     "pug": "^3.0.3",
-    "sass": "^1.77.8",
-    "stylus": "^0.63.0"
+    "sass": "^1.80.6",
+    "stylus": "^0.64.0"
   }
 }
