@@ -58,6 +58,23 @@ export interface Options {
      * - **default:** `false`
      */
     prodHydrationMismatchDetails?: boolean
+    /**
+     * Customize the component ID generation strategy.
+     * - `'filepath'`: hash the file path (relative to the project root)
+     * - `'filepath-source'`: hash the file path and the source code
+     * - `function`: custom function that takes the file path, source code,
+     *   whether in production mode, and the default hash function as arguments
+     * - **default:** `'filepath'` in development, `'filepath-source'` in production
+     */
+    componentIdGenerator?:
+      | 'filepath'
+      | 'filepath-source'
+      | ((
+          filepath: string,
+          source: string,
+          isProduction: boolean | undefined,
+          getHash: (text: string) => string,
+        ) => string)
   }
 
   // `script`, `template` and `style` are lower-level compiler options
