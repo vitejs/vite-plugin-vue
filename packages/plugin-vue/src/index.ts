@@ -155,6 +155,8 @@ export interface Options {
           isProduction: boolean | undefined,
           getHash: (text: string) => string,
         ) => string)
+
+    forceVapor?: boolean | string | RegExp | (string | RegExp)[]
   }
 
   /**
@@ -170,6 +172,7 @@ export interface ResolvedOptions extends Options {
   cssDevSourcemap: boolean
   devServer?: ViteDevServer
   devToolsEnabled?: boolean
+  forceVaporFilter: (id: string) => boolean
 }
 
 export interface Api {
@@ -181,17 +184,6 @@ export interface Api {
 export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
   clearScriptCache()
 
-  const options = shallowRef<ResolvedOptions>({
-    isProduction: process.env.NODE_ENV === 'production',
-    compiler: null as any, // to be set in buildStart
-    include: /\.vue$/,
-    customElement: /\.ce\.vue$/,
-    ...rawOptions,
-    root: process.cwd(),
-    sourceMap: true,
-    cssDevSourcemap: false,
-  })
-
   const filter = computed(() =>
     createFilter(options.value.include, options.value.exclude),
   )
@@ -201,6 +193,24 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     return typeof customElement === 'boolean'
       ? () => customElement
       : createFilter(customElement)
+  })
+
+  const forceVapor = rawOptions.features?.forceVapor
+  const forceVaporFilter =
+    typeof forceVapor === 'boolean'
+      ? (id: string) => forceVapor
+      : createFilter(forceVapor)
+
+  const options = shallowRef<ResolvedOptions>({
+    isProduction: process.env.NODE_ENV === 'production',
+    compiler: null as any, // to be set in buildStart
+    include: /\.vue$/,
+    customElement: /\.ce\.vue$/,
+    ...rawOptions,
+    root: process.cwd(),
+    sourceMap: true,
+    cssDevSourcemap: false,
+    forceVaporFilter,
   })
 
   return {

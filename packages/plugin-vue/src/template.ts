@@ -208,7 +208,7 @@ export function resolveTemplateCompilerOptions(
       expressionPlugins,
       sourceMap: options.sourceMap,
     },
-    vapor: descriptor.vapor,
+    vapor: descriptor.vapor || options.forceVaporFilter(filename),
   }
 }
 
