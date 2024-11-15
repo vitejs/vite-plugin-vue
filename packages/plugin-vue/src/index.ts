@@ -1,7 +1,6 @@
 import fs from 'node:fs'
 import type { Plugin, ViteDevServer } from 'vite'
 import { createFilter, normalizePath } from 'vite'
-/* eslint-disable import/no-duplicates */
 import type {
   SFCBlock,
   SFCScriptCompileOptions,
@@ -9,7 +8,6 @@ import type {
   SFCTemplateCompileOptions,
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
-/* eslint-enable import/no-duplicates */
 import { computed, shallowRef } from 'vue'
 import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
