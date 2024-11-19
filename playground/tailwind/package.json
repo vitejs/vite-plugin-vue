@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.20",
-    "tailwindcss": "^3.4.14",
+    "tailwindcss": "^3.4.15",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
