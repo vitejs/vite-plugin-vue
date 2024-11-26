@@ -1,3 +1,11 @@
+## <small>5.2.1 (2024-11-26)</small>
+
+* chore: add vite 6 peer dep (#481) ([4288652](https://github.com/vitejs/vite-plugin-vue/commit/4288652)), closes [#481](https://github.com/vitejs/vite-plugin-vue/issues/481)
+* chore: fix lint ([378aea3](https://github.com/vitejs/vite-plugin-vue/commit/378aea3))
+* chore(deps): update dependency rollup to ^4.27.2 (#476) ([b2df95e](https://github.com/vitejs/vite-plugin-vue/commit/b2df95e)), closes [#476](https://github.com/vitejs/vite-plugin-vue/issues/476)
+
+
+
 ## 5.2.0 (2024-11-13)
 
 * feat: add a feature option to support custom component id generator (#461) ([7a1fc4c](https://github.com/vitejs/vite-plugin-vue/commit/7a1fc4c)), closes [#461](https://github.com/vitejs/vite-plugin-vue/issues/461)
