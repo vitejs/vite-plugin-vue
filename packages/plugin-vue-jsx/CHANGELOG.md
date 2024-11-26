@@ -1,3 +1,9 @@
+## <small>4.1.1 (2024-11-26)</small>
+
+* chore: add vite 6 peer dep (#481) ([4288652](https://github.com/vitejs/vite-plugin-vue/commit/4288652)), closes [#481](https://github.com/vitejs/vite-plugin-vue/issues/481)
+
+
+
 ## 4.1.0 (2024-11-11)
 
 * feat: support tsPluginOptions (#445) ([fdb3590](https://github.com/vitejs/vite-plugin-vue/commit/fdb3590)), closes [#445](https://github.com/vitejs/vite-plugin-vue/issues/445)
