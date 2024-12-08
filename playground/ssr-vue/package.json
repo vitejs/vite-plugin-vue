@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@vitejs/test-example-external-component": "file:example-external-component",
-    "pinia": "^2.2.6",
+    "pinia": "^2.3.0",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
@@ -25,7 +25,7 @@
     "@vitejs/plugin-vue-jsx": "workspace:*",
     "@vitejs/test-dep-import-type": "link:dep-import-type",
     "compression": "^1.7.5",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "serve-static": "^1.16.2"
   }
 }
