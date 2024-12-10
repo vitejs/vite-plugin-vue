@@ -42,7 +42,7 @@
     "@jridgewell/gen-mapping": "^0.3.5",
     "@jridgewell/trace-mapping": "^0.3.25",
     "debug": "^4.4.0",
-    "rollup": "^4.27.4",
+    "rollup": "^4.28.1",
     "slash": "^5.1.0",
     "source-map-js": "^1.2.1",
     "vite": "catalog:",
