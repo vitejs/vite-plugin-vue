@@ -208,8 +208,11 @@ describe('hmr', () => {
 
   test('should reload when relies file changed', async () => {
     // rerender
-    editFile('Hmr.vue', (code) => code.replace('HMR', 'HMR updated'))
     await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated')
+    editFile('Hmr.vue', (code) =>
+      code.replace('HMR updated', 'HMR updated updated'),
+    )
+    await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated updated')
     await untilUpdated(() => page.textContent('.hmr-number'), '100')
 
     // reload
