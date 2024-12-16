@@ -77,6 +77,20 @@ export function transformTemplateInMain(
   }
 }
 
+function carryQueryWithSvgUse(code: string, result: SFCTemplateCompileResults) {
+  const reg = /<use\s+href="([^"]+)"/g
+  let match
+  const hrefs = new Set<string>()
+  while ((match = reg.exec(code))) {
+    if (!match[1].includes('?')) {
+      hrefs.add(match[1].split('#')[0])
+    }
+  }
+  hrefs.forEach((href) => {
+    result.code = result.code.replace(href, `${href}?no-inline`)
+  })
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function compile(
   code: string,
@@ -92,6 +106,8 @@ export function compile(
     ...resolveTemplateCompilerOptions(descriptor, options, ssr)!,
     source: code,
   })
+
+  carryQueryWithSvgUse(code, result)
 
   if (result.errors.length) {
     result.errors.forEach((error) =>
@@ -184,7 +200,6 @@ export function resolveTemplateCompilerOptions(
   if (lang && /tsx?$/.test(lang) && !expressionPlugins.includes('typescript')) {
     expressionPlugins.push('typescript')
   }
-
   return {
     ...options.template,
     id,
