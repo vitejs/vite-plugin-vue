@@ -78,12 +78,12 @@ export function transformTemplateInMain(
 }
 
 function carryQueryWithSvgUse(code: string, result: SFCTemplateCompileResults) {
-  const reg = /<use\s+href="([^"]+)"/g
+  const reg = /<use.+\bhref=(['"])([^'"]+)\1/g
   let match
   const hrefs = new Set<string>()
   while ((match = reg.exec(code))) {
-    if (!match[1].includes('?')) {
-      hrefs.add(match[1].split('#')[0])
+    if (!match[2].includes('?')) {
+      hrefs.add(match[2].split('#')[0])
     }
   }
   hrefs.forEach((href) => {
