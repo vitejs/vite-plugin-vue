@@ -40,10 +40,10 @@
     "@vue/babel-plugin-jsx": "^1.2.5"
   },
   "devDependencies": {
-    "vite": "catalog:"
+    "rolldown-vite": "catalog:"
   },
   "peerDependencies": {
-    "vite": "^5.0.0 || ^6.0.0",
+    "rolldown-vite": "catalog:",
     "vue": "^3.0.0"
   }
 }

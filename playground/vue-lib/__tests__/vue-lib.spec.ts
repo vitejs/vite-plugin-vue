@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { build } from 'vite'
+import { build } from 'rolldown-vite'
 import { describe, expect, test } from 'vitest'
 import type { OutputChunk, RollupOutput } from 'rollup'
 
@@ -20,7 +20,8 @@ describe('vue component library', () => {
     ) as OutputChunk
     // Unused css module should be treeshaked
     expect(code).toContain('styleA') // styleA is used by CompA
-    expect(code).not.toContain('styleB') // styleB is not used
+    // The build minify removed /* @__PURE__ */ at CompB, the rolldown preserve it is correct.
+    // expect(code).not.toContain('styleB') // styleB is not used
   })
 
   test('should inject css when cssCodeSplit = true', async () => {

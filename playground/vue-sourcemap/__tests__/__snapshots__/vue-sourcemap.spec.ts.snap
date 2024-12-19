@@ -321,7 +321,7 @@ exports[`serve:vue-sourcemap > src imported sass > serve-src-imported-sass 1`] =
 exports[`serve:vue-sourcemap > ts > serve-ts 1`] = `
 {
   "ignoreList": [],
-  "mappings": ";AAKA,QAAQ,IAAI,WAAW;;;;;AAIvB,YAAQ,IAAI,UAAU;;;;;;;;uBARpB,oBAAiB,WAAd,MAAU",
+  "mappings": ";AAKA,QAAQ,IAAI,YAAW;;;;;AAIvB,UAAQ,IAAI,WAAU;;;;;;;;;;;sBARpB,oBAAiB,WAAd,OAAU",
   "sources": [
     "Ts.vue",
   ],

@@ -1,5 +1,5 @@
 import vuePlugin from '@vitejs/plugin-vue'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'rolldown-vite'
 
 export default defineConfig({
   css: {

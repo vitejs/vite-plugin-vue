@@ -1,13 +1,13 @@
 import path from 'node:path'
 import fs from 'node:fs'
 import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
-import type { PluginContext, TransformPluginContext } from 'rollup'
+import type { PluginContext, TransformPluginContext } from 'rolldown'
 import type { RawSourceMap } from 'source-map-js'
 import type { EncodedSourceMap as TraceEncodedSourceMap } from '@jridgewell/trace-mapping'
 import { TraceMap, eachMapping } from '@jridgewell/trace-mapping'
 import type { EncodedSourceMap as GenEncodedSourceMap } from '@jridgewell/gen-mapping'
 import { addMapping, fromMap, toEncodedMap } from '@jridgewell/gen-mapping'
-import { normalizePath, transformWithEsbuild } from 'vite'
+import { normalizePath, transformWithOxc } from 'rolldown-vite'
 import {
   createDescriptor,
   getDescriptor,
@@ -256,15 +256,16 @@ export async function transformMain(
     /tsx?$/.test(lang) &&
     !descriptor.script?.src // only normal script can have src
   ) {
-    const { code, map } = await transformWithEsbuild(
+    const { code, map } = await transformWithOxc(
+      pluginContext,
       resolvedCode,
       filename,
       {
         target: 'esnext',
         // #430 support decorators in .vue file
         // target can be overridden by esbuild config target
-        ...options.devServer?.config.esbuild,
-        loader: 'ts',
+        ...options.devServer?.config.oxc,
+        lang: 'ts',
         sourcemap: options.sourceMap,
       },
       resolvedMap,

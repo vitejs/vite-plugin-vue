@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'rolldown-vite'
 
 export default defineConfig({
   root: __dirname,

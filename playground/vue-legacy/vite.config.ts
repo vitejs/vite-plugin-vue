@@ -1,6 +1,6 @@
 import path from 'node:path'
 import fs from 'node:fs'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'rolldown-vite'
 import vuePlugin from '@vitejs/plugin-vue'
 import legacyPlugin from '@vitejs/plugin-legacy'
 

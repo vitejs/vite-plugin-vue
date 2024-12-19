@@ -1,7 +1,7 @@
 import _debug from 'debug'
 import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
-import type { HmrContext, ModuleNode } from 'vite'
-import { isCSSRequest } from 'vite'
+import type { HmrContext, ModuleNode } from 'rolldown-vite'
+import { isCSSRequest } from 'rolldown-vite'
 
 // eslint-disable-next-line n/no-extraneous-import
 import type * as t from '@babel/types'

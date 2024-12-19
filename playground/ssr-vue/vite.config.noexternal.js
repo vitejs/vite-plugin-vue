@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'rolldown-vite'
 import createConfig from './vite.config.js'
 
 export default defineConfig((env) => {

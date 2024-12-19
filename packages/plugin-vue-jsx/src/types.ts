@@ -1,5 +1,5 @@
 import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx'
-import type { FilterPattern } from 'vite'
+import type { FilterPattern } from 'rolldown-vite'
 
 export interface FilterOptions {
   include?: FilterPattern

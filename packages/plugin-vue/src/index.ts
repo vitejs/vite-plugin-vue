@@ -1,6 +1,6 @@
 import fs from 'node:fs'
-import type { Plugin, ViteDevServer } from 'vite'
-import { createFilter, normalizePath } from 'vite'
+import type { Plugin, ViteDevServer } from 'rolldown-vite'
+import { createFilter, normalizePath } from 'rolldown-vite'
 import type {
   SFCBlock,
   SFCScriptCompileOptions,

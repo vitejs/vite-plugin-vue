@@ -4,5 +4,7 @@ packages:
 
 catalog:
   'vue': ^3.5.12
-  'vite': ^6.0.0
+  'rolldown-vite': https://pkg.pr.new/rolldown/vite@fd4392e
   'vue-router': ^4.4.3
+  'rolldown': 0.15.0-commit.ddbe0a9
+

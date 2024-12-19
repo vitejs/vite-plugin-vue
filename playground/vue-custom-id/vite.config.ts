@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'rolldown-vite'
 import vuePlugin from '@vitejs/plugin-vue'
 
 export default defineConfig({

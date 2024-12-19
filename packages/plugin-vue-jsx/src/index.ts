@@ -3,9 +3,9 @@ import path from 'node:path'
 import type { types } from '@babel/core'
 import * as babel from '@babel/core'
 import jsx from '@vue/babel-plugin-jsx'
-import { createFilter, normalizePath } from 'vite'
+import { createFilter, normalizePath } from 'rolldown-vite'
 import type { ComponentOptions } from 'vue'
-import type { Plugin } from 'vite'
+import type { Plugin } from 'rolldown-vite'
 import type { Options } from './types'
 
 export * from './types'
@@ -56,8 +56,15 @@ function vueJsxPlugin(options: Options = {}): Plugin {
       return {
         // only apply esbuild to ts files
         // since we are handling jsx and tsx now
-        esbuild: {
+        oxc: {
           include: /\.ts$/,
+        },
+        optimizeDeps: {
+          rollupOptions: {
+            jsx: {
+              mode: 'classic', // TODO using rolldown jsx preserve
+            },
+          },
         },
         define: {
           __VUE_OPTIONS_API__: config.define?.__VUE_OPTIONS_API__ ?? true,
@@ -138,6 +145,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
           return {
             code: result.code,
             map: result.map,
+            moduleType: 'js',
           }
         }
 
@@ -263,6 +271,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
         return {
           code: result.code,
           map: result.map,
+          moduleType: 'js',
         }
       }
     },

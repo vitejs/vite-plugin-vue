@@ -3,7 +3,7 @@
 
 import path from 'node:path'
 import kill from 'kill-port'
-import type { ViteDevServer } from 'vite'
+import type { ViteDevServer } from 'rolldown-vite'
 import { hmrPorts, isBuild, ports, rootDir } from '~utils'
 
 export const port = ports['ssr-vue']
@@ -13,7 +13,7 @@ export let viteServer: ViteDevServer
 export async function serve(): Promise<{ close(): Promise<void> }> {
   if (isBuild) {
     // build first
-    const { build } = await import('vite')
+    const { build } = await import('rolldown-vite')
     // client build
     await build({
       base: '/test/',

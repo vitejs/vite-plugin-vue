@@ -30,12 +30,12 @@ export async function createServer(
   const app = express()
 
   /**
-   * @type {import('vite').ViteDevServer}
+   * @type {import('rolldown-vite').ViteDevServer}
    */
   let vite
   if (!isProd) {
     vite = await (
-      await import('vite')
+      await import('rolldown-vite')
     ).createServer({
       base: '/test/',
       root,

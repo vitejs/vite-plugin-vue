@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import crypto from 'node:crypto'
 import type { CompilerError, SFCDescriptor } from 'vue/compiler-sfc'
-import { normalizePath } from 'vite'
+import { normalizePath } from 'rolldown-vite'
 import type { ResolvedOptions, VueQuery } from '../index'
 
 // compiler-sfc should be exported so it can be re-used

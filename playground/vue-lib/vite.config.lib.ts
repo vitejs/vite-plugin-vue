@@ -1,10 +1,11 @@
 import path from 'node:path'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'rolldown-vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   root: __dirname,
   build: {
+    minify: false,
     outDir: 'dist/lib',
     lib: {
       entry: path.resolve(__dirname, 'src-lib/index.ts'),

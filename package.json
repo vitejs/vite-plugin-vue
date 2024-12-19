@@ -57,12 +57,12 @@
     "playwright-chromium": "^1.49.0",
     "prettier": "3.4.2",
     "rollup": "^4.28.1",
+    "rolldown-vite": "catalog:",
     "simple-git-hooks": "^2.11.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.0",
     "unbuild": "2.0.0",
-    "vite": "catalog:",
     "vitest": "^2.1.8",
     "vue": "catalog:"
   },
