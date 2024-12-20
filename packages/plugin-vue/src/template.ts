@@ -184,6 +184,7 @@ export function resolveTemplateCompilerOptions(
   if (lang && /tsx?$/.test(lang) && !expressionPlugins.includes('typescript')) {
     expressionPlugins.push('typescript')
   }
+
   return {
     ...options.template,
     id,
