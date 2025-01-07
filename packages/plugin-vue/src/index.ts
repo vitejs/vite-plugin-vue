@@ -242,18 +242,18 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           dedupe: config.build?.ssr ? [] : ['vue'],
         },
         define: {
-          __VUE_OPTIONS_API__: !!(
-            (options.value.features?.optionsAPI ?? true) ||
-            config.define?.__VUE_OPTIONS_API__
-          ),
-          __VUE_PROD_DEVTOOLS__: !!(
-            options.value.features?.prodDevtools ||
-            config.define?.__VUE_PROD_DEVTOOLS__
-          ),
-          __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: !!(
-            options.value.features?.prodHydrationMismatchDetails ||
-            config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__
-          ),
+          __VUE_OPTIONS_API__:
+            options.value.features?.optionsAPI ??
+            config.define?.__VUE_OPTIONS_API__ ??
+            true,
+          __VUE_PROD_DEVTOOLS__:
+            (options.value.features?.prodDevtools ||
+              config.define?.__VUE_PROD_DEVTOOLS__) ??
+            false,
+          __VUE_PROD_HYDRATION_MISMATCH_DETAILS__:
+            (options.value.features?.prodHydrationMismatchDetails ||
+              config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__) ??
+            false,
         },
         ssr: {
           // @ts-ignore -- config.legacy.buildSsrCjsExternalHeuristics will be removed in Vite 5
