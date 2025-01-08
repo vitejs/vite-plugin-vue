@@ -201,6 +201,24 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       : createFilter(customElement)
   })
 
+  function carryQueryWithSvgUse(code: string, id: string) {
+    if (!id.endsWith('.vue')) {
+      return code
+    }
+    const reg = /<use.+\bhref=(['"])([^'"]+)/g
+    code = code.replace(reg, (match) => {
+      const [path, hash] = match.split(/#/)
+      if (!path.endsWith('.svg') || match.includes('?')) {
+        return match
+      }
+      if (hash) {
+        return `${path}?no-inline#${hash}`
+      }
+      return `${path}?no-inline`
+    })
+    return code
+  }
+
   return {
     name: 'vite:vue',
 
@@ -344,6 +362,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     transform(code, id, opt) {
+      code = carryQueryWithSvgUse(code, id)
       const ssr = opt?.ssr === true
       const { filename, query } = parseVueRequest(id)
 
