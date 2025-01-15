@@ -61,7 +61,7 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0",
-    "unbuild": "2.0.0",
+    "unbuild": "3.3.1",
     "vite": "catalog:",
     "vitest": "^2.1.8",
     "vue": "catalog:"
