@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    vite:
+      specifier: ^6.0.0
+      version: 6.0.9
     vue:
       specifier: ^3.5.12
       version: 3.5.12
