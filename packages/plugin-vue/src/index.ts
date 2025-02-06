@@ -282,7 +282,11 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       const _warn = config.logger.warn
       config.logger.warn = (...args) => {
         const msg = args[0]
-        if (msg.match(/\[lightningcss\] '(deep|slotted|global)' is not recognized as a valid pseudo-/)) {
+        if (
+          msg.match(
+            /\[lightningcss\] '(deep|slotted|global)' is not recognized as a valid pseudo-/,
+          )
+        ) {
           return
         }
         _warn(...args)
