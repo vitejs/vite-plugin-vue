@@ -292,7 +292,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         }
         _warn(...args)
       }
-      
+
       transformCachedModule =
         config.command === 'build' &&
         options.value.sourceMap &&
