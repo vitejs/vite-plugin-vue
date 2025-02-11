@@ -201,6 +201,8 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       : createFilter(customElement)
   })
 
+  let transformCachedModule = false
+
   return {
     name: 'vite:vue',
 
@@ -277,7 +279,6 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           !config.isProduction
         ),
       }
-
       // #507 suppress warnings for non-recognized pseudo selectors from lightningcss
       const _warn = config.logger.warn
       config.logger.warn = (...args) => {
@@ -291,6 +292,18 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         }
         _warn(...args)
       }
+
+      transformCachedModule =
+        config.command === 'build' &&
+        options.value.sourceMap &&
+        config.build.watch != null
+    },
+
+    shouldTransformCachedModule({ id }) {
+      if (transformCachedModule && parseVueRequest(id).query.vue) {
+        return true
+      }
+      return false
     },
 
     configureServer(server) {
