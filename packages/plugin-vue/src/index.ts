@@ -330,6 +330,9 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       // select corresponding block for sub-part virtual modules
       if (query.vue) {
         if (query.src) {
+          if (options.value.devServer?.watcher) {
+            options.value.devServer.watcher.add(filename)
+          }
           return fs.readFileSync(filename, 'utf-8')
         }
         const descriptor = getDescriptor(filename, options.value)!
