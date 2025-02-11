@@ -305,10 +305,11 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     load(id, opt) {
-      const ssr = opt?.ssr === true
       if (id === EXPORT_HELPER_ID) {
         return helperCode
       }
+
+      const ssr = opt?.ssr === true
 
       const { filename, query } = parseVueRequest(id)
 
