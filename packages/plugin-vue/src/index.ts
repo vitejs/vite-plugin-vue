@@ -279,6 +279,20 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           !config.isProduction
         ),
       }
+      // #507 suppress warnings for non-recognized pseudo selectors from lightningcss
+      const _warn = config.logger.warn
+      config.logger.warn = (...args) => {
+        const msg = args[0]
+        if (
+          msg.match(
+            /\[lightningcss\] '(deep|slotted|global)' is not recognized as a valid pseudo-/,
+          )
+        ) {
+          return
+        }
+        _warn(...args)
+      }
+      
       transformCachedModule =
         config.command === 'build' &&
         options.value.sourceMap &&
@@ -318,10 +332,11 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     load(id, opt) {
-      const ssr = opt?.ssr === true
       if (id === EXPORT_HELPER_ID) {
         return helperCode
       }
+
+      const ssr = opt?.ssr === true
 
       const { filename, query } = parseVueRequest(id)
 
