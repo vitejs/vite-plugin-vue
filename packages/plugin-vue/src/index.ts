@@ -387,6 +387,10 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
             getTempSrcDescriptor(filename, query)
           : getDescriptor(filename, options.value)!
 
+        if (query.src) {
+          this.addWatchFile(filename)
+        }
+
         if (query.type === 'template') {
           return transformTemplateAsModule(
             code,
