@@ -66,6 +66,12 @@ import PreCompiledExternalScoped from './pre-compiled/external-scoped.vue'
 import PreCompiledExternalCssModules from './pre-compiled/external-cssmodules.vue'
 import ParserOptions from './ParserOptions.vue'
 import HmrCircularReference from './HmrCircularReference.vue'
+import TreeShakeScopedStyle from './TreeShakeScopedStyle.vue'
+
+// NOTE: this function is not used intentionally
+function foo() {
+  console.log(TreeShakeScopedStyle)
+}
 
 const TsGeneric = defineAsyncComponent(() => import('./TsGeneric.vue'))
 

@@ -275,9 +275,9 @@ export async function transformMain(
 
   return {
     code: resolvedCode,
-    map: resolvedMap || {
+    map: (resolvedMap || {
       mappings: '',
-    },
+    }) as any,
     meta: {
       vite: {
         lang: descriptor.script?.lang || descriptor.scriptSetup?.lang || 'js',
