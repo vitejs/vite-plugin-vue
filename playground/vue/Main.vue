@@ -36,6 +36,8 @@
   <PreCompiledExternalScoped />
   <PreCompiledExternalCssModules />
   <ParserOptions />
+  <ExportTypeProps1 />
+  <ExportTypeProps2 />
 </template>
 
 <script setup lang="ts">
@@ -66,6 +68,8 @@ import PreCompiledExternalScoped from './pre-compiled/external-scoped.vue'
 import PreCompiledExternalCssModules from './pre-compiled/external-cssmodules.vue'
 import ParserOptions from './ParserOptions.vue'
 import HmrCircularReference from './HmrCircularReference.vue'
+import ExportTypeProps1 from './ExportTypeProps1.vue'
+import ExportTypeProps2 from './ExportTypeProps2.vue'
 
 const TsGeneric = defineAsyncComponent(() => import('./TsGeneric.vue'))
 

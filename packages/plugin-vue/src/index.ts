@@ -224,10 +224,12 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       if (options.value.compiler.invalidateTypeCache) {
         options.value.compiler.invalidateTypeCache(ctx.file)
       }
+      const matchesFilter = filter.value(ctx.file)
       if (typeDepToSFCMap.has(ctx.file)) {
-        return handleTypeDepChange(typeDepToSFCMap.get(ctx.file)!, ctx)
+        const mod = handleTypeDepChange(typeDepToSFCMap.get(ctx.file)!, ctx)
+        if (!matchesFilter) return mod
       }
-      if (filter.value(ctx.file)) {
+      if (matchesFilter) {
         return handleHotUpdate(
           ctx,
           options.value,
