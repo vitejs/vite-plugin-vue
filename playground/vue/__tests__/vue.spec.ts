@@ -409,6 +409,13 @@ describe('macro imported types', () => {
       ),
     )
   })
+
+  test('should update style', async () => {
+    const cls = '.export-type-props1'
+    expect(await getColor(cls)).toBe('red')
+    editFile('ExportTypeProps1.vue', (code) => code.replace('red', 'blue'))
+    await untilUpdated(() => getColor(cls), 'blue')
+  })
 })
 
 test('TS with generics', async () => {
