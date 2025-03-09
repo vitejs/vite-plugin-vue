@@ -242,18 +242,18 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           dedupe: config.build?.ssr ? [] : ['vue'],
         },
         define: {
-          __VUE_OPTIONS_API__: !!(
-            (options.value.features?.optionsAPI ?? true) ||
-            config.define?.__VUE_OPTIONS_API__
-          ),
-          __VUE_PROD_DEVTOOLS__: !!(
-            options.value.features?.prodDevtools ||
-            config.define?.__VUE_PROD_DEVTOOLS__
-          ),
-          __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: !!(
-            options.value.features?.prodHydrationMismatchDetails ||
-            config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__
-          ),
+          __VUE_OPTIONS_API__:
+            options.value.features?.optionsAPI ??
+            config.define?.__VUE_OPTIONS_API__ ??
+            true,
+          __VUE_PROD_DEVTOOLS__:
+            (options.value.features?.prodDevtools ||
+              config.define?.__VUE_PROD_DEVTOOLS__) ??
+            false,
+          __VUE_PROD_HYDRATION_MISMATCH_DETAILS__:
+            (options.value.features?.prodHydrationMismatchDetails ||
+              config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__) ??
+            false,
         },
         ssr: {
           // @ts-ignore -- config.legacy.buildSsrCjsExternalHeuristics will be removed in Vite 5
@@ -278,6 +278,20 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           config.define!.__VUE_PROD_DEVTOOLS__ ||
           !config.isProduction
         ),
+      }
+
+      // #507 suppress warnings for non-recognized pseudo selectors from lightningcss
+      const _warn = config.logger.warn
+      config.logger.warn = (...args) => {
+        const msg = args[0]
+        if (
+          msg.match(
+            /\[lightningcss\] '(deep|slotted|global)' is not recognized as a valid pseudo-/,
+          )
+        ) {
+          return
+        }
+        _warn(...args)
       }
     },
 
@@ -307,10 +321,11 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     load(id, opt) {
-      const ssr = opt?.ssr === true
       if (id === EXPORT_HELPER_ID) {
         return helperCode
       }
+
+      const ssr = opt?.ssr === true
 
       const { filename, query } = parseVueRequest(id)
 
@@ -373,6 +388,10 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           ? getSrcDescriptor(filename, query) ||
             getTempSrcDescriptor(filename, query)
           : getDescriptor(filename, options.value)!
+
+        if (query.src) {
+          this.addWatchFile(filename)
+        }
 
         if (query.type === 'template') {
           return transformTemplateAsModule(

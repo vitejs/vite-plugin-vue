@@ -8,6 +8,8 @@ export default defineConfig({
     alias: {
       '/@': __dirname,
       '@': __dirname,
+      '#external': resolve(__dirname, '../vue-external'),
+      '/#external': resolve(__dirname, '../vue-external'),
     },
   },
   plugins: [

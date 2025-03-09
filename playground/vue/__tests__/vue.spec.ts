@@ -208,8 +208,11 @@ describe('hmr', () => {
 
   test('should reload when relies file changed', async () => {
     // rerender
-    editFile('Hmr.vue', (code) => code.replace('HMR', 'HMR updated'))
     await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated')
+    editFile('Hmr.vue', (code) =>
+      code.replace('HMR updated', 'HMR updated updated'),
+    )
+    await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated updated')
     await untilUpdated(() => page.textContent('.hmr-number'), '100')
 
     // reload
@@ -271,6 +274,38 @@ describe('src imports', () => {
   test('template src import hmr', async () => {
     const el = await page.$('.src-imports-style')
     editFile('src-import/template.html', (code) =>
+      code.replace('should be tan', 'should be red'),
+    )
+    await untilUpdated(() => el.textContent(), 'should be red')
+  })
+})
+
+describe('external src imports', () => {
+  test('script src with ts', async () => {
+    expect(await page.textContent('.external-src-imports-script')).toMatch(
+      'hello from script src',
+    )
+    editFile('../vue-external/src-import/script.ts', (code) =>
+      code.replace('hello from script src', 'updated'),
+    )
+    await untilUpdated(
+      () => page.textContent('.external-src-imports-script'),
+      'updated',
+    )
+  })
+
+  test('style src', async () => {
+    const el = await page.$('.external-src-imports-style')
+    expect(await getColor(el)).toBe('tan')
+    editFile('../vue-external/src-import/style.css', (code) =>
+      code.replace('color: tan', 'color: red'),
+    )
+    await untilUpdated(() => getColor(el), 'red')
+  })
+
+  test('template src import hmr', async () => {
+    const el = await page.$('.external-src-imports-style')
+    editFile('../vue-external/src-import/template.html', (code) =>
       code.replace('should be tan', 'should be red'),
     )
     await untilUpdated(() => el.textContent(), 'should be red')
