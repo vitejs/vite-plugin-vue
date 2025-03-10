@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import type { Plugin, ViteDevServer } from 'vite'
+import type { ModuleNode, Plugin, ViteDevServer } from 'vite'
 import { createFilter, normalizePath } from 'vite'
 import type {
   SFCBlock,
@@ -224,16 +224,22 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       if (options.value.compiler.invalidateTypeCache) {
         options.value.compiler.invalidateTypeCache(ctx.file)
       }
+
+      let typeDepModules: ModuleNode[] | undefined
       const matchesFilter = filter.value(ctx.file)
       if (typeDepToSFCMap.has(ctx.file)) {
-        const mod = handleTypeDepChange(typeDepToSFCMap.get(ctx.file)!, ctx)
-        if (!matchesFilter) return mod
+        typeDepModules = handleTypeDepChange(
+          typeDepToSFCMap.get(ctx.file)!,
+          ctx,
+        )
+        if (!matchesFilter) return typeDepModules
       }
       if (matchesFilter) {
         return handleHotUpdate(
           ctx,
           options.value,
           customElementFilter.value(ctx.file),
+          typeDepModules,
         )
       }
     },

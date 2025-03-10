@@ -36,8 +36,8 @@
   <PreCompiledExternalScoped />
   <PreCompiledExternalCssModules />
   <ParserOptions />
-  <ExportTypeProps1 />
-  <ExportTypeProps2 />
+  <ExportTypeProps1 msg="msg" />
+  <ExportTypeProps2 msg="msg" />
 </template>
 
 <script setup lang="ts">

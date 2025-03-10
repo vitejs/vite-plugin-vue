@@ -1,8 +1,8 @@
+<template>
+  <div class="export-type-props2">{{ props }}</div>
+</template>
+
 <script setup lang="ts">
 import type { FooProps } from './ExportTypeProps1.vue'
-defineProps<FooProps>()
+const props = defineProps<FooProps>()
 </script>
-
-<template>
-  <div>bar: {{ title }}</div>
-</template>

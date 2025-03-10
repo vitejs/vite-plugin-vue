@@ -1,15 +1,15 @@
 <template>
-  <div class="export-type-props1">foo: {{ title }}</div>
+  <div class="export-type-props1">{{ props }}</div>
 </template>
 
 <script lang="ts">
 export interface FooProps {
-  title?: string
+  msg: string
 }
 </script>
 
 <script setup lang="ts">
-defineProps<FooProps>()
+const props = defineProps<FooProps>()
 </script>
 
 <style>
