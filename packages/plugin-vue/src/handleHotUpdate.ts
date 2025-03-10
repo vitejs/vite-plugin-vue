@@ -31,6 +31,7 @@ export async function handleHotUpdate(
   { file, modules, read }: HmrContext,
   options: ResolvedOptions,
   customElement: boolean,
+  typeDepModules?: ModuleNode[],
 ): Promise<ModuleNode[] | void> {
   const prevDescriptor = getDescriptor(file, options, false, true)
   if (!prevDescriptor) {
@@ -172,7 +173,9 @@ export async function handleHotUpdate(
     }
     debug(`[vue:update(${updateType.join('&')})] ${file}`)
   }
-  return [...affectedModules].filter(Boolean) as ModuleNode[]
+  return [...affectedModules, ...(typeDepModules || [])].filter(
+    Boolean,
+  ) as ModuleNode[]
 }
 
 export function isEqualBlock(a: SFCBlock | null, b: SFCBlock | null): boolean {
