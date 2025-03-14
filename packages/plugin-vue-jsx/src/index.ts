@@ -53,6 +53,13 @@ function vueJsxPlugin(options: Options = {}): Plugin {
     name: 'vite:vue-jsx',
 
     config(config) {
+      const parseDefine = (v: unknown) => {
+        try {
+          return typeof v === 'string' ? JSON.parse(v) : v
+        } catch (err) {
+          return v
+        }
+      }
       return {
         // only apply esbuild to ts files
         // since we are handling jsx and tsx now
@@ -60,10 +67,14 @@ function vueJsxPlugin(options: Options = {}): Plugin {
           include: /\.ts$/,
         },
         define: {
-          __VUE_OPTIONS_API__: config.define?.__VUE_OPTIONS_API__ ?? true,
-          __VUE_PROD_DEVTOOLS__: config.define?.__VUE_PROD_DEVTOOLS__ ?? false,
+          __VUE_OPTIONS_API__:
+            parseDefine(config.define?.__VUE_OPTIONS_API__) ?? true,
+          __VUE_PROD_DEVTOOLS__:
+            parseDefine(config.define?.__VUE_PROD_DEVTOOLS__) ?? false,
           __VUE_PROD_HYDRATION_MISMATCH_DETAILS__:
-            config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ ?? false,
+            parseDefine(
+              config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__,
+            ) ?? false,
         },
       }
     },
