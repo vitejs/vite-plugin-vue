@@ -75,6 +75,10 @@ export function invalidateDescriptor(filename: string, hmr = false): void {
   }
 }
 
+export interface ExtendedSFCDescriptor extends SFCDescriptor {
+  isTemp?: boolean
+}
+
 export function getDescriptor(
   filename: string,
   options: ResolvedOptions,
@@ -113,7 +117,7 @@ export function getSrcDescriptor(
 export function getTempSrcDescriptor(
   filename: string,
   query: VueQuery,
-): SFCDescriptor {
+): ExtendedSFCDescriptor {
   // this is only used for pre-compiled <style src> with scoped flag
   return {
     filename,
@@ -124,9 +128,10 @@ export function getTempSrcDescriptor(
         loc: {
           start: { line: 0, column: 0 },
         },
-      },
+      } as any,
     ],
-  } as SFCDescriptor
+    isTemp: true,
+  } as ExtendedSFCDescriptor
 }
 
 export function setSrcDescriptor(

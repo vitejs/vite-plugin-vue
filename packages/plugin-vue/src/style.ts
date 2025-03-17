@@ -1,13 +1,13 @@
-import type { SFCDescriptor } from 'vue/compiler-sfc'
 import type { ExistingRawSourceMap, TransformPluginContext } from 'rollup'
 import type { RawSourceMap } from 'source-map-js'
 import { formatPostcssSourceMap } from 'vite'
+import type { ExtendedSFCDescriptor } from './utils/descriptorCache'
 import type { ResolvedOptions } from './index'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function transformStyle(
   code: string,
-  descriptor: SFCDescriptor,
+  descriptor: ExtendedSFCDescriptor,
   index: number,
   options: ResolvedOptions,
   pluginContext: TransformPluginContext,
@@ -62,5 +62,13 @@ export async function transformStyle(
   return {
     code: result.code,
     map: map,
+    meta:
+      block.scoped && !descriptor.isTemp
+        ? {
+            vite: {
+              cssScopeTo: [descriptor.filename, 'default'],
+            },
+          }
+        : undefined,
   }
 }

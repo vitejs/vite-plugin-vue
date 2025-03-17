@@ -3,6 +3,7 @@ import { version } from 'vue'
 import {
   browserLogs,
   editFile,
+  findAssetFile,
   getBg,
   getColor,
   isBuild,
@@ -454,4 +455,9 @@ describe('template parse options', () => {
       'custom',
     )
   })
+})
+
+test.runIf(isBuild)('scoped style should be tree-shakeable', async () => {
+  const indexCss = findAssetFile(/index-[\w-]+\.css/)
+  expect(indexCss).not.toContain('.tree-shake-scoped-style')
 })

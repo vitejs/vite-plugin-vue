@@ -13,6 +13,7 @@ import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
 import {
+  type ExtendedSFCDescriptor,
   getDescriptor,
   getSrcDescriptor,
   getTempSrcDescriptor,
@@ -412,7 +413,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         )
       } else {
         // sub block request
-        const descriptor = query.src
+        const descriptor: ExtendedSFCDescriptor = query.src
           ? getSrcDescriptor(filename, query) ||
             getTempSrcDescriptor(filename, query)
           : getDescriptor(filename, options.value)!

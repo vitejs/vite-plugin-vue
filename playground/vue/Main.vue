@@ -68,6 +68,13 @@ import PreCompiledExternalScoped from './pre-compiled/external-scoped.vue'
 import PreCompiledExternalCssModules from './pre-compiled/external-cssmodules.vue'
 import ParserOptions from './ParserOptions.vue'
 import HmrCircularReference from './HmrCircularReference.vue'
+import TreeShakeScopedStyle from './TreeShakeScopedStyle.vue'
+
+// NOTE: this function is not used intentionally
+function foo() {
+  console.log(TreeShakeScopedStyle)
+}
+
 import ExportTypeProps1 from './ExportTypeProps1.vue'
 import ExportTypeProps2 from './ExportTypeProps2.vue'
 
