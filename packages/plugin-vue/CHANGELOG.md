@@ -1,3 +1,9 @@
+## <small>5.2.3 (2025-03-17)</small>
+
+* Revert "fix: generate unique component id" (#548) ([4bc5517](https://github.com/vitejs/vite-plugin-vue/commit/4bc5517)), closes [#548](https://github.com/vitejs/vite-plugin-vue/issues/548)
+
+
+
 ## <small>5.2.2 (2025-03-17)</small>
 
 * feat: pass descriptor vapor flag to compileTemplte ([219e007](https://github.com/vitejs/vite-plugin-vue/commit/219e007))
