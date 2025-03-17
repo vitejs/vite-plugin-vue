@@ -410,6 +410,20 @@ describe('macro imported types', () => {
       ),
     )
   })
+
+  test('should hmr when SFC is treated as a type dependency', async () => {
+    const cls1 = '.export-type-props1'
+    expect(await getColor(cls1)).toBe('red')
+    editFile('ExportTypeProps1.vue', (code) => code.replace('red', 'blue'))
+    await untilUpdated(() => getColor(cls1), 'blue')
+
+    const cls2 = '.export-type-props2'
+    editFile('ExportTypeProps1.vue', (code) => code.replace('msg: string', ''))
+    await untilUpdated(
+      () => page.textContent(cls2),
+      JSON.stringify({}, null, 2),
+    )
+  })
 })
 
 test('TS with generics', async () => {
