@@ -1,3 +1,12 @@
+## <small>4.1.2 (2025-03-17)</small>
+
+* fix: properly interpret boolean values in `define` (#545) ([46d3d65](https://github.com/vitejs/vite-plugin-vue/commit/46d3d65)), closes [#545](https://github.com/vitejs/vite-plugin-vue/issues/545)
+* fix(deps): update all non-major dependencies (#482) ([cdbae68](https://github.com/vitejs/vite-plugin-vue/commit/cdbae68)), closes [#482](https://github.com/vitejs/vite-plugin-vue/issues/482)
+* fix(deps): update all non-major dependencies (#502) ([5bfbbc6](https://github.com/vitejs/vite-plugin-vue/commit/5bfbbc6)), closes [#502](https://github.com/vitejs/vite-plugin-vue/issues/502)
+* fix(deps): update all non-major dependencies (#510) ([28bca4b](https://github.com/vitejs/vite-plugin-vue/commit/28bca4b)), closes [#510](https://github.com/vitejs/vite-plugin-vue/issues/510)
+
+
+
 ## <small>4.1.1 (2024-11-26)</small>
 
 * chore: add vite 6 peer dep (#481) ([4288652](https://github.com/vitejs/vite-plugin-vue/commit/4288652)), closes [#481](https://github.com/vitejs/vite-plugin-vue/issues/481)
