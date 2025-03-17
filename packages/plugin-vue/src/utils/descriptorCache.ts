@@ -40,7 +40,7 @@ export function createDescriptor(
 
   // ensure the path is normalized in a way that is consistent inside
   // project (relative to root) and on different systems.
-  const normalizedPath = normalizePath(path.relative(root, filename))
+  const normalizedPath = normalizePath(filename)
 
   const componentIdGenerator = features?.componentIdGenerator
   if (componentIdGenerator === 'filepath') {
@@ -49,7 +49,7 @@ export function createDescriptor(
     descriptor.id = getHash(normalizedPath + source)
   } else if (typeof componentIdGenerator === 'function') {
     descriptor.id = componentIdGenerator(
-      normalizedPath,
+      normalizePath(path.relative(root, filename)),
       source,
       isProduction,
       getHash,
