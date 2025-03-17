@@ -245,6 +245,13 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     config(config) {
+      const parseDefine = (v: unknown) => {
+        try {
+          return typeof v === 'string' ? JSON.parse(v) : v
+        } catch (err) {
+          return v
+        }
+      }
       return {
         resolve: {
           dedupe: config.build?.ssr ? [] : ['vue'],
@@ -252,15 +259,17 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         define: {
           __VUE_OPTIONS_API__:
             options.value.features?.optionsAPI ??
-            config.define?.__VUE_OPTIONS_API__ ??
+            parseDefine(config.define?.__VUE_OPTIONS_API__) ??
             true,
           __VUE_PROD_DEVTOOLS__:
             (options.value.features?.prodDevtools ||
-              config.define?.__VUE_PROD_DEVTOOLS__) ??
+              parseDefine(config.define?.__VUE_PROD_DEVTOOLS__)) ??
             false,
           __VUE_PROD_HYDRATION_MISMATCH_DETAILS__:
             (options.value.features?.prodHydrationMismatchDetails ||
-              config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__) ??
+              parseDefine(
+                config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__,
+              )) ??
             false,
         },
         ssr: {
