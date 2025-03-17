@@ -1,3 +1,28 @@
+## <small>5.2.2 (2025-03-17)</small>
+
+* feat: pass descriptor vapor flag to compileTemplte ([219e007](https://github.com/vitejs/vite-plugin-vue/commit/219e007))
+* feat(css): tree shake scoped styles (#533) ([333094f](https://github.com/vitejs/vite-plugin-vue/commit/333094f)), closes [#533](https://github.com/vitejs/vite-plugin-vue/issues/533)
+* fix: generate unique component id (#538) ([2704e85](https://github.com/vitejs/vite-plugin-vue/commit/2704e85)), closes [#538](https://github.com/vitejs/vite-plugin-vue/issues/538)
+* fix: properly interpret boolean values in `define` (#545) ([46d3d65](https://github.com/vitejs/vite-plugin-vue/commit/46d3d65)), closes [#545](https://github.com/vitejs/vite-plugin-vue/issues/545)
+* fix(deps): update all non-major dependencies (#482) ([cdbae68](https://github.com/vitejs/vite-plugin-vue/commit/cdbae68)), closes [#482](https://github.com/vitejs/vite-plugin-vue/issues/482)
+* fix(deps): update all non-major dependencies (#488) ([5d39582](https://github.com/vitejs/vite-plugin-vue/commit/5d39582)), closes [#488](https://github.com/vitejs/vite-plugin-vue/issues/488)
+* fix(index): move the if check earlier to avoid creating unnecessary ssr when entering return block ( ([2135c84](https://github.com/vitejs/vite-plugin-vue/commit/2135c84)), closes [#523](https://github.com/vitejs/vite-plugin-vue/issues/523)
+* fix(plugin-vue): default value for compile time flags (#495) ([ae9d948](https://github.com/vitejs/vite-plugin-vue/commit/ae9d948)), closes [#495](https://github.com/vitejs/vite-plugin-vue/issues/495)
+* fix(plugin-vue): ensure HMR updates styles when SFC is treated as a type dependency (#541) ([4abe3be](https://github.com/vitejs/vite-plugin-vue/commit/4abe3be)), closes [#541](https://github.com/vitejs/vite-plugin-vue/issues/541)
+* fix(plugin-vue): resolve sourcemap conflicts in build watch mode with cached modules (#505) ([906cebb](https://github.com/vitejs/vite-plugin-vue/commit/906cebb)), closes [#505](https://github.com/vitejs/vite-plugin-vue/issues/505)
+* fix(plugin-vue): support external import URLs for monorepos (#524) ([cdd4922](https://github.com/vitejs/vite-plugin-vue/commit/cdd4922)), closes [#524](https://github.com/vitejs/vite-plugin-vue/issues/524)
+* fix(plugin-vue): support vapor template-only component (#529) ([95be153](https://github.com/vitejs/vite-plugin-vue/commit/95be153)), closes [#529](https://github.com/vitejs/vite-plugin-vue/issues/529)
+* fix(plugin-vue): suppress warnings for non-recognized pseudo selectors form lightningcss (#521) ([15c0eb0](https://github.com/vitejs/vite-plugin-vue/commit/15c0eb0)), closes [#521](https://github.com/vitejs/vite-plugin-vue/issues/521)
+* chore(deps): update dependency rollup to ^4.27.4 (#479) ([428320d](https://github.com/vitejs/vite-plugin-vue/commit/428320d)), closes [#479](https://github.com/vitejs/vite-plugin-vue/issues/479)
+* chore(deps): update dependency rollup to ^4.28.1 (#484) ([388403f](https://github.com/vitejs/vite-plugin-vue/commit/388403f)), closes [#484](https://github.com/vitejs/vite-plugin-vue/issues/484)
+* chore(deps): update dependency rollup to ^4.29.1 (#493) ([b092bc8](https://github.com/vitejs/vite-plugin-vue/commit/b092bc8)), closes [#493](https://github.com/vitejs/vite-plugin-vue/issues/493)
+* chore(deps): update upstream (#503) ([8c12b9f](https://github.com/vitejs/vite-plugin-vue/commit/8c12b9f)), closes [#503](https://github.com/vitejs/vite-plugin-vue/issues/503)
+* chore(deps): update upstream (#511) ([d057351](https://github.com/vitejs/vite-plugin-vue/commit/d057351)), closes [#511](https://github.com/vitejs/vite-plugin-vue/issues/511)
+* chore(deps): update upstream (#526) ([59946d3](https://github.com/vitejs/vite-plugin-vue/commit/59946d3)), closes [#526](https://github.com/vitejs/vite-plugin-vue/issues/526)
+* chore(plugin-vue): simplify `resolved` declaration ([7288a59](https://github.com/vitejs/vite-plugin-vue/commit/7288a59))
+
+
+
 ## <small>5.2.1 (2024-11-26)</small>
 
 * chore: add vite 6 peer dep (#481) ([4288652](https://github.com/vitejs/vite-plugin-vue/commit/4288652)), closes [#481](https://github.com/vitejs/vite-plugin-vue/issues/481)
