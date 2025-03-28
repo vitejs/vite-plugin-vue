@@ -224,7 +224,7 @@ describe('hmr', () => {
   test('should reload when script changes after a rerender', async () => {
     // rerender
     editFile('Hmr.vue', (code) => code.replace('bar-title', 'bar-title1'))
-    await untilUpdated(() => page.textContent('h2.hmr'), 'bar-title1')
+    await untilUpdated(() => page.textContent('.hmr-bar-text'), 'bar-title1')
 
     // change 'bar' to 'updated', should reload
     editFile('Hmr.vue', (code) =>
