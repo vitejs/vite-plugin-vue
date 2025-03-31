@@ -55,7 +55,7 @@
     "npm-run-all2": "^7.0.2",
     "picocolors": "^1.1.1",
     "playwright-chromium": "^1.51.1",
-    "prettier": "3.4.2",
+    "prettier": "3.5.3",
     "rollup": "^4.34.9",
     "simple-git-hooks": "^2.12.1",
     "tsx": "^4.19.3",
