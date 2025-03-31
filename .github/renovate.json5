@@ -18,6 +18,11 @@
       groupName: "prettier",
       matchPackageNames: ["prettier"],
     },
+    {
+      "matchDepTypes": ["action"],
+      "excludePackagePrefixes": ["actions/", "github/"],
+      "pinDigests": true,
+    },
   ],
   "ignoreDeps": [
     // manually bumping

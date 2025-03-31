@@ -66,7 +66,7 @@ export async function transformStyle(
       block.scoped && !descriptor.isTemp
         ? {
             vite: {
-              cssScopeTo: [descriptor.filename, 'default'],
+              cssScopeTo: [descriptor.filename, 'default'] as const,
             },
           }
         : undefined,
