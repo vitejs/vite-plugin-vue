@@ -87,6 +87,15 @@
   "pnpm": {
     "overrides": {
       "@vitejs/plugin-vue": "workspace:*"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "core-js",
+      "esbuild"
+    ],
+    "onlyBuiltDependencies": [
+      "playwright-chromium",
+      "simple-git-hooks"
+    ]
   }
 }
