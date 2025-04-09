@@ -37,16 +37,17 @@
   },
   "devDependencies": {
     "@babel/types": "^7.27.0",
-    "@eslint/js": "^9.23.0",
+    "@eslint/js": "^9.24.0",
     "@types/babel__core": "^7.20.5",
     "@types/convert-source-map": "^2.0.3",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.13.14",
+    "@types/node": "^22.14.0",
     "@vitejs/release-scripts": "^1.4.0",
     "conventional-changelog-cli": "^5.0.0",
-    "eslint": "^9.23.0",
-    "eslint-plugin-import-x": "^4.9.4",
+    "eslint": "^9.24.0",
+    "eslint-import-resolver-typescript": "^4.3.2",
+    "eslint-plugin-import-x": "^4.10.2",
     "eslint-plugin-n": "^17.17.0",
     "eslint-plugin-regexp": "^2.7.0",
     "execa": "^9.5.2",
@@ -58,8 +59,8 @@
     "rollup": "^4.38.0",
     "simple-git-hooks": "^2.12.1",
     "tsx": "^4.19.3",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.28.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.29.1",
     "unbuild": "3.5.0",
     "vite": "catalog:",
     "vitest": "^3.1.1",
@@ -82,7 +83,7 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@10.7.0",
+  "packageManager": "pnpm@10.8.0",
   "pnpm": {
     "overrides": {
       "@vitejs/plugin-vue": "workspace:*"
