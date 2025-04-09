@@ -4,7 +4,8 @@ import eslint from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import nodePlugin from 'eslint-plugin-n'
 import * as regexpPlugin from 'eslint-plugin-regexp'
-import importPlugin from 'eslint-plugin-import-x'
+import importPlugin, { createNodeResolver } from 'eslint-plugin-import-x'
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript'
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -15,6 +16,12 @@ export default tseslint.config(
   {
     plugins: {
       import: importPlugin,
+    },
+    settings: {
+      'import-x/resolver-next': [
+        createNodeResolver(),
+        createTypeScriptImportResolver(),
+      ],
     },
     rules: {
       eqeqeq: ['warn', 'always', { null: 'never' }],

@@ -11,9 +11,9 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*",
-    "less": "^4.2.2",
+    "less": "^4.3.0",
     "postcss-nested": "^7.0.2",
-    "sass": "^1.86.0"
+    "sass": "^1.86.3"
   },
   "dependencies": {
     "vue": "catalog:"

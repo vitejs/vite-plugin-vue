@@ -16,9 +16,9 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*",
     "js-yaml": "^4.1.0",
-    "less": "^4.2.2",
+    "less": "^4.3.0",
     "pug": "^3.0.3",
-    "sass": "^1.86.0",
+    "sass": "^1.86.3",
     "stylus": "^0.64.0"
   }
 }
