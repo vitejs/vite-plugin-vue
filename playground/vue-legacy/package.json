@@ -14,6 +14,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*",
-    "@vitejs/plugin-legacy": "^6.0.2"
+    "@vitejs/plugin-legacy": "^6.1.0"
   }
 }
