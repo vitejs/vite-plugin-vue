@@ -102,12 +102,6 @@ export default tseslint.config(
     },
   },
   {
-    files: ['*.spec.ts'],
-    rules: {
-      'n/no-extraneous-import': 'off',
-    },
-  },
-  {
     files: ['**/build.config.ts'],
     rules: {
       'no-undef': 'off',
@@ -146,6 +140,20 @@ export default tseslint.config(
       'no-empty': 'off',
       'no-constant-condition': 'off',
       '@typescript-eslint/no-empty-function': 'off',
+    },
+  },
+  {
+    name: 'tests',
+    files: ['**/__tests__/**/*'],
+    rules: {
+      'n/no-extraneous-import': 'off',
+      'n/no-unsupported-features/node-builtins': [
+        'error',
+        {
+          version: '^18.0.0 || >=20.0.0',
+          allowExperimental: true,
+        },
+      ],
     },
   },
   {

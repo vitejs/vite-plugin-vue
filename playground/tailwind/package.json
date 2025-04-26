@@ -12,8 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.4",
     "tailwindcss": "^4.1.4",
-    "vue": "catalog:",
-    "vue-router": "catalog:"
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
