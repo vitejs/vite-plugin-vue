@@ -10,14 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.21",
+    "@tailwindcss/vite": "^4.1.4",
     "tailwindcss": "^4.1.4",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
-    "@vitejs/plugin-vue": "workspace:*",
-    "ts-node": "^10.9.2"
+    "@vitejs/plugin-vue": "workspace:*"
   }
 }
