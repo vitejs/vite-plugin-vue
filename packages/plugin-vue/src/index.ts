@@ -24,6 +24,7 @@ import { handleHotUpdate, handleTypeDepChange } from './handleHotUpdate'
 import { transformTemplateAsModule } from './template'
 import { transformStyle } from './style'
 import { EXPORT_HELPER_ID, helperCode } from './helper'
+import { exactRegex } from './utils/filter'
 
 export { parseVueRequest } from './utils/query'
 export type { VueQuery } from './utils/query'
@@ -338,110 +339,129 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       }
     },
 
-    async resolveId(id) {
-      // component export helper
-      if (id === EXPORT_HELPER_ID) {
-        return id
-      }
-      // serve sub-part requests (*?vue) as virtual modules
-      if (parseVueRequest(id).query.vue) {
-        return id
-      }
+    resolveId: {
+      filter: {
+        id: [exactRegex(EXPORT_HELPER_ID), /[?&]vue\b/],
+      },
+      handler(id) {
+        // component export helper
+        if (id === EXPORT_HELPER_ID) {
+          return id
+        }
+        // serve sub-part requests (*?vue) as virtual modules
+        if (parseVueRequest(id).query.vue) {
+          return id
+        }
+      },
     },
 
-    load(id, opt) {
-      if (id === EXPORT_HELPER_ID) {
-        return helperCode
-      }
-
-      const ssr = opt?.ssr === true
-
-      const { filename, query } = parseVueRequest(id)
-
-      // select corresponding block for sub-part virtual modules
-      if (query.vue) {
-        if (query.src) {
-          return fs.readFileSync(filename, 'utf-8')
+    load: {
+      filter: {
+        id: [exactRegex(EXPORT_HELPER_ID), /[?&]vue\b/],
+      },
+      handler(id, opt) {
+        if (id === EXPORT_HELPER_ID) {
+          return helperCode
         }
-        const descriptor = getDescriptor(filename, options.value)!
-        let block: SFCBlock | null | undefined
-        if (query.type === 'script') {
-          // handle <script> + <script setup> merge via compileScript()
-          block = resolveScript(
-            descriptor,
-            options.value,
-            ssr,
-            customElementFilter.value(filename),
-          )
-        } else if (query.type === 'template') {
-          block = descriptor.template!
-        } else if (query.type === 'style') {
-          block = descriptor.styles[query.index!]
-        } else if (query.index != null) {
-          block = descriptor.customBlocks[query.index]
-        }
-        if (block) {
-          return {
-            code: block.content,
-            map: block.map as any,
+
+        const ssr = opt?.ssr === true
+
+        const { filename, query } = parseVueRequest(id)
+
+        // select corresponding block for sub-part virtual modules
+        if (query.vue) {
+          if (query.src) {
+            return fs.readFileSync(filename, 'utf-8')
+          }
+          const descriptor = getDescriptor(filename, options.value)!
+          let block: SFCBlock | null | undefined
+          if (query.type === 'script') {
+            // handle <script> + <script setup> merge via compileScript()
+            block = resolveScript(
+              descriptor,
+              options.value,
+              ssr,
+              customElementFilter.value(filename),
+            )
+          } else if (query.type === 'template') {
+            block = descriptor.template!
+          } else if (query.type === 'style') {
+            block = descriptor.styles[query.index!]
+          } else if (query.index != null) {
+            block = descriptor.customBlocks[query.index]
+          }
+          if (block) {
+            return {
+              code: block.content,
+              map: block.map as any,
+            }
           }
         }
-      }
+      },
     },
 
-    transform(code, id, opt) {
-      const ssr = opt?.ssr === true
-      const { filename, query } = parseVueRequest(id)
+    transform: {
+      filter: {
+        // FIXME: should include other files if filter is updated
+        id: {
+          include: /[?&]vue\b|\.vue$/,
+          exclude: /[?&](?:raw|url)\b/,
+        },
+      },
+      handler(code, id, opt) {
+        const ssr = opt?.ssr === true
+        const { filename, query } = parseVueRequest(id)
 
-      if (query.raw || query.url) {
-        return
-      }
-
-      if (!filter.value(filename) && !query.vue) {
-        return
-      }
-
-      if (!query.vue) {
-        // main request
-        return transformMain(
-          code,
-          filename,
-          options.value,
-          this,
-          ssr,
-          customElementFilter.value(filename),
-        )
-      } else {
-        // sub block request
-        const descriptor: ExtendedSFCDescriptor = query.src
-          ? getSrcDescriptor(filename, query) ||
-            getTempSrcDescriptor(filename, query)
-          : getDescriptor(filename, options.value)!
-
-        if (query.src) {
-          this.addWatchFile(filename)
+        if (query.raw || query.url) {
+          return
         }
 
-        if (query.type === 'template') {
-          return transformTemplateAsModule(
+        if (!filter.value(filename) && !query.vue) {
+          return
+        }
+
+        if (!query.vue) {
+          // main request
+          return transformMain(
             code,
-            descriptor,
+            filename,
             options.value,
             this,
             ssr,
             customElementFilter.value(filename),
           )
-        } else if (query.type === 'style') {
-          return transformStyle(
-            code,
-            descriptor,
-            Number(query.index || 0),
-            options.value,
-            this,
-            filename,
-          )
+        } else {
+          // sub block request
+          const descriptor: ExtendedSFCDescriptor = query.src
+            ? getSrcDescriptor(filename, query) ||
+              getTempSrcDescriptor(filename, query)
+            : getDescriptor(filename, options.value)!
+
+          if (query.src) {
+            this.addWatchFile(filename)
+          }
+
+          if (query.type === 'template') {
+            return transformTemplateAsModule(
+              code,
+              descriptor,
+              options.value,
+              this,
+              ssr,
+              customElementFilter.value(filename),
+            )
+          } else if (query.type === 'style') {
+            return transformStyle(
+              code,
+              descriptor,
+              Number(query.index || 0),
+              options.value,
+              this,
+              filename,
+            )
+          }
         }
-      }
+      },
     },
   }
 }
