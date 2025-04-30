@@ -6,7 +6,7 @@ import type {
   SFCTemplateCompileOptions,
   SFCTemplateCompileResults,
 } from 'vue/compiler-sfc'
-import type { PluginContext, TransformPluginContext } from 'rollup'
+import type { Rollup } from 'vite'
 import { getResolvedScript, resolveScript } from './script'
 import { createRollupError } from './utils/error'
 import type { ResolvedOptions } from './index'
@@ -15,7 +15,7 @@ export async function transformTemplateAsModule(
   code: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: TransformPluginContext,
+  pluginContext: Rollup.TransformPluginContext,
   ssr: boolean,
   customElement: boolean,
 ): Promise<{
@@ -56,7 +56,7 @@ export function transformTemplateInMain(
   code: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
 ): SFCTemplateCompileResults {
@@ -82,7 +82,7 @@ export function compile(
   code: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
 ) {
