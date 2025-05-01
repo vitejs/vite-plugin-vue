@@ -256,22 +256,43 @@ export async function transformMain(
     /tsx?$/.test(lang) &&
     !descriptor.script?.src // only normal script can have src
   ) {
-    const { code, map } = await transformWithEsbuild(
-      resolvedCode,
-      filename,
-      {
-        target: 'esnext',
-        charset: 'utf8',
-        // #430 support decorators in .vue file
-        // target can be overridden by esbuild config target
-        ...options.devServer?.config.esbuild,
-        loader: 'ts',
-        sourcemap: options.sourceMap,
-      },
-      resolvedMap,
-    )
-    resolvedCode = code
-    resolvedMap = resolvedMap ? (map as any) : resolvedMap
+    // @ts-ignore Rolldown-specific
+    const { rolldownVersion, transformWithOxc } = await import('vite')
+    if (rolldownVersion) {
+      const { code, map } = await transformWithOxc(
+        resolvedCode,
+        filename,
+        {
+          target: 'esnext',
+          charset: 'utf8',
+          // #430 support decorators in .vue file
+          // target can be overridden by esbuild config target
+          ...options.devServer?.config.esbuild,
+          loader: 'ts',
+          sourcemap: options.sourceMap,
+        },
+        resolvedMap,
+      )
+      resolvedCode = code
+      resolvedMap = resolvedMap ? (map as any) : resolvedMap
+    } else {
+      const { code, map } = await transformWithEsbuild(
+        resolvedCode,
+        filename,
+        {
+          target: 'esnext',
+          charset: 'utf8',
+          // #430 support decorators in .vue file
+          // target can be overridden by esbuild config target
+          ...options.devServer?.config.esbuild,
+          loader: 'ts',
+          sourcemap: options.sourceMap,
+        },
+        resolvedMap,
+      )
+      resolvedCode = code
+      resolvedMap = resolvedMap ? (map as any) : resolvedMap
+    }
   }
 
   return {
