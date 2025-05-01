@@ -1,12 +1,12 @@
 import path from 'node:path'
 import fs from 'node:fs'
 import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
-import type { PluginContext, TransformPluginContext } from 'rollup'
 import type { RawSourceMap } from 'source-map-js'
 import type { EncodedSourceMap as TraceEncodedSourceMap } from '@jridgewell/trace-mapping'
 import { TraceMap, eachMapping } from '@jridgewell/trace-mapping'
 import type { EncodedSourceMap as GenEncodedSourceMap } from '@jridgewell/gen-mapping'
 import { addMapping, fromMap, toEncodedMap } from '@jridgewell/gen-mapping'
+import type { Rollup } from 'vite'
 import { normalizePath, transformWithEsbuild } from 'vite'
 import {
   createDescriptor,
@@ -31,7 +31,7 @@ export async function transformMain(
   code: string,
   filename: string,
   options: ResolvedOptions,
-  pluginContext: TransformPluginContext,
+  pluginContext: Rollup.TransformPluginContext,
   ssr: boolean,
   customElement: boolean,
 ) {
@@ -290,7 +290,7 @@ export async function transformMain(
 async function genTemplateCode(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
 ) {
@@ -339,7 +339,7 @@ async function genTemplateCode(
 async function genScriptCode(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
 ): Promise<{
@@ -397,7 +397,7 @@ async function genScriptCode(
 
 async function genStyleCode(
   descriptor: SFCDescriptor,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   customElement: boolean,
   attachedProps: [string, string][],
 ) {
@@ -487,7 +487,7 @@ function genCSSModulesCode(
 
 async function genCustomBlockCode(
   descriptor: SFCDescriptor,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
 ) {
   let code = ''
   for (let index = 0; index < descriptor.customBlocks.length; index++) {
@@ -514,7 +514,7 @@ async function genCustomBlockCode(
 async function linkSrcToDescriptor(
   src: string,
   descriptor: SFCDescriptor,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   scoped?: boolean,
 ) {
   const srcFile =
