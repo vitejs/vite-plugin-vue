@@ -263,12 +263,11 @@ export async function transformMain(
         resolvedCode,
         filename,
         {
-          target: 'esnext',
-          charset: 'utf8',
           // #430 support decorators in .vue file
-          // target can be overridden by esbuild config target
-          ...options.devServer?.config.esbuild,
-          loader: 'ts',
+          // target can be overridden by oxc config target
+          // @ts-ignore Rolldown-specific
+          ...options.devServer?.config.oxc,
+          lang: 'ts',
           sourcemap: options.sourceMap,
         },
         resolvedMap,
