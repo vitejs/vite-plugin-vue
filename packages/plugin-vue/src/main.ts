@@ -196,14 +196,19 @@ export async function transformMain(
 
   let resolvedMap: RawSourceMap | undefined = undefined
   if (options.sourceMap) {
-    if (scriptMap && templateMap) {
+    if (templateMap) {
       // if the template is inlined into the main module (indicated by the presence
       // of templateMap), we need to concatenate the two source maps.
-
+      const from = scriptMap ?? {
+        version: 3,
+        sources: [],
+        names: [],
+        mappings: '',
+      }
       const gen = fromMap(
         // version property of result.map is declared as string
         // but actually it is `3`
-        scriptMap as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap,
+        from as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap,
       )
       const tracer = new TraceMap(
         // same above
@@ -231,8 +236,7 @@ export async function transformMain(
       // of the main module compile result, which has outdated sourcesContent.
       resolvedMap.sourcesContent = templateMap.sourcesContent
     } else {
-      // if one of `scriptMap` and `templateMap` is empty, use the other one
-      resolvedMap = scriptMap ?? templateMap
+      resolvedMap = scriptMap
     }
   }
 
