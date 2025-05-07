@@ -147,12 +147,14 @@ exports[`serve:vue-sourcemap > css scoped > serve-css-scoped 1`] = `
 exports[`serve:vue-sourcemap > empty script > serve-empty-script 1`] = `
 {
   "ignoreList": [],
-  "mappings": ";;;;wBAEE,oBAA2B,WAAxB,gBAAoB",
+  "mappings": ";;;;wBAIE,oBAA2B,WAAxB,gBAAoB",
   "sources": [
     "EmptyScript.vue",
   ],
   "sourcesContent": [
-    "<script setup></script>
+    "<script setup>
+
+</script>
 <template>
   <p>&lt;empty-script&gt;</p>
 </template>
