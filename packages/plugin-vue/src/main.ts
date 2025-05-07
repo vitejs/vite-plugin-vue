@@ -200,8 +200,11 @@ export async function transformMain(
       // if the template is inlined into the main module (indicated by the presence
       // of templateMap), we need to concatenate the two source maps.
       const from = scriptMap ?? {
+        file: filename,
+        sourceRoot: '',
         version: 3,
         sources: [],
+        sourcesContent: [],
         names: [],
         mappings: '',
       }

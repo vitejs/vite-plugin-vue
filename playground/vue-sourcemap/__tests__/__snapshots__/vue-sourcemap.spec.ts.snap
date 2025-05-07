@@ -144,6 +144,24 @@ exports[`serve:vue-sourcemap > css scoped > serve-css-scoped 1`] = `
 }
 `;
 
+exports[`serve:vue-sourcemap > empty script > serve-empty-script 1`] = `
+{
+  "ignoreList": [],
+  "mappings": ";;;;wBAEE,oBAA2B,WAAxB,gBAAoB",
+  "sources": [
+    "EmptyScript.vue",
+  ],
+  "sourcesContent": [
+    "<script setup></script>
+<template>
+  <p>&lt;empty-script&gt;</p>
+</template>
+",
+  ],
+  "version": 3,
+}
+`;
+
 exports[`serve:vue-sourcemap > js > serve-js 1`] = `
 {
   "ignoreList": [],
@@ -194,7 +212,8 @@ exports[`serve:vue-sourcemap > less with additionalData > serve-less-with-additi
 
 exports[`serve:vue-sourcemap > no script > serve-no-script 1`] = `
 {
-  "mappings": ";;;wBACE,oBAAwB,WAArB,aAAiB",
+  "ignoreList": [],
+  "mappings": ";;;;wBACE,oBAAwB,WAArB,aAAiB",
   "sources": [
     "NoScript.vue",
   ],

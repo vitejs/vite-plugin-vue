@@ -100,6 +100,17 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot('serve-no-script')
   })
 
+  test('empty script', async () => {
+    const res = await page.request.get(
+      new URL('./EmptyScript.vue', page.url()).href,
+    )
+    const js = await res.text()
+    const map = extractSourcemap(js)
+    expect(formatSourcemapForSnapshot(map)).toMatchSnapshot(
+      'serve-empty-script',
+    )
+  })
+
   test('no template', async () => {
     const res = await page.request.get(
       new URL('./NoTemplate.vue', page.url()).href,
