@@ -196,9 +196,10 @@ export async function transformMain(
 
   let resolvedMap: RawSourceMap | undefined = undefined
   if (options.sourceMap) {
+    // the mappings of the source map for the inlined template should be moved
+    // because the position does not include the script tag part.
+    // we also concatenate the two source maps while doing that.
     if (templateMap) {
-      // if the template is inlined into the main module (indicated by the presence
-      // of templateMap), we need to concatenate the two source maps.
       const from = scriptMap ?? {
         file: filename,
         sourceRoot: '',
