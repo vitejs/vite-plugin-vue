@@ -1,3 +1,15 @@
+## <small>5.2.4 (2025-05-09)</small>
+
+* chore: fix types with Vite 6.3 (#559) ([8002511](https://github.com/vitejs/vite-plugin-vue/commit/8002511)), closes [#559](https://github.com/vitejs/vite-plugin-vue/issues/559)
+* chore: use rollup types exposed from Vite (#583) ([2e1287f](https://github.com/vitejs/vite-plugin-vue/commit/2e1287f)), closes [#583](https://github.com/vitejs/vite-plugin-vue/issues/583)
+* chore(deps): update upstream (#542) ([ef446fc](https://github.com/vitejs/vite-plugin-vue/commit/ef446fc)), closes [#542](https://github.com/vitejs/vite-plugin-vue/issues/542)
+* chore(deps): update upstream (#569) ([98381b2](https://github.com/vitejs/vite-plugin-vue/commit/98381b2)), closes [#569](https://github.com/vitejs/vite-plugin-vue/issues/569)
+* feat(plugin-vue): use `transformWithOxc` if `rolldown-vite` is detected (#584) ([6ac8e3a](https://github.com/vitejs/vite-plugin-vue/commit/6ac8e3a)), closes [#584](https://github.com/vitejs/vite-plugin-vue/issues/584)
+* fix(plugin-vue): handle sourcemap with empty script code (#585) ([7f73970](https://github.com/vitejs/vite-plugin-vue/commit/7f73970)), closes [#585](https://github.com/vitejs/vite-plugin-vue/issues/585)
+* fix(plugin-vue): when the resource path contains chinese characters, dev/build is inconsistent (#550 ([5f6affe](https://github.com/vitejs/vite-plugin-vue/commit/5f6affe)), closes [#550](https://github.com/vitejs/vite-plugin-vue/issues/550)
+
+
+
 ## <small>5.2.3 (2025-03-17)</small>
 
 * Revert "fix: generate unique component id" (#548) ([4bc5517](https://github.com/vitejs/vite-plugin-vue/commit/4bc5517)), closes [#548](https://github.com/vitejs/vite-plugin-vue/issues/548)
