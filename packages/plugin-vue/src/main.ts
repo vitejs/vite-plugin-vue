@@ -8,6 +8,7 @@ import type { EncodedSourceMap as GenEncodedSourceMap } from '@jridgewell/gen-ma
 import { addMapping, fromMap, toEncodedMap } from '@jridgewell/gen-mapping'
 import type { Rollup } from 'vite'
 import { normalizePath, transformWithEsbuild } from 'vite'
+import * as vite from 'vite'
 import {
   createDescriptor,
   getDescriptor,
@@ -264,22 +265,41 @@ export async function transformMain(
     /tsx?$/.test(lang) &&
     !descriptor.script?.src // only normal script can have src
   ) {
-    const { code, map } = await transformWithEsbuild(
-      resolvedCode,
-      filename,
-      {
-        target: 'esnext',
-        charset: 'utf8',
-        // #430 support decorators in .vue file
-        // target can be overridden by esbuild config target
-        ...options.devServer?.config.esbuild,
-        loader: 'ts',
-        sourcemap: options.sourceMap,
-      },
-      resolvedMap,
-    )
-    resolvedCode = code
-    resolvedMap = resolvedMap ? (map as any) : resolvedMap
+    if ('transformWithOxc' in vite) {
+      // @ts-ignore rolldown-vite
+      const { code, map } = await vite.transformWithOxc(
+        resolvedCode,
+        filename,
+        {
+          // #430 support decorators in .vue file
+          // target can be overridden by esbuild config target
+          // @ts-ignore
+          ...options.devServer?.config.oxc,
+          lang: 'ts',
+          sourcemap: options.sourceMap,
+        },
+        resolvedMap,
+      )
+      resolvedCode = code
+      resolvedMap = resolvedMap ? (map as any) : resolvedMap
+    } else {
+      const { code, map } = await transformWithEsbuild(
+        resolvedCode,
+        filename,
+        {
+          target: 'esnext',
+          charset: 'utf8',
+          // #430 support decorators in .vue file
+          // target can be overridden by esbuild config target
+          ...options.devServer?.config.esbuild,
+          loader: 'ts',
+          sourcemap: options.sourceMap,
+        },
+        resolvedMap,
+      )
+      resolvedCode = code
+      resolvedMap = resolvedMap ? (map as any) : resolvedMap
+    }
   }
 
   return {
