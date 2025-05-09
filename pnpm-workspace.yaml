@@ -5,4 +5,4 @@ packages:
 catalog:
   'vue': ^3.5.13
   'vite': ^6.3.3
-  'vue-router': ^4.5.0
+  'vue-router': ^4.5.1
