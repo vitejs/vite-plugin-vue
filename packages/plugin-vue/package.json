@@ -41,7 +41,7 @@
   "devDependencies": {
     "@jridgewell/gen-mapping": "^0.3.8",
     "@jridgewell/trace-mapping": "^0.3.25",
-    "debug": "^4.4.0",
+    "debug": "^4.4.1",
     "rollup": "^4.40.2",
     "slash": "^5.1.0",
     "source-map-js": "^1.2.1",
