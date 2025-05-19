@@ -8,7 +8,6 @@ import type { EncodedSourceMap as GenEncodedSourceMap } from '@jridgewell/gen-ma
 import { addMapping, fromMap, toEncodedMap } from '@jridgewell/gen-mapping'
 import type { Rollup } from 'vite'
 import { normalizePath, transformWithEsbuild } from 'vite'
-import * as vite from 'vite'
 import {
   createDescriptor,
   getDescriptor,
