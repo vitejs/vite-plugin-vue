@@ -1,5 +1,5 @@
 import { resolve } from 'node:path'
-import { defineConfig, splitVendorChunkPlugin } from 'vite'
+import { defineConfig } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
 import { vueI18nPlugin } from './CustomBlockPlugin'
 
@@ -23,7 +23,6 @@ export default defineConfig({
         },
       },
     }),
-    splitVendorChunkPlugin(),
     vueI18nPlugin,
   ],
   build: {

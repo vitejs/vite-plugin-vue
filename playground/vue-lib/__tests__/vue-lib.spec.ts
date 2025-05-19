@@ -1,7 +1,7 @@
 import path from 'node:path'
+import type { Rollup } from 'vite'
 import { build } from 'vite'
 import { describe, expect, test } from 'vitest'
-import type { OutputChunk, RollupOutput } from 'rollup'
 
 describe('vue component library', () => {
   test('should output tree shakeable css module code', async () => {
@@ -14,10 +14,10 @@ describe('vue component library', () => {
     const { output } = (await build({
       logLevel: 'silent',
       configFile: path.resolve(__dirname, '../vite.config.consumer.ts'),
-    })) as RollupOutput
+    })) as Rollup.RollupOutput
     const { code } = output.find(
       (e) => e.type === 'chunk' && e.isEntry,
-    ) as OutputChunk
+    ) as Rollup.OutputChunk
     // Unused css module should be treeshaked
     expect(code).toContain('styleA') // styleA is used by CompA
     expect(code).not.toContain('styleB') // styleB is not used
