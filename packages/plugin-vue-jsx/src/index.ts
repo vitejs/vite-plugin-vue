@@ -6,8 +6,11 @@ import jsx from '@vue/babel-plugin-jsx'
 import { createFilter, normalizePath } from 'vite'
 import type { ComponentOptions } from 'vue'
 import type { Plugin } from 'vite'
+import {
+  exactRegex,
+  makeIdFiltersToMatchWithQuery,
+} from '@rolldown/pluginutils'
 import type { Options } from './types'
-import { exactRegex, matchWithQuery } from './filterUtils'
 
 export * from './types'
 
@@ -107,10 +110,8 @@ function vueJsxPlugin(options: Options = {}): Plugin {
     transform: {
       filter: {
         id: {
-          include: ensureArray(include!).map(matchWithQuery),
-          exclude: exclude
-            ? ensureArray(exclude).map(matchWithQuery)
-            : undefined,
+          include: include ? makeIdFiltersToMatchWithQuery(include) : undefined,
+          exclude: exclude ? makeIdFiltersToMatchWithQuery(exclude) : undefined,
         },
       },
       async handler(code, id, opt) {
@@ -338,10 +339,6 @@ const hash =
 
 function getHash(text: string) {
   return hash('sha256', text, 'hex').substring(0, 8)
-}
-
-function ensureArray<T>(value: T | readonly T[]): readonly T[] {
-  return Array.isArray(value) ? value : ([value] as readonly T[])
 }
 
 export default vueJsxPlugin

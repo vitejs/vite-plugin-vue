@@ -146,6 +146,9 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.27.0
         version: 7.27.0(@babel/core@7.26.10)
+      '@rolldown/pluginutils':
+        specifier: 1.0.0-beta.9
+        version: 1.0.0-beta.9
       '@vue/babel-plugin-jsx':
         specifier: ^1.4.0
         version: 1.4.0(@babel/core@7.26.10)
@@ -1397,6 +1400,9 @@ packages:
   '@publint/pack@0.1.1':
     resolution: {integrity: sha512-TvCl79Y8v18ZhFGd5mjO1kYPovSBq3+4LVCi5Nfl1JI8fS8i8kXbgQFGwBJRXczim8GlW8c2LMBKTtExYXOy/A==}
     engines: {node: '>=18'}
+
+  '@rolldown/pluginutils@1.0.0-beta.9':
+    resolution: {integrity: sha512-e9MeMtVWo186sgvFFJOPGy7/d2j2mZhLJIdVW0C/xDluuOvymEATqz6zKsP0ZmXGzQtqlyjz5sC1sYQUoJG98w==}
 
   '@rollup/plugin-alias@5.1.1':
     resolution: {integrity: sha512-PR9zDb+rOzkRb2VD+EuKB7UC41vU5DIwZ5qqCpk0KJudcWAyi8rvYOhS7+L5aZCspw1stTViLgN5v6FF1p5cgQ==}
@@ -5519,6 +5525,8 @@ snapshots:
   '@pkgr/core@0.2.4': {}
 
   '@publint/pack@0.1.1': {}
+
+  '@rolldown/pluginutils@1.0.0-beta.9': {}
 
   '@rollup/plugin-alias@5.1.1(rollup@4.38.0)':
     optionalDependencies:
