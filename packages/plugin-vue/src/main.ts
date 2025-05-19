@@ -1,12 +1,12 @@
 import path from 'node:path'
 import fs from 'node:fs'
 import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
-import type { PluginContext, TransformPluginContext } from 'rollup'
 import type { RawSourceMap } from 'source-map-js'
 import type { EncodedSourceMap as TraceEncodedSourceMap } from '@jridgewell/trace-mapping'
 import { TraceMap, eachMapping } from '@jridgewell/trace-mapping'
 import type { EncodedSourceMap as GenEncodedSourceMap } from '@jridgewell/gen-mapping'
 import { addMapping, fromMap, toEncodedMap } from '@jridgewell/gen-mapping'
+import type { Rollup } from 'vite'
 import { normalizePath, transformWithEsbuild } from 'vite'
 import * as vite from 'vite'
 import {
@@ -32,7 +32,7 @@ export async function transformMain(
   code: string,
   filename: string,
   options: ResolvedOptions,
-  pluginContext: TransformPluginContext,
+  pluginContext: Rollup.TransformPluginContext,
   ssr: boolean,
   customElement: boolean,
 ) {
@@ -197,14 +197,23 @@ export async function transformMain(
 
   let resolvedMap: RawSourceMap | undefined = undefined
   if (options.sourceMap) {
-    if (scriptMap && templateMap) {
-      // if the template is inlined into the main module (indicated by the presence
-      // of templateMap), we need to concatenate the two source maps.
-
+    // the mappings of the source map for the inlined template should be moved
+    // because the position does not include the script tag part.
+    // we also concatenate the two source maps while doing that.
+    if (templateMap) {
+      const from = scriptMap ?? {
+        file: filename,
+        sourceRoot: '',
+        version: 3,
+        sources: [],
+        sourcesContent: [],
+        names: [],
+        mappings: '',
+      }
       const gen = fromMap(
         // version property of result.map is declared as string
         // but actually it is `3`
-        scriptMap as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap,
+        from as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap,
       )
       const tracer = new TraceMap(
         // same above
@@ -232,8 +241,7 @@ export async function transformMain(
       // of the main module compile result, which has outdated sourcesContent.
       resolvedMap.sourcesContent = templateMap.sourcesContent
     } else {
-      // if one of `scriptMap` and `templateMap` is empty, use the other one
-      resolvedMap = scriptMap ?? templateMap
+      resolvedMap = scriptMap
     }
   }
 
@@ -257,15 +265,16 @@ export async function transformMain(
     /tsx?$/.test(lang) &&
     !descriptor.script?.src // only normal script can have src
   ) {
-    if ('transformWithOxc' in vite) {
-      // @ts-ignore rolldown-vite
-      const { code, map } = await vite.transformWithOxc(
+    // @ts-ignore Rolldown-specific
+    const { transformWithOxc } = await import('vite')
+    if (transformWithOxc) {
+      const { code, map } = await transformWithOxc(
         resolvedCode,
         filename,
         {
           // #430 support decorators in .vue file
-          // target can be overridden by esbuild config target
-          // @ts-ignore
+          // target can be overridden by oxc config target
+          // @ts-ignore Rolldown-specific
           ...options.devServer?.config.oxc,
           lang: 'ts',
           sourcemap: options.sourceMap,
@@ -310,7 +319,7 @@ export async function transformMain(
 async function genTemplateCode(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
 ) {
@@ -359,7 +368,7 @@ async function genTemplateCode(
 async function genScriptCode(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
 ): Promise<{
@@ -417,7 +426,7 @@ async function genScriptCode(
 
 async function genStyleCode(
   descriptor: SFCDescriptor,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   customElement: boolean,
   attachedProps: [string, string][],
 ) {
@@ -507,7 +516,7 @@ function genCSSModulesCode(
 
 async function genCustomBlockCode(
   descriptor: SFCDescriptor,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
 ) {
   let code = ''
   for (let index = 0; index < descriptor.customBlocks.length; index++) {
@@ -534,7 +543,7 @@ async function genCustomBlockCode(
 async function linkSrcToDescriptor(
   src: string,
   descriptor: SFCDescriptor,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   scoped?: boolean,
 ) {
   const srcFile =
