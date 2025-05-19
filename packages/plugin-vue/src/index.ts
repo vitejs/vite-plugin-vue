@@ -163,7 +163,7 @@ export interface Options {
   customElement?: boolean | string | RegExp | (string | RegExp)[]
 }
 
-export interface ResolvedOptions extends Options {
+export interface ResolvedOptions extends Omit<Options, 'include' | 'exclude'> {
   compiler: typeof _compiler
   root: string
   sourceMap: boolean
@@ -175,6 +175,14 @@ export interface ResolvedOptions extends Options {
 export interface Api {
   get options(): ResolvedOptions
   set options(value: ResolvedOptions)
+
+  get include(): string | RegExp | (string | RegExp)[] | undefined
+  /** include cannot be updated after `options` hook is called */
+  set include(value: string | RegExp | (string | RegExp)[] | undefined)
+  get exclude(): string | RegExp | (string | RegExp)[] | undefined
+  /** exclude cannot be updated after `options` hook is called */
+  set exclude(value: string | RegExp | (string | RegExp)[] | undefined)
+
   version: string
 }
 
@@ -184,17 +192,19 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
   const options = shallowRef<ResolvedOptions>({
     isProduction: process.env.NODE_ENV === 'production',
     compiler: null as any, // to be set in buildStart
-    include: /\.vue$/,
     customElement: /\.ce\.vue$/,
     ...rawOptions,
     root: process.cwd(),
     sourceMap: true,
     cssDevSourcemap: false,
   })
-
-  const filter = computed(() =>
-    createFilter(options.value.include, options.value.exclude),
+  const include = shallowRef<Exclude<Options['include'], undefined>>(
+    rawOptions.include ?? /\.vue$/,
   )
+  const exclude = shallowRef<Options['exclude']>(rawOptions.exclude)
+  let optionsHookIsCalled = false
+
+  const filter = computed(() => createFilter(include.value, exclude.value))
   const customElementFilter = computed(() => {
     const customElement =
       options.value.features?.customElement || options.value.customElement
@@ -205,7 +215,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
 
   let transformCachedModule = false
 
-  return {
+  const plugin: Plugin<Api> = {
     name: 'vite:vue',
 
     api: {
@@ -214,6 +224,28 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       },
       set options(value) {
         options.value = value
+      },
+      get include() {
+        return include.value
+      },
+      set include(value) {
+        if (optionsHookIsCalled) {
+          throw new Error(
+            'include cannot be updated after `options` hook is called',
+          )
+        }
+        include.value = value
+      },
+      get exclude() {
+        return exclude.value
+      },
+      set exclude(value) {
+        if (optionsHookIsCalled) {
+          throw new Error(
+            'exclude cannot be updated after `options` hook is called',
+          )
+        }
+        exclude.value = value
       },
       version,
     },
@@ -318,6 +350,20 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         config.build.watch != null
     },
 
+    options() {
+      type TransformObjectHook = Extract<
+        typeof plugin.transform,
+        { filter?: unknown }
+      >
+      optionsHookIsCalled = true
+      ;(plugin.transform as TransformObjectHook).filter = {
+        id: {
+          include: [...ensureArray(include.value), /[?&]vue\b/],
+          exclude: exclude.value,
+        },
+      }
+    },
+
     shouldTransformCachedModule({ id }) {
       if (transformCachedModule && parseVueRequest(id).query.vue) {
         return true
@@ -401,13 +447,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     transform: {
-      filter: {
-        // FIXME: should include other files if filter is updated
-        id: {
-          include: /[?&]vue\b|\.vue$/,
-          exclude: /[?&](?:raw|url)\b/,
-        },
-      },
+      // filter is set in options() hook
       handler(code, id, opt) {
         const ssr = opt?.ssr === true
         const { filename, query } = parseVueRequest(id)
@@ -464,4 +504,9 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       },
     },
   }
+  return plugin
+}
+
+function ensureArray<T>(value: T | T[]): T[] {
+  return Array.isArray(value) ? value : [value]
 }
