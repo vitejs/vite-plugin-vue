@@ -1,3 +1,11 @@
+## 4.2.0 (2025-05-20)
+
+* feat(vue-jsx): add filter (#581) ([f66a009](https://github.com/vitejs/vite-plugin-vue/commit/f66a009)), closes [#581](https://github.com/vitejs/vite-plugin-vue/issues/581)
+* fix(deps): update all non-major dependencies (#527) ([8495d12](https://github.com/vitejs/vite-plugin-vue/commit/8495d12)), closes [#527](https://github.com/vitejs/vite-plugin-vue/issues/527)
+* fix(deps): update all non-major dependencies (#578) ([405647f](https://github.com/vitejs/vite-plugin-vue/commit/405647f)), closes [#578](https://github.com/vitejs/vite-plugin-vue/issues/578)
+
+
+
 ## <small>4.1.2 (2025-03-17)</small>
 
 * fix: properly interpret boolean values in `define` (#545) ([46d3d65](https://github.com/vitejs/vite-plugin-vue/commit/46d3d65)), closes [#545](https://github.com/vitejs/vite-plugin-vue/issues/545)
