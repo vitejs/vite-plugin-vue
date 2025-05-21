@@ -9,6 +9,7 @@ import type {
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
 import { computed, shallowRef } from 'vue'
+import { exactRegex } from '@rolldown/pluginutils'
 import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
@@ -162,7 +163,7 @@ export interface Options {
   customElement?: boolean | string | RegExp | (string | RegExp)[]
 }
 
-export interface ResolvedOptions extends Options {
+export interface ResolvedOptions extends Omit<Options, 'include' | 'exclude'> {
   compiler: typeof _compiler
   root: string
   sourceMap: boolean
@@ -174,6 +175,14 @@ export interface ResolvedOptions extends Options {
 export interface Api {
   get options(): ResolvedOptions
   set options(value: ResolvedOptions)
+
+  get include(): string | RegExp | (string | RegExp)[] | undefined
+  /** include cannot be updated after `options` hook is called */
+  set include(value: string | RegExp | (string | RegExp)[] | undefined)
+  get exclude(): string | RegExp | (string | RegExp)[] | undefined
+  /** exclude cannot be updated after `options` hook is called */
+  set exclude(value: string | RegExp | (string | RegExp)[] | undefined)
+
   version: string
 }
 
@@ -183,17 +192,19 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
   const options = shallowRef<ResolvedOptions>({
     isProduction: process.env.NODE_ENV === 'production',
     compiler: null as any, // to be set in buildStart
-    include: /\.vue$/,
     customElement: /\.ce\.vue$/,
     ...rawOptions,
     root: process.cwd(),
     sourceMap: true,
     cssDevSourcemap: false,
   })
-
-  const filter = computed(() =>
-    createFilter(options.value.include, options.value.exclude),
+  const include = shallowRef<Exclude<Options['include'], undefined>>(
+    rawOptions.include ?? /\.vue$/,
   )
+  const exclude = shallowRef<Options['exclude']>(rawOptions.exclude)
+  let optionsHookIsCalled = false
+
+  const filter = computed(() => createFilter(include.value, exclude.value))
   const customElementFilter = computed(() => {
     const customElement =
       options.value.features?.customElement || options.value.customElement
@@ -204,7 +215,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
 
   let transformCachedModule = false
 
-  return {
+  const plugin: Plugin<Api> = {
     name: 'vite:vue',
 
     api: {
@@ -213,6 +224,28 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       },
       set options(value) {
         options.value = value
+      },
+      get include() {
+        return include.value
+      },
+      set include(value) {
+        if (optionsHookIsCalled) {
+          throw new Error(
+            'include cannot be updated after `options` hook is called',
+          )
+        }
+        include.value = value
+      },
+      get exclude() {
+        return exclude.value
+      },
+      set exclude(value) {
+        if (optionsHookIsCalled) {
+          throw new Error(
+            'exclude cannot be updated after `options` hook is called',
+          )
+        }
+        exclude.value = value
       },
       version,
     },
@@ -317,6 +350,20 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         config.build.watch != null
     },
 
+    options() {
+      type TransformObjectHook = Extract<
+        typeof plugin.transform,
+        { filter?: unknown }
+      >
+      optionsHookIsCalled = true
+      ;(plugin.transform as TransformObjectHook).filter = {
+        id: {
+          include: [...ensureArray(include.value), /[?&]vue\b/],
+          exclude: exclude.value,
+        },
+      }
+    },
+
     shouldTransformCachedModule({ id }) {
       if (transformCachedModule && parseVueRequest(id).query.vue) {
         return true
@@ -338,110 +385,128 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       }
     },
 
-    async resolveId(id) {
-      // component export helper
-      if (id === EXPORT_HELPER_ID) {
-        return id
-      }
-      // serve sub-part requests (*?vue) as virtual modules
-      if (parseVueRequest(id).query.vue) {
-        return id
-      }
+    resolveId: {
+      filter: {
+        id: [exactRegex(EXPORT_HELPER_ID), /[?&]vue\b/],
+      },
+      handler(id) {
+        // component export helper
+        if (id === EXPORT_HELPER_ID) {
+          return id
+        }
+        // serve sub-part requests (*?vue) as virtual modules
+        if (parseVueRequest(id).query.vue) {
+          return id
+        }
+      },
     },
 
-    load(id, opt) {
-      if (id === EXPORT_HELPER_ID) {
-        return helperCode
-      }
-
-      const ssr = opt?.ssr === true
-
-      const { filename, query } = parseVueRequest(id)
-
-      // select corresponding block for sub-part virtual modules
-      if (query.vue) {
-        if (query.src) {
-          return fs.readFileSync(filename, 'utf-8')
+    load: {
+      filter: {
+        id: [exactRegex(EXPORT_HELPER_ID), /[?&]vue\b/],
+      },
+      handler(id, opt) {
+        if (id === EXPORT_HELPER_ID) {
+          return helperCode
         }
-        const descriptor = getDescriptor(filename, options.value)!
-        let block: SFCBlock | null | undefined
-        if (query.type === 'script') {
-          // handle <script> + <script setup> merge via compileScript()
-          block = resolveScript(
-            descriptor,
-            options.value,
-            ssr,
-            customElementFilter.value(filename),
-          )
-        } else if (query.type === 'template') {
-          block = descriptor.template!
-        } else if (query.type === 'style') {
-          block = descriptor.styles[query.index!]
-        } else if (query.index != null) {
-          block = descriptor.customBlocks[query.index]
-        }
-        if (block) {
-          return {
-            code: block.content,
-            map: block.map as any,
+
+        const ssr = opt?.ssr === true
+
+        const { filename, query } = parseVueRequest(id)
+
+        // select corresponding block for sub-part virtual modules
+        if (query.vue) {
+          if (query.src) {
+            return fs.readFileSync(filename, 'utf-8')
+          }
+          const descriptor = getDescriptor(filename, options.value)!
+          let block: SFCBlock | null | undefined
+          if (query.type === 'script') {
+            // handle <script> + <script setup> merge via compileScript()
+            block = resolveScript(
+              descriptor,
+              options.value,
+              ssr,
+              customElementFilter.value(filename),
+            )
+          } else if (query.type === 'template') {
+            block = descriptor.template!
+          } else if (query.type === 'style') {
+            block = descriptor.styles[query.index!]
+          } else if (query.index != null) {
+            block = descriptor.customBlocks[query.index]
+          }
+          if (block) {
+            return {
+              code: block.content,
+              map: block.map as any,
+            }
           }
         }
-      }
+      },
     },
 
-    transform(code, id, opt) {
-      const ssr = opt?.ssr === true
-      const { filename, query } = parseVueRequest(id)
+    transform: {
+      // filter is set in options() hook
+      handler(code, id, opt) {
+        const ssr = opt?.ssr === true
+        const { filename, query } = parseVueRequest(id)
 
-      if (query.raw || query.url) {
-        return
-      }
-
-      if (!filter.value(filename) && !query.vue) {
-        return
-      }
-
-      if (!query.vue) {
-        // main request
-        return transformMain(
-          code,
-          filename,
-          options.value,
-          this,
-          ssr,
-          customElementFilter.value(filename),
-        )
-      } else {
-        // sub block request
-        const descriptor: ExtendedSFCDescriptor = query.src
-          ? getSrcDescriptor(filename, query) ||
-            getTempSrcDescriptor(filename, query)
-          : getDescriptor(filename, options.value)!
-
-        if (query.src) {
-          this.addWatchFile(filename)
+        if (query.raw || query.url) {
+          return
         }
 
-        if (query.type === 'template') {
-          return transformTemplateAsModule(
+        if (!filter.value(filename) && !query.vue) {
+          return
+        }
+
+        if (!query.vue) {
+          // main request
+          return transformMain(
             code,
-            descriptor,
+            filename,
             options.value,
             this,
             ssr,
             customElementFilter.value(filename),
           )
-        } else if (query.type === 'style') {
-          return transformStyle(
-            code,
-            descriptor,
-            Number(query.index || 0),
-            options.value,
-            this,
-            filename,
-          )
+        } else {
+          // sub block request
+          const descriptor: ExtendedSFCDescriptor = query.src
+            ? getSrcDescriptor(filename, query) ||
+              getTempSrcDescriptor(filename, query)
+            : getDescriptor(filename, options.value)!
+
+          if (query.src) {
+            this.addWatchFile(filename)
+          }
+
+          if (query.type === 'template') {
+            return transformTemplateAsModule(
+              code,
+              descriptor,
+              options.value,
+              this,
+              ssr,
+              customElementFilter.value(filename),
+            )
+          } else if (query.type === 'style') {
+            return transformStyle(
+              code,
+              descriptor,
+              Number(query.index || 0),
+              options.value,
+              this,
+              filename,
+            )
+          }
         }
-      }
+      },
     },
   }
+  return plugin
+}
+
+function ensureArray<T>(value: T | T[]): T[] {
+  return Array.isArray(value) ? value : [value]
 }
