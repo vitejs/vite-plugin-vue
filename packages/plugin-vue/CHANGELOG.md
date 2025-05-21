@@ -1,3 +1,10 @@
+## 6.0.0-beta.0 (2025-05-21)
+
+* feat(vue)!: separate include and exclude from `api.options` and add filter (#582) ([e3beac8](https://github.com/vitejs/vite-plugin-vue/commit/e3beac8)), closes [#582](https://github.com/vitejs/vite-plugin-vue/issues/582)
+* fix(deps): update all non-major dependencies (#587) ([d5ea412](https://github.com/vitejs/vite-plugin-vue/commit/d5ea412)), closes [#587](https://github.com/vitejs/vite-plugin-vue/issues/587)
+
+
+
 ## <small>5.2.4 (2025-05-09)</small>
 
 * chore: fix types with Vite 6.3 (#559) ([8002511](https://github.com/vitejs/vite-plugin-vue/commit/8002511)), closes [#559](https://github.com/vitejs/vite-plugin-vue/issues/559)
