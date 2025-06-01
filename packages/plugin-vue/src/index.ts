@@ -9,7 +9,10 @@ import type {
 } from 'vue/compiler-sfc'
 import type * as _compiler from 'vue/compiler-sfc'
 import { computed, shallowRef } from 'vue'
-import { exactRegex } from '@rolldown/pluginutils'
+import {
+  exactRegex,
+  makeIdFiltersToMatchWithQuery,
+} from '@rolldown/pluginutils'
 import { version } from '../package.json'
 import { resolveCompiler } from './compiler'
 import { parseVueRequest } from './utils/query'
@@ -358,7 +361,10 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
       optionsHookIsCalled = true
       ;(plugin.transform as TransformObjectHook).filter = {
         id: {
-          include: [...ensureArray(include.value), /[?&]vue\b/],
+          include: [
+            ...makeIdFiltersToMatchWithQuery(ensureArray(include.value)),
+            /[?&]vue\b/,
+          ],
           exclude: exclude.value,
         },
       }
