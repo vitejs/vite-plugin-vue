@@ -1,3 +1,9 @@
+## 6.0.0-beta.1 (2025-06-02)
+
+* fix(vue): import with query (#592) ([b0400f3](https://github.com/vitejs/vite-plugin-vue/commit/b0400f3)), closes [#592](https://github.com/vitejs/vite-plugin-vue/issues/592)
+
+
+
 ## 6.0.0-beta.0 (2025-05-21)
 
 * feat(vue)!: separate include and exclude from `api.options` and add filter (#582) ([e3beac8](https://github.com/vitejs/vite-plugin-vue/commit/e3beac8)), closes [#582](https://github.com/vitejs/vite-plugin-vue/issues/582)
