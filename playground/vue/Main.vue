@@ -11,6 +11,7 @@
   <HmrCircularReference name="test" />
   <TypeProps msg="msg" bar="bar" :id="123" />
   <TypePropsTsx msg="msg" bar="bar" />
+  <WithQuery />
   <Syntax />
   <PreProcessors />
   <PreProcessorsHmr />
@@ -44,6 +45,7 @@
 import { version, defineAsyncComponent } from 'vue'
 import Hmr from './Hmr.vue'
 import HmrTsx from './HmrTsx.vue'
+import WithQuery from './WithQuery.vue?with-query'
 import Syntax from './Syntax.vue'
 import PreProcessors from './PreProcessors.vue'
 import PreProcessorsHmr from './PreProcessorsHmr.vue'

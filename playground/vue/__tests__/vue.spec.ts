@@ -22,6 +22,10 @@ test('should update', async () => {
   expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
 })
 
+test('import with query should work', async () => {
+  expect(await page.textContent('.imported-with-query')).toMatch('ok')
+})
+
 test('template/script latest syntax support', async () => {
   expect(await page.textContent('.syntax')).toBe('baz')
 })
