@@ -1,11 +1,11 @@
 import type { SFCDescriptor, SFCScriptBlock } from 'vue/compiler-sfc'
 import { resolveTemplateCompilerOptions } from './template'
 import { cache as descriptorCache } from './utils/descriptorCache'
-import type { ResolvedOptions } from '.'
+import type { ResolvedOptions } from './index'
 
 // ssr and non ssr builds would output different script content
-const clientCache = new WeakMap<SFCDescriptor, SFCScriptBlock | null>()
-const ssrCache = new WeakMap<SFCDescriptor, SFCScriptBlock | null>()
+let clientCache = new WeakMap<SFCDescriptor, SFCScriptBlock | null>()
+let ssrCache = new WeakMap<SFCDescriptor, SFCScriptBlock | null>()
 
 export const typeDepToSFCMap = new Map<string, Set<string>>()
 
@@ -32,14 +32,24 @@ export function setResolvedScript(
   ;(ssr ? ssrCache : clientCache).set(descriptor, script)
 }
 
+export function clearScriptCache(): void {
+  clientCache = new WeakMap()
+  ssrCache = new WeakMap()
+}
+
 // Check if we can use compile template as inlined render function
 // inside <script setup>. This can only be done for build because
 // inlined template cannot be individually hot updated.
 export function isUseInlineTemplate(
   descriptor: SFCDescriptor,
-  isProd: boolean,
+  options: ResolvedOptions,
 ): boolean {
-  return isProd && !!descriptor.scriptSetup && !descriptor.template?.src
+  return (
+    !options.devServer &&
+    !options.devToolsEnabled &&
+    !!descriptor.scriptSetup &&
+    !descriptor.template?.src
+  )
 }
 
 export const scriptIdentifier = `_sfc_main`
@@ -48,30 +58,30 @@ export function resolveScript(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   ssr: boolean,
+  customElement: boolean,
 ): SFCScriptBlock | null {
   if (!descriptor.script && !descriptor.scriptSetup) {
     return null
   }
 
-  const cacheToUse = ssr ? ssrCache : clientCache
-  const cached = cacheToUse.get(descriptor)
+  const cached = getResolvedScript(descriptor, ssr)
   if (cached) {
     return cached
   }
 
-  let resolved: SFCScriptBlock | null = null
-
-  resolved = options.compiler.compileScript(descriptor, {
+  const resolved: SFCScriptBlock = options.compiler.compileScript(descriptor, {
     ...options.script,
     id: descriptor.id,
     isProd: options.isProduction,
-    inlineTemplate: isUseInlineTemplate(descriptor, !options.devServer),
-    reactivityTransform: options.reactivityTransform !== false,
+    inlineTemplate: isUseInlineTemplate(descriptor, options),
     templateOptions: resolveTemplateCompilerOptions(descriptor, options, ssr),
     sourceMap: options.sourceMap,
     genDefaultAs: canInlineMain(descriptor, options)
       ? scriptIdentifier
       : undefined,
+    customElement,
+    propsDestructure:
+      options.features?.propsDestructure ?? options.script?.propsDestructure,
   })
 
   if (!options.isProduction && resolved?.deps) {
@@ -91,7 +101,7 @@ export function resolveScript(
     }
   }
 
-  cacheToUse.set(descriptor, resolved)
+  setResolvedScript(descriptor, resolved, ssr)
   return resolved
 }
 

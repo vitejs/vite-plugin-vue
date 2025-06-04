@@ -4,7 +4,7 @@
 </template>
 
 <style lang="sass">
-@import './sassWithImportImported'
+@use './sassWithImportImported'
 
 .sass-with-import
   color: red

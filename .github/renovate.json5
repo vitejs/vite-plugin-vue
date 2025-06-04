@@ -9,12 +9,24 @@
       "depTypeList": ["peerDependencies"],
       "enabled": false,
     },
+    {
+      groupName: "upstream",
+      matchPackageNames: ["vite"],
+      matchPackagePrefixes: ["rollup", "@rollup", "@vitejs"],
+    },
+    {
+      groupName: "prettier",
+      matchPackageNames: ["prettier"],
+    },
+    {
+      "matchDepTypes": ["action"],
+      "excludePackagePrefixes": ["actions/", "github/"],
+      "pinDigests": true,
+    },
   ],
   "ignoreDeps": [
     // manually bumping
-    "rollup",
     "node",
-    "typescript",
 
     // breaking changes
     "kill-port", // `kill-port:^2.0.0 has perf issues (#8392)

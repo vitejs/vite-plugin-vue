@@ -2,6 +2,7 @@
   "name": "@vitejs/test-tailwind",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -9,13 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.16",
-    "tailwindcss": "^3.3.3",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.5"
+    "@tailwindcss/vite": "^4.1.7",
+    "tailwindcss": "^4.1.7",
+    "vue": "catalog:"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "workspace:*",
-    "ts-node": "^10.9.1"
+    "@types/node": "^22.15.19",
+    "@vitejs/plugin-vue": "workspace:*"
   }
 }

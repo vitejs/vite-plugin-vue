@@ -3,6 +3,7 @@ import { version } from 'vue'
 import {
   browserLogs,
   editFile,
+  findAssetFile,
   getBg,
   getColor,
   isBuild,
@@ -19,6 +20,10 @@ test('should update', async () => {
   expect(await page.textContent('.hmr-inc')).toMatch('count is 0')
   await page.click('.hmr-inc')
   expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
+})
+
+test('import with query should work', async () => {
+  expect(await page.textContent('.imported-with-query')).toMatch('ok')
 })
 
 test('template/script latest syntax support', async () => {
@@ -127,7 +132,7 @@ describe('css modules', () => {
 
 describe('asset reference', () => {
   const assetMatch = isBuild
-    ? /\/assets\/asset-\w{8}\.png/
+    ? /\/assets\/asset-[-\w]{8}\.png/
     : '/assets/asset.png'
 
   test('should not 404', () => {
@@ -164,7 +169,7 @@ describe('asset reference', () => {
 
   test('relative url from <style>', async () => {
     const assetMatch = isBuild
-      ? /\/assets\/asset-\w{8}\.png/
+      ? /\/assets\/asset-[-\w]{8}\.png/
       : '/assets/asset.png'
     expect(await getBg('.relative-style-url')).toMatch(assetMatch)
   })
@@ -184,11 +189,40 @@ describe('hmr', () => {
     expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
   })
 
+  test('should preserve state when script is merely formatted', async () => {
+    // this is the state from the previous test
+    expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
+
+    editFile('Hmr.vue', (code) =>
+      code
+        .replace('let foo: number = 0', '  let foo: number = 0\n\n')
+        // also edit the style so that we can have something to wait for
+        .replace('color: blue;', 'color: black;'),
+    )
+    await untilUpdated(() => getColor('.hmr-inc'), 'black')
+    // should preserve state
+    expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
+  })
+
   test('should reload and reset state when script is edited', async () => {
     editFile('Hmr.vue', (code) =>
       code.replace('let foo: number = 0', 'let foo: number = 100'),
     )
     await untilUpdated(() => page.textContent('.hmr-inc'), 'count is 100')
+  })
+
+  test('should reload when relies file changed', async () => {
+    // rerender
+    await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated')
+    editFile('Hmr.vue', (code) =>
+      code.replace('HMR updated', 'HMR updated updated'),
+    )
+    await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated updated')
+    await untilUpdated(() => page.textContent('.hmr-number'), '100')
+
+    // reload
+    editFile('lib.js', (code) => code.replace('100', '200'))
+    await untilUpdated(() => page.textContent('.hmr-number'), '200')
   })
 
   test('global hmr for some scenarios', async () => {
@@ -208,6 +242,16 @@ describe('hmr', () => {
     await untilUpdated(
       () => page.innerHTML('.hmr-tsx-block .hmr-tsx-inc'),
       'updatedCount is 0',
+    )
+  })
+
+  test('should handle circular reference (issue 325)', async () => {
+    editFile('HmrCircularReference.vue', (code) =>
+      code.replace('let foo: number = 0', 'let foo: number = 100'),
+    )
+    await untilUpdated(
+      () => page.textContent('.hmr-circular-reference-inc'),
+      'count is 100',
     )
   })
 })
@@ -241,6 +285,38 @@ describe('src imports', () => {
   })
 })
 
+describe('external src imports', () => {
+  test('script src with ts', async () => {
+    expect(await page.textContent('.external-src-imports-script')).toMatch(
+      'hello from script src',
+    )
+    editFile('../vue-external/src-import/script.ts', (code) =>
+      code.replace('hello from script src', 'updated'),
+    )
+    await untilUpdated(
+      () => page.textContent('.external-src-imports-script'),
+      'updated',
+    )
+  })
+
+  test('style src', async () => {
+    const el = await page.$('.external-src-imports-style')
+    expect(await getColor(el)).toBe('tan')
+    editFile('../vue-external/src-import/style.css', (code) =>
+      code.replace('color: tan', 'color: red'),
+    )
+    await untilUpdated(() => getColor(el), 'red')
+  })
+
+  test('template src import hmr', async () => {
+    const el = await page.$('.external-src-imports-style')
+    editFile('../vue-external/src-import/template.html', (code) =>
+      code.replace('should be tan', 'should be red'),
+    )
+    await untilUpdated(() => el.textContent(), 'should be red')
+  })
+})
+
 describe('custom blocks', () => {
   test('should work', async () => {
     expect(await page.textContent('.custom-block')).toMatch('こんにちは')
@@ -250,14 +326,6 @@ describe('custom blocks', () => {
 describe('async component', () => {
   test('should work', async () => {
     expect(await page.textContent('.async-component')).toMatch('ab == ab')
-  })
-})
-
-describe('ref transform', () => {
-  test('should work', async () => {
-    expect(await page.textContent('.ref-transform')).toMatch('0')
-    await page.click('.ref-transform')
-    expect(await page.textContent('.ref-transform')).toMatch('1')
   })
 })
 
@@ -332,6 +400,34 @@ describe('macro imported types', () => {
       ),
     )
   })
+
+  test('should hmr with lang=tsx', async () => {
+    editFile('types.ts', (code) => code.replace('msg: string', ''))
+    await untilUpdated(
+      () => page.textContent('.type-props-tsx'),
+      JSON.stringify(
+        {
+          bar: 'bar',
+        },
+        null,
+        2,
+      ),
+    )
+  })
+
+  test('should hmr when SFC is treated as a type dependency', async () => {
+    const cls1 = '.export-type-props1'
+    expect(await getColor(cls1)).toBe('red')
+    editFile('ExportTypeProps1.vue', (code) => code.replace('red', 'blue'))
+    await untilUpdated(() => getColor(cls1), 'blue')
+
+    const cls2 = '.export-type-props2'
+    editFile('ExportTypeProps1.vue', (code) => code.replace('msg: string', ''))
+    await untilUpdated(
+      () => page.textContent(cls2),
+      JSON.stringify({}, null, 2),
+    )
+  })
 })
 
 test('TS with generics', async () => {
@@ -355,4 +451,17 @@ describe('pre-compiled components', () => {
   test('should work with external css modules', async () => {
     expect(await getColor('.pre-compiled-external-cssmodules')).toBe('red')
   })
+})
+
+describe('template parse options', () => {
+  test('isCustomElement', async () => {
+    expect(await page.textContent('.custom-element-from-options')).toMatch(
+      'custom',
+    )
+  })
+})
+
+test.runIf(isBuild)('scoped style should be tree-shakeable', async () => {
+  const indexCss = findAssetFile(/index-[\w-]+\.css/)
+  expect(indexCss).not.toContain('.tree-shake-scoped-style')
 })

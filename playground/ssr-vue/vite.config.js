@@ -15,7 +15,7 @@ const base = '/test/'
 globalThis.__vite_test_filename = __filename
 globalThis.__vite_test_dirname = __dirname
 
-export default defineConfig(({ command, ssrBuild }) => ({
+export default defineConfig(({ command, ssrBuild, isSsrBuild }) => ({
   base,
   plugins: [
     vuePlugin(),
@@ -30,9 +30,9 @@ export default defineConfig(({ command, ssrBuild }) => ({
       load(id, options) {
         const ssrFromOptions = options?.ssr ?? false
         if (id === '@foo') {
-          // Force a mismatch error if ssrBuild is different from ssrFromOptions
+          // Force a mismatch error if ssrBuild/isSsrBuild is different from ssrFromOptions
           return `export default { msg: '${
-            command === 'build' && !!ssrBuild !== ssrFromOptions
+            command === 'build' && !!(ssrBuild ?? isSsrBuild) !== ssrFromOptions
               ? `defineConfig ssrBuild !== ssr from load options`
               : 'hi'
           }' }`
@@ -93,7 +93,9 @@ export default defineConfig(({ command, ssrBuild }) => ({
           ) {
             return {
               code:
-                `import { __ssr_vue_processAssetPath } from '${virtualId}';__ssr_vue_processAssetPath;` +
+                `import { __ssr_vue_processAssetPath } from '${virtualId}';` +
+                // make `__ssr_vue_processAssetPath` not to be tree-shaken (`globalThis.__ssr_vue` doesn't exist)
+                `globalThis.__ssr_vue?.(__ssr_vue_processAssetPath);` +
                 code,
               sourcemap: null, // no sourcemap support to speed up CI
             }

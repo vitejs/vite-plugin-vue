@@ -1,6 +1,7 @@
 {
   "name": "@vitejs/plugin-vue",
-  "version": "4.4.0",
+  "version": "6.0.0-beta.1",
+  "type": "commonjs",
   "license": "MIT",
   "author": "Evan You",
   "files": [
@@ -22,7 +23,7 @@
     "prepublishOnly": "npm run build"
   },
   "engines": {
-    "node": "^14.18.0 || >=16.0.0"
+    "node": "^18.0.0 || >=20.0.0"
   },
   "repository": {
     "type": "git",
@@ -34,17 +35,20 @@
   },
   "homepage": "https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#readme",
   "peerDependencies": {
-    "vite": "^4.0.0",
+    "vite": "^5.0.0 || ^6.0.0",
     "vue": "^3.2.25"
   },
   "devDependencies": {
-    "@jridgewell/gen-mapping": "^0.3.3",
-    "@jridgewell/trace-mapping": "^0.3.19",
-    "debug": "^4.3.4",
-    "rollup": "^3.17.2",
+    "@jridgewell/gen-mapping": "^0.3.8",
+    "@jridgewell/trace-mapping": "^0.3.25",
+    "debug": "^4.4.1",
+    "rollup": "^4.40.2",
     "slash": "^5.1.0",
-    "source-map-js": "^1.0.2",
-    "vite": "^4.4.9",
-    "vue": "^3.3.4"
+    "source-map-js": "^1.2.1",
+    "vite": "catalog:",
+    "vue": "catalog:"
+  },
+  "dependencies": {
+    "@rolldown/pluginutils": "1.0.0-beta.9"
   }
 }

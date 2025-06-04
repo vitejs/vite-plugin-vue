@@ -6,5 +6,9 @@ export interface FilterOptions {
   exclude?: FilterPattern
 }
 
-export type Options = VueJSXPluginOptions &
-  FilterOptions & { babelPlugins?: any[] }
+export interface Options extends VueJSXPluginOptions, FilterOptions {
+  babelPlugins?: any[]
+  /** @default ['defineComponent'] */
+  defineComponentName?: string[]
+  tsPluginOptions?: any
+}

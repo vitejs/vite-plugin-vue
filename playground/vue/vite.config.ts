@@ -1,4 +1,5 @@
-import { defineConfig, splitVendorChunkPlugin } from 'vite'
+import { resolve } from 'node:path'
+import { defineConfig } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
 import { vueI18nPlugin } from './CustomBlockPlugin'
 
@@ -7,18 +8,27 @@ export default defineConfig({
     alias: {
       '/@': __dirname,
       '@': __dirname,
+      '#external': resolve(__dirname, '../vue-external'),
+      '/#external': resolve(__dirname, '../vue-external'),
     },
   },
   plugins: [
     vuePlugin({
-      reactivityTransform: true,
+      script: {
+        globalTypeFiles: [resolve(__dirname, 'HmrCircularReferenceFile.d.ts')],
+      },
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith('my-'),
+        },
+      },
     }),
-    splitVendorChunkPlugin(),
     vueI18nPlugin,
   ],
   build: {
     // to make tests faster
     minify: false,
+    assetsInlineLimit: 100, // keep SVG as assets URL
     rollupOptions: {
       output: {
         // Test splitVendorChunkPlugin composition

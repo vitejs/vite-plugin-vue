@@ -22,57 +22,121 @@ export interface Options {
 
   isProduction?: boolean
 
-  // options to pass on to vue/compiler-sfc
+  /**
+   * Requires @vitejs/plugin-vue@^5.1.0
+   */
+  features?: {
+    /**
+     * Enable reactive destructure for `defineProps`.
+     * - Available in Vue 3.4 and later.
+     * - **default:** `false` in Vue 3.4 (**experimental**), `true` in Vue 3.5+
+     */
+    propsDestructure?: boolean
+    /**
+     * Transform Vue SFCs into custom elements.
+     * - `true`: all `*.vue` imports are converted into custom elements
+     * - `string | RegExp`: matched files are converted into custom elements
+     * - **default:** /\.ce\.vue$/
+     */
+    customElement?: boolean | string | RegExp | (string | RegExp)[]
+    /**
+     * Set to `false` to disable Options API support and allow related code in
+     * Vue core to be dropped via dead-code elimination in production builds,
+     * resulting in smaller bundles.
+     * - **default:** `true`
+     */
+    optionsAPI?: boolean
+    /**
+     * Set to `true` to enable devtools support in production builds.
+     * Results in slightly larger bundles.
+     * - **default:** `false`
+     */
+    prodDevtools?: boolean
+    /**
+     * Set to `true` to enable detailed information for hydration mismatch
+     * errors in production builds. Results in slightly larger bundles.
+     * - **default:** `false`
+     */
+    prodHydrationMismatchDetails?: boolean
+    /**
+     * Customize the component ID generation strategy.
+     * - `'filepath'`: hash the file path (relative to the project root)
+     * - `'filepath-source'`: hash the file path and the source code
+     * - `function`: custom function that takes the file path, source code,
+     *   whether in production mode, and the default hash function as arguments
+     * - **default:** `'filepath'` in development, `'filepath-source'` in production
+     */
+    componentIdGenerator?:
+      | 'filepath'
+      | 'filepath-source'
+      | ((
+          filepath: string,
+          source: string,
+          isProduction: boolean | undefined,
+          getHash: (text: string) => string,
+        ) => string)
+  }
+
+  // `script`, `template` and `style` are lower-level compiler options
+  // to pass on to respective APIs of `vue/compiler-sfc`
+
   script?: Partial<
-    Pick<
+    Omit<
       SFCScriptCompileOptions,
-      | 'babelParserPlugins'
-      | 'globalTypeFiles'
-      | 'defineModel'
-      | 'propsDestructure'
-      | 'fs'
-      | 'reactivityTransform'
+      | 'id'
+      | 'isProd'
+      | 'inlineTemplate'
+      | 'templateOptions'
+      | 'sourceMap'
+      | 'genDefaultAs'
+      | 'customElement'
     >
   >
 
   template?: Partial<
-    Pick<
+    Omit<
       SFCTemplateCompileOptions,
-      | 'compiler'
-      | 'compilerOptions'
-      | 'preprocessOptions'
-      | 'preprocessCustomRequire'
-      | 'transformAssetUrls'
+      | 'id'
+      | 'source'
+      | 'ast'
+      | 'filename'
+      | 'scoped'
+      | 'slotted'
+      | 'isProd'
+      | 'inMap'
+      | 'ssr'
+      | 'ssrCssVars'
+      | 'preprocessLang'
     >
   >
-  style?: Partial<Pick<SFCStyleCompileOptions, 'trim'>>
 
-  /**
-   * Transform Vue SFCs into custom elements.
-   * - `true`: all `*.vue` imports are converted into custom elements
-   * - `string | RegExp`: matched files are converted into custom elements
-   *
-   * @default /\.ce\.vue$/
-   */
-  customElement?: boolean | string | RegExp | (string | RegExp)[]
-
-  /**
-   * Enable Vue reactivity transform (experimental).
-   * https://vuejs.org/guide/extras/reactivity-transform.html
-   * - `true`: transform will be enabled for all vue,js(x),ts(x) files except
-   *           those inside node_modules
-   * - `string | RegExp`: apply to vue + only matched files (will include
-   *                      node_modules, so specify directories if necessary)
-   * - `false`: disable in all cases
-   *
-   * @default false
-   */
-  reactivityTransform?: boolean | string | RegExp | (string | RegExp)[]
+  style?: Partial<
+    Omit<
+      SFCStyleCompileOptions,
+      | 'filename'
+      | 'id'
+      | 'isProd'
+      | 'source'
+      | 'scoped'
+      | 'cssDevSourcemap'
+      | 'postcssOptions'
+      | 'map'
+      | 'postcssPlugins'
+      | 'preprocessCustomRequire'
+      | 'preprocessLang'
+      | 'preprocessOptions'
+    >
+  >
 
   /**
    * Use custom compiler-sfc instance. Can be used to force a specific version.
    */
   compiler?: typeof _compiler
+
+  /**
+   * @deprecated moved to `features.customElement`.
+   */
+  customElements?: boolean | string | RegExp | (string | RegExp)[]
 }
 ```
 

@@ -2,6 +2,7 @@
   "name": "@vitejs/test-vue",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -10,14 +11,14 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "vue": "^3.3.4"
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*",
     "js-yaml": "^4.1.0",
-    "less": "^4.2.0",
-    "pug": "^3.0.2",
-    "sass": "^1.68.0",
-    "stylus": "^0.60.0"
+    "less": "^4.3.0",
+    "pug": "^3.0.3",
+    "sass": "^1.89.0",
+    "stylus": "^0.64.0"
   }
 }

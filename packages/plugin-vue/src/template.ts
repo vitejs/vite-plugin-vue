@@ -6,24 +6,32 @@ import type {
   SFCTemplateCompileOptions,
   SFCTemplateCompileResults,
 } from 'vue/compiler-sfc'
-import type { PluginContext, TransformPluginContext } from 'rollup'
+import type { Rollup } from 'vite'
 import { getResolvedScript, resolveScript } from './script'
 import { createRollupError } from './utils/error'
-import type { ResolvedOptions } from '.'
+import type { ResolvedOptions } from './index'
 
 export async function transformTemplateAsModule(
   code: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: TransformPluginContext,
+  pluginContext: Rollup.TransformPluginContext,
   ssr: boolean,
+  customElement: boolean,
   filename: string,
   isSrc: boolean,
 ): Promise<{
   code: string
   map: any
 }> {
-  const result = compile(code, descriptor, options, pluginContext, ssr)
+  const result = compile(
+    code,
+    descriptor,
+    options,
+    pluginContext,
+    ssr,
+    customElement,
+  )
 
   let returnCode = result.code
   if (
@@ -59,10 +67,18 @@ export function transformTemplateInMain(
   code: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
+  customElement: boolean,
 ): SFCTemplateCompileResults {
-  const result = compile(code, descriptor, options, pluginContext, ssr)
+  const result = compile(
+    code,
+    descriptor,
+    options,
+    pluginContext,
+    ssr,
+    customElement,
+  )
   return {
     ...result,
     code: result.code.replace(
@@ -77,11 +93,12 @@ export function compile(
   code: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
+  customElement: boolean,
 ) {
   const filename = descriptor.filename
-  resolveScript(descriptor, options, ssr)
+  resolveScript(descriptor, options, ssr, customElement)
   const result = options.compiler.compileTemplate({
     ...resolveTemplateCompilerOptions(descriptor, options, ssr)!,
     source: code,
@@ -125,7 +142,9 @@ export function resolveTemplateCompilerOptions(
   let transformAssetUrls = options.template?.transformAssetUrls
   // compiler-sfc should export `AssetURLOptions`
   let assetUrlOptions //: AssetURLOptions | undefined
-  if (options.devServer) {
+  if (transformAssetUrls === false) {
+    // if explicitly disabled, let assetUrlOptions be undefined
+  } else if (options.devServer) {
     // during dev, inject vite base so that compiler-sfc can transform
     // relative paths directly to absolute paths without incurring an extra import
     // request
@@ -136,9 +155,10 @@ export function resolveTemplateCompilerOptions(
           (options.devServer.config.server?.origin ?? '') +
           devBase +
           slash(path.relative(options.root, path.dirname(filename))),
+        includeAbsolute: !!devBase,
       }
     }
-  } else if (transformAssetUrls !== false) {
+  } else {
     // build: force all asset urls into import requests so that they go through
     // the assets plugin for asset registration
     assetUrlOptions = {
@@ -178,7 +198,12 @@ export function resolveTemplateCompilerOptions(
 
   return {
     ...options.template,
+    // @ts-expect-error TODO remove when 3.6 is out
+    vapor: descriptor.vapor,
     id,
+    ast: canReuseAST(options.compiler.version)
+      ? descriptor.template?.ast
+      : undefined,
     filename,
     scoped: hasScoped,
     slotted: descriptor.slotted,
@@ -197,4 +222,18 @@ export function resolveTemplateCompilerOptions(
       sourceMap: options.sourceMap,
     },
   }
+}
+
+/**
+ * Versions before 3.4.3 have issues when the user has passed additional
+ * template parse options e.g. `isCustomElement`.
+ */
+function canReuseAST(version: string | undefined) {
+  if (version) {
+    const [_, minor, patch] = version.split('.').map(Number)
+    if (minor >= 4 && patch >= 3) {
+      return true
+    }
+  }
+  return false
 }

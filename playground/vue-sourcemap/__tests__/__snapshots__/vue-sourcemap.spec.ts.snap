@@ -2,16 +2,17 @@
 
 exports[`serve:vue-sourcemap > css > serve-css 1`] = `
 {
+  "ignoreList": [],
   "mappings": ";AAQA;EACE,UAAU;AACZ",
   "sources": [
     "/root/Css.vue",
   ],
   "sourcesContent": [
     "<template>
-  <p class=\\"css\\">&lt;css&gt;</p>
-  <p :class=\\"$style['css-module']\\">&lt;css&gt; module</p>
-  <p class=\\"css-scoped\\">&lt;css&gt; scoped</p>
-  <p class=\\"css-scoped-nested\\">&lt;css&gt; scoped with nested</p>
+  <p class="css">&lt;css&gt;</p>
+  <p :class="$style['css-module']">&lt;css&gt; module</p>
+  <p class="css-scoped">&lt;css&gt; scoped</p>
+  <p class="css-scoped-nested">&lt;css&gt; scoped with nested</p>
 </template>
 
 <style>
@@ -49,16 +50,17 @@ exports[`serve:vue-sourcemap > css > serve-css 1`] = `
 
 exports[`serve:vue-sourcemap > css module > serve-css-module 1`] = `
 {
+  "ignoreList": [],
   "mappings": ";AAcA;EACE,UAAU;AACZ",
   "sources": [
     "/root/Css.vue",
   ],
   "sourcesContent": [
     "<template>
-  <p class=\\"css\\">&lt;css&gt;</p>
-  <p :class=\\"$style['css-module']\\">&lt;css&gt; module</p>
-  <p class=\\"css-scoped\\">&lt;css&gt; scoped</p>
-  <p class=\\"css-scoped-nested\\">&lt;css&gt; scoped with nested</p>
+  <p class="css">&lt;css&gt;</p>
+  <p :class="$style['css-module']">&lt;css&gt; module</p>
+  <p class="css-scoped">&lt;css&gt; scoped</p>
+  <p class="css-scoped-nested">&lt;css&gt; scoped with nested</p>
 </template>
 
 <style>
@@ -96,16 +98,17 @@ exports[`serve:vue-sourcemap > css module > serve-css-module 1`] = `
 
 exports[`serve:vue-sourcemap > css scoped > serve-css-scoped 1`] = `
 {
+  "ignoreList": [],
   "mappings": ";AAoBA;EACE,UAAU;AACZ",
   "sources": [
     "/root/Css.vue",
   ],
   "sourcesContent": [
     "<template>
-  <p class=\\"css\\">&lt;css&gt;</p>
-  <p :class=\\"$style['css-module']\\">&lt;css&gt; module</p>
-  <p class=\\"css-scoped\\">&lt;css&gt; scoped</p>
-  <p class=\\"css-scoped-nested\\">&lt;css&gt; scoped with nested</p>
+  <p class="css">&lt;css&gt;</p>
+  <p :class="$style['css-module']">&lt;css&gt; module</p>
+  <p class="css-scoped">&lt;css&gt; scoped</p>
+  <p class="css-scoped-nested">&lt;css&gt; scoped with nested</p>
 </template>
 
 <style>
@@ -141,9 +144,28 @@ exports[`serve:vue-sourcemap > css scoped > serve-css-scoped 1`] = `
 }
 `;
 
+exports[`serve:vue-sourcemap > empty script > serve-empty-script 1`] = `
+{
+  "ignoreList": [],
+  "mappings": ";;;;wBAEE,oBAA2B,WAAxB,gBAAoB",
+  "sources": [
+    "EmptyScript.vue",
+  ],
+  "sourcesContent": [
+    "<script setup></script>
+<template>
+  <p>&lt;empty-script&gt;</p>
+</template>
+",
+  ],
+  "version": 3,
+}
+`;
+
 exports[`serve:vue-sourcemap > js > serve-js 1`] = `
 {
-  "mappings": "AAKA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;AAGP;AACd,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;;;;;wBARlB,oBAAiB,WAAd,MAAU",
+  "ignoreList": [],
+  "mappings": ";AAKA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;AAIpB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;;;;;wBARjB,oBAAiB,WAAd,MAAU",
   "sources": [
     "Js.vue",
   ],
@@ -167,16 +189,17 @@ console.log('setup')
 
 exports[`serve:vue-sourcemap > less with additionalData > serve-less-with-additionalData 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAKA;EACE",
   "sources": [
     "/root/Less.vue",
   ],
   "sourcesContent": [
     "<template>
-  <p class=\\"less\\">&lt;less&gt; with additionalData</p>
+  <p class="less">&lt;less&gt; with additionalData</p>
 </template>
 
-<style lang=\\"less\\">
+<style lang="less">
 .less {
   color: @color;
 }
@@ -189,8 +212,8 @@ exports[`serve:vue-sourcemap > less with additionalData > serve-less-with-additi
 
 exports[`serve:vue-sourcemap > no script > serve-no-script 1`] = `
 {
-  "mappings": ";;;wBACE,oBAAwB,WAArB,aAAiB",
-  "sourceRoot": "",
+  "ignoreList": [],
+  "mappings": ";;;;wBACE,oBAAwB,WAArB,aAAiB",
   "sources": [
     "NoScript.vue",
   ],
@@ -206,7 +229,7 @@ exports[`serve:vue-sourcemap > no script > serve-no-script 1`] = `
 
 exports[`serve:vue-sourcemap > no template > serve-no-template 1`] = `
 {
-  "mappings": "AACA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;AAGP;AACd,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;",
+  "mappings": ";AACA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;AAIpB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;;;;;;;",
   "sources": [
     "NoTemplate.vue",
   ],
@@ -226,16 +249,17 @@ console.log('setup')
 
 exports[`serve:vue-sourcemap > sass > serve-sass 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAKA;EACE",
   "sources": [
     "/root/Sass.vue",
   ],
   "sourcesContent": [
     "<template>
-  <p class=\\"sass\\">&lt;sass&gt;</p>
+  <p class="sass">&lt;sass&gt;</p>
 </template>
 
-<style lang=\\"sass\\">
+<style lang="sass">
 .sass
   color: red
 </style>
@@ -247,6 +271,7 @@ exports[`serve:vue-sourcemap > sass > serve-sass 1`] = `
 
 exports[`serve:vue-sourcemap > sass with import > serve-sass-with-import 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAAA;EACE;;ACOF;EACE",
   "sources": [
     "/root/sassWithImportImported.sass",
@@ -257,12 +282,12 @@ exports[`serve:vue-sourcemap > sass with import > serve-sass-with-import 1`] = `
   color: red
 ",
     "<template>
-  <p class=\\"sass-with-import\\">&lt;sass&gt; with import</p>
-  <p class=\\"sass-with-import-imported\\">&lt;sass&gt; with import (imported)</p>
+  <p class="sass-with-import">&lt;sass&gt; with import</p>
+  <p class="sass-with-import-imported">&lt;sass&gt; with import (imported)</p>
 </template>
 
-<style lang=\\"sass\\">
-@import './sassWithImportImported'
+<style lang="sass">
+@use './sassWithImportImported'
 
 .sass-with-import
   color: red
@@ -275,6 +300,7 @@ exports[`serve:vue-sourcemap > sass with import > serve-sass-with-import 1`] = `
 
 exports[`serve:vue-sourcemap > src imported > serve-src-imported 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAAA;EACE,UAAU;AACZ",
   "sources": [
     "/root/src-import/src-import.css",
@@ -305,6 +331,7 @@ exports[`serve:vue-sourcemap > src imported html > serve-html 1`] = `
 
 exports[`serve:vue-sourcemap > src imported sass > serve-src-imported-sass 1`] = `
 {
+  "ignoreList": [],
   "mappings": "AAAA;EACE;;ACCF;EACE",
   "sources": [
     "/root/src-import/src-import-imported.sass",
@@ -314,7 +341,7 @@ exports[`serve:vue-sourcemap > src imported sass > serve-src-imported-sass 1`] =
     ".src-import-sass-imported
   color: red
 ",
-    "@import './src-import-imported'
+    "@use './src-import-imported'
 
 .src-import-sass
   color: red
@@ -326,6 +353,7 @@ exports[`serve:vue-sourcemap > src imported sass > serve-src-imported-sass 1`] =
 
 exports[`serve:vue-sourcemap > ts > serve-ts 1`] = `
 {
+  "ignoreList": [],
   "mappings": ";AAKA,QAAQ,IAAI,WAAW;;;;;AAIvB,YAAQ,IAAI,UAAU;;;;;;;;uBARpB,oBAAiB,WAAd,MAAU",
   "sources": [
     "Ts.vue",
@@ -335,11 +363,11 @@ exports[`serve:vue-sourcemap > ts > serve-ts 1`] = `
   <p>&lt;ts&gt;</p>
 </template>
 
-<script lang=\\"ts\\">
+<script lang="ts">
 console.log('ts script')
 </script>
 
-<script lang=\\"ts\\" setup>
+<script lang="ts" setup>
 console.log('ts setup')
 </script>
 ",

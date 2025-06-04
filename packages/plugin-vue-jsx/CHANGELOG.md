@@ -1,3 +1,82 @@
+## 4.2.0 (2025-05-20)
+
+* feat(vue-jsx): add filter (#581) ([f66a009](https://github.com/vitejs/vite-plugin-vue/commit/f66a009)), closes [#581](https://github.com/vitejs/vite-plugin-vue/issues/581)
+* fix(deps): update all non-major dependencies (#527) ([8495d12](https://github.com/vitejs/vite-plugin-vue/commit/8495d12)), closes [#527](https://github.com/vitejs/vite-plugin-vue/issues/527)
+* fix(deps): update all non-major dependencies (#578) ([405647f](https://github.com/vitejs/vite-plugin-vue/commit/405647f)), closes [#578](https://github.com/vitejs/vite-plugin-vue/issues/578)
+
+
+
+## <small>4.1.2 (2025-03-17)</small>
+
+* fix: properly interpret boolean values in `define` (#545) ([46d3d65](https://github.com/vitejs/vite-plugin-vue/commit/46d3d65)), closes [#545](https://github.com/vitejs/vite-plugin-vue/issues/545)
+* fix(deps): update all non-major dependencies (#482) ([cdbae68](https://github.com/vitejs/vite-plugin-vue/commit/cdbae68)), closes [#482](https://github.com/vitejs/vite-plugin-vue/issues/482)
+* fix(deps): update all non-major dependencies (#502) ([5bfbbc6](https://github.com/vitejs/vite-plugin-vue/commit/5bfbbc6)), closes [#502](https://github.com/vitejs/vite-plugin-vue/issues/502)
+* fix(deps): update all non-major dependencies (#510) ([28bca4b](https://github.com/vitejs/vite-plugin-vue/commit/28bca4b)), closes [#510](https://github.com/vitejs/vite-plugin-vue/issues/510)
+
+
+
+## <small>4.1.1 (2024-11-26)</small>
+
+* chore: add vite 6 peer dep (#481) ([4288652](https://github.com/vitejs/vite-plugin-vue/commit/4288652)), closes [#481](https://github.com/vitejs/vite-plugin-vue/issues/481)
+
+
+
+## 4.1.0 (2024-11-11)
+
+* feat: support tsPluginOptions (#445) ([fdb3590](https://github.com/vitejs/vite-plugin-vue/commit/fdb3590)), closes [#445](https://github.com/vitejs/vite-plugin-vue/issues/445)
+* fix(deps): update all non-major dependencies (#421) ([e3a7fec](https://github.com/vitejs/vite-plugin-vue/commit/e3a7fec)), closes [#421](https://github.com/vitejs/vite-plugin-vue/issues/421)
+* fix(deps): update all non-major dependencies (#439) ([e432bcb](https://github.com/vitejs/vite-plugin-vue/commit/e432bcb)), closes [#439](https://github.com/vitejs/vite-plugin-vue/issues/439)
+* fix(plugin-jsx): work around bun bug for ssrRegisterHelper (#380) ([9c2b620](https://github.com/vitejs/vite-plugin-vue/commit/9c2b620)), closes [#380](https://github.com/vitejs/vite-plugin-vue/issues/380) [#376](https://github.com/vitejs/vite-plugin-vue/issues/376)
+* perf: use `hash` to replace `createHash` (#460) ([de88394](https://github.com/vitejs/vite-plugin-vue/commit/de88394)), closes [#460](https://github.com/vitejs/vite-plugin-vue/issues/460)
+* refactor(vue-jsx): remove extraneous import ([ab2516a](https://github.com/vitejs/vite-plugin-vue/commit/ab2516a))
+
+
+
+## <small>4.0.1 (2024-08-14)</small>
+
+* chore: use pnpm catalog for shared deps ([0735e18](https://github.com/vitejs/vite-plugin-vue/commit/0735e18))
+* chore(deps): update upstream (#416) ([02a3edd](https://github.com/vitejs/vite-plugin-vue/commit/02a3edd)), closes [#416](https://github.com/vitejs/vite-plugin-vue/issues/416)
+* chore(deps): update upstream (#432) ([5d592cd](https://github.com/vitejs/vite-plugin-vue/commit/5d592cd)), closes [#432](https://github.com/vitejs/vite-plugin-vue/issues/432)
+* chore(vue-jsx): add `type` package field ([a2fe479](https://github.com/vitejs/vite-plugin-vue/commit/a2fe479))
+* feat(vue-jsx): add `defineComponentName` option ([0f71911](https://github.com/vitejs/vite-plugin-vue/commit/0f71911))
+* fix(deps): update all non-major dependencies (#412) ([8cb2ea9](https://github.com/vitejs/vite-plugin-vue/commit/8cb2ea9)), closes [#412](https://github.com/vitejs/vite-plugin-vue/issues/412)
+
+
+
+## 4.0.0 (2024-05-30)
+
+* chore: upgrade vitest ([db4cf1c](https://github.com/vitejs/vite-plugin-vue/commit/db4cf1c))
+* chore(deps-dev): bump vite from 5.0.10 to 5.0.12 (#354) ([0294b9d](https://github.com/vitejs/vite-plugin-vue/commit/0294b9d)), closes [#354](https://github.com/vitejs/vite-plugin-vue/issues/354)
+* chore(deps): replace dependency eslint-plugin-node with eslint-plugin-n ^14.0.0 (#378) ([997f9bb](https://github.com/vitejs/vite-plugin-vue/commit/997f9bb)), closes [#378](https://github.com/vitejs/vite-plugin-vue/issues/378)
+* chore(deps): update dependency prettier to v3.2.4 (#347) ([e957179](https://github.com/vitejs/vite-plugin-vue/commit/e957179)), closes [#347](https://github.com/vitejs/vite-plugin-vue/issues/347)
+* chore(deps): update dependency prettier to v3.2.5 (#352) ([a9f5b11](https://github.com/vitejs/vite-plugin-vue/commit/a9f5b11)), closes [#352](https://github.com/vitejs/vite-plugin-vue/issues/352)
+* chore(deps): update upstream (#302) ([9c93426](https://github.com/vitejs/vite-plugin-vue/commit/9c93426)), closes [#302](https://github.com/vitejs/vite-plugin-vue/issues/302)
+* chore(deps): update upstream (#310) ([90eb484](https://github.com/vitejs/vite-plugin-vue/commit/90eb484)), closes [#310](https://github.com/vitejs/vite-plugin-vue/issues/310)
+* chore(deps): update upstream (#356) ([cf7d91e](https://github.com/vitejs/vite-plugin-vue/commit/cf7d91e)), closes [#356](https://github.com/vitejs/vite-plugin-vue/issues/356)
+* chore(deps): update upstream (#361) ([a28c46e](https://github.com/vitejs/vite-plugin-vue/commit/a28c46e)), closes [#361](https://github.com/vitejs/vite-plugin-vue/issues/361)
+* chore(deps): update upstream (#367) ([2050ad3](https://github.com/vitejs/vite-plugin-vue/commit/2050ad3)), closes [#367](https://github.com/vitejs/vite-plugin-vue/issues/367)
+* chore(deps): update upstream (#379) ([96c82e9](https://github.com/vitejs/vite-plugin-vue/commit/96c82e9)), closes [#379](https://github.com/vitejs/vite-plugin-vue/issues/379)
+* chore(deps): update upstream (major) (#295) ([f5d8a29](https://github.com/vitejs/vite-plugin-vue/commit/f5d8a29)), closes [#295](https://github.com/vitejs/vite-plugin-vue/issues/295)
+* fix(deps): update all non-major dependencies (#298) ([cad0825](https://github.com/vitejs/vite-plugin-vue/commit/cad0825)), closes [#298](https://github.com/vitejs/vite-plugin-vue/issues/298)
+* fix(deps): update all non-major dependencies (#309) ([8c694f6](https://github.com/vitejs/vite-plugin-vue/commit/8c694f6)), closes [#309](https://github.com/vitejs/vite-plugin-vue/issues/309)
+* fix(deps): update all non-major dependencies (#332) ([70e5df9](https://github.com/vitejs/vite-plugin-vue/commit/70e5df9)), closes [#332](https://github.com/vitejs/vite-plugin-vue/issues/332)
+* fix(deps): update all non-major dependencies (#360) ([ed4970a](https://github.com/vitejs/vite-plugin-vue/commit/ed4970a)), closes [#360](https://github.com/vitejs/vite-plugin-vue/issues/360)
+* fix(deps): update all non-major dependencies (#371) ([0a484c7](https://github.com/vitejs/vite-plugin-vue/commit/0a484c7)), closes [#371](https://github.com/vitejs/vite-plugin-vue/issues/371)
+* feat: provide default value for __VUE_PROD_HYDRATION_MISMATCH_DETAILS__ (new in Vue 3.4) ([0fbc4a4](https://github.com/vitejs/vite-plugin-vue/commit/0fbc4a4))
+* refactor!: drop node 14&16 (#296) ([4b7be52](https://github.com/vitejs/vite-plugin-vue/commit/4b7be52)), closes [#296](https://github.com/vitejs/vite-plugin-vue/issues/296)
+* refactor!: drop vite 4 ([fcabfa5](https://github.com/vitejs/vite-plugin-vue/commit/fcabfa5))
+
+
+
+## 3.1.0 (2023-11-16)
+
+* refactor(plugin-vue-jsx): improve the readability (#289) ([a13cfbd](https://github.com/vitejs/vite-plugin-vue/commit/a13cfbd)), closes [#289](https://github.com/vitejs/vite-plugin-vue/issues/289)
+* fix(deps): update all non-major dependencies (#242) ([5b2f9c8](https://github.com/vitejs/vite-plugin-vue/commit/5b2f9c8)), closes [#242](https://github.com/vitejs/vite-plugin-vue/issues/242)
+* fix(deps): update all non-major dependencies (#262) ([c316d43](https://github.com/vitejs/vite-plugin-vue/commit/c316d43)), closes [#262](https://github.com/vitejs/vite-plugin-vue/issues/262)
+* chore: vite 5 peerDep for vite-plugin-vue-jsx (#291) ([a74db21](https://github.com/vitejs/vite-plugin-vue/commit/a74db21)), closes [#291](https://github.com/vitejs/vite-plugin-vue/issues/291)
+
+
+
 ## <small>3.0.2 (2023-08-17)</small>
 
 * chore: bump vite ([ffe74e5](https://github.com/vitejs/vite-plugin-vue/commit/ffe74e5))
