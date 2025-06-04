@@ -13,19 +13,19 @@ import type { ResolvedOptions } from './index'
 
 export async function transformTemplateAsModule(
   code: string,
+  filename: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   pluginContext: Rollup.TransformPluginContext,
   ssr: boolean,
   customElement: boolean,
-  filename: string,
-  isSrc: boolean,
 ): Promise<{
   code: string
   map: any
 }> {
   const result = compile(
     code,
+    filename,
     descriptor,
     options,
     pluginContext,
@@ -43,15 +43,6 @@ export async function transformTemplateAsModule(
     returnCode += `\nimport.meta.hot.accept(({ render }) => {
       __VUE_HMR_RUNTIME__.rerender(${JSON.stringify(descriptor.id)}, render)
     })`
-  }
-
-  if (result.map && isSrc) {
-    const vueFileIndex = result.map.sources.findIndex(
-      (source) => source === descriptor.filename,
-    )
-    if (vueFileIndex >= 0) {
-      result.map.sources[vueFileIndex] = filename
-    }
   }
 
   return {
@@ -73,6 +64,7 @@ export function transformTemplateInMain(
 ): SFCTemplateCompileResults {
   const result = compile(
     code,
+    descriptor.filename,
     descriptor,
     options,
     pluginContext,
@@ -91,16 +83,16 @@ export function transformTemplateInMain(
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function compile(
   code: string,
+  filename: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
   pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
 ) {
-  const filename = descriptor.filename
   resolveScript(descriptor, options, ssr, customElement)
   const result = options.compiler.compileTemplate({
-    ...resolveTemplateCompilerOptions(descriptor, options, ssr)!,
+    ...resolveTemplateCompilerOptions(descriptor, options, filename, ssr)!,
     source: code,
   })
 
@@ -129,6 +121,7 @@ export function compile(
 export function resolveTemplateCompilerOptions(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
+  filename: string,
   ssr: boolean,
 ): Omit<SFCTemplateCompileOptions, 'source'> | undefined {
   const block = descriptor.template
@@ -137,7 +130,7 @@ export function resolveTemplateCompilerOptions(
   }
   const resolvedScript = getResolvedScript(descriptor, ssr)
   const hasScoped = descriptor.styles.some((s) => s.scoped)
-  const { id, filename, cssVars } = descriptor
+  const { id, cssVars } = descriptor
 
   let transformAssetUrls = options.template?.transformAssetUrls
   // compiler-sfc should export `AssetURLOptions`
