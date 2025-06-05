@@ -490,6 +490,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           if (query.type === 'template') {
             return transformTemplateAsModule(
               code,
+              filename,
               descriptor,
               options.value,
               this,

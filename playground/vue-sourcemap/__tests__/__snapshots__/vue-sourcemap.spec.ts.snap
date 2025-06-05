@@ -315,6 +315,20 @@ exports[`serve:vue-sourcemap > src imported > serve-src-imported 1`] = `
 }
 `;
 
+exports[`serve:vue-sourcemap > src imported html > serve-html 1`] = `
+{
+  "mappings": ";;;wBAAA,oBAA8B,WAA3B,mBAAuB",
+  "sources": [
+    "src-import.html",
+  ],
+  "sourcesContent": [
+    "<p>&lt;src-import-html&gt;</p>
+",
+  ],
+  "version": 3,
+}
+`;
+
 exports[`serve:vue-sourcemap > src imported sass > serve-src-imported-sass 1`] = `
 {
   "ignoreList": [],
