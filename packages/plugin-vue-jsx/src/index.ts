@@ -12,7 +12,7 @@ import {
 } from '@rolldown/pluginutils'
 import type { Options } from './types'
 
-export * from './types'
+export type * from './types'
 
 const ssrRegisterHelperId = '/__vue-jsx-ssr-register-helper'
 const ssrRegisterHelperCode =
@@ -333,3 +333,12 @@ function getHash(text: string) {
 }
 
 export default vueJsxPlugin
+
+// Compat for require
+function vueJsxPluginCjs(this: unknown, options: Options): Plugin {
+  return vueJsxPlugin.call(this, options)
+}
+Object.assign(vueJsxPluginCjs, {
+  default: vueJsxPluginCjs,
+})
+export { vueJsxPluginCjs as 'module.exports' }

@@ -517,3 +517,13 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
 function ensureArray<T>(value: T | T[]): T[] {
   return Array.isArray(value) ? value : [value]
 }
+
+// Compat for require
+function vuePluginCjs(this: unknown, options: Options): Plugin<Api> {
+  return vuePlugin.call(this, options)
+}
+Object.assign(vuePluginCjs, {
+  default: vuePluginCjs,
+  parseVueRequest,
+})
+export { vuePluginCjs as 'module.exports' }
