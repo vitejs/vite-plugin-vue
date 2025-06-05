@@ -120,13 +120,13 @@ export default tseslint.config(
       'n/no-unsupported-features/es-builtins': [
         'error',
         {
-          version: '^18.0.0 || >=20.0.0',
+          version: '^20.19.0 || >=22.12.0',
         },
       ],
       'n/no-unsupported-features/node-builtins': [
         'error',
         {
-          version: '^18.0.0 || >=20.0.0',
+          version: '^20.19.0 || >=22.12.0',
         },
       ],
       '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -150,7 +150,7 @@ export default tseslint.config(
       'n/no-unsupported-features/node-builtins': [
         'error',
         {
-          version: '^18.0.0 || >=20.0.0',
+          version: '^20.19.0 || >=22.12.0',
           allowExperimental: true,
         },
       ],

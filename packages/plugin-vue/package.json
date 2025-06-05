@@ -1,29 +1,23 @@
 {
   "name": "@vitejs/plugin-vue",
   "version": "6.0.0-beta.1",
-  "type": "commonjs",
+  "type": "module",
   "license": "MIT",
   "author": "Evan You",
   "files": [
     "dist"
   ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    }
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
   },
   "scripts": {
     "dev": "unbuild --stub",
-    "build": "unbuild && pnpm run patch-cjs",
-    "patch-cjs": "tsx ../../scripts/patchCJS.ts",
+    "build": "unbuild",
     "prepublishOnly": "npm run build"
   },
   "engines": {
-    "node": "^18.0.0 || >=20.0.0"
+    "node": "^20.19.0 || >=22.12.0"
   },
   "repository": {
     "type": "git",
