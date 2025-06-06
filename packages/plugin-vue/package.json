@@ -43,6 +43,6 @@
     "vue": "catalog:"
   },
   "dependencies": {
-    "@rolldown/pluginutils": "1.0.0-beta.9"
+    "@rolldown/pluginutils": "1.0.0-beta.11"
   }
 }
