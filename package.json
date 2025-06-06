@@ -36,23 +36,23 @@
     "ci-publish": "tsx scripts/publishCI.ts"
   },
   "devDependencies": {
-    "@babel/types": "^7.27.1",
-    "@eslint/js": "^9.27.0",
+    "@babel/types": "^7.27.6",
+    "@eslint/js": "^9.28.0",
     "@types/babel__core": "^7.20.5",
     "@types/convert-source-map": "^2.0.3",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.15.19",
+    "@types/node": "^22.15.30",
     "@vitejs/release-scripts": "^1.5.0",
     "conventional-changelog-cli": "^5.0.0",
-    "eslint": "^9.27.0",
-    "eslint-import-resolver-typescript": "^4.3.5",
-    "eslint-plugin-import-x": "^4.12.2",
-    "eslint-plugin-n": "^17.18.0",
-    "eslint-plugin-regexp": "^2.7.0",
-    "execa": "^9.5.3",
+    "eslint": "^9.28.0",
+    "eslint-import-resolver-typescript": "^4.4.3",
+    "eslint-plugin-import-x": "^4.15.1",
+    "eslint-plugin-n": "^17.19.0",
+    "eslint-plugin-regexp": "^2.8.0",
+    "execa": "^9.6.0",
     "fs-extra": "^11.3.0",
-    "lint-staged": "^16.0.0",
+    "lint-staged": "^16.1.0",
     "picocolors": "^1.1.1",
     "playwright-chromium": "^1.52.0",
     "prettier": "3.5.3",
@@ -60,10 +60,10 @@
     "simple-git-hooks": "^2.13.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.32.1",
+    "typescript-eslint": "^8.33.1",
     "unbuild": "3.5.0",
     "vite": "catalog:",
-    "vitest": "^3.1.4",
+    "vitest": "^3.2.2",
     "vue": "catalog:"
   },
   "simple-git-hooks": {
@@ -83,7 +83,7 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@10.11.0",
+  "packageManager": "pnpm@10.11.1",
   "pnpm": {
     "overrides": {
       "@vitejs/plugin-vue": "workspace:*"
