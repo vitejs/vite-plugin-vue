@@ -1,3 +1,11 @@
+## 6.0.0-beta.2 (2025-06-06)
+
+* refactor!: bump required node version to 20.19+, 22.12+ and drop CJS build (#596) ([56df545](https://github.com/vitejs/vite-plugin-vue/commit/56df545)), closes [#596](https://github.com/vitejs/vite-plugin-vue/issues/596)
+* feat: add Vite 7 support (#597) ([12f2881](https://github.com/vitejs/vite-plugin-vue/commit/12f2881)), closes [#597](https://github.com/vitejs/vite-plugin-vue/issues/597)
+* fix: template src sourcemap source (#267) ([de18693](https://github.com/vitejs/vite-plugin-vue/commit/de18693)), closes [#267](https://github.com/vitejs/vite-plugin-vue/issues/267)
+
+
+
 ## 6.0.0-beta.1 (2025-06-02)
 
 * fix(vue): import with query (#592) ([b0400f3](https://github.com/vitejs/vite-plugin-vue/commit/b0400f3)), closes [#592](https://github.com/vitejs/vite-plugin-vue/issues/592)
