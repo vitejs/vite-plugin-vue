@@ -1,6 +1,6 @@
 {
   "name": "@vitejs/plugin-vue-jsx",
-  "version": "4.2.0",
+  "version": "5.0.0-beta.0",
   "type": "module",
   "license": "MIT",
   "author": "Evan You",

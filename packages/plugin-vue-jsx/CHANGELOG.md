@@ -1,3 +1,10 @@
+## 5.0.0-beta.0 (2025-06-06)
+
+* refactor!: bump required node version to 20.19+, 22.12+ and drop CJS build (#596) ([56df545](https://github.com/vitejs/vite-plugin-vue/commit/56df545)), closes [#596](https://github.com/vitejs/vite-plugin-vue/issues/596)
+* feat: add Vite 7 support (#597) ([12f2881](https://github.com/vitejs/vite-plugin-vue/commit/12f2881)), closes [#597](https://github.com/vitejs/vite-plugin-vue/issues/597)
+
+
+
 ## 4.2.0 (2025-05-20)
 
 * feat(vue-jsx): add filter (#581) ([f66a009](https://github.com/vitejs/vite-plugin-vue/commit/f66a009)), closes [#581](https://github.com/vitejs/vite-plugin-vue/issues/581)
