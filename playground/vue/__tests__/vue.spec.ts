@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { version } from 'vue'
+import * as vite from 'vite'
 import {
   browserLogs,
   editFile,
@@ -11,6 +12,8 @@ import {
   serverLogs,
   untilUpdated,
 } from '~utils'
+
+const isRolldownVite = 'rolldownVersion' in vite
 
 test('should render', async () => {
   expect(await page.textContent('h1')).toMatch(`Vue version ${version}`)
@@ -461,7 +464,11 @@ describe('template parse options', () => {
   })
 })
 
-test.runIf(isBuild)('scoped style should be tree-shakeable', async () => {
-  const indexCss = findAssetFile(/index-[\w-]+\.css/)
-  expect(indexCss).not.toContain('.tree-shake-scoped-style')
-})
+// skip this test for now with rolldown-vite as this requires https://github.com/rolldown/rolldown/issues/4812 to be implemented
+test.runIf(isBuild && !isRolldownVite)(
+  'scoped style should be tree-shakeable',
+  async () => {
+    const indexCss = findAssetFile(/index-[\w-]+\.css/)
+    expect(indexCss).not.toContain('.tree-shake-scoped-style')
+  },
+)
