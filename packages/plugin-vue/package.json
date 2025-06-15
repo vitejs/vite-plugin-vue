@@ -4,6 +4,12 @@
   "type": "module",
   "license": "MIT",
   "author": "Evan You",
+  "description": "The official plugin for Vue SFC support in Vite.",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "vue"
+  ],
   "files": [
     "dist"
   ],
