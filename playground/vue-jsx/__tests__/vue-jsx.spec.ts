@@ -11,6 +11,9 @@ test('should render', async () => {
   expect(await page.textContent('.jsx-with-query')).toMatch('6')
   expect(await page.textContent('.other-ext')).toMatch('Other Ext')
   expect(await page.textContent('.ts-import')).toMatch('success')
+  expect(await page.textContent('.export-default')).toMatch(
+    'export default defineComponent',
+  )
 })
 
 test('should update', async () => {
