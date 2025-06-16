@@ -149,7 +149,7 @@ export function setSrcDescriptor(
 }
 
 const hash =
-   
+  // eslint-disable-next-line n/no-unsupported-features/node-builtins -- crypto.hash is supported in Node 21.7.0+, 20.12.0+
   crypto.hash ??
   ((
     algorithm: string,
