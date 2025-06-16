@@ -67,8 +67,6 @@ function rgbToHex(rgb: string): string | undefined {
   return undefined
 }
 
-const timeout = (n: number) => new Promise((r) => setTimeout(r, n))
-
 async function toEl(el: string | ElementHandle): Promise<ElementHandle> {
   if (typeof el === 'string') {
     return await page.$(el)
@@ -144,40 +142,6 @@ export function readManifest(base = ''): Manifest {
   return JSON.parse(
     fs.readFileSync(path.join(testDir, 'dist', base, 'manifest.json'), 'utf-8'),
   )
-}
-
-/**
- * Poll a getter until the value it returns includes the expected value.
- */
-export async function untilUpdated(
-  poll: () => string | Promise<string>,
-  expected: string,
-): Promise<void> {
-  const maxTries = process.env.CI ? 200 : 50
-  for (let tries = 0; tries < maxTries; tries++) {
-    const actual = (await poll()) ?? ''
-    if (actual.indexOf(expected) > -1 || tries === maxTries - 1) {
-      expect(actual).toMatch(expected)
-      break
-    } else {
-      await timeout(50)
-    }
-  }
-}
-
-/**
- * Retry `func` until it does not throw error.
- */
-export async function withRetry(func: () => Promise<void>): Promise<void> {
-  const maxTries = process.env.CI ? 200 : 50
-  for (let tries = 0; tries < maxTries; tries++) {
-    try {
-      await func()
-      return
-    } catch {}
-    await timeout(50)
-  }
-  await func()
 }
 
 type UntilBrowserLogAfterCallback = (logs: string[]) => PromiseLike<void> | void

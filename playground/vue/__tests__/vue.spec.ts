@@ -11,7 +11,6 @@ import {
   isServe,
   page,
   serverLogs,
-  untilUpdated,
 } from '~utils'
 
 const isRolldownVite = 'rolldownVersion' in vite
@@ -70,7 +69,9 @@ describe('pre-processors', () => {
     editFile('PreProcessors.vue', (code) =>
       code.replace('Pre-Processors', 'Updated'),
     )
-    await untilUpdated(() => page.textContent('h2.pre-processors'), 'Updated')
+    await expect
+      .poll(() => page.textContent('h2.pre-processors'))
+      .toMatch('Updated')
   })
 
   test('scss', async () => {
@@ -80,7 +81,7 @@ describe('pre-processors', () => {
     editFile('PreProcessors.vue', (code) =>
       code.replace('$color: magenta;', '$color: red;'),
     )
-    await untilUpdated(() => getColor(el), 'red')
+    await expect.poll(() => getColor(el)).toMatch('red')
   })
 
   test('less + scoped', async () => {
@@ -90,7 +91,7 @@ describe('pre-processors', () => {
     editFile('PreProcessors.vue', (code) =>
       code.replace('@color: green;', '@color: blue;'),
     )
-    await untilUpdated(() => getColor(el), 'blue')
+    await expect.poll(() => getColor(el)).toMatch('blue')
   })
 
   test('stylus + change lang', async () => {
@@ -102,11 +103,11 @@ describe('pre-processors', () => {
         .replace('color = orange', '$color: yellow;')
         .replace('color: color', '{ color: $color; }'),
     )
-    await untilUpdated(() => getColor('p.pug-stylus'), 'yellow')
+    await expect.poll(() => getColor('p.pug-stylus')).toMatch('yellow')
     editFile('PreProcessors.vue', (code) =>
       code.replace('$color: yellow;', '$color: orange;'),
     )
-    await untilUpdated(() => getColor('p.pug-stylus'), 'orange')
+    await expect.poll(() => getColor('p.pug-stylus')).toMatch('orange')
   })
 
   test('pug hmr', async () => {
@@ -117,7 +118,7 @@ describe('pre-processors', () => {
         .replace('p.pug-hmr {{ preHmr }}', 'p.pug-hmr {{ postHmr }}')
         .replace(`const preHmr = 'pre-hmr'`, `const postHmr = 'post-hmr'`),
     )
-    await untilUpdated(() => page.textContent('p.pug-hmr'), 'post-hmr')
+    await expect.poll(() => page.textContent('p.pug-hmr')).toMatch('post-hmr')
   })
 })
 
@@ -128,7 +129,7 @@ describe('css modules', () => {
     editFile('CssModules.vue', (code) =>
       code.replace('color: blue;', 'color: red;'),
     )
-    await untilUpdated(() => getColor('.sfc-css-modules'), 'red')
+    await expect.poll(() => getColor('.sfc-css-modules')).toMatch('red')
   })
 
   test('with preprocessor + name', async () => {
@@ -137,7 +138,9 @@ describe('css modules', () => {
     editFile('CssModules.vue', (code) =>
       code.replace('color: orange;', 'color: blue;'),
     )
-    await untilUpdated(() => getColor('.sfc-css-modules-with-pre'), 'blue')
+    await expect
+      .poll(() => getColor('.sfc-css-modules-with-pre'))
+      .toMatch('blue')
   })
 })
 
@@ -189,14 +192,14 @@ describe('asset reference', () => {
 describe.runIf(isServe)('hmr', () => {
   test('should re-render and preserve state when template is edited', async () => {
     editFile('Hmr.vue', (code) => code.replace('HMR', 'HMR updated'))
-    await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated')
+    await expect.poll(() => page.textContent('h2.hmr')).toMatch('HMR updated')
     expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
   })
 
   test('should update style and preserve state when style is edited', async () => {
     expect(await getColor('.hmr-inc')).toBe('red')
     editFile('Hmr.vue', (code) => code.replace('color: red;', 'color: blue;'))
-    await untilUpdated(() => getColor('.hmr-inc'), 'blue')
+    await expect.poll(() => getColor('.hmr-inc')).toMatch('blue')
     expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
   })
 
@@ -210,7 +213,7 @@ describe.runIf(isServe)('hmr', () => {
         // also edit the style so that we can have something to wait for
         .replace('color: blue;', 'color: black;'),
     )
-    await untilUpdated(() => getColor('.hmr-inc'), 'black')
+    await expect.poll(() => getColor('.hmr-inc')).toMatch('black')
     // should preserve state
     expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
   })
@@ -219,51 +222,53 @@ describe.runIf(isServe)('hmr', () => {
     editFile('Hmr.vue', (code) =>
       code.replace('let foo: number = 0', 'let foo: number = 100'),
     )
-    await untilUpdated(() => page.textContent('.hmr-inc'), 'count is 100')
+    await expect
+      .poll(() => page.textContent('.hmr-inc'))
+      .toMatch('count is 100')
   })
 
   test('should reload when relies file changed', async () => {
     // rerender
-    await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated')
+    await expect.poll(() => page.textContent('h2.hmr')).toMatch('HMR updated')
     editFile('Hmr.vue', (code) =>
       code.replace('HMR updated', 'HMR updated updated'),
     )
-    await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated updated')
-    await untilUpdated(() => page.textContent('.hmr-number'), '100')
+    await expect
+      .poll(() => page.textContent('h2.hmr'))
+      .toMatch('HMR updated updated')
+    await expect.poll(() => page.textContent('.hmr-number')).toMatch('100')
 
     // reload
     editFile('lib.js', (code) => code.replace('100', '200'))
-    await untilUpdated(() => page.textContent('.hmr-number'), '200')
+    await expect.poll(() => page.textContent('.hmr-number')).toMatch('200')
   })
 
   test('global hmr for some scenarios', async () => {
     editFile('Hmr.vue', (code) =>
       code.replace('</template>', '  <Node/>\n' + '</template>'),
     )
-    await untilUpdated(() => page.innerHTML('.node'), 'this is node')
+    await expect.poll(() => page.innerHTML('.node')).toMatch('this is node')
   })
 
   test('should re-render when template is emptied', async () => {
     editFile('Hmr.vue', (code) => code.replace(/<template>.+<\/template>/s, ''))
-    await untilUpdated(() => page.innerHTML('.hmr-block'), '<!---->')
+    await expect.poll(() => page.innerHTML('.hmr-block')).toMatch('<!---->')
   })
 
   test('should re-render when template and tsx script both changed', async () => {
     editFile('HmrTsx.vue', (code) => code.replace(/count/g, 'updatedCount'))
-    await untilUpdated(
-      () => page.innerHTML('.hmr-tsx-block .hmr-tsx-inc'),
-      'updatedCount is 0',
-    )
+    await expect
+      .poll(() => page.innerHTML('.hmr-tsx-block .hmr-tsx-inc'))
+      .toMatch('updatedCount is 0')
   })
 
   test('should handle circular reference (issue 325)', async () => {
     editFile('HmrCircularReference.vue', (code) =>
       code.replace('let foo: number = 0', 'let foo: number = 100'),
     )
-    await untilUpdated(
-      () => page.textContent('.hmr-circular-reference-inc'),
-      'count is 100',
-    )
+    await expect
+      .poll(() => page.textContent('.hmr-circular-reference-inc'))
+      .toMatch('count is 100')
   })
 })
 
@@ -276,7 +281,9 @@ describe('src imports', () => {
     editFile('src-import/script.ts', (code) =>
       code.replace('hello from script src', 'updated'),
     )
-    await untilUpdated(() => page.textContent('.src-imports-script'), 'updated')
+    await expect
+      .poll(() => page.textContent('.src-imports-script'))
+      .toMatch('updated')
   })
 
   test('style src', async () => {
@@ -286,7 +293,7 @@ describe('src imports', () => {
     editFile('src-import/style.css', (code) =>
       code.replace('color: tan', 'color: red'),
     )
-    await untilUpdated(() => getColor(el), 'red')
+    await expect.poll(() => getColor(el)).toMatch('red')
   })
 
   test.runIf(isServe)('template src import hmr', async () => {
@@ -294,7 +301,7 @@ describe('src imports', () => {
     editFile('src-import/template.html', (code) =>
       code.replace('should be tan', 'should be red'),
     )
-    await untilUpdated(() => el.textContent(), 'should be red')
+    await expect.poll(() => el.textContent()).toMatch('should be red')
   })
 })
 
@@ -307,10 +314,9 @@ describe('external src imports', () => {
     editFile('../vue-external/src-import/script.ts', (code) =>
       code.replace('hello from script src', 'updated'),
     )
-    await untilUpdated(
-      () => page.textContent('.external-src-imports-script'),
-      'updated',
-    )
+    await expect
+      .poll(() => page.textContent('.external-src-imports-script'))
+      .toMatch('updated')
   })
 
   test('style src', async () => {
@@ -320,7 +326,7 @@ describe('external src imports', () => {
     editFile('../vue-external/src-import/style.css', (code) =>
       code.replace('color: tan', 'color: red'),
     )
-    await untilUpdated(() => getColor(el), 'red')
+    await expect.poll(() => getColor(el)).toMatch('red')
   })
 
   test.runIf(isServe)('template src import hmr', async () => {
@@ -328,7 +334,7 @@ describe('external src imports', () => {
     editFile('../vue-external/src-import/template.html', (code) =>
       code.replace('should be tan', 'should be red'),
     )
-    await untilUpdated(() => el.textContent(), 'should be red')
+    await expect.poll(() => el.textContent()).toMatch('should be red')
   })
 })
 
@@ -391,43 +397,46 @@ describe('macro imported types', () => {
 
   test.runIf(isServe)('should hmr', async () => {
     editFile('types.ts', (code) => code.replace('msg: string', ''))
-    await untilUpdated(
-      () => page.textContent('.type-props'),
-      JSON.stringify(
-        {
-          bar: 'bar',
-          id: 123,
-        },
-        null,
-        2,
-      ),
-    )
+    await expect
+      .poll(() => page.textContent('.type-props'))
+      .toMatch(
+        JSON.stringify(
+          {
+            bar: 'bar',
+            id: 123,
+          },
+          null,
+          2,
+        ),
+      )
 
     editFile('types-aliased.d.ts', (code) => code.replace('id: number', ''))
-    await untilUpdated(
-      () => page.textContent('.type-props'),
-      JSON.stringify(
-        {
-          bar: 'bar',
-        },
-        null,
-        2,
-      ),
-    )
+    await expect
+      .poll(() => page.textContent('.type-props'))
+      .toMatch(
+        JSON.stringify(
+          {
+            bar: 'bar',
+          },
+          null,
+          2,
+        ),
+      )
   })
 
   test.runIf(isServe)('should hmr with lang=tsx', async () => {
     editFile('types.ts', (code) => code.replace('msg: string', ''))
-    await untilUpdated(
-      () => page.textContent('.type-props-tsx'),
-      JSON.stringify(
-        {
-          bar: 'bar',
-        },
-        null,
-        2,
-      ),
-    )
+    await expect
+      .poll(() => page.textContent('.type-props-tsx'))
+      .toMatch(
+        JSON.stringify(
+          {
+            bar: 'bar',
+          },
+          null,
+          2,
+        ),
+      )
   })
 
   test.runIf(isServe)(
@@ -436,16 +445,15 @@ describe('macro imported types', () => {
       const cls1 = '.export-type-props1'
       expect(await getColor(cls1)).toBe('red')
       editFile('ExportTypeProps1.vue', (code) => code.replace('red', 'blue'))
-      await untilUpdated(() => getColor(cls1), 'blue')
+      await expect.poll(() => getColor(cls1)).toMatch('blue')
 
       const cls2 = '.export-type-props2'
       editFile('ExportTypeProps1.vue', (code) =>
         code.replace('msg: string', ''),
       )
-      await untilUpdated(
-        () => page.textContent(cls2),
-        JSON.stringify({}, null, 2),
-      )
+      await expect
+        .poll(() => page.textContent(cls2))
+        .toMatch(JSON.stringify({}, null, 2))
     },
   )
 })

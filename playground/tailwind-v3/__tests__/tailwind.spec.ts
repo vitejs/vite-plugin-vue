@@ -5,7 +5,6 @@ import {
   isServe,
   page,
   untilBrowserLogAfter,
-  untilUpdated,
 } from '~utils'
 
 test.runIf(isServe)('regenerate CSS and HMR (pug template)', async () => {
@@ -23,5 +22,5 @@ test.runIf(isServe)('regenerate CSS and HMR (pug template)', async () => {
     ],
     false,
   )
-  await untilUpdated(() => getBgColor(el), 'rgb(220, 38, 38)')
+  await expect.poll(() => getBgColor(el)).toMatch('rgb(220, 38, 38)')
 })
