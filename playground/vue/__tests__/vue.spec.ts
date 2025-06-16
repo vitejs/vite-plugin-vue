@@ -8,6 +8,7 @@ import {
   getBg,
   getColor,
   isBuild,
+  isServe,
   page,
   serverLogs,
   untilUpdated,
@@ -65,6 +66,7 @@ describe('pre-processors', () => {
     )
     // #1383 pug default doctype
     expect(await page.textContent('.pug-slot')).toMatch(`slot content`)
+    if (isBuild) return
     editFile('PreProcessors.vue', (code) =>
       code.replace('Pre-Processors', 'Updated'),
     )
@@ -74,6 +76,7 @@ describe('pre-processors', () => {
   test('scss', async () => {
     const el = await page.$('p.pug')
     expect(await getColor(el)).toBe('magenta')
+    if (isBuild) return
     editFile('PreProcessors.vue', (code) =>
       code.replace('$color: magenta;', '$color: red;'),
     )
@@ -83,6 +86,7 @@ describe('pre-processors', () => {
   test('less + scoped', async () => {
     const el = await page.$('p.pug-less')
     expect(await getColor(el)).toBe('green')
+    if (isBuild) return
     editFile('PreProcessors.vue', (code) =>
       code.replace('@color: green;', '@color: blue;'),
     )
@@ -91,6 +95,7 @@ describe('pre-processors', () => {
 
   test('stylus + change lang', async () => {
     expect(await getColor('p.pug-stylus')).toBe('orange')
+    if (isBuild) return
     editFile('PreProcessors.vue', (code) =>
       code
         .replace('<style lang="stylus">', '<style lang="scss">')
@@ -106,6 +111,7 @@ describe('pre-processors', () => {
 
   test('pug hmr', async () => {
     expect(await page.textContent('p.pug-hmr')).toMatch('pre-hmr')
+    if (isBuild) return
     editFile('PreProcessorsHmr.vue', (code) =>
       code
         .replace('p.pug-hmr {{ preHmr }}', 'p.pug-hmr {{ postHmr }}')
@@ -118,6 +124,7 @@ describe('pre-processors', () => {
 describe('css modules', () => {
   test('basic', async () => {
     expect(await getColor('.sfc-css-modules')).toBe('blue')
+    if (isBuild) return
     editFile('CssModules.vue', (code) =>
       code.replace('color: blue;', 'color: red;'),
     )
@@ -126,6 +133,7 @@ describe('css modules', () => {
 
   test('with preprocessor + name', async () => {
     expect(await getColor('.sfc-css-modules-with-pre')).toBe('orange')
+    if (isBuild) return
     editFile('CssModules.vue', (code) =>
       code.replace('color: orange;', 'color: blue;'),
     )
@@ -178,7 +186,7 @@ describe('asset reference', () => {
   })
 })
 
-describe('hmr', () => {
+describe.runIf(isServe)('hmr', () => {
   test('should re-render and preserve state when template is edited', async () => {
     editFile('Hmr.vue', (code) => code.replace('HMR', 'HMR updated'))
     await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated')
@@ -264,6 +272,7 @@ describe('src imports', () => {
     expect(await page.textContent('.src-imports-script')).toMatch(
       'hello from script src',
     )
+    if (isBuild) return
     editFile('src-import/script.ts', (code) =>
       code.replace('hello from script src', 'updated'),
     )
@@ -273,13 +282,14 @@ describe('src imports', () => {
   test('style src', async () => {
     const el = await page.$('.src-imports-style')
     expect(await getColor(el)).toBe('tan')
+    if (isBuild) return
     editFile('src-import/style.css', (code) =>
       code.replace('color: tan', 'color: red'),
     )
     await untilUpdated(() => getColor(el), 'red')
   })
 
-  test('template src import hmr', async () => {
+  test.runIf(isServe)('template src import hmr', async () => {
     const el = await page.$('.src-imports-style')
     editFile('src-import/template.html', (code) =>
       code.replace('should be tan', 'should be red'),
@@ -293,6 +303,7 @@ describe('external src imports', () => {
     expect(await page.textContent('.external-src-imports-script')).toMatch(
       'hello from script src',
     )
+    if (isBuild) return
     editFile('../vue-external/src-import/script.ts', (code) =>
       code.replace('hello from script src', 'updated'),
     )
@@ -305,13 +316,14 @@ describe('external src imports', () => {
   test('style src', async () => {
     const el = await page.$('.external-src-imports-style')
     expect(await getColor(el)).toBe('tan')
+    if (isBuild) return
     editFile('../vue-external/src-import/style.css', (code) =>
       code.replace('color: tan', 'color: red'),
     )
     await untilUpdated(() => getColor(el), 'red')
   })
 
-  test('template src import hmr', async () => {
+  test.runIf(isServe)('template src import hmr', async () => {
     const el = await page.$('.external-src-imports-style')
     editFile('../vue-external/src-import/template.html', (code) =>
       code.replace('should be tan', 'should be red'),
@@ -377,7 +389,7 @@ describe('macro imported types', () => {
     )
   })
 
-  test('should hmr', async () => {
+  test.runIf(isServe)('should hmr', async () => {
     editFile('types.ts', (code) => code.replace('msg: string', ''))
     await untilUpdated(
       () => page.textContent('.type-props'),
@@ -404,7 +416,7 @@ describe('macro imported types', () => {
     )
   })
 
-  test('should hmr with lang=tsx', async () => {
+  test.runIf(isServe)('should hmr with lang=tsx', async () => {
     editFile('types.ts', (code) => code.replace('msg: string', ''))
     await untilUpdated(
       () => page.textContent('.type-props-tsx'),
@@ -418,19 +430,24 @@ describe('macro imported types', () => {
     )
   })
 
-  test('should hmr when SFC is treated as a type dependency', async () => {
-    const cls1 = '.export-type-props1'
-    expect(await getColor(cls1)).toBe('red')
-    editFile('ExportTypeProps1.vue', (code) => code.replace('red', 'blue'))
-    await untilUpdated(() => getColor(cls1), 'blue')
+  test.runIf(isServe)(
+    'should hmr when SFC is treated as a type dependency',
+    async () => {
+      const cls1 = '.export-type-props1'
+      expect(await getColor(cls1)).toBe('red')
+      editFile('ExportTypeProps1.vue', (code) => code.replace('red', 'blue'))
+      await untilUpdated(() => getColor(cls1), 'blue')
 
-    const cls2 = '.export-type-props2'
-    editFile('ExportTypeProps1.vue', (code) => code.replace('msg: string', ''))
-    await untilUpdated(
-      () => page.textContent(cls2),
-      JSON.stringify({}, null, 2),
-    )
-  })
+      const cls2 = '.export-type-props2'
+      editFile('ExportTypeProps1.vue', (code) =>
+        code.replace('msg: string', ''),
+      )
+      await untilUpdated(
+        () => page.textContent(cls2),
+        JSON.stringify({}, null, 2),
+      )
+    },
+  )
 })
 
 test('TS with generics', async () => {

@@ -7,6 +7,7 @@ import {
   editFile,
   getColor,
   isBuild,
+  isServe,
   page,
   untilBrowserLogAfter,
   untilUpdated,
@@ -165,7 +166,7 @@ test('hydration', async () => {
   expect(await page.textContent('button')).toMatch('1')
 })
 
-test('hmr', { retry: 3 }, async () => {
+test.runIf(isServe)('hmr', { retry: 3 }, async () => {
   // This is test is flaky in Mac CI, but can't be reproduced locally. Wait until
   // network idle to avoid the issue. TODO: This may be caused by a bug when
   // modifying a file while loading, we should remove this guard
@@ -180,6 +181,9 @@ test('client navigation', async () => {
   await untilUpdated(() => page.textContent('a[href="/test/about"]'), 'About')
   await page.click('a[href="/test/about"]')
   await untilUpdated(() => page.textContent('h1'), 'About')
+
+  if (isBuild) return
+
   editFile('src/pages/About.vue', (code) => code.replace('About', 'changed'))
   await untilUpdated(() => page.textContent('h1'), 'changed')
   await page.click('a[href="/test/"]')
