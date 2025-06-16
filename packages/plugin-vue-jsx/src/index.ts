@@ -167,6 +167,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                         const declaration = _path.node
                           .declaration as types.CallExpression
                         const nodesPath = _path.replaceWithMultiple([
+                          // const __default__ = defineComponent(...)
                           types.variableDeclaration('const', [
                             types.variableDeclarator(
                               types.identifier('__default__'),
@@ -176,6 +177,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                               ),
                             ),
                           ]),
+                          // export default __default__
                           types.exportDefaultDeclaration(
                             types.identifier('__default__'),
                           ),
