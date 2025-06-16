@@ -4,6 +4,12 @@
   "type": "module",
   "license": "MIT",
   "author": "Evan You",
+  "description": "Provides Vue 3 JSX & TSX support with HMR.",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "vue"
+  ],
   "files": [
     "dist"
   ],
