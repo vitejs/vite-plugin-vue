@@ -2,6 +2,7 @@
   "name": "@vitejs/test-vue-legacy",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -9,10 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.4.5"
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*",
-    "@vitejs/plugin-legacy": "^5.2.0"
+    "@vitejs/plugin-legacy": "^6.1.1"
   }
 }

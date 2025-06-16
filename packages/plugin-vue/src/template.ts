@@ -6,16 +6,17 @@ import type {
   SFCTemplateCompileOptions,
   SFCTemplateCompileResults,
 } from 'vue/compiler-sfc'
-import type { PluginContext, TransformPluginContext } from 'rollup'
+import type { Rollup } from 'vite'
 import { getResolvedScript, resolveScript } from './script'
 import { createRollupError } from './utils/error'
-import type { ResolvedOptions } from '.'
+import type { ResolvedOptions } from './index'
 
 export async function transformTemplateAsModule(
   code: string,
+  filename: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: TransformPluginContext,
+  pluginContext: Rollup.TransformPluginContext,
   ssr: boolean,
   customElement: boolean,
 ): Promise<{
@@ -24,6 +25,7 @@ export async function transformTemplateAsModule(
 }> {
   const result = compile(
     code,
+    filename,
     descriptor,
     options,
     pluginContext,
@@ -56,12 +58,13 @@ export function transformTemplateInMain(
   code: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
 ): SFCTemplateCompileResults {
   const result = compile(
     code,
+    descriptor.filename,
     descriptor,
     options,
     pluginContext,
@@ -80,16 +83,16 @@ export function transformTemplateInMain(
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function compile(
   code: string,
+  filename: string,
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
 ) {
-  const filename = descriptor.filename
   resolveScript(descriptor, options, ssr, customElement)
   const result = options.compiler.compileTemplate({
-    ...resolveTemplateCompilerOptions(descriptor, options, ssr)!,
+    ...resolveTemplateCompilerOptions(descriptor, options, filename, ssr)!,
     source: code,
   })
 
@@ -118,6 +121,7 @@ export function compile(
 export function resolveTemplateCompilerOptions(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
+  filename: string,
   ssr: boolean,
 ): Omit<SFCTemplateCompileOptions, 'source'> | undefined {
   const block = descriptor.template
@@ -126,12 +130,14 @@ export function resolveTemplateCompilerOptions(
   }
   const resolvedScript = getResolvedScript(descriptor, ssr)
   const hasScoped = descriptor.styles.some((s) => s.scoped)
-  const { id, filename, cssVars } = descriptor
+  const { id, cssVars } = descriptor
 
   let transformAssetUrls = options.template?.transformAssetUrls
   // compiler-sfc should export `AssetURLOptions`
   let assetUrlOptions //: AssetURLOptions | undefined
-  if (options.devServer) {
+  if (transformAssetUrls === false) {
+    // if explicitly disabled, let assetUrlOptions be undefined
+  } else if (options.devServer) {
     // during dev, inject vite base so that compiler-sfc can transform
     // relative paths directly to absolute paths without incurring an extra import
     // request
@@ -145,7 +151,7 @@ export function resolveTemplateCompilerOptions(
         includeAbsolute: !!devBase,
       }
     }
-  } else if (transformAssetUrls !== false) {
+  } else {
     // build: force all asset urls into import requests so that they go through
     // the assets plugin for asset registration
     assetUrlOptions = {
@@ -185,6 +191,8 @@ export function resolveTemplateCompilerOptions(
 
   return {
     ...options.template,
+    // @ts-expect-error TODO remove when 3.6 is out
+    vapor: descriptor.vapor,
     id,
     ast: canReuseAST(options.compiler.version)
       ? descriptor.template?.ast

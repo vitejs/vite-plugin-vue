@@ -3,7 +3,7 @@ import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
 import type { HmrContext, ModuleNode } from 'vite'
 import { isCSSRequest } from 'vite'
 
-// eslint-disable-next-line node/no-extraneous-import
+// eslint-disable-next-line n/no-extraneous-import
 import type * as t from '@babel/types'
 
 import {
@@ -18,7 +18,7 @@ import {
   resolveScript,
   setResolvedScript,
 } from './script'
-import type { ResolvedOptions } from '.'
+import type { ResolvedOptions } from './index'
 
 const debug = _debug('vite:hmr')
 
@@ -31,6 +31,7 @@ export async function handleHotUpdate(
   { file, modules, read }: HmrContext,
   options: ResolvedOptions,
   customElement: boolean,
+  typeDepModules?: ModuleNode[],
 ): Promise<ModuleNode[] | void> {
   const prevDescriptor = getDescriptor(file, options, false, true)
   if (!prevDescriptor) {
@@ -172,7 +173,9 @@ export async function handleHotUpdate(
     }
     debug(`[vue:update(${updateType.join('&')})] ${file}`)
   }
-  return [...affectedModules].filter(Boolean) as ModuleNode[]
+  return [...affectedModules, ...(typeDepModules || [])].filter(
+    Boolean,
+  ) as ModuleNode[]
 }
 
 export function isEqualBlock(a: SFCBlock | null, b: SFCBlock | null): boolean {
@@ -259,7 +262,6 @@ function isEqualAst(prev?: t.Statement[], next?: t.Statement[]): boolean {
     return prev === next
   }
 
-  // deep equal, but ignore start/end/loc/range/leadingComments/trailingComments/innerComments
   if (prev.length !== next.length) {
     return false
   }
@@ -268,6 +270,7 @@ function isEqualAst(prev?: t.Statement[], next?: t.Statement[]): boolean {
     const prevNode = prev[i]
     const nextNode = next[i]
     if (
+      // deep equal, but ignore start/end/loc/range/leadingComments/trailingComments/innerComments
       !deepEqual(prevNode, nextNode, [
         'start',
         'end',
@@ -276,6 +279,12 @@ function isEqualAst(prev?: t.Statement[], next?: t.Statement[]): boolean {
         'leadingComments',
         'trailingComments',
         'innerComments',
+        // https://github.com/vuejs/core/issues/11923
+        // avoid comparing the following properties of typeParameters
+        // as it may be imported from 3rd lib and complex to compare
+        '_ownerScope',
+        '_resolvedReference',
+        '_resolvedElements',
       ])
     ) {
       return false

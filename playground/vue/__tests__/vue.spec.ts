@@ -1,8 +1,10 @@
 import { describe, expect, test } from 'vitest'
 import { version } from 'vue'
+import * as vite from 'vite'
 import {
   browserLogs,
   editFile,
+  findAssetFile,
   getBg,
   getColor,
   isBuild,
@@ -10,6 +12,8 @@ import {
   serverLogs,
   untilUpdated,
 } from '~utils'
+
+const isRolldownVite = 'rolldownVersion' in vite
 
 test('should render', async () => {
   expect(await page.textContent('h1')).toMatch(`Vue version ${version}`)
@@ -19,6 +23,10 @@ test('should update', async () => {
   expect(await page.textContent('.hmr-inc')).toMatch('count is 0')
   await page.click('.hmr-inc')
   expect(await page.textContent('.hmr-inc')).toMatch('count is 1')
+})
+
+test('import with query should work', async () => {
+  expect(await page.textContent('.imported-with-query')).toMatch('ok')
 })
 
 test('template/script latest syntax support', async () => {
@@ -206,6 +214,20 @@ describe('hmr', () => {
     await untilUpdated(() => page.textContent('.hmr-inc'), 'count is 100')
   })
 
+  test('should reload when relies file changed', async () => {
+    // rerender
+    await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated')
+    editFile('Hmr.vue', (code) =>
+      code.replace('HMR updated', 'HMR updated updated'),
+    )
+    await untilUpdated(() => page.textContent('h2.hmr'), 'HMR updated updated')
+    await untilUpdated(() => page.textContent('.hmr-number'), '100')
+
+    // reload
+    editFile('lib.js', (code) => code.replace('100', '200'))
+    await untilUpdated(() => page.textContent('.hmr-number'), '200')
+  })
+
   test('global hmr for some scenarios', async () => {
     editFile('Hmr.vue', (code) =>
       code.replace('</template>', '  <Node/>\n' + '</template>'),
@@ -260,6 +282,38 @@ describe('src imports', () => {
   test('template src import hmr', async () => {
     const el = await page.$('.src-imports-style')
     editFile('src-import/template.html', (code) =>
+      code.replace('should be tan', 'should be red'),
+    )
+    await untilUpdated(() => el.textContent(), 'should be red')
+  })
+})
+
+describe('external src imports', () => {
+  test('script src with ts', async () => {
+    expect(await page.textContent('.external-src-imports-script')).toMatch(
+      'hello from script src',
+    )
+    editFile('../vue-external/src-import/script.ts', (code) =>
+      code.replace('hello from script src', 'updated'),
+    )
+    await untilUpdated(
+      () => page.textContent('.external-src-imports-script'),
+      'updated',
+    )
+  })
+
+  test('style src', async () => {
+    const el = await page.$('.external-src-imports-style')
+    expect(await getColor(el)).toBe('tan')
+    editFile('../vue-external/src-import/style.css', (code) =>
+      code.replace('color: tan', 'color: red'),
+    )
+    await untilUpdated(() => getColor(el), 'red')
+  })
+
+  test('template src import hmr', async () => {
+    const el = await page.$('.external-src-imports-style')
+    editFile('../vue-external/src-import/template.html', (code) =>
       code.replace('should be tan', 'should be red'),
     )
     await untilUpdated(() => el.textContent(), 'should be red')
@@ -349,6 +403,34 @@ describe('macro imported types', () => {
       ),
     )
   })
+
+  test('should hmr with lang=tsx', async () => {
+    editFile('types.ts', (code) => code.replace('msg: string', ''))
+    await untilUpdated(
+      () => page.textContent('.type-props-tsx'),
+      JSON.stringify(
+        {
+          bar: 'bar',
+        },
+        null,
+        2,
+      ),
+    )
+  })
+
+  test('should hmr when SFC is treated as a type dependency', async () => {
+    const cls1 = '.export-type-props1'
+    expect(await getColor(cls1)).toBe('red')
+    editFile('ExportTypeProps1.vue', (code) => code.replace('red', 'blue'))
+    await untilUpdated(() => getColor(cls1), 'blue')
+
+    const cls2 = '.export-type-props2'
+    editFile('ExportTypeProps1.vue', (code) => code.replace('msg: string', ''))
+    await untilUpdated(
+      () => page.textContent(cls2),
+      JSON.stringify({}, null, 2),
+    )
+  })
 })
 
 test('TS with generics', async () => {
@@ -381,3 +463,12 @@ describe('template parse options', () => {
     )
   })
 })
+
+// skip this test for now with rolldown-vite as this requires https://github.com/rolldown/rolldown/issues/4812 to be implemented
+test.runIf(isBuild && !isRolldownVite)(
+  'scoped style should be tree-shakeable',
+  async () => {
+    const indexCss = findAssetFile(/index-[\w-]+\.css/)
+    expect(indexCss).not.toContain('.tree-shake-scoped-style')
+  },
+)

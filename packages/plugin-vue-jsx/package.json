@@ -1,28 +1,29 @@
 {
   "name": "@vitejs/plugin-vue-jsx",
-  "version": "3.1.0",
+  "version": "5.0.0-beta.0",
+  "type": "module",
   "license": "MIT",
   "author": "Evan You",
+  "description": "Provides Vue 3 JSX & TSX support with HMR.",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "vue"
+  ],
   "files": [
     "dist"
   ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    }
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
   },
   "scripts": {
     "dev": "unbuild --stub",
-    "build": "unbuild && pnpm run patch-cjs",
-    "patch-cjs": "tsx ../../scripts/patchCJS.ts",
+    "build": "unbuild",
     "prepublishOnly": "npm run build"
   },
   "engines": {
-    "node": "^18.0.0 || >=20.0.0"
+    "node": "^20.19.0 || >=22.12.0"
   },
   "repository": {
     "type": "git",
@@ -34,15 +35,16 @@
   },
   "homepage": "https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx#readme",
   "dependencies": {
-    "@babel/core": "^7.23.7",
-    "@babel/plugin-transform-typescript": "^7.23.6",
-    "@vue/babel-plugin-jsx": "^1.1.5"
+    "@babel/core": "^7.27.4",
+    "@babel/plugin-transform-typescript": "^7.27.1",
+    "@rolldown/pluginutils": "^1.0.0-beta.16",
+    "@vue/babel-plugin-jsx": "^1.4.0"
   },
   "devDependencies": {
-    "vite": "^5.0.10"
+    "vite": "catalog:"
   },
   "peerDependencies": {
-    "vite": "^5.0.0",
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0-0",
     "vue": "^3.0.0"
   }
 }

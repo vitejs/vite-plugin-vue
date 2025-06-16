@@ -2,6 +2,7 @@
   "name": "@vitejs/test-vue-lib",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev-consumer": "vite --config ./vite.config.consumer.ts",
     "build-lib": "vite build --config ./vite.config.lib.ts",
@@ -9,7 +10,7 @@
     "build-consumer": "vite build --config ./vite.config.consumer.ts"
   },
   "dependencies": {
-    "vue": "^3.4.5"
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "workspace:*"

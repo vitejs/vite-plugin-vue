@@ -35,12 +35,20 @@ A [picomatch pattern](https://github.com/micromatch/picomatch), or array of patt
 
 > See [@vue/babel-plugin-jsx](https://github.com/vuejs/jsx-next) for other options.
 
+### defineComponentName
+
+Type: `string[]`
+
+Default: `['defineComponent']`
+
+The name of the function to be used for defining components. This is useful when you have a custom `defineComponent` function.
+
 ## HMR Detection
 
 This plugin supports HMR of Vue JSX components. The detection requirements are:
 
 - The component must be exported.
-- The component must be declared by calling `defineComponent` via a root-level statement, either variable declaration or export declaration.
+- The component must be declared by calling `defineComponent` or the name specified in `defineComponentName` via a root-level statement, either variable declaration or export declaration.
 
 ### Supported patterns
 

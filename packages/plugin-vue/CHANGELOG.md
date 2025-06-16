@@ -1,3 +1,166 @@
+## 6.0.0-beta.2 (2025-06-06)
+
+* refactor!: bump required node version to 20.19+, 22.12+ and drop CJS build (#596) ([56df545](https://github.com/vitejs/vite-plugin-vue/commit/56df545)), closes [#596](https://github.com/vitejs/vite-plugin-vue/issues/596)
+* feat: add Vite 7 support (#597) ([12f2881](https://github.com/vitejs/vite-plugin-vue/commit/12f2881)), closes [#597](https://github.com/vitejs/vite-plugin-vue/issues/597)
+* fix: template src sourcemap source (#267) ([de18693](https://github.com/vitejs/vite-plugin-vue/commit/de18693)), closes [#267](https://github.com/vitejs/vite-plugin-vue/issues/267)
+
+
+
+## 6.0.0-beta.1 (2025-06-02)
+
+* fix(vue): import with query (#592) ([b0400f3](https://github.com/vitejs/vite-plugin-vue/commit/b0400f3)), closes [#592](https://github.com/vitejs/vite-plugin-vue/issues/592)
+
+
+
+## 6.0.0-beta.0 (2025-05-21)
+
+* feat(vue)!: separate include and exclude from `api.options` and add filter (#582) ([e3beac8](https://github.com/vitejs/vite-plugin-vue/commit/e3beac8)), closes [#582](https://github.com/vitejs/vite-plugin-vue/issues/582)
+* fix(deps): update all non-major dependencies (#587) ([d5ea412](https://github.com/vitejs/vite-plugin-vue/commit/d5ea412)), closes [#587](https://github.com/vitejs/vite-plugin-vue/issues/587)
+
+
+
+## <small>5.2.4 (2025-05-09)</small>
+
+* chore: fix types with Vite 6.3 (#559) ([8002511](https://github.com/vitejs/vite-plugin-vue/commit/8002511)), closes [#559](https://github.com/vitejs/vite-plugin-vue/issues/559)
+* chore: use rollup types exposed from Vite (#583) ([2e1287f](https://github.com/vitejs/vite-plugin-vue/commit/2e1287f)), closes [#583](https://github.com/vitejs/vite-plugin-vue/issues/583)
+* chore(deps): update upstream (#542) ([ef446fc](https://github.com/vitejs/vite-plugin-vue/commit/ef446fc)), closes [#542](https://github.com/vitejs/vite-plugin-vue/issues/542)
+* chore(deps): update upstream (#569) ([98381b2](https://github.com/vitejs/vite-plugin-vue/commit/98381b2)), closes [#569](https://github.com/vitejs/vite-plugin-vue/issues/569)
+* feat(plugin-vue): use `transformWithOxc` if `rolldown-vite` is detected (#584) ([6ac8e3a](https://github.com/vitejs/vite-plugin-vue/commit/6ac8e3a)), closes [#584](https://github.com/vitejs/vite-plugin-vue/issues/584)
+* fix(plugin-vue): handle sourcemap with empty script code (#585) ([7f73970](https://github.com/vitejs/vite-plugin-vue/commit/7f73970)), closes [#585](https://github.com/vitejs/vite-plugin-vue/issues/585)
+* fix(plugin-vue): when the resource path contains chinese characters, dev/build is inconsistent (#550 ([5f6affe](https://github.com/vitejs/vite-plugin-vue/commit/5f6affe)), closes [#550](https://github.com/vitejs/vite-plugin-vue/issues/550)
+
+
+
+## <small>5.2.3 (2025-03-17)</small>
+
+* Revert "fix: generate unique component id" (#548) ([4bc5517](https://github.com/vitejs/vite-plugin-vue/commit/4bc5517)), closes [#548](https://github.com/vitejs/vite-plugin-vue/issues/548)
+
+
+
+## <small>5.2.2 (2025-03-17)</small>
+
+* feat: pass descriptor vapor flag to compileTemplte ([219e007](https://github.com/vitejs/vite-plugin-vue/commit/219e007))
+* feat(css): tree shake scoped styles (#533) ([333094f](https://github.com/vitejs/vite-plugin-vue/commit/333094f)), closes [#533](https://github.com/vitejs/vite-plugin-vue/issues/533)
+* fix: generate unique component id (#538) ([2704e85](https://github.com/vitejs/vite-plugin-vue/commit/2704e85)), closes [#538](https://github.com/vitejs/vite-plugin-vue/issues/538)
+* fix: properly interpret boolean values in `define` (#545) ([46d3d65](https://github.com/vitejs/vite-plugin-vue/commit/46d3d65)), closes [#545](https://github.com/vitejs/vite-plugin-vue/issues/545)
+* fix(deps): update all non-major dependencies (#482) ([cdbae68](https://github.com/vitejs/vite-plugin-vue/commit/cdbae68)), closes [#482](https://github.com/vitejs/vite-plugin-vue/issues/482)
+* fix(deps): update all non-major dependencies (#488) ([5d39582](https://github.com/vitejs/vite-plugin-vue/commit/5d39582)), closes [#488](https://github.com/vitejs/vite-plugin-vue/issues/488)
+* fix(index): move the if check earlier to avoid creating unnecessary ssr when entering return block ( ([2135c84](https://github.com/vitejs/vite-plugin-vue/commit/2135c84)), closes [#523](https://github.com/vitejs/vite-plugin-vue/issues/523)
+* fix(plugin-vue): default value for compile time flags (#495) ([ae9d948](https://github.com/vitejs/vite-plugin-vue/commit/ae9d948)), closes [#495](https://github.com/vitejs/vite-plugin-vue/issues/495)
+* fix(plugin-vue): ensure HMR updates styles when SFC is treated as a type dependency (#541) ([4abe3be](https://github.com/vitejs/vite-plugin-vue/commit/4abe3be)), closes [#541](https://github.com/vitejs/vite-plugin-vue/issues/541)
+* fix(plugin-vue): resolve sourcemap conflicts in build watch mode with cached modules (#505) ([906cebb](https://github.com/vitejs/vite-plugin-vue/commit/906cebb)), closes [#505](https://github.com/vitejs/vite-plugin-vue/issues/505)
+* fix(plugin-vue): support external import URLs for monorepos (#524) ([cdd4922](https://github.com/vitejs/vite-plugin-vue/commit/cdd4922)), closes [#524](https://github.com/vitejs/vite-plugin-vue/issues/524)
+* fix(plugin-vue): support vapor template-only component (#529) ([95be153](https://github.com/vitejs/vite-plugin-vue/commit/95be153)), closes [#529](https://github.com/vitejs/vite-plugin-vue/issues/529)
+* fix(plugin-vue): suppress warnings for non-recognized pseudo selectors form lightningcss (#521) ([15c0eb0](https://github.com/vitejs/vite-plugin-vue/commit/15c0eb0)), closes [#521](https://github.com/vitejs/vite-plugin-vue/issues/521)
+* chore(deps): update dependency rollup to ^4.27.4 (#479) ([428320d](https://github.com/vitejs/vite-plugin-vue/commit/428320d)), closes [#479](https://github.com/vitejs/vite-plugin-vue/issues/479)
+* chore(deps): update dependency rollup to ^4.28.1 (#484) ([388403f](https://github.com/vitejs/vite-plugin-vue/commit/388403f)), closes [#484](https://github.com/vitejs/vite-plugin-vue/issues/484)
+* chore(deps): update dependency rollup to ^4.29.1 (#493) ([b092bc8](https://github.com/vitejs/vite-plugin-vue/commit/b092bc8)), closes [#493](https://github.com/vitejs/vite-plugin-vue/issues/493)
+* chore(deps): update upstream (#503) ([8c12b9f](https://github.com/vitejs/vite-plugin-vue/commit/8c12b9f)), closes [#503](https://github.com/vitejs/vite-plugin-vue/issues/503)
+* chore(deps): update upstream (#511) ([d057351](https://github.com/vitejs/vite-plugin-vue/commit/d057351)), closes [#511](https://github.com/vitejs/vite-plugin-vue/issues/511)
+* chore(deps): update upstream (#526) ([59946d3](https://github.com/vitejs/vite-plugin-vue/commit/59946d3)), closes [#526](https://github.com/vitejs/vite-plugin-vue/issues/526)
+* chore(plugin-vue): simplify `resolved` declaration ([7288a59](https://github.com/vitejs/vite-plugin-vue/commit/7288a59))
+
+
+
+## <small>5.2.1 (2024-11-26)</small>
+
+* chore: add vite 6 peer dep (#481) ([4288652](https://github.com/vitejs/vite-plugin-vue/commit/4288652)), closes [#481](https://github.com/vitejs/vite-plugin-vue/issues/481)
+* chore: fix lint ([378aea3](https://github.com/vitejs/vite-plugin-vue/commit/378aea3))
+* chore(deps): update dependency rollup to ^4.27.2 (#476) ([b2df95e](https://github.com/vitejs/vite-plugin-vue/commit/b2df95e)), closes [#476](https://github.com/vitejs/vite-plugin-vue/issues/476)
+
+
+
+## 5.2.0 (2024-11-13)
+
+* feat: add a feature option to support custom component id generator (#461) ([7a1fc4c](https://github.com/vitejs/vite-plugin-vue/commit/7a1fc4c)), closes [#461](https://github.com/vitejs/vite-plugin-vue/issues/461)
+
+
+
+## <small>5.1.5 (2024-11-11)</small>
+
+* chore: fix typo (#464) ([4a811b0](https://github.com/vitejs/vite-plugin-vue/commit/4a811b0)), closes [#464](https://github.com/vitejs/vite-plugin-vue/issues/464)
+* chore(deps): update dependency rollup to ^4.24.0 (#448) ([0fc9cd0](https://github.com/vitejs/vite-plugin-vue/commit/0fc9cd0)), closes [#448](https://github.com/vitejs/vite-plugin-vue/issues/448)
+* chore(deps): update dependency rollup to ^4.25.0 (#472) ([91210cc](https://github.com/vitejs/vite-plugin-vue/commit/91210cc)), closes [#472](https://github.com/vitejs/vite-plugin-vue/issues/472)
+* chore(deps): update upstream (#462) ([5625fc9](https://github.com/vitejs/vite-plugin-vue/commit/5625fc9)), closes [#462](https://github.com/vitejs/vite-plugin-vue/issues/462)
+* fix(deps): update all non-major dependencies (#439) ([e432bcb](https://github.com/vitejs/vite-plugin-vue/commit/e432bcb)), closes [#439](https://github.com/vitejs/vite-plugin-vue/issues/439)
+* fix(hmr): re-resolve script after type dep changed (#446) ([8f9c624](https://github.com/vitejs/vite-plugin-vue/commit/8f9c624)), closes [#446](https://github.com/vitejs/vite-plugin-vue/issues/446)
+* fix(hmr): should reload if relies file changed after re-render (#471) ([62b17f3](https://github.com/vitejs/vite-plugin-vue/commit/62b17f3)), closes [#471](https://github.com/vitejs/vite-plugin-vue/issues/471)
+* perf: use `hash` to replace `createHash` (#460) ([de88394](https://github.com/vitejs/vite-plugin-vue/commit/de88394)), closes [#460](https://github.com/vitejs/vite-plugin-vue/issues/460)
+
+
+
+## <small>5.1.4 (2024-09-16)</small>
+
+* chore: format ([07b29a6](https://github.com/vitejs/vite-plugin-vue/commit/07b29a6))
+* chore(deps): update dependency rollup to ^4.21.3 (#440) ([98766c2](https://github.com/vitejs/vite-plugin-vue/commit/98766c2)), closes [#440](https://github.com/vitejs/vite-plugin-vue/issues/440)
+* fix: skip checking private properties of typeParameters (#443) ([e4f5fff](https://github.com/vitejs/vite-plugin-vue/commit/e4f5fff)), closes [#443](https://github.com/vitejs/vite-plugin-vue/issues/443)
+* fix(plugin-vue): allow overwrite esbuild config (#444) ([1344294](https://github.com/vitejs/vite-plugin-vue/commit/1344294)), closes [#444](https://github.com/vitejs/vite-plugin-vue/issues/444)
+
+
+
+## <small>5.1.3 (2024-08-29)</small>
+
+* chore: upgrade to eslint 9 ([236a40f](https://github.com/vitejs/vite-plugin-vue/commit/236a40f))
+* chore: use pnpm catalog for shared deps ([0735e18](https://github.com/vitejs/vite-plugin-vue/commit/0735e18))
+* chore(deps): update dependency rollup to ^4.20.0 (#433) ([37c9073](https://github.com/vitejs/vite-plugin-vue/commit/37c9073)), closes [#433](https://github.com/vitejs/vite-plugin-vue/issues/433)
+* chore(deps): update upstream (#436) ([b75a46f](https://github.com/vitejs/vite-plugin-vue/commit/b75a46f)), closes [#436](https://github.com/vitejs/vite-plugin-vue/issues/436)
+* fix(deps): update all non-major dependencies (#421) ([e3a7fec](https://github.com/vitejs/vite-plugin-vue/commit/e3a7fec)), closes [#421](https://github.com/vitejs/vite-plugin-vue/issues/421)
+* fix(plugin-vue): default value for `__VUE_OPTIONS_API__` ([acb57c9](https://github.com/vitejs/vite-plugin-vue/commit/acb57c9)), closes [#438](https://github.com/vitejs/vite-plugin-vue/issues/438)
+
+
+
+## <small>5.1.2 (2024-08-01)</small>
+
+* refactor(plugin-vue): add `type` field ([a6b7e3f](https://github.com/vitejs/vite-plugin-vue/commit/a6b7e3f))
+* fix(plugin-vue): add deprecated `script.propsDestructure` option ([1e24322](https://github.com/vitejs/vite-plugin-vue/commit/1e24322)), closes [#431](https://github.com/vitejs/vite-plugin-vue/issues/431)
+* chore(deps): update upstream (#432) ([5d592cd](https://github.com/vitejs/vite-plugin-vue/commit/5d592cd)), closes [#432](https://github.com/vitejs/vite-plugin-vue/issues/432)
+
+
+
+## <small>5.1.1 (2024-07-27)</small>
+
+* fix(plugin-vue): clear script cache if recall ([f5eb5ac](https://github.com/vitejs/vite-plugin-vue/commit/f5eb5ac)), closes [#431](https://github.com/vitejs/vite-plugin-vue/issues/431)
+
+
+
+## 5.1.0 (2024-07-23)
+
+* fix(deps): update all non-major dependencies (#412) ([8cb2ea9](https://github.com/vitejs/vite-plugin-vue/commit/8cb2ea9)), closes [#412](https://github.com/vitejs/vite-plugin-vue/issues/412)
+* fix(plugin-vue): clear cache after build end ([96dbb22](https://github.com/vitejs/vite-plugin-vue/commit/96dbb22))
+* chore: update documentation for new features option ([7fc7994](https://github.com/vitejs/vite-plugin-vue/commit/7fc7994))
+* chore(deps): update upstream (#416) ([02a3edd](https://github.com/vitejs/vite-plugin-vue/commit/02a3edd)), closes [#416](https://github.com/vitejs/vite-plugin-vue/issues/416)
+* feat(plugin-vue): add `features` option (#419) ([3e839e2](https://github.com/vitejs/vite-plugin-vue/commit/3e839e2)), closes [#419](https://github.com/vitejs/vite-plugin-vue/issues/419)
+
+
+
+## <small>5.0.5 (2024-05-30)</small>
+
+* fix(deps): update all non-major dependencies (#360) ([ed4970a](https://github.com/vitejs/vite-plugin-vue/commit/ed4970a)), closes [#360](https://github.com/vitejs/vite-plugin-vue/issues/360)
+* fix(deps): update all non-major dependencies (#371) ([0a484c7](https://github.com/vitejs/vite-plugin-vue/commit/0a484c7)), closes [#371](https://github.com/vitejs/vite-plugin-vue/issues/371)
+* fix(plugin-vue): don't inline template when `__VUE_PROD_DEVTOOLS__` (#81) ([277a3ab](https://github.com/vitejs/vite-plugin-vue/commit/277a3ab)), closes [#81](https://github.com/vitejs/vite-plugin-vue/issues/81)
+* refactor(plugin-vue): use normalizePath from vite (#395) ([2848174](https://github.com/vitejs/vite-plugin-vue/commit/2848174)), closes [#395](https://github.com/vitejs/vite-plugin-vue/issues/395)
+* chore(deps): replace dependency eslint-plugin-node with eslint-plugin-n ^14.0.0 (#378) ([997f9bb](https://github.com/vitejs/vite-plugin-vue/commit/997f9bb)), closes [#378](https://github.com/vitejs/vite-plugin-vue/issues/378)
+* chore(deps): update all non-major dependencies (#355) ([4faec3d](https://github.com/vitejs/vite-plugin-vue/commit/4faec3d)), closes [#355](https://github.com/vitejs/vite-plugin-vue/issues/355)
+* chore(deps): update upstream (#356) ([cf7d91e](https://github.com/vitejs/vite-plugin-vue/commit/cf7d91e)), closes [#356](https://github.com/vitejs/vite-plugin-vue/issues/356)
+* chore(deps): update upstream (#361) ([a28c46e](https://github.com/vitejs/vite-plugin-vue/commit/a28c46e)), closes [#361](https://github.com/vitejs/vite-plugin-vue/issues/361)
+* chore(deps): update upstream (#367) ([2050ad3](https://github.com/vitejs/vite-plugin-vue/commit/2050ad3)), closes [#367](https://github.com/vitejs/vite-plugin-vue/issues/367)
+* chore(deps): update upstream (#379) ([96c82e9](https://github.com/vitejs/vite-plugin-vue/commit/96c82e9)), closes [#379](https://github.com/vitejs/vite-plugin-vue/issues/379)
+* chore(plugin-vue): update options on docs ([3f8b472](https://github.com/vitejs/vite-plugin-vue/commit/3f8b472))
+
+
+
+## <small>5.0.4 (2024-02-09)</small>
+
+* chore(deps-dev): bump vite from 5.0.10 to 5.0.12 (#354) ([0294b9d](https://github.com/vitejs/vite-plugin-vue/commit/0294b9d)), closes [#354](https://github.com/vitejs/vite-plugin-vue/issues/354)
+* chore(deps): update dependency prettier to v3.2.4 (#347) ([e957179](https://github.com/vitejs/vite-plugin-vue/commit/e957179)), closes [#347](https://github.com/vitejs/vite-plugin-vue/issues/347)
+* chore(deps): update dependency prettier to v3.2.5 (#352) ([a9f5b11](https://github.com/vitejs/vite-plugin-vue/commit/a9f5b11)), closes [#352](https://github.com/vitejs/vite-plugin-vue/issues/352)
+* chore(deps): update upstream (#333) ([573420d](https://github.com/vitejs/vite-plugin-vue/commit/573420d)), closes [#333](https://github.com/vitejs/vite-plugin-vue/issues/333)
+* types: omit overridden options ([0c7432b](https://github.com/vitejs/vite-plugin-vue/commit/0c7432b))
+* fix(deps): update all non-major dependencies (#332) ([70e5df9](https://github.com/vitejs/vite-plugin-vue/commit/70e5df9)), closes [#332](https://github.com/vitejs/vite-plugin-vue/issues/332)
+* fix(plugin-vue): allow disabling transformAssetUrls (#326) ([0ff6fb7](https://github.com/vitejs/vite-plugin-vue/commit/0ff6fb7)), closes [#326](https://github.com/vitejs/vite-plugin-vue/issues/326)
+
+
+
 ## <small>5.0.3 (2024-01-10)</small>
 
 * fix(deps): update all non-major dependencies (#309) ([8c694f6](https://github.com/vitejs/vite-plugin-vue/commit/8c694f6)), closes [#309](https://github.com/vitejs/vite-plugin-vue/issues/309)

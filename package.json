@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "^18.0.0 || >=20.0.0"
+    "node": "^20.19.0 || >=22.12.0"
   },
   "homepage": "https://github.com/vitejs/vite-plugin-vue/",
   "repository": {
@@ -24,7 +24,7 @@
     "format": "prettier --write --cache .",
     "lint": "eslint --cache .",
     "typecheck": "tsc -p scripts --noEmit && tsc -p playground --noEmit",
-    "test": "run-s test-serve test-build",
+    "test": "pnpm test-serve && pnpm test-build",
     "test-serve": "vitest run -c vitest.config.e2e.ts",
     "test-build": "VITE_TEST_BUILD=1 vitest run -c vitest.config.e2e.ts",
     "test-build-without-plugin-commonjs": "VITE_TEST_WITHOUT_PLUGIN_COMMONJS=1 pnpm test-build",
@@ -36,40 +36,35 @@
     "ci-publish": "tsx scripts/publishCI.ts"
   },
   "devDependencies": {
-    "@babel/types": "^7.23.6",
+    "@babel/types": "^7.27.6",
+    "@eslint/js": "^9.29.0",
     "@types/babel__core": "^7.20.5",
     "@types/convert-source-map": "^2.0.3",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^20.10.6",
-    "@types/resolve": "^1.20.6",
-    "@typescript-eslint/eslint-plugin": "^6.17.0",
-    "@typescript-eslint/parser": "^6.17.0",
-    "@vitejs/release-scripts": "^1.3.1",
-    "conventional-changelog-cli": "^4.1.0",
-    "eslint": "^8.56.0",
-    "eslint-define-config": "^2.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-regexp": "^2.1.2",
-    "execa": "^8.0.1",
-    "fast-glob": "^3.3.2",
-    "fs-extra": "^11.2.0",
-    "lint-staged": "^15.2.0",
-    "npm-run-all": "^4.1.5",
-    "picocolors": "^1.0.0",
-    "playwright-chromium": "^1.40.1",
-    "prettier": "3.1.1",
-    "resolve": "^1.22.8",
-    "rollup": "^4.9.2",
-    "rollup-plugin-license": "^3.2.0",
-    "simple-git-hooks": "^2.9.0",
-    "tsx": "^4.7.0",
-    "typescript": "^5.3.3",
-    "unbuild": "2.0.0",
-    "vite": "^5.0.10",
-    "vitest": "^1.1.1",
-    "vue": "^3.4.5"
+    "@types/node": "^22.15.31",
+    "@vitejs/release-scripts": "^1.5.0",
+    "conventional-changelog-cli": "^5.0.0",
+    "eslint": "^9.29.0",
+    "eslint-import-resolver-typescript": "^4.4.3",
+    "eslint-plugin-import-x": "^4.15.2",
+    "eslint-plugin-n": "^17.20.0",
+    "eslint-plugin-regexp": "^2.9.0",
+    "execa": "^9.6.0",
+    "fs-extra": "^11.3.0",
+    "lint-staged": "^16.1.2",
+    "picocolors": "^1.1.1",
+    "playwright-chromium": "^1.53.0",
+    "prettier": "3.5.3",
+    "rollup": "^4.43.0",
+    "simple-git-hooks": "^2.13.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.0",
+    "unbuild": "3.5.0",
+    "vite": "catalog:",
+    "vitest": "^3.2.3",
+    "vue": "catalog:"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged --concurrent false"
@@ -88,10 +83,19 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@8.14.0",
+  "packageManager": "pnpm@10.12.1",
   "pnpm": {
     "overrides": {
       "@vitejs/plugin-vue": "workspace:*"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "core-js",
+      "esbuild"
+    ],
+    "onlyBuiltDependencies": [
+      "playwright-chromium",
+      "simple-git-hooks"
+    ]
   }
 }
