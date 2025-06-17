@@ -7,9 +7,9 @@ import {
   editFile,
   getColor,
   isBuild,
+  isServe,
   page,
   untilBrowserLogAfter,
-  untilUpdated,
   viteServer,
 } from '~utils'
 
@@ -125,8 +125,8 @@ test('css', async () => {
   } else {
     // During dev, the CSS is loaded from async chunk and we may have to wait
     // when the test runs concurrently.
-    await untilUpdated(() => getColor('h1'), 'green')
-    await untilUpdated(() => getColor('.jsx'), 'blue')
+    await expect.poll(() => getColor('h1')).toMatch('green')
+    await expect.poll(() => getColor('.jsx')).toMatch('blue')
   }
 })
 
@@ -165,25 +165,30 @@ test('hydration', async () => {
   expect(await page.textContent('button')).toMatch('1')
 })
 
-test('hmr', { retry: 3 }, async () => {
+test.runIf(isServe)('hmr', { retry: 3 }, async () => {
   // This is test is flaky in Mac CI, but can't be reproduced locally. Wait until
   // network idle to avoid the issue. TODO: This may be caused by a bug when
   // modifying a file while loading, we should remove this guard
   await page.goto(url, { waitUntil: 'networkidle' })
   editFile('src/pages/Home.vue', (code) => code.replace('Home', 'changed'))
-  await untilUpdated(() => page.textContent('h1'), 'changed')
+  await expect.poll(() => page.textContent('h1')).toMatch('changed')
 })
 
 test('client navigation', async () => {
   await untilBrowserLogAfter(() => page.goto(url), 'hydrated')
 
-  await untilUpdated(() => page.textContent('a[href="/test/about"]'), 'About')
+  await expect
+    .poll(() => page.textContent('a[href="/test/about"]'))
+    .toMatch('About')
   await page.click('a[href="/test/about"]')
-  await untilUpdated(() => page.textContent('h1'), 'About')
+  await expect.poll(() => page.textContent('h1')).toMatch('About')
+
+  if (isBuild) return
+
   editFile('src/pages/About.vue', (code) => code.replace('About', 'changed'))
-  await untilUpdated(() => page.textContent('h1'), 'changed')
+  await expect.poll(() => page.textContent('h1')).toMatch('changed')
   await page.click('a[href="/test/"]')
-  await untilUpdated(() => page.textContent('a[href="/test/"]'), 'Home')
+  await expect.poll(() => page.textContent('a[href="/test/"]')).toMatch('Home')
 })
 
 test('import.meta.url', async () => {

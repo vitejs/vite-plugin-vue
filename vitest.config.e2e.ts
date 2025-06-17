@@ -30,5 +30,10 @@ export default defineConfig({
       if (log.match(/experimental|jit engine|emitted file|tailwind/i))
         return false
     },
+    expect: {
+      poll: {
+        timeout: 50 * (process.env.CI ? 200 : 50),
+      },
+    },
   },
 })

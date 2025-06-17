@@ -10,7 +10,7 @@ import { normalizePath } from 'vite'
 import { fromComment } from 'convert-source-map'
 import { expect } from 'vitest'
 import type { ResultPromise as ExecaResultPromise } from 'execa'
-import { isBuild, isWindows, page, testDir } from './vitestSetup'
+import { isWindows, page, testDir } from './vitestSetup'
 
 export * from './vitestSetup'
 
@@ -67,8 +67,6 @@ function rgbToHex(rgb: string): string | undefined {
   return undefined
 }
 
-const timeout = (n: number) => new Promise((r) => setTimeout(r, n))
-
 async function toEl(el: string | ElementHandle): Promise<ElementHandle> {
   if (typeof el === 'string') {
     return await page.$(el)
@@ -99,9 +97,7 @@ export function readFile(filename: string): string {
 export function editFile(
   filename: string,
   replacer: (str: string) => string,
-  runInBuild: boolean = false,
 ): void {
-  if (isBuild && !runInBuild) return
   filename = path.resolve(testDir, filename)
   const content = fs.readFileSync(filename, 'utf-8')
   const modified = replacer(content)
@@ -146,46 +142,6 @@ export function readManifest(base = ''): Manifest {
   return JSON.parse(
     fs.readFileSync(path.join(testDir, 'dist', base, 'manifest.json'), 'utf-8'),
   )
-}
-
-/**
- * Poll a getter until the value it returns includes the expected value.
- */
-export async function untilUpdated(
-  poll: () => string | Promise<string>,
-  expected: string,
-  runInBuild = false,
-): Promise<void> {
-  if (isBuild && !runInBuild) return
-  const maxTries = process.env.CI ? 200 : 50
-  for (let tries = 0; tries < maxTries; tries++) {
-    const actual = (await poll()) ?? ''
-    if (actual.indexOf(expected) > -1 || tries === maxTries - 1) {
-      expect(actual).toMatch(expected)
-      break
-    } else {
-      await timeout(50)
-    }
-  }
-}
-
-/**
- * Retry `func` until it does not throw error.
- */
-export async function withRetry(
-  func: () => Promise<void>,
-  runInBuild = false,
-): Promise<void> {
-  if (isBuild && !runInBuild) return
-  const maxTries = process.env.CI ? 200 : 50
-  for (let tries = 0; tries < maxTries; tries++) {
-    try {
-      await func()
-      return
-    } catch {}
-    await timeout(50)
-  }
-  await func()
 }
 
 type UntilBrowserLogAfterCallback = (logs: string[]) => PromiseLike<void> | void
