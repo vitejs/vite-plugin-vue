@@ -1,3 +1,17 @@
+## 6.0.0 (2025-06-24)
+
+* chore: add `description` and `keywords` field to package.json (#604) ([67ab76b](https://github.com/vitejs/vite-plugin-vue/commit/67ab76b)), closes [#604](https://github.com/vitejs/vite-plugin-vue/issues/604)
+* chore: remove Vite 7 beta from supported range (#598) ([c7ddd62](https://github.com/vitejs/vite-plugin-vue/commit/c7ddd62)), closes [#598](https://github.com/vitejs/vite-plugin-vue/issues/598)
+* chore(deps): update dependency rollup to ^4.41.1 (#591) ([256ac31](https://github.com/vitejs/vite-plugin-vue/commit/256ac31)), closes [#591](https://github.com/vitejs/vite-plugin-vue/issues/591)
+* chore(deps): update dependency rollup to ^4.43.0 (#601) ([a495edf](https://github.com/vitejs/vite-plugin-vue/commit/a495edf)), closes [#601](https://github.com/vitejs/vite-plugin-vue/issues/601)
+* fix(deps): update all non-major dependencies (#590) ([43426c8](https://github.com/vitejs/vite-plugin-vue/commit/43426c8)), closes [#590](https://github.com/vitejs/vite-plugin-vue/issues/590)
+* fix(deps): update all non-major dependencies (#600) ([a4c32a8](https://github.com/vitejs/vite-plugin-vue/commit/a4c32a8)), closes [#600](https://github.com/vitejs/vite-plugin-vue/issues/600)
+* fix(deps): update all non-major dependencies (#605) ([67534e5](https://github.com/vitejs/vite-plugin-vue/commit/67534e5)), closes [#605](https://github.com/vitejs/vite-plugin-vue/issues/605)
+* fix(deps): update all non-major dependencies (#609) ([98c52eb](https://github.com/vitejs/vite-plugin-vue/commit/98c52eb)), closes [#609](https://github.com/vitejs/vite-plugin-vue/issues/609)
+* refactor: always use `crypto.hash` (#606) ([5de85f6](https://github.com/vitejs/vite-plugin-vue/commit/5de85f6)), closes [#606](https://github.com/vitejs/vite-plugin-vue/issues/606)
+
+
+
 ## 6.0.0-beta.2 (2025-06-06)
 
 * refactor!: bump required node version to 20.19+, 22.12+ and drop CJS build (#596) ([56df545](https://github.com/vitejs/vite-plugin-vue/commit/56df545)), closes [#596](https://github.com/vitejs/vite-plugin-vue/issues/596)
