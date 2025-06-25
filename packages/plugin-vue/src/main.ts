@@ -12,6 +12,7 @@ import {
   createDescriptor,
   getDescriptor,
   getPrevDescriptor,
+  getSrcDescriptor,
   setSrcDescriptor,
 } from './utils/descriptorCache'
 import {
@@ -434,13 +435,28 @@ async function genStyleCode(
   if (descriptor.styles.length) {
     for (let i = 0; i < descriptor.styles.length; i++) {
       const style = descriptor.styles[i]
+      let indexQuery = i
       if (style.src) {
-        await linkSrcToDescriptor(
-          style.src,
-          descriptor,
-          pluginContext,
-          style.scoped,
-        )
+        const resolvedSrc =
+          (await pluginContext.resolve(style.src, descriptor.filename))?.id ||
+          style.src
+        const alreadyDescriptor = getSrcDescriptor(resolvedSrc, {
+          scoped: style.scoped,
+          src: descriptor.id,
+        })
+
+        if (alreadyDescriptor) {
+          indexQuery = alreadyDescriptor.styles.findIndex(
+            ({ scoped, src }) => style.scoped === scoped && style.src === src,
+          )
+        } else {
+          await linkSrcToDescriptor(
+            style.src,
+            descriptor,
+            pluginContext,
+            style.scoped,
+          )
+        }
       }
       const src = style.src || descriptor.filename
       // do not include module in default query, since we use it to indicate
@@ -453,7 +469,7 @@ async function genStyleCode(
         : ''
       const directQuery = customElement ? `&inline` : ``
       const scopedQuery = style.scoped ? `&scoped=${descriptor.id}` : ``
-      const query = `?vue&type=style&index=${i}${srcQuery}${directQuery}${scopedQuery}`
+      const query = `?vue&type=style&index=${indexQuery}${srcQuery}${directQuery}${scopedQuery}`
       const styleRequest = src + query + attrsQuery
       if (style.module) {
         if (customElement) {
