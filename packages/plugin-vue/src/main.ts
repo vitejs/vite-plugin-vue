@@ -446,22 +446,26 @@ async function genStyleCode(
         })
 
         if (alreadyDescriptor) {
-          const foundIndex = await alreadyDescriptor.styles.reduce(async (acc, { scoped, src }, index) => {
-            const prevRes = await acc;
+          const foundIndex = await alreadyDescriptor.styles.reduce(
+            async (acc, { scoped, src }, index) => {
+              const prevRes = await acc
 
-            if (~prevRes) return prevRes;
-            if (scoped !== style.scoped) return prevRes;
-            if (!src) return prevRes;
+              if (~prevRes) return prevRes
+              if (scoped !== style.scoped) return prevRes
+              if (!src) return prevRes
 
-            const _resolvedSrc = (await pluginContext.resolve(src, alreadyDescriptor.filename))?.id || src
+              const _resolvedSrc =
+                (await pluginContext.resolve(src, alreadyDescriptor.filename))
+                  ?.id || src
 
-            if (_resolvedSrc !== resolvedSrc) return prevRes;
+              if (_resolvedSrc !== resolvedSrc) return prevRes
 
-            return index;
-          }, Promise.resolve(-1));
+              return index
+            },
+            Promise.resolve(-1),
+          )
 
-          if (~foundIndex)
-            indexQuery = foundIndex
+          if (~foundIndex) indexQuery = foundIndex
         } else {
           await linkSrcToDescriptor(
             style.src,
