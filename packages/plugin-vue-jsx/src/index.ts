@@ -158,14 +158,17 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                     enter(
                       _path: babel.NodePath<types.ExportDefaultDeclaration>,
                     ) {
+                      const unwrappedDeclaration = unwrapTypeAssertion(
+                        _path.node.declaration,
+                      )
                       if (
                         isDefineComponentCall(
-                          _path.node.declaration,
+                          unwrappedDeclaration,
                           defineComponentName,
                         )
                       ) {
-                        const declaration = _path.node
-                          .declaration as types.CallExpression
+                        const declaration =
+                          unwrappedDeclaration as types.CallExpression
                         const nodesPath = _path.replaceWithMultiple([
                           // const __default__ = defineComponent(...)
                           types.variableDeclaration('const', [
@@ -276,7 +279,10 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                   })
                 }
               } else if (
-                isDefineComponentCall(node.declaration, defineComponentName)
+                isDefineComponentCall(
+                  unwrapTypeAssertion(node.declaration),
+                  defineComponentName,
+                )
               ) {
                 hotComponents.push({
                   local: '__default__',
@@ -337,7 +343,7 @@ function parseComponentDecls(
   for (const decl of node.declarations) {
     if (
       decl.id.type === 'Identifier' &&
-      isDefineComponentCall(decl.init, fnNames)
+      isDefineComponentCall(unwrapTypeAssertion(decl.init), fnNames)
     ) {
       names.push(decl.id.name)
     }
@@ -355,6 +361,25 @@ function isDefineComponentCall(
     node.callee.type === 'Identifier' &&
     names.includes(node.callee.name)
   )
+}
+
+function unwrapTypeAssertion(node: types.Node): types.Node
+function unwrapTypeAssertion(
+  node: types.Node | null | undefined,
+): types.Node | null | undefined
+function unwrapTypeAssertion(
+  node: types.Node | null | undefined,
+): types.Node | null | undefined {
+  if (!node) return node
+  let current = node
+  while (
+    current.type === 'TSAsExpression' ||
+    current.type === 'TSSatisfiesExpression' ||
+    current.type === 'TSTypeAssertion'
+  ) {
+    current = current.expression
+  }
+  return current
 }
 
 function getHash(text: string) {
