@@ -14,6 +14,9 @@ test('should render', async () => {
   expect(await page.textContent('.export-default')).toMatch(
     'export default defineComponent',
   )
+  expect(await page.textContent('.export-default-as')).toMatch(
+    'export default defineComponent as',
+  )
 })
 
 test('should update', async () => {
