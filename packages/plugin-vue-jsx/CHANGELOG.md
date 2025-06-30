@@ -1,3 +1,10 @@
+## <small>5.0.1 (2025-06-30)</small>
+
+* fix(deps): update all non-major dependencies (#618) ([46f6c99](https://github.com/vitejs/vite-plugin-vue/commit/46f6c99)), closes [#618](https://github.com/vitejs/vite-plugin-vue/issues/618)
+* fix(vue-jsx): handle type asserted export default defineComponent (#615) ([3602d4d](https://github.com/vitejs/vite-plugin-vue/commit/3602d4d)), closes [#615](https://github.com/vitejs/vite-plugin-vue/issues/615)
+
+
+
 ## 5.0.0 (2025-06-24)
 
 * chore: add `description` and `keywords` field to package.json (#604) ([67ab76b](https://github.com/vitejs/vite-plugin-vue/commit/67ab76b)), closes [#604](https://github.com/vitejs/vite-plugin-vue/issues/604)
