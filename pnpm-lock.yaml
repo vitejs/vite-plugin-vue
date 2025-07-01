@@ -147,6 +147,9 @@ importers:
       '@babel/core':
         specifier: ^7.27.7
         version: 7.27.7
+      '@babel/plugin-syntax-typescript':
+        specifier: ^7.27.1
+        version: 7.27.1(@babel/core@7.27.7)
       '@babel/plugin-transform-typescript':
         specifier: ^7.27.1
         version: 7.27.1(@babel/core@7.27.7)
@@ -309,6 +312,22 @@ importers:
         specifier: 'catalog:'
         version: 3.5.17(typescript@5.8.3)
     devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue
+      '@vitejs/plugin-vue-jsx':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue-jsx
+
+  playground/vue-jsx-decorators:
+    dependencies:
+      vue:
+        specifier: 'catalog:'
+        version: 3.5.17(typescript@5.8.3)
+    devDependencies:
+      '@babel/plugin-syntax-decorators':
+        specifier: 7.27.1
+        version: 7.27.1(@babel/core@7.27.7)
       '@vitejs/plugin-vue':
         specifier: workspace:*
         version: link:../../packages/plugin-vue
@@ -544,6 +563,12 @@ packages:
 
   '@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2':
     resolution: {integrity: sha512-SOSkfJDddaM7mak6cPEpswyTRnuRltl429hMraQEglW+OkovnCzsiszTmsrlY//qLFjCpQDFRvjdm2wA5pPm9w==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+
+  '@babel/plugin-syntax-decorators@7.27.1':
+    resolution: {integrity: sha512-YMq8Z87Lhl8EGkmb0MwYkt36QnxC+fzCgrl66ereamPlYToRpIk5nUjKUY3QKLWq8mwUB1BgbeXcTJhZOCDg5A==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -5046,6 +5071,11 @@ snapshots:
     dependencies:
       '@babel/core': 7.27.7
 
+  '@babel/plugin-syntax-decorators@7.27.1(@babel/core@7.27.7)':
+    dependencies:
+      '@babel/core': 7.27.7
+      '@babel/helper-plugin-utils': 7.27.1
+
   '@babel/plugin-syntax-import-assertions@7.26.0(@babel/core@7.27.7)':
     dependencies:
       '@babel/core': 7.27.7
@@ -6535,7 +6565,7 @@ snapshots:
 
   '@vue/compiler-core@3.5.17':
     dependencies:
-      '@babel/parser': 7.27.5
+      '@babel/parser': 7.27.7
       '@vue/shared': 3.5.17
       entities: 4.5.0
       estree-walker: 2.0.2
@@ -6565,7 +6595,7 @@ snapshots:
 
   '@vue/compiler-sfc@3.5.17':
     dependencies:
-      '@babel/parser': 7.27.5
+      '@babel/parser': 7.27.7
       '@vue/compiler-core': 3.5.17
       '@vue/compiler-dom': 3.5.17
       '@vue/compiler-ssr': 3.5.17

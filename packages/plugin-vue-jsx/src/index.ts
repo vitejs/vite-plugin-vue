@@ -49,6 +49,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
     babelPlugins = [],
     defineComponentName = ['defineComponent'],
     tsPluginOptions = {},
+    tsTransform,
     ...babelPluginOptions
   } = options
   const filter = createFilter(include, exclude)
@@ -67,9 +68,17 @@ function vueJsxPlugin(options: Options = {}): Plugin {
       return {
         // only apply esbuild to ts files
         // since we are handling jsx and tsx now
-        esbuild: {
-          include: /\.ts$/,
-        },
+        esbuild:
+          tsTransform === 'built-in'
+            ? {
+                // For 'built-in' we still need esbuild to transform ts syntax for `.tsx` files.
+                // So we add `.jsx` extension to `exclude` and keep original `include`.
+                // https://github.com/vitejs/vite/blob/v6.3.5/packages/vite/src/node/plugins/esbuild.ts#L246
+                exclude: /\.jsx?$/,
+              }
+            : {
+                include: /\.ts$/,
+              },
         define: {
           __VUE_OPTIONS_API__:
             parseDefine(config.define?.__VUE_OPTIONS_API__) ?? true,
@@ -108,6 +117,9 @@ function vueJsxPlugin(options: Options = {}): Plugin {
     },
 
     transform: {
+      // Use 'pre' stage for 'built-in'
+      // to run jsx transformation before esbuild transformation.
+      order: tsTransform === 'built-in' ? 'pre' : undefined,
       filter: {
         id: {
           include: include ? makeIdFiltersToMatchWithQuery(include) : undefined,
@@ -123,14 +135,26 @@ function vueJsxPlugin(options: Options = {}): Plugin {
         if (filter(id) || filter(filepath)) {
           const plugins = [[jsx, babelPluginOptions], ...babelPlugins]
           if (id.endsWith('.tsx') || filepath.endsWith('.tsx')) {
-            plugins.push([
-              // @ts-ignore missing type
-              await import('@babel/plugin-transform-typescript').then(
-                (r) => r.default,
-              ),
-              // @ts-ignore
-              { ...tsPluginOptions, isTSX: true, allowExtensions: true },
-            ])
+            if (tsTransform === 'built-in') {
+              // For 'built-in' add "syntax" plugin
+              // to enable parsing without transformation.
+              plugins.push([
+                // @ts-ignore missing type
+                await import('@babel/plugin-syntax-typescript').then(
+                  (r) => r.default,
+                ),
+                { isTSX: true },
+              ])
+            } else {
+              plugins.push([
+                // @ts-ignore missing type
+                await import('@babel/plugin-transform-typescript').then(
+                  (r) => r.default,
+                ),
+                // @ts-ignore
+                { ...tsPluginOptions, isTSX: true, allowExtensions: true },
+              ])
+            }
           }
 
           if (!ssr && !needHmr) {
