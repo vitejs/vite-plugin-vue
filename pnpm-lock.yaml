@@ -319,14 +319,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-vue-jsx
 
-  playground/vue-jsx-decorators:
+  playground/vue-jsx-ts-built-in:
     dependencies:
       vue:
         specifier: 'catalog:'
         version: 3.5.17(typescript@5.8.3)
     devDependencies:
       '@babel/plugin-syntax-decorators':
-        specifier: 7.27.1
+        specifier: ^7.27.1
         version: 7.27.1(@babel/core@7.27.7)
       '@vitejs/plugin-vue':
         specifier: workspace:*
