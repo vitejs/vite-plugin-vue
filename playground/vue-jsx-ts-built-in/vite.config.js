@@ -8,9 +8,12 @@ export default defineConfig({
     vueJsxPlugin({
       tsTransform: 'built-in',
       babelPlugins: [
-        // to tests decorators we use only method decorators
-        // they have the same syntax in 'legacy' and in '2023-11'
-        [babelPluginSyntaxTypescript, { version: '2023-11' }],
+        [
+          babelPluginSyntaxTypescript,
+          // to test decorators we use only method decorators
+          // they have the same syntax in 'legacy' and in '2023-11'
+          { version: '2023-11' },
+        ],
       ],
     }),
     vuePlugin(),
