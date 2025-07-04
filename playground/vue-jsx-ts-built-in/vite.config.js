@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import vueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import vuePlugin from '@vitejs/plugin-vue'
+import babelPluginSyntaxTypescript from '@babel/plugin-syntax-decorators'
 
 export default defineConfig({
   plugins: [
@@ -9,7 +10,7 @@ export default defineConfig({
       babelPlugins: [
         // to tests decorators we use only method decorators
         // they have the same syntax in 'legacy' and in '2023-11'
-        ['@babel/plugin-syntax-decorators', { version: '2023-11' }],
+        [babelPluginSyntaxTypescript, { version: '2023-11' }],
       ],
     }),
     vuePlugin(),
