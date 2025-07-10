@@ -14,12 +14,12 @@
     "dist"
   ],
   "exports": {
-    ".": "./dist/index.mjs",
+    ".": "./dist/index.js",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "unbuild --stub",
-    "build": "unbuild",
+    "dev": "tsdown --watch",
+    "build": "tsdown",
     "prepublishOnly": "npm run build"
   },
   "engines": {
@@ -41,6 +41,7 @@
     "@vue/babel-plugin-jsx": "^1.4.0"
   },
   "devDependencies": {
+    "tsdown": "^0.12.9",
     "vite": "catalog:"
   },
   "peerDependencies": {
