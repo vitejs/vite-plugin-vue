@@ -47,7 +47,7 @@ export default tseslint.config(
       ],
       'n/no-extraneous-import': [
         'error',
-        { allowModules: ['vite', 'less', 'sass', 'vitest', 'unbuild'] },
+        { allowModules: ['vite', 'less', 'sass', 'vitest'] },
       ],
       'n/no-extraneous-require': ['error', { allowModules: ['vite'] }],
       'n/no-deprecated-api': 'off',
