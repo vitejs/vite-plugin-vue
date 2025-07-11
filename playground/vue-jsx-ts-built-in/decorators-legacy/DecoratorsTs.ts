@@ -17,6 +17,7 @@ export default defineComponent(() => {
   class Counter {
     value = ref(5)
 
+    // @ts-expect-error typecheck script does not use local tsconfig.json
     @methodDecorator
     increment() {}
   }
