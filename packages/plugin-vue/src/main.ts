@@ -450,7 +450,7 @@ async function genStyleCode(
             async (acc, { scoped, src }, index) => {
               const prevRes = await acc
 
-              if (~prevRes) return prevRes
+              if (prevRes !== -1) return prevRes
               if (scoped !== style.scoped) return prevRes
               if (!src) return prevRes
 
@@ -465,7 +465,7 @@ async function genStyleCode(
             Promise.resolve(-1),
           )
 
-          if (~foundIndex) indexQuery = foundIndex
+          if (foundIndex !== -1) indexQuery = foundIndex
         } else {
           await linkSrcToDescriptor(
             style.src,
