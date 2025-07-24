@@ -24,7 +24,7 @@
     "@vitejs/plugin-vue": "workspace:*",
     "@vitejs/plugin-vue-jsx": "workspace:*",
     "@vitejs/test-dep-import-type": "link:dep-import-type",
-    "compression": "^1.8.0",
+    "compression": "^1.8.1",
     "express": "^5.1.0",
     "serve-static": "^2.2.0"
   }

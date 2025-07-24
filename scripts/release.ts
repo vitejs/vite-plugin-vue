@@ -1,6 +1,6 @@
-import { release } from '@vitejs/release-scripts'
+import { generateChangelog, release } from '@vitejs/release-scripts'
 import colors from 'picocolors'
-import { logRecentCommits, run } from './releaseUtils'
+import { logRecentCommits } from './releaseUtils'
 
 release({
   repo: 'vite-plugin-vue',
@@ -9,18 +9,9 @@ release({
   logChangelog: (pkg) => logRecentCommits(pkg),
   generateChangelog: async (pkgName) => {
     console.log(colors.cyan('\nGenerating changelog...'))
-    const changelogArgs = [
-      'conventional-changelog',
-      '-p',
-      'angular',
-      '-i',
-      'CHANGELOG.md',
-      '-s',
-      '--commit-path',
-      '.',
-      '--lerna-package',
-      pkgName,
-    ]
-    await run('npx', changelogArgs, { cwd: `packages/${pkgName}` })
+    await generateChangelog({
+      getPkgDir: () => `packages/${pkgName}`,
+      tagPrefix: `${pkgName}@`,
+    })
   },
 })

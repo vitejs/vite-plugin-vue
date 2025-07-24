@@ -9,6 +9,7 @@ import JsxSetupSyntax from './setup-syntax-jsx.vue'
 import JsxWithQuery from './Query.jsx?query=true'
 import TsImport from './TsImport.vue'
 import ExportDefault from './ExportDefault'
+import ExportDefaultAs from './ExportDefaultAs'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <JsxWithQuery />
       <TsImport />
       <ExportDefault />
+      <ExportDefaultAs />
     </>
   )
 }
