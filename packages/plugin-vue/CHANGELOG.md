@@ -1,3 +1,27 @@
+## <small>[6.0.1](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.0...plugin-vue@6.0.1) (2025-07-28)</small>
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#618](https://github.com/vitejs/vite-plugin-vue/issues/618)) ([46f6c99](https://github.com/vitejs/vite-plugin-vue/commit/46f6c99f8ed039e46e7ee9f647b9466ed6a5d76f))
+* **deps:** update all non-major dependencies ([#624](https://github.com/vitejs/vite-plugin-vue/issues/624)) ([fe03fa2](https://github.com/vitejs/vite-plugin-vue/commit/fe03fa224c16255fd7ecc38156acb8087e10a151))
+* **deps:** update all non-major dependencies ([#629](https://github.com/vitejs/vite-plugin-vue/issues/629)) ([b969637](https://github.com/vitejs/vite-plugin-vue/commit/b9696373ef666f8db3a435bd2952a3adb38ed1f4))
+* **deps:** update all non-major dependencies ([#633](https://github.com/vitejs/vite-plugin-vue/issues/633)) ([aa56ad1](https://github.com/vitejs/vite-plugin-vue/commit/aa56ad1860a70bb8ab8b471f7577ec08dd5b3f68))
+* **deps:** update all non-major dependencies ([#636](https://github.com/vitejs/vite-plugin-vue/issues/636)) ([5f471a3](https://github.com/vitejs/vite-plugin-vue/commit/5f471a3daa6560c1d23523587850c958cc1617e5))
+* **hmr:** ignore non-js modules ([#625](https://github.com/vitejs/vite-plugin-vue/issues/625)) ([f899ad3](https://github.com/vitejs/vite-plugin-vue/commit/f899ad341b2ee2254cbe22fc456575007edb7d09))
+
+### Performance Improvements
+
+* only bundle node version `debug` ([#627](https://github.com/vitejs/vite-plugin-vue/issues/627)) ([9dfa996](https://github.com/vitejs/vite-plugin-vue/commit/9dfa9961e9df3e4a6c2491036719845876624a1f))
+
+### Miscellaneous Chores
+
+* **deps:** update dependency rollup to ^4.44.2 ([#623](https://github.com/vitejs/vite-plugin-vue/issues/623)) ([76bf4c4](https://github.com/vitejs/vite-plugin-vue/commit/76bf4c478c1fd66b6c115e8b050c086fdd9f4565))
+* **deps:** update dependency rollup to ^4.45.1 ([#630](https://github.com/vitejs/vite-plugin-vue/issues/630)) ([4fd92b9](https://github.com/vitejs/vite-plugin-vue/commit/4fd92b9bb90760f51b6a5d86f948ba7078292e2f))
+* group commits by category in changelog ([#620](https://github.com/vitejs/vite-plugin-vue/issues/620)) ([1a32018](https://github.com/vitejs/vite-plugin-vue/commit/1a32018fb94a5eb096565c990832ee6840655b7d))
+
+### Build System
+
+* use tsdown ([#626](https://github.com/vitejs/vite-plugin-vue/issues/626)) ([ffac7e1](https://github.com/vitejs/vite-plugin-vue/commit/ffac7e12f4af8e0501649981752887d27781fa73))
+
 ## [6.0.0](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.0-beta.2...plugin-vue@6.0.0) (2025-06-24)
 ### Bug Fixes
 
