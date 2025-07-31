@@ -29,16 +29,6 @@ export default defineConfig({
     // to make tests faster
     minify: false,
     assetsInlineLimit: 100, // keep SVG as assets URL
-    rollupOptions: {
-      output: {
-        // Test splitVendorChunkPlugin composition
-        manualChunks(id) {
-          if (id.includes('src-import')) {
-            return 'src-import'
-          }
-        },
-      },
-    },
   },
   css: {
     modules: {
