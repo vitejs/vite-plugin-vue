@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "unocss": "^66.4.1",
+    "unocss": "^66.4.2",
     "vue": "catalog:"
   },
   "devDependencies": {

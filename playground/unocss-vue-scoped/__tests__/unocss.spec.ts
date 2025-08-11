@@ -22,5 +22,6 @@ test.runIf(isServe)('regenerate CSS and HMR', async () => {
     ],
     false,
   )
-  await expect.poll(() => getBgColor(el)).toMatch('rgb(254, 202, 202)')
+  const newEl = await page.$('.uno')
+  await expect.poll(() => getBgColor(newEl)).toMatch('rgb(254, 202, 202)')
 })
