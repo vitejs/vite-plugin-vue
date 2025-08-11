@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import _debug from 'debug'
 import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
 import type { HmrContext, ModuleNode } from 'vite'
@@ -160,9 +161,18 @@ export async function handleHotUpdate(
   }
   if (updateType.length) {
     if (file.endsWith('.vue')) {
-      // invalidate the descriptor cache so that the next transform will
-      // re-analyze the file and pick up the changes.
-      invalidateDescriptor(file)
+      // If the descriptor was created from transformed content (e.g., by UnoCSS vue-scoped),
+      // we should update the main cache with the transformed descriptor instead of invalidating it.
+      // This ensures that subsequent style block requests get the correct transformed content.
+      const isTransformedContent = content !== fs.readFileSync(file, 'utf-8')
+      if (isTransformedContent) {
+        // Use the descriptor created from transformed content
+        cache.set(file, descriptor)
+      } else {
+        // invalidate the descriptor cache so that the next transform will
+        // re-analyze the file and pick up the changes.
+        invalidateDescriptor(file)
+      }
     } else {
       // https://github.com/vuejs/vitepress/issues/3129
       // For non-vue files, e.g. .md files in VitePress, invalidating the
