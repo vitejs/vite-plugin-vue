@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "devDependencies": {
-    "@types/node": "^22.16.5",
+    "@types/node": "^22.17.2",
     "convert-source-map": "^2.0.0",
     "css-color-names": "^1.0.1",
     "kill-port": "^1.6.1"
