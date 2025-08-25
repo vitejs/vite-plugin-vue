@@ -43,7 +43,9 @@ export async function handleHotUpdate(
   const { descriptor } = createDescriptor(file, content, options, true)
 
   let needRerender = false
-  const affectedModules = new Set<ModuleNode | undefined>()
+  const affectedModules = new Set<ModuleNode | undefined>(
+    modules.filter((mod) => mod.type !== 'js'), // this plugin does not handle non-js modules
+  )
   const mainModule = getMainModule(modules)
   const templateModule = modules.find((m) => /type=template/.test(m.url))
 

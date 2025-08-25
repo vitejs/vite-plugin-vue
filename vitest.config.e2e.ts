@@ -1,6 +1,5 @@
 import { resolve } from 'node:path'
-import { defaultExclude, defineConfig } from 'vitest/config'
-import * as vite from 'vite'
+import { defineConfig } from 'vitest/config'
 
 const timeout = process.env.CI ? 50000 : 30000
 
@@ -16,11 +15,6 @@ export default defineConfig({
   },
   test: {
     include: ['./playground/**/*.spec.[tj]s'],
-    exclude: [
-      ...defaultExclude,
-      // plugin-legacy is not supported with rolldown-vite
-      ...('rolldownVersion' in vite ? ['./playground/vue-legacy/**/*'] : []),
-    ],
     setupFiles: ['./playground/vitestSetup.ts'],
     globalSetup: ['./playground/vitestGlobalSetup.ts'],
     testTimeout: timeout,

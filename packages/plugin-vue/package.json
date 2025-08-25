@@ -1,6 +1,6 @@
 {
   "name": "@vitejs/plugin-vue",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "type": "module",
   "license": "MIT",
   "author": "Evan You",
@@ -39,17 +39,17 @@
     "vue": "^3.2.25"
   },
   "devDependencies": {
-    "@jridgewell/gen-mapping": "^0.3.12",
-    "@jridgewell/trace-mapping": "^0.3.29",
+    "@jridgewell/gen-mapping": "^0.3.13",
+    "@jridgewell/trace-mapping": "^0.3.30",
     "debug": "^4.4.1",
-    "rollup": "^4.44.2",
+    "rollup": "^4.48.1",
     "slash": "^5.1.0",
     "source-map-js": "^1.2.1",
-    "tsdown": "^0.12.9",
+    "tsdown": "^0.14.2",
     "vite": "catalog:",
     "vue": "catalog:"
   },
   "dependencies": {
-    "@rolldown/pluginutils": "1.0.0-beta.24"
+    "@rolldown/pluginutils": "1.0.0-beta.34"
   }
 }
