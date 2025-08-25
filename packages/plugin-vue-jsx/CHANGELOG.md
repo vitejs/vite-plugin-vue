@@ -1,3 +1,26 @@
+## [5.1.0](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.0.1...plugin-vue-jsx@5.1.0) (2025-08-25)
+### Features
+
+* **jsx:** set `optimizeDeps.rolldownOptions.transform.jsx: 'preserve'` ([#650](https://github.com/vitejs/vite-plugin-vue/issues/650)) ([c4b9878](https://github.com/vitejs/vite-plugin-vue/commit/c4b9878d1d5a839b9724e5633b7e90be4aee668b))
+* **vue-jsx:** allow esbuild to perform ts transformation ([#621](https://github.com/vitejs/vite-plugin-vue/issues/621)) ([c453513](https://github.com/vitejs/vite-plugin-vue/commit/c453513a638078cd5f59f132cfcbd85f2253ebcc))
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#624](https://github.com/vitejs/vite-plugin-vue/issues/624)) ([fe03fa2](https://github.com/vitejs/vite-plugin-vue/commit/fe03fa224c16255fd7ecc38156acb8087e10a151))
+* **deps:** update all non-major dependencies ([#629](https://github.com/vitejs/vite-plugin-vue/issues/629)) ([b969637](https://github.com/vitejs/vite-plugin-vue/commit/b9696373ef666f8db3a435bd2952a3adb38ed1f4))
+* **deps:** update all non-major dependencies ([#633](https://github.com/vitejs/vite-plugin-vue/issues/633)) ([aa56ad1](https://github.com/vitejs/vite-plugin-vue/commit/aa56ad1860a70bb8ab8b471f7577ec08dd5b3f68))
+* **deps:** update all non-major dependencies ([#636](https://github.com/vitejs/vite-plugin-vue/issues/636)) ([5f471a3](https://github.com/vitejs/vite-plugin-vue/commit/5f471a3daa6560c1d23523587850c958cc1617e5))
+* **deps:** update all non-major dependencies ([#643](https://github.com/vitejs/vite-plugin-vue/issues/643)) ([b702c1f](https://github.com/vitejs/vite-plugin-vue/commit/b702c1f7c536b5707cb068c5964f75b861503db2))
+* **deps:** update all non-major dependencies ([#653](https://github.com/vitejs/vite-plugin-vue/issues/653)) ([c6bd324](https://github.com/vitejs/vite-plugin-vue/commit/c6bd3244194d1dda68ffa873b46c994eb64bb116))
+
+### Miscellaneous Chores
+
+* group commits by category in changelog ([#620](https://github.com/vitejs/vite-plugin-vue/issues/620)) ([1a32018](https://github.com/vitejs/vite-plugin-vue/commit/1a32018fb94a5eb096565c990832ee6840655b7d))
+
+### Build System
+
+* use tsdown ([#626](https://github.com/vitejs/vite-plugin-vue/issues/626)) ([ffac7e1](https://github.com/vitejs/vite-plugin-vue/commit/ffac7e12f4af8e0501649981752887d27781fa73))
+
 ## <small>[5.0.1](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.0.1...plugin-vue-jsx@5.0.1) (2025-07-03)</small>
 ### Bug Fixes
 
