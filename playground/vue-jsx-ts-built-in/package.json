@@ -1,5 +1,5 @@
 {
-  "name": "@vitejs/test-vue-sourcemap",
+  "name": "@vitejs/test-vue-jsx-ts-built-in",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,13 +9,12 @@
     "debug": "node --inspect-brk vite",
     "preview": "vite preview"
   },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "workspace:*",
-    "less": "^4.4.1",
-    "postcss-nested": "^7.0.2",
-    "sass": "^1.90.0"
-  },
   "dependencies": {
     "vue": "catalog:"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-decorators": "^7.27.1",
+    "@vitejs/plugin-vue": "workspace:*",
+    "@vitejs/plugin-vue-jsx": "workspace:*"
   }
 }
