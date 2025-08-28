@@ -89,11 +89,12 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__,
             ) ?? false,
         },
-        optimizeDeps: this.meta.rolldownVersion
-          ? {
-              rolldownOptions: { transform: { jsx: 'preserve' } },
-            }
-          : {},
+        optimizeDeps:
+          this && 'rolldownVersion' in this.meta
+            ? {
+                rolldownOptions: { transform: { jsx: 'preserve' } },
+              }
+            : {},
       }
     },
 
