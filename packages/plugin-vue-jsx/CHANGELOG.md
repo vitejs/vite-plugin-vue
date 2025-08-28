@@ -1,3 +1,8 @@
+## <small>[5.1.1](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.1.0...plugin-vue-jsx@5.1.1) (2025-08-28)</small>
+### Bug Fixes
+
+* **jsx:** vite 5 / 6 compat ([#657](https://github.com/vitejs/vite-plugin-vue/issues/657)) ([98dd753](https://github.com/vitejs/vite-plugin-vue/commit/98dd753e00d88e4e20875fb8704f5da11430bbb4))
+
 ## [5.1.0](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.0.1...plugin-vue-jsx@5.1.0) (2025-08-25)
 ### Features
 
