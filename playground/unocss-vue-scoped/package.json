@@ -10,11 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "unocss": "^66.4.2",
+    "unocss": "^66.5.1",
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^22.16.5",
+    "@types/node": "^22.18.1",
     "@vitejs/plugin-vue": "workspace:*"
   }
 }
