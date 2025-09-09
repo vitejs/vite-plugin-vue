@@ -36,22 +36,22 @@
     "ci-publish": "tsx scripts/publishCI.ts"
   },
   "devDependencies": {
-    "@babel/types": "^7.28.2",
-    "@eslint/js": "^9.34.0",
+    "@babel/types": "^7.28.4",
+    "@eslint/js": "^9.35.0",
     "@types/babel__core": "^7.20.5",
     "@types/convert-source-map": "^2.0.3",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.18.0",
+    "@types/node": "^22.18.1",
     "@vitejs/release-scripts": "^1.6.0",
-    "eslint": "^9.34.0",
+    "eslint": "^9.35.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import-x": "^4.16.1",
     "eslint-plugin-n": "^17.21.3",
     "eslint-plugin-regexp": "^2.10.0",
     "execa": "^9.6.0",
     "fs-extra": "^11.3.1",
-    "lint-staged": "^16.1.5",
+    "lint-staged": "^16.1.6",
     "picocolors": "^1.1.1",
     "playwright-chromium": "^1.55.0",
     "prettier": "3.6.2",
@@ -59,7 +59,7 @@
     "simple-git-hooks": "^2.13.1",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.40.0",
+    "typescript-eslint": "^8.43.0",
     "vite": "catalog:",
     "vitest": "^3.2.4",
     "vue": "catalog:"
@@ -81,7 +81,7 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@10.15.1",
   "pnpm": {
     "overrides": {
       "@vitejs/plugin-vue": "workspace:*"
