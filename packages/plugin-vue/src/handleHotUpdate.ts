@@ -164,8 +164,7 @@ export async function handleHotUpdate(
       // If the descriptor was created from transformed content (e.g., by UnoCSS vue-scoped),
       // we should update the main cache with the transformed descriptor instead of invalidating it.
       // This ensures that subsequent style block requests get the correct transformed content.
-      const isTransformedContent = content !== fs.readFileSync(file, 'utf-8')
-      if (isTransformedContent) {
+      if (content !== fs.readFileSync(file, 'utf-8')) {
         // Use the descriptor created from transformed content
         cache.set(file, descriptor)
       } else {
