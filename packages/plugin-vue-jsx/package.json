@@ -38,11 +38,11 @@
     "@babel/core": "^7.28.4",
     "@babel/plugin-syntax-typescript": "^7.27.1",
     "@babel/plugin-transform-typescript": "^7.28.0",
-    "@rolldown/pluginutils": "^1.0.0-beta.36",
+    "@rolldown/pluginutils": "^1.0.0-beta.37",
     "@vue/babel-plugin-jsx": "^1.5.0"
   },
   "devDependencies": {
-    "tsdown": "^0.14.2",
+    "tsdown": "^0.15.1",
     "vite": "catalog:"
   },
   "peerDependencies": {
