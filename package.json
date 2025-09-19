@@ -92,8 +92,10 @@
       "esbuild"
     ],
     "onlyBuiltDependencies": [
+      "@tailwindcss/oxide",
       "playwright-chromium",
-      "simple-git-hooks"
+      "simple-git-hooks",
+      "unrs-resolver"
     ]
   }
 }
