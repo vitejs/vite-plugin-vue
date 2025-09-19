@@ -81,21 +81,5 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@10.16.1",
-  "pnpm": {
-    "overrides": {
-      "@vitejs/plugin-vue": "workspace:*"
-    },
-    "ignoredBuiltDependencies": [
-      "@parcel/watcher",
-      "core-js",
-      "esbuild"
-    ],
-    "onlyBuiltDependencies": [
-      "@tailwindcss/oxide",
-      "playwright-chromium",
-      "simple-git-hooks",
-      "unrs-resolver"
-    ]
-  }
+  "packageManager": "pnpm@10.16.1"
 }
