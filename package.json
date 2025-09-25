@@ -62,7 +62,7 @@
     "typescript-eslint": "^8.43.0",
     "vite": "catalog:",
     "vitest": "^3.2.4",
-    "vue": "catalog:"
+    "vue": "https://pkg.pr.new/vue@13926"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged --concurrent false"
