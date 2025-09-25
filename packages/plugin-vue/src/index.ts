@@ -158,6 +158,17 @@ export interface Options {
           isProduction: boolean | undefined,
           getHash: (text: string) => string,
         ) => string)
+
+    /**
+     * LRUCache options for the compiler.
+     * see https://isaacs.github.io/node-lru-cache/
+     */
+    compilerCacheOptions?: {
+      parse?: Record<string, any>
+      templateUsageCheck?: Record<string, any>
+      tsConfig?: Record<string, any>
+      fileToScope?: Record<string, any>
+    }
   }
 
   /**
@@ -388,6 +399,14 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         options.value.devServer?.watcher.on('unlink', (file) => {
           compiler.invalidateTypeCache(file)
         })
+      }
+
+      // @ts-expect-error required 3.6+
+      if (compiler.configureCacheOptions) {
+        // @ts-expect-error required 3.6+
+        compiler.configureCacheOptions(
+          options.value.features?.compilerCacheOptions,
+        )
       }
     },
 
