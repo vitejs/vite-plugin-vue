@@ -3,7 +3,7 @@
   "exclude": ["**/*.spec.ts"],
   "compilerOptions": {
     "outDir": "dist",
-    "target": "es2023",
+    "target": "es2025",
     "module": "preserve",
     "moduleResolution": "bundler",
     "strict": true,
