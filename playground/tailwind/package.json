@@ -10,12 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.13",
-    "tailwindcss": "^4.1.13",
+    "@tailwindcss/vite": "^4.1.14",
+    "tailwindcss": "^4.1.14",
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^22.18.3",
+    "@types/node": "^22.18.8",
     "@vitejs/plugin-vue": "workspace:*"
   }
 }

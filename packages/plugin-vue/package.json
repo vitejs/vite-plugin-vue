@@ -45,11 +45,11 @@
     "rollup": "^4.52.3",
     "slash": "^5.1.0",
     "source-map-js": "^1.2.1",
-    "tsdown": "^0.15.1",
+    "tsdown": "^0.15.6",
     "vite": "catalog:",
     "vue": "catalog:"
   },
   "dependencies": {
-    "@rolldown/pluginutils": "1.0.0-beta.37"
+    "@rolldown/pluginutils": "1.0.0-beta.41"
   }
 }
