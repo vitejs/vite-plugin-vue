@@ -22,7 +22,4 @@ export default defineConfig({
     // to make tests faster
     minify: false,
   },
-  optimizeDeps: {
-    disabled: true,
-  },
 })
