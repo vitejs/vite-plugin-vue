@@ -19,7 +19,7 @@ export default defineConfig({
       ],
     }),
     vuePlugin(),
-    // rolldown-vite does not support ecma decorators yet, use SWC for them
+    // rolldown-vite does not support ecma decorators yet, use SWC to lower them
     // https://github.com/oxc-project/oxc/issues/9170
     'rolldownVersion' in vite &&
       vite.withFilter(
@@ -28,6 +28,7 @@ export default defineConfig({
             swc: {
               jsc: {
                 parser: { decorators: true, decoratorsBeforeExport: true },
+                // NOTE: SWC doesn't support '2023-11' version yet
                 transform: { decoratorVersion: '2022-03' },
               },
             },
