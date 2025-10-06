@@ -7,6 +7,10 @@ catalog:
   'vite': ^7.1.7
   'vue-router': ^4.5.1
 
+catalogs:
+  rolldown-vite:
+    vite: npm:rolldown-vite@^7.1.15
+
 overrides:
   '@vitejs/plugin-vue': workspace:*
 
