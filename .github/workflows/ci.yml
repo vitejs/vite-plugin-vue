@@ -92,6 +92,17 @@ jobs:
       - name: Test build
         run: pnpm run test-build
 
+      - name: Setup rolldown-vite
+        run: |
+          sed -i"" -e "s/overrides:/overrides:\n  vite: catalog:rolldown-vite/" pnpm-workspace.yaml
+          pnpm i --no-frozen-lockfile
+
+      - name: Test serve (rolldown-vite)
+        run: pnpm run test-serve
+
+      - name: Test build (rolldown-vite)
+        run: pnpm run test-build
+
   lint:
     if: github.repository == 'vitejs/vite-plugin-vue'
     timeout-minutes: 10
