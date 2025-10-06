@@ -3,6 +3,7 @@ import * as vite from 'vite'
 import vueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import vuePlugin from '@vitejs/plugin-vue'
 import babelPluginSyntaxDecorators from '@babel/plugin-syntax-decorators'
+import swc from '@rollup/plugin-swc'
 
 export default defineConfig({
   plugins: [
