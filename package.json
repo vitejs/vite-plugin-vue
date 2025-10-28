@@ -36,7 +36,7 @@
     "ci-publish": "tsx scripts/publishCI.ts"
   },
   "devDependencies": {
-    "@babel/types": "^7.28.4",
+    "@babel/types": "^7.28.5",
     "@eslint/js": "^9.38.0",
     "@types/babel__core": "^7.20.5",
     "@types/convert-source-map": "^2.0.3",
@@ -51,7 +51,7 @@
     "eslint-plugin-regexp": "^2.10.0",
     "execa": "^9.6.0",
     "fs-extra": "^11.3.2",
-    "lint-staged": "^16.2.5",
+    "lint-staged": "^16.2.6",
     "picocolors": "^1.1.1",
     "playwright-chromium": "^1.56.1",
     "prettier": "3.6.2",
