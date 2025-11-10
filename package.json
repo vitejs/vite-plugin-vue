@@ -42,7 +42,7 @@
     "@types/convert-source-map": "^2.0.3",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.19.0",
+    "@types/node": "^24.10.0",
     "@vitejs/release-scripts": "^1.6.0",
     "eslint": "^9.39.1",
     "eslint-import-resolver-typescript": "^4.4.4",
