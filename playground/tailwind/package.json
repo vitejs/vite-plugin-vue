@@ -15,7 +15,7 @@
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^22.19.0",
+    "@types/node": "^24.10.0",
     "@vitejs/plugin-vue": "workspace:*"
   }
 }
