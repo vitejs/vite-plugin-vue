@@ -332,28 +332,24 @@ function hasScriptChanged(prev: SFCDescriptor, next: SFCDescriptor): boolean {
 function getMainModule(modules: ModuleNode[]) {
   return (
     modules
-      .filter((m) => !/type=/.test(m.url) || /type=script/.test(m.url))
+      .filter(
+        (m) =>
+          m.type === 'js' &&
+          (!/type=/.test(m.url) || /type=script/.test(m.url)),
+      )
       // #9341
       // We pick the module with the shortest URL in order to pick the module
       // with the lowest number of query parameters.
-      // https://github.com/vitejs/vite-plugin-vue/issues/701
-      // Prefer type: 'js' modules, since tailwind can add type: 'asset' modules
-      // which can have the same url length and come first in the array
-      // in certain cases
       .sort((m1, m2) => {
-        if (m1.type !== m2.type) {
-          if (m1.type === 'js' || m2.type === 'js') {
-            return m1.type === 'js' ? -1 : 1
-          }
-        }
-
         return m1.url.length - m2.url.length
       })[0]
   )
 }
 
 function getScriptModule(modules: ModuleNode[]) {
-  return modules.find((m) => /type=script.*&lang\.\w+$/.test(m.url))
+  return modules.find(
+    (m) => m.type === 'js' && /type=script.*&lang\.\w+$/.test(m.url),
+  )
 }
 
 export function handleTypeDepChange(
