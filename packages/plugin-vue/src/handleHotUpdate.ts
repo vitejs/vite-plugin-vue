@@ -22,8 +22,6 @@ import type { ResolvedOptions } from './index'
 
 const debug = _debug('vite:hmr')
 
-const directRequestRE = /(?:\?|&)direct\b/
-
 /**
  * Vite-specific HMR handling
  */
@@ -43,17 +41,19 @@ export async function handleHotUpdate(
   const { descriptor } = createDescriptor(file, content, options, true)
 
   let needRerender = false
+  const nonJsModules = modules.filter((m) => m.type !== 'js')
+  const jsModules = modules.filter((m) => m.type === 'js')
   const affectedModules = new Set<ModuleNode | undefined>(
-    modules.filter((mod) => mod.type !== 'js'), // this plugin does not handle non-js modules
+    nonJsModules, // this plugin does not handle non-js modules
   )
-  const mainModule = getMainModule(modules)
-  const templateModule = modules.find((m) => /type=template/.test(m.url))
+  const mainModule = getMainModule(jsModules)
+  const templateModule = jsModules.find((m) => /type=template/.test(m.url))
 
   // trigger resolveScript for descriptor so that we'll have the AST ready
   resolveScript(descriptor, options, false, customElement)
   const scriptChanged = hasScriptChanged(prevDescriptor, descriptor)
   if (scriptChanged) {
-    affectedModules.add(getScriptModule(modules) || mainModule)
+    affectedModules.add(getScriptModule(jsModules) || mainModule)
   }
 
   if (!isEqualBlock(descriptor.template, prevDescriptor.template)) {
@@ -95,11 +95,10 @@ export async function handleHotUpdate(
     const next = nextStyles[i]
     if (!prev || !isEqualBlock(prev, next)) {
       didUpdateStyle = true
-      const mod = modules.find(
+      const mod = jsModules.find(
         (m) =>
           m.url.includes(`type=style&index=${i}`) &&
-          m.url.endsWith(`.${next.lang || 'css'}`) &&
-          !directRequestRE.test(m.url),
+          m.url.endsWith(`.${next.lang || 'css'}`),
       )
       if (mod) {
         affectedModules.add(mod)
@@ -130,7 +129,7 @@ export async function handleHotUpdate(
       const prev = prevCustoms[i]
       const next = nextCustoms[i]
       if (!prev || !isEqualBlock(prev, next)) {
-        const mod = modules.find((m) =>
+        const mod = jsModules.find((m) =>
           m.url.includes(`type=${prev.type}&index=${i}`),
         )
         if (mod) {
@@ -329,9 +328,9 @@ function hasScriptChanged(prev: SFCDescriptor, next: SFCDescriptor): boolean {
   return false
 }
 
-function getMainModule(modules: ModuleNode[]) {
+function getMainModule(jsModules: ModuleNode[]) {
   return (
-    modules
+    jsModules
       .filter((m) => !/type=/.test(m.url) || /type=script/.test(m.url))
       // #9341
       // We pick the module with the shortest URL in order to pick the module
@@ -342,8 +341,8 @@ function getMainModule(modules: ModuleNode[]) {
   )
 }
 
-function getScriptModule(modules: ModuleNode[]) {
-  return modules.find((m) => /type=script.*&lang\.\w+$/.test(m.url))
+function getScriptModule(jsModules: ModuleNode[]) {
+  return jsModules.find((m) => /type=script.*&lang\.\w+$/.test(m.url))
 }
 
 export function handleTypeDepChange(
