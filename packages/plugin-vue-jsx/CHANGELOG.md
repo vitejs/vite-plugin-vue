@@ -1,3 +1,17 @@
+## <small>[5.1.2](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.1.1...plugin-vue-jsx@5.1.2) (2025-11-19)</small>
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#663](https://github.com/vitejs/vite-plugin-vue/issues/663)) ([dbcd1d0](https://github.com/vitejs/vite-plugin-vue/commit/dbcd1d08114b702056ba2423ed2977cd1f032db5))
+* **deps:** update all non-major dependencies ([#665](https://github.com/vitejs/vite-plugin-vue/issues/665)) ([428dde0](https://github.com/vitejs/vite-plugin-vue/commit/428dde04d7f297b279b324461895e26d3344adcf))
+* **deps:** update all non-major dependencies ([#671](https://github.com/vitejs/vite-plugin-vue/issues/671)) ([59e0a51](https://github.com/vitejs/vite-plugin-vue/commit/59e0a51f0b54bc8ee8f2f0b0f26f3d466ce661e9))
+* **deps:** update all non-major dependencies ([#679](https://github.com/vitejs/vite-plugin-vue/issues/679)) ([f226dab](https://github.com/vitejs/vite-plugin-vue/commit/f226dab4e872a7f45050732bdbc0ab61df8f092f))
+* **deps:** update all non-major dependencies ([#685](https://github.com/vitejs/vite-plugin-vue/issues/685)) ([d990206](https://github.com/vitejs/vite-plugin-vue/commit/d9902061d37cd40f7ae9b14de0404105bac60749))
+* **deps:** update all non-major dependencies ([#688](https://github.com/vitejs/vite-plugin-vue/issues/688)) ([46edd7e](https://github.com/vitejs/vite-plugin-vue/commit/46edd7e531c848d0c68a397716173ec72b331217))
+* **deps:** update all non-major dependencies ([#692](https://github.com/vitejs/vite-plugin-vue/issues/692)) ([13accf3](https://github.com/vitejs/vite-plugin-vue/commit/13accf3a261333fbb57deb42cbfdc5c5af5ec13a))
+* **deps:** update all non-major dependencies ([#694](https://github.com/vitejs/vite-plugin-vue/issues/694)) ([9c77f01](https://github.com/vitejs/vite-plugin-vue/commit/9c77f01b9a26ce148495ab2f2fa05291a8cfa2eb))
+* **deps:** update all non-major dependencies ([#704](https://github.com/vitejs/vite-plugin-vue/issues/704)) ([ecb581a](https://github.com/vitejs/vite-plugin-vue/commit/ecb581a810e5dde62f12ff6475cac91cc76596fb))
+* **deps:** update dependency @vue/babel-plugin-jsx to v2 ([#683](https://github.com/vitejs/vite-plugin-vue/issues/683)) ([dd247b5](https://github.com/vitejs/vite-plugin-vue/commit/dd247b5906126b176c9b2737d32f22f00fe98ae1))
+
 ## <small>[5.1.1](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.1.0...plugin-vue-jsx@5.1.1) (2025-08-28)</small>
 ### Bug Fixes
 
