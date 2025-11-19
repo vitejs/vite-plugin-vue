@@ -1,3 +1,32 @@
+## <small>[6.0.2](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.1...plugin-vue@6.0.2) (2025-11-19)</small>
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#643](https://github.com/vitejs/vite-plugin-vue/issues/643)) ([b702c1f](https://github.com/vitejs/vite-plugin-vue/commit/b702c1f7c536b5707cb068c5964f75b861503db2))
+* **deps:** update all non-major dependencies ([#653](https://github.com/vitejs/vite-plugin-vue/issues/653)) ([c6bd324](https://github.com/vitejs/vite-plugin-vue/commit/c6bd3244194d1dda68ffa873b46c994eb64bb116))
+* **deps:** update all non-major dependencies ([#663](https://github.com/vitejs/vite-plugin-vue/issues/663)) ([dbcd1d0](https://github.com/vitejs/vite-plugin-vue/commit/dbcd1d08114b702056ba2423ed2977cd1f032db5))
+* **deps:** update all non-major dependencies ([#665](https://github.com/vitejs/vite-plugin-vue/issues/665)) ([428dde0](https://github.com/vitejs/vite-plugin-vue/commit/428dde04d7f297b279b324461895e26d3344adcf))
+* **deps:** update all non-major dependencies ([#671](https://github.com/vitejs/vite-plugin-vue/issues/671)) ([59e0a51](https://github.com/vitejs/vite-plugin-vue/commit/59e0a51f0b54bc8ee8f2f0b0f26f3d466ce661e9))
+* **deps:** update all non-major dependencies ([#679](https://github.com/vitejs/vite-plugin-vue/issues/679)) ([f226dab](https://github.com/vitejs/vite-plugin-vue/commit/f226dab4e872a7f45050732bdbc0ab61df8f092f))
+* **deps:** update all non-major dependencies ([#685](https://github.com/vitejs/vite-plugin-vue/issues/685)) ([d990206](https://github.com/vitejs/vite-plugin-vue/commit/d9902061d37cd40f7ae9b14de0404105bac60749))
+* **deps:** update all non-major dependencies ([#688](https://github.com/vitejs/vite-plugin-vue/issues/688)) ([46edd7e](https://github.com/vitejs/vite-plugin-vue/commit/46edd7e531c848d0c68a397716173ec72b331217))
+* **deps:** update all non-major dependencies ([#692](https://github.com/vitejs/vite-plugin-vue/issues/692)) ([13accf3](https://github.com/vitejs/vite-plugin-vue/commit/13accf3a261333fbb57deb42cbfdc5c5af5ec13a))
+* **deps:** update all non-major dependencies ([#694](https://github.com/vitejs/vite-plugin-vue/issues/694)) ([9c77f01](https://github.com/vitejs/vite-plugin-vue/commit/9c77f01b9a26ce148495ab2f2fa05291a8cfa2eb))
+* **deps:** update all non-major dependencies ([#704](https://github.com/vitejs/vite-plugin-vue/issues/704)) ([ecb581a](https://github.com/vitejs/vite-plugin-vue/commit/ecb581a810e5dde62f12ff6475cac91cc76596fb))
+* fix hmr of dynamically loaded vue sfc modules in apps with tailwind ([#702](https://github.com/vitejs/vite-plugin-vue/issues/702)) ([0a883f7](https://github.com/vitejs/vite-plugin-vue/commit/0a883f7862a01305b34552876f278f0ca8ad9daa))
+
+### Miscellaneous Chores
+
+* **deps:** update dependency rollup to ^4.52.3 ([#674](https://github.com/vitejs/vite-plugin-vue/issues/674)) ([dd91393](https://github.com/vitejs/vite-plugin-vue/commit/dd91393c3f5e107fe2cdf4c901ea74cf195d7bab))
+* **deps:** update dependency rollup to ^4.52.5 ([#684](https://github.com/vitejs/vite-plugin-vue/issues/684)) ([a291b66](https://github.com/vitejs/vite-plugin-vue/commit/a291b669db3ccd14fe269fd75db3ff7eb13969bd))
+* **deps:** update dependency rollup to ^4.53.1 ([#695](https://github.com/vitejs/vite-plugin-vue/issues/695)) ([0b238ea](https://github.com/vitejs/vite-plugin-vue/commit/0b238ea371d5c7558a14f3c8fd5d6a4cd9c1a956))
+* **deps:** update dependency rollup to ^4.53.2 ([#703](https://github.com/vitejs/vite-plugin-vue/issues/703)) ([847808f](https://github.com/vitejs/vite-plugin-vue/commit/847808f8acebceeaaa16fae986cb507d5c0d8d26))
+* **deps:** update upstream ([#638](https://github.com/vitejs/vite-plugin-vue/issues/638)) ([f7cef18](https://github.com/vitejs/vite-plugin-vue/commit/f7cef18a0f4f8989a05d8504d480816ee3e30eda))
+* **deps:** update upstream ([#642](https://github.com/vitejs/vite-plugin-vue/issues/642)) ([be57955](https://github.com/vitejs/vite-plugin-vue/commit/be5795563a13efea5939c22bc68f1e4cb7a84872))
+* **deps:** update upstream ([#652](https://github.com/vitejs/vite-plugin-vue/issues/652)) ([3030263](https://github.com/vitejs/vite-plugin-vue/commit/30302633624892b9d1913ccc922281dca56a27f1))
+* **deps:** update upstream ([#666](https://github.com/vitejs/vite-plugin-vue/issues/666)) ([e6ece54](https://github.com/vitejs/vite-plugin-vue/commit/e6ece541f79c11adb30b27d9463ce713be1d7e43))
+* **deps:** update upstream ([#670](https://github.com/vitejs/vite-plugin-vue/issues/670)) ([5d3313f](https://github.com/vitejs/vite-plugin-vue/commit/5d3313f3cbab14e966eb8fdcf55a46dd2ceec219))
+* **deps:** update upstream ([#678](https://github.com/vitejs/vite-plugin-vue/issues/678)) ([3f0593f](https://github.com/vitejs/vite-plugin-vue/commit/3f0593f2f3e253ba86fedebf31ca1f310a57ad95))
+
 ## <small>[6.0.1](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.0...plugin-vue@6.0.1) (2025-07-28)</small>
 ### Bug Fixes
 
