@@ -1,4 +1,4 @@
-import _debug from 'debug'
+import { createDebug } from 'obug'
 import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
 import type { HmrContext, ModuleNode } from 'vite'
 import { isCSSRequest } from 'vite'
@@ -20,7 +20,7 @@ import {
 } from './script'
 import type { ResolvedOptions } from './index'
 
-const debug = _debug('vite:hmr')
+const debug = createDebug('vite:hmr')
 
 /**
  * Vite-specific HMR handling
