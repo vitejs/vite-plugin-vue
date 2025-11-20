@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite'
+import * as vite from 'vite'
 import vueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import vuePlugin from '@vitejs/plugin-vue'
 import babelPluginSyntaxDecorators from '@babel/plugin-syntax-decorators'
+import swc from '@rollup/plugin-swc'
 
 export default defineConfig({
   plugins: [
@@ -17,12 +19,28 @@ export default defineConfig({
       ],
     }),
     vuePlugin(),
+    // rolldown-vite does not support ecma decorators yet, use SWC to lower them
+    // https://github.com/oxc-project/oxc/issues/9170
+    'rolldownVersion' in vite &&
+      vite.withFilter(
+        {
+          ...swc({
+            swc: {
+              jsc: {
+                parser: { decorators: true, decoratorsBeforeExport: true },
+                // NOTE: SWC doesn't support '2023-11' version yet
+                transform: { decoratorVersion: '2022-03' },
+              },
+            },
+          }),
+        },
+        {
+          transform: { id: /\/decorators\//, code: '@' },
+        },
+      ),
   ],
   build: {
     // to make tests faster
     minify: false,
-  },
-  optimizeDeps: {
-    disabled: true,
   },
 })

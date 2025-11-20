@@ -20,7 +20,6 @@ import {
   preview,
 } from 'vite'
 import type { Browser, Page } from 'playwright-chromium'
-import type { File } from 'vitest'
 import { beforeAll } from 'vitest'
 
 // #region env
@@ -92,13 +91,7 @@ export function setViteUrl(url: string): void {
 
 const DIR = join(os.tmpdir(), 'vitest_playwright_global_setup')
 
-beforeAll(async (s) => {
-  const suite = s as File
-  // skip browser setup for non-playground tests
-  if (!suite.filepath.includes('playground')) {
-    return
-  }
-
+beforeAll(async (suite) => {
   const wsEndpoint = fs.readFileSync(join(DIR, 'wsEndpoint'), 'utf-8')
   if (!wsEndpoint) {
     throw new Error('wsEndpoint not found')
@@ -132,7 +125,7 @@ beforeAll(async (s) => {
       browserErrors.push(error)
     })
 
-    testPath = suite.filepath!
+    testPath = suite.file.filepath
     testName = slash(testPath).match(/playground\/([\w-]+)\//)?.[1]
     testDir = dirname(testPath)
 
