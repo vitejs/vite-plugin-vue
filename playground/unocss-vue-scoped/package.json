@@ -1,0 +1,20 @@
+{
+  "name": "@vitejs/test-unocss-vue-scoped",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "debug": "node --inspect-brk ../../packages/vite/bin/vite",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "unocss": "^66.5.7",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@vitejs/plugin-vue": "workspace:*"
+  }
+}
