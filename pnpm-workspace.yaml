@@ -3,13 +3,13 @@ packages:
   - 'playground/**'
 
 catalog:
-  'vue': ^3.5.24
+  'vue': ^3.5.25
   'vite': ^7.2.4
   'vue-router': ^4.6.3
 
 catalogs:
   rolldown-vite:
-    vite: npm:rolldown-vite@^7.2.5
+    vite: npm:rolldown-vite@^7.2.7
 
 overrides:
   '@vitejs/plugin-vue': workspace:*
