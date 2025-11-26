@@ -50,17 +50,17 @@
     "eslint-plugin-regexp": "^2.10.0",
     "execa": "^9.6.0",
     "fs-extra": "^11.3.2",
-    "lint-staged": "^16.2.6",
+    "lint-staged": "^16.2.7",
     "picocolors": "^1.1.1",
-    "playwright-chromium": "^1.56.1",
+    "playwright-chromium": "^1.57.0",
     "prettier": "3.6.2",
     "rollup": "^4.53.3",
     "simple-git-hooks": "^2.13.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.4",
+    "typescript-eslint": "^8.48.0",
     "vite": "catalog:",
-    "vitest": "^4.0.9",
+    "vitest": "^4.0.14",
     "vue": "catalog:"
   },
   "simple-git-hooks": {
@@ -80,5 +80,5 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@10.22.0"
+  "packageManager": "pnpm@10.23.0"
 }
