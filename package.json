@@ -23,7 +23,7 @@
     "postinstall": "simple-git-hooks",
     "format": "prettier --write --cache .",
     "lint": "eslint --cache .",
-    "typecheck": "tsc -p scripts --noEmit && tsc -p playground --noEmit",
+    "typecheck": "tsgo -p scripts --noEmit && tsgo -p playground --noEmit",
     "test": "pnpm test-serve && pnpm test-build",
     "test-serve": "vitest run -c vitest.config.e2e.ts",
     "test-build": "VITE_TEST_BUILD=1 vitest run -c vitest.config.e2e.ts",
@@ -42,25 +42,26 @@
     "@types/convert-source-map": "^2.0.3",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^24.10.1",
+    "@typescript/native-preview": "7.0.0-dev.20251203.1",
     "@vitejs/release-scripts": "^1.6.0",
     "eslint": "^9.39.1",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import-x": "^4.16.1",
     "eslint-plugin-n": "^17.23.1",
     "eslint-plugin-regexp": "^2.10.0",
-    "execa": "^9.6.0",
+    "execa": "^9.6.1",
     "fs-extra": "^11.3.2",
     "lint-staged": "^16.2.7",
     "picocolors": "^1.1.1",
     "playwright-chromium": "^1.57.0",
-    "prettier": "3.6.2",
+    "prettier": "3.7.4",
     "rollup": "^4.53.3",
     "simple-git-hooks": "^2.13.1",
-    "tsx": "^4.20.6",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.48.0",
+    "typescript-eslint": "^8.48.1",
     "vite": "catalog:",
-    "vitest": "^4.0.14",
+    "vitest": "^4.0.15",
     "vue": "catalog:"
   },
   "simple-git-hooks": {
@@ -80,5 +81,5 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@10.23.0"
+  "packageManager": "pnpm@10.24.0"
 }
