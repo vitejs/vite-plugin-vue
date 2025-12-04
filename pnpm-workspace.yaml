@@ -24,3 +24,14 @@ onlyBuiltDependencies:
   - playwright-chromium
   - simple-git-hooks
   - unrs-resolver
+
+hoistPattern:
+  - postcss
+  - pug # playground/vue > @vue/compiler-sfc
+  - ts-node # playground/tailwind
+
+autoInstallPeers: false
+
+strictPeerDependencies: false
+
+shellEmulator: true
