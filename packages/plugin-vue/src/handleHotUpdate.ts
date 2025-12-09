@@ -200,7 +200,6 @@ export function isOnlyTemplateChanged(
   return (
     !hasScriptChanged(prev, next) &&
     // @ts-expect-error TODO remove when 3.6 is out
-    // reload is required for template only components switch between vapor and vdom
     prev.vapor === next.vapor &&
     prev.styles.length === next.styles.length &&
     prev.styles.every((s, i) => isEqualBlock(s, next.styles[i])) &&
