@@ -299,6 +299,9 @@ function isEqualAst(prev?: t.Statement[], next?: t.Statement[]): boolean {
 }
 
 function hasScriptChanged(prev: SFCDescriptor, next: SFCDescriptor): boolean {
+  // @ts-expect-error TODO remove when 3.6 is out
+  if (prev.vapor !== next.vapor) return true
+
   // check for scriptAst/scriptSetupAst changes
   // note that the next ast is not available yet, so we need to trigger parsing
   const prevScript = getResolvedScript(prev, false)
