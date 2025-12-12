@@ -1,3 +1,22 @@
+## <small>[6.0.3](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.2...plugin-vue@6.0.3) (2025-12-12)</small>
+### Features
+
+* add Vite 8 support ([2080d41](https://github.com/vitejs/vite-plugin-vue/commit/2080d411397b758d32144ce33d904e042c009504))
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#707](https://github.com/vitejs/vite-plugin-vue/issues/707)) ([799f419](https://github.com/vitejs/vite-plugin-vue/commit/799f419565467a9db675e68eefd0551b9c16e3e6))
+* **hmr:** reload when components switch between vapor and vdom ([#714](https://github.com/vitejs/vite-plugin-vue/issues/714)) ([6c45fe5](https://github.com/vitejs/vite-plugin-vue/commit/6c45fe52944a4ed73b896c8fefba1adfe0a81998))
+
+### Performance Improvements
+
+* replace debug with obug ([#705](https://github.com/vitejs/vite-plugin-vue/issues/705)) ([684ac30](https://github.com/vitejs/vite-plugin-vue/commit/684ac30f8325c13b94a0a35e53ef9470dd134042))
+
+### Miscellaneous Chores
+
+* **deps:** update upstream ([#706](https://github.com/vitejs/vite-plugin-vue/issues/706)) ([d910114](https://github.com/vitejs/vite-plugin-vue/commit/d9101144a81632ec05f4d49c32e5003293118c88))
+* upgrade deps, setup tsgo ([037e540](https://github.com/vitejs/vite-plugin-vue/commit/037e5403e9ce6bd0a038010b6e3003a9ac4c7f66))
+
 ## <small>[6.0.2](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.1...plugin-vue@6.0.2) (2025-11-19)</small>
 ### Bug Fixes
 
