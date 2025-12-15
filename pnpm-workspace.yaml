@@ -4,7 +4,7 @@ packages:
 
 catalog:
   'vue': ^3.5.25
-  'vite': ^7.2.6
+  'vite': ^7.2.7
   'vue-router': ^4.6.3
 
 catalogs:
