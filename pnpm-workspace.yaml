@@ -16,8 +16,10 @@ overrides:
 
 ignoredBuiltDependencies:
   - '@parcel/watcher'
+  - '@swc/core'
   - core-js
   - esbuild
+  - less
 
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
