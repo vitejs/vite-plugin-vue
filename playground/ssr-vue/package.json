@@ -26,6 +26,6 @@
     "@vitejs/test-dep-import-type": "link:dep-import-type",
     "compression": "^1.8.1",
     "express": "^5.2.1",
-    "serve-static": "^2.2.0"
+    "serve-static": "^2.2.1"
   }
 }
