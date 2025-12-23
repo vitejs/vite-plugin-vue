@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.22",
     "vue": "catalog:"
   },
   "devDependencies": {
@@ -18,7 +18,7 @@
     "js-yaml": "^4.1.1",
     "less": "^4.5.1",
     "pug": "^3.0.3",
-    "sass": "^1.96.0",
+    "sass": "^1.97.1",
     "stylus": "^0.64.0"
   }
 }
