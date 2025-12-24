@@ -65,6 +65,10 @@ function vueJsxPlugin(options: Options = {}): Plugin {
           return v
         }
       }
+      const oxcConfig =
+        this && 'rolldownVersion' in this.meta
+          ? { oxc: { jsx: { transform: 'preserve' } } }
+          : {}
       return {
         // only apply esbuild to ts files
         // since we are handling jsx and tsx now
@@ -75,15 +79,11 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                 // So we add `.jsx` extension to `exclude` and keep original `include`.
                 // https://github.com/vitejs/vite/blob/v6.3.5/packages/vite/src/node/plugins/esbuild.ts#L246
                 exclude: /\.jsx?$/,
-                ...(this && 'rolldownVersion' in this.meta
-                  ? { oxc: { jsx: { transform: 'preserve' } } }
-                  : {}),
+                ...oxcConfig,
               }
             : {
                 include: /\.ts$/,
-                ...(this && 'rolldownVersion' in this.meta
-                  ? { oxc: { jsx: { transform: 'preserve' } } }
-                  : {}),
+                ...oxcConfig,
               },
         define: {
           __VUE_OPTIONS_API__:
