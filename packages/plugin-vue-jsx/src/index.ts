@@ -65,10 +65,12 @@ function vueJsxPlugin(options: Options = {}): Plugin {
           return v
         }
       }
+      const isRolldownVite = this && 'rolldownVersion' in this.meta
+      const esbuildKey = (isRolldownVite ? 'oxc' : 'esbuild') as 'esbuild'
       return {
         // only apply esbuild to ts files
         // since we are handling jsx and tsx now
-        esbuild:
+        [esbuildKey]:
           tsTransform === 'built-in'
             ? {
                 // For 'built-in' we still need esbuild to transform ts syntax for `.tsx` files.
@@ -89,12 +91,11 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__,
             ) ?? false,
         },
-        optimizeDeps:
-          this && 'rolldownVersion' in this.meta
-            ? {
-                rolldownOptions: { transform: { jsx: 'preserve' } },
-              }
-            : {},
+        optimizeDeps: isRolldownVite
+          ? {
+              rolldownOptions: { transform: { jsx: 'preserve' } },
+            }
+          : {},
       }
     },
 
