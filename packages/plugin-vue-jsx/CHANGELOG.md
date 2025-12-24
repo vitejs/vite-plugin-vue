@@ -1,3 +1,19 @@
+## <small>[5.1.3](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.1.2...plugin-vue-jsx@5.1.3) (2025-12-24)</small>
+### Features
+
+* add Vite 8 support ([2080d41](https://github.com/vitejs/vite-plugin-vue/commit/2080d411397b758d32144ce33d904e042c009504))
+* **vue-jsx:** use `oxc` option instead of `esbuild` option for rolldown-vite ([#724](https://github.com/vitejs/vite-plugin-vue/issues/724)) ([c40df9d](https://github.com/vitejs/vite-plugin-vue/commit/c40df9dd8c0ba62d8c261a62e4b15ddb3698c113))
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#707](https://github.com/vitejs/vite-plugin-vue/issues/707)) ([799f419](https://github.com/vitejs/vite-plugin-vue/commit/799f419565467a9db675e68eefd0551b9c16e3e6))
+* **deps:** update all non-major dependencies ([#709](https://github.com/vitejs/vite-plugin-vue/issues/709)) ([924b28e](https://github.com/vitejs/vite-plugin-vue/commit/924b28ef5e6fd991a00a507074b9b9a98fd1c398))
+* **deps:** update all non-major dependencies ([#722](https://github.com/vitejs/vite-plugin-vue/issues/722)) ([8a95809](https://github.com/vitejs/vite-plugin-vue/commit/8a9580920d145bb6d58375bba9aaa1adf7d16b81))
+
+### Miscellaneous Chores
+
+* upgrade deps, setup tsgo ([037e540](https://github.com/vitejs/vite-plugin-vue/commit/037e5403e9ce6bd0a038010b6e3003a9ac4c7f66))
+
 ## <small>[5.1.2](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.1.1...plugin-vue-jsx@5.1.2) (2025-11-19)</small>
 ### Bug Fixes
 
