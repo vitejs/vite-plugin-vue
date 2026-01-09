@@ -55,7 +55,7 @@
     "picocolors": "^1.1.1",
     "playwright-chromium": "^1.57.0",
     "prettier": "3.7.4",
-    "rollup": "^4.53.3",
+    "rollup": "^4.55.1",
     "simple-git-hooks": "^2.13.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
