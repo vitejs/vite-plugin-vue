@@ -243,6 +243,24 @@ describe.runIf(isServe)('hmr', () => {
     await expect.poll(() => page.textContent('.hmr-number')).toMatch('200')
   })
 
+  test('should reload when script changes after a rerender', async () => {
+    // rerender
+    editFile('Hmr.vue', (code) => code.replace('bar-title', 'bar-title1'))
+    await untilUpdated(() => page.textContent('.hmr-bar-text'), 'bar-title1')
+
+    // change 'bar' to 'updated', should reload
+    editFile('Hmr.vue', (code) =>
+      code.replace(`let bar = 'bar'`, `let bar = 'updated'`),
+    )
+    await untilUpdated(() => page.textContent('.hmr-bar'), 'updated')
+
+    // change 'updated' to 'bar', should reload again not rerender
+    editFile('Hmr.vue', (code) =>
+      code.replace(`let bar = 'updated'`, `let bar = 'bar'`),
+    )
+    await untilUpdated(() => page.textContent('.hmr-bar'), 'bar')
+  })
+
   test('global hmr for some scenarios', async () => {
     editFile('Hmr.vue', (code) =>
       code.replace('</template>', '  <Node/>\n' + '</template>'),
