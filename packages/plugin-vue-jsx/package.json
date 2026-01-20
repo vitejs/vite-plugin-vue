@@ -53,5 +53,16 @@
     "dts": {
       "tsgo": true
     }
+  },
+  "compatiblePackages": {
+    "schemaVersion": 1,
+    "rolldown": {
+      "type": "incompatible",
+      "reason": "Uses Vite-specific APIs"
+    },
+    "rollup": {
+      "type": "incompatible",
+      "reason": "Uses Vite-specific APIs"
+    }
   }
 }
