@@ -42,7 +42,7 @@
     "@jridgewell/gen-mapping": "^0.3.13",
     "@jridgewell/trace-mapping": "^0.3.31",
     "obug": "^2.1.1",
-    "rollup": "^4.55.1",
+    "rollup": "^4.57.1",
     "slash": "^5.1.0",
     "source-map-js": "^1.2.1",
     "tsdown": "^0.18.2",
