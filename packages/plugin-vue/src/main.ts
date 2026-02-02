@@ -12,6 +12,7 @@ import {
   createDescriptor,
   getDescriptor,
   getPrevDescriptor,
+  getSrcDescriptor,
   setSrcDescriptor,
 } from './utils/descriptorCache'
 import {
@@ -434,13 +435,45 @@ async function genStyleCode(
   if (descriptor.styles.length) {
     for (let i = 0; i < descriptor.styles.length; i++) {
       const style = descriptor.styles[i]
+      let indexQuery = i
       if (style.src) {
-        await linkSrcToDescriptor(
-          style.src,
-          descriptor,
-          pluginContext,
-          style.scoped,
-        )
+        const resolvedSrc =
+          (await pluginContext.resolve(style.src, descriptor.filename))?.id ||
+          style.src
+        const alreadyDescriptor = getSrcDescriptor(resolvedSrc, {
+          scoped: style.scoped,
+          src: descriptor.id,
+        })
+
+        if (alreadyDescriptor) {
+          const foundIndex = await alreadyDescriptor.styles.reduce(
+            async (acc, { scoped, src }, index) => {
+              const prevRes = await acc
+
+              if (prevRes !== -1) return prevRes
+              if (scoped !== style.scoped) return prevRes
+              if (!src) return prevRes
+
+              const _resolvedSrc =
+                (await pluginContext.resolve(src, alreadyDescriptor.filename))
+                  ?.id || src
+
+              if (_resolvedSrc !== resolvedSrc) return prevRes
+
+              return index
+            },
+            Promise.resolve(-1),
+          )
+
+          if (foundIndex !== -1) indexQuery = foundIndex
+        } else {
+          await linkSrcToDescriptor(
+            style.src,
+            descriptor,
+            pluginContext,
+            style.scoped,
+          )
+        }
       }
       const src = style.src || descriptor.filename
       // do not include module in default query, since we use it to indicate
@@ -453,7 +486,7 @@ async function genStyleCode(
         : ''
       const directQuery = customElement ? `&inline` : ``
       const scopedQuery = style.scoped ? `&scoped=${descriptor.id}` : ``
-      const query = `?vue&type=style&index=${i}${srcQuery}${directQuery}${scopedQuery}`
+      const query = `?vue&type=style&index=${indexQuery}${srcQuery}${directQuery}${scopedQuery}`
       const styleRequest = src + query + attrsQuery
       if (style.module) {
         if (customElement) {
