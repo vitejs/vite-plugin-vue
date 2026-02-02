@@ -1,3 +1,12 @@
+## <small>[5.1.4](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.1.3...plugin-vue-jsx@5.1.4) (2026-02-02)</small>
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#726](https://github.com/vitejs/vite-plugin-vue/issues/726)) ([e69d751](https://github.com/vitejs/vite-plugin-vue/commit/e69d7519aeda6e7be10736197ceea8ad69d89905))
+
+### Miscellaneous Chores
+
+* add metadata for vite-plugin-registry ([#730](https://github.com/vitejs/vite-plugin-vue/issues/730)) ([239eb6a](https://github.com/vitejs/vite-plugin-vue/commit/239eb6a847601805242b5ffbfe59d9d53dbf5d5c))
+
 ## <small>[5.1.3](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.1.2...plugin-vue-jsx@5.1.3) (2025-12-24)</small>
 ### Features
 
