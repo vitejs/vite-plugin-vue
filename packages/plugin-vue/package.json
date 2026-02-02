@@ -52,11 +52,6 @@
   "dependencies": {
     "@rolldown/pluginutils": "1.0.0-rc.2"
   },
-  "tsdown": {
-    "dts": {
-      "tsgo": true
-    }
-  },
   "compatiblePackages": {
     "schemaVersion": 1,
     "rolldown": {
