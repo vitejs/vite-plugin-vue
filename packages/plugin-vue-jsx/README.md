@@ -33,6 +33,14 @@ Default: `undefined`
 
 A [picomatch pattern](https://github.com/micromatch/picomatch), or array of patterns, which specifies the files to be ignored by the plugin.
 
+### autoWrapDefaultSlot
+
+Type: `boolean`
+
+Default: `false`
+
+Automatically wrap non-function default slot children like SFC compiler does. This silences the "Non-function value encountered for default slot" warning in JSX/TSX when passing children to components.
+
 > See [@vue/babel-plugin-jsx](https://github.com/vuejs/jsx-next) for other options.
 
 ### defineComponentName

@@ -13,4 +13,9 @@ export interface Options extends VueJSXPluginOptions, FilterOptions {
   tsPluginOptions?: any
   /** @default 'babel' */
   tsTransform?: 'babel' | 'built-in'
+  /**
+   * Automatically wrap non-function default slot children like SFC compiler does.
+   * @default false
+   */
+  autoWrapDefaultSlot?: boolean
 }
