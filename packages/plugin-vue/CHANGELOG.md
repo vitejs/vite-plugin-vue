@@ -1,3 +1,8 @@
+## <small>[6.0.5](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.4...plugin-vue@6.0.5) (2026-03-12)</small>
+### Miscellaneous Chores
+
+* remove Vite 8 beta from supported range ([#746](https://github.com/vitejs/vite-plugin-vue/issues/746)) ([b3f23e4](https://github.com/vitejs/vite-plugin-vue/commit/b3f23e4d0818f11a3e2f674380da870b11d260a2))
+
 ## <small>[6.0.4](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.3...plugin-vue@6.0.4) (2026-02-02)</small>
 ### Bug Fixes
 
