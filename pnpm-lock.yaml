@@ -81,7 +81,7 @@ importers:
         specifier: 3.8.1
         version: 3.8.1
       rollup:
-        specifier: ^4.57.1
+        specifier: ^4.59.0
         version: 4.59.0
       simple-git-hooks:
         specifier: ^2.13.1
@@ -121,7 +121,7 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       rollup:
-        specifier: ^4.57.1
+        specifier: ^4.59.0
         version: 4.59.0
       slash:
         specifier: ^5.1.0
