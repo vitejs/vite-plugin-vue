@@ -339,7 +339,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         const msg = args[0]
         if (
           msg.match(
-            /\[lightningcss\] '(deep|slotted|global)' is not recognized as a valid pseudo-/,
+            /\[lightningcss(?: minify)?\] '(deep|slotted|global)' is not recognized as a valid pseudo-/,
           )
         ) {
           return
