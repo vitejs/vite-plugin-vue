@@ -53,10 +53,6 @@ export let testPath: string
  */
 export let testDir: string
 /**
- * Test folder name
- */
-export let testName: string
-/**
  * current test using vite inline config
  * when using server.js is not possible to get the config
  */
@@ -91,7 +87,8 @@ export function setViteUrl(url: string): void {
 
 const DIR = join(os.tmpdir(), 'vitest_playwright_global_setup')
 
-beforeAll(async (suite) => {
+// eslint-disable-next-line no-empty-pattern
+beforeAll(async ({}, suite) => {
   const wsEndpoint = fs.readFileSync(join(DIR, 'wsEndpoint'), 'utf-8')
   if (!wsEndpoint) {
     throw new Error('wsEndpoint not found')
@@ -126,7 +123,7 @@ beforeAll(async (suite) => {
     })
 
     testPath = suite.file.filepath
-    testName = slash(testPath).match(/playground\/([\w-]+)\//)?.[1]
+    const testName = slash(testPath).match(/playground\/([\w-]+)\//)?.[1]
     testDir = dirname(testPath)
 
     // if this is a test placed under playground/xxx/__tests__
@@ -274,7 +271,7 @@ export async function startDefaultServe(): Promise<void> {
     const previewServer = await preview(testConfig)
     // prevent preview change NODE_ENV
     process.env.NODE_ENV = _nodeEnv
-    viteTestUrl = previewServer.resolvedUrls.local[0]
+    viteTestUrl = previewServer.resolvedUrls!.local[0]
     await page.goto(viteTestUrl)
   }
 }

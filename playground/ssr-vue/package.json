@@ -21,6 +21,9 @@
     "vue-router": "catalog:"
   },
   "devDependencies": {
+    "@types/compression": "^1.8.1",
+    "@types/express": "^5.0.6",
+    "@types/serve-static": "^2.2.0",
     "@vitejs/plugin-vue": "workspace:*",
     "@vitejs/plugin-vue-jsx": "workspace:*",
     "@vitejs/test-dep-import-type": "link:dep-import-type",

@@ -3,12 +3,15 @@ packages:
   - 'playground/**'
 
 catalog:
-  'vue': ^3.5.27
+  'vue': ^3.5.32
   'vite': ^8.0.5
-  'vue-router': ^5.0.2
+  'vue-router': ^5.0.4
 
 overrides:
   '@vitejs/plugin-vue': workspace:*
+
+minimumReleaseAgeExclude:
+  - '*'
 
 ignoredBuiltDependencies:
   - '@parcel/watcher'
