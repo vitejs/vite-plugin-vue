@@ -91,7 +91,7 @@ export function setViteUrl(url: string): void {
 
 const DIR = join(os.tmpdir(), 'vitest_playwright_global_setup')
 
-beforeAll(async (suite) => {
+beforeAll(async ({}, suite) => {
   const wsEndpoint = fs.readFileSync(join(DIR, 'wsEndpoint'), 'utf-8')
   if (!wsEndpoint) {
     throw new Error('wsEndpoint not found')
