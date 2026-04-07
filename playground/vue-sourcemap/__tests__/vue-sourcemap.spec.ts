@@ -1,6 +1,5 @@
 import { URL } from 'node:url'
 import { describe, expect, test } from 'vitest'
-import * as vite from 'vite'
 import {
   extractSourcemap,
   formatSourcemapForSnapshot,
@@ -9,8 +8,6 @@ import {
   page,
   serverLogs,
 } from '~utils'
-
-const isRolldownVite = 'rolldownVersion' in vite
 
 describe.runIf(isServe)('serve:vue-sourcemap', () => {
   const getStyleTagContentIncluding = async (content: string) => {

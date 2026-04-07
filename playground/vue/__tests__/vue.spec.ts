@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'vitest'
 import { version } from 'vue'
-import * as vite from 'vite'
 import {
   browserLogs,
   editFile,
@@ -12,8 +11,6 @@ import {
   page,
   serverLogs,
 } from '~utils'
-
-const isRolldownVite = 'rolldownVersion' in vite
 
 test('should render', async () => {
   expect(await page.textContent('h1')).toMatch(`Vue version ${version}`)
