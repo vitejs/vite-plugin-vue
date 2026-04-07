@@ -28,7 +28,6 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot('serve-js')
   })
 
-  // skip this test for now with rolldown-vite as the snapshot is slightly different
   test('ts', async () => {
     const res = await page.request.get(new URL('./Ts.vue', page.url()).href)
     const js = await res.text()
