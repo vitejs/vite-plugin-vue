@@ -91,6 +91,7 @@ export function setViteUrl(url: string): void {
 
 const DIR = join(os.tmpdir(), 'vitest_playwright_global_setup')
 
+// eslint-disable-next-line no-empty-pattern
 beforeAll(async ({}, suite) => {
   const wsEndpoint = fs.readFileSync(join(DIR, 'wsEndpoint'), 'utf-8')
   if (!wsEndpoint) {
