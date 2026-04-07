@@ -489,11 +489,7 @@ describe('template parse options', () => {
   })
 })
 
-// skip this test for now with rolldown-vite as this requires https://github.com/rolldown/rolldown/issues/4812 to be implemented
-test.runIf(isBuild && !isRolldownVite)(
-  'scoped style should be tree-shakeable',
-  async () => {
-    const indexCss = findAssetFile(/index-[\w-]+\.css/)
-    expect(indexCss).not.toContain('.tree-shake-scoped-style')
-  },
-)
+test('scoped style should be tree-shakeable', async () => {
+  const indexCss = findAssetFile(/index-[\w-]+\.css/)
+  expect(indexCss).not.toContain('.tree-shake-scoped-style')
+})
