@@ -72,7 +72,7 @@ describe('pre-processors', () => {
   })
 
   test('scss', async () => {
-    const el = await page.$('p.pug')
+    const el = (await page.$('p.pug'))!
     expect(await getColor(el)).toBe('magenta')
     if (isBuild) return
     editFile('PreProcessors.vue', (code) =>
@@ -82,7 +82,7 @@ describe('pre-processors', () => {
   })
 
   test('less + scoped', async () => {
-    const el = await page.$('p.pug-less')
+    const el = (await page.$('p.pug-less'))!
     expect(await getColor(el)).toBe('green')
     if (isBuild) return
     editFile('PreProcessors.vue', (code) =>
@@ -153,28 +153,28 @@ describe('asset reference', () => {
   })
 
   test('relative import', async () => {
-    const el = await page.$('img.relative-import')
+    const el = (await page.$('img.relative-import'))!
     expect(await el.evaluate((el) => (el as HTMLImageElement).src)).toMatch(
       assetMatch,
     )
   })
 
   test('absolute import', async () => {
-    const el = await page.$('img.absolute-import')
+    const el = (await page.$('img.absolute-import'))!
     expect(await el.evaluate((el) => (el as HTMLImageElement).src)).toMatch(
       assetMatch,
     )
   })
 
   test('absolute import from public dir', async () => {
-    const el = await page.$('img.public-import')
+    const el = (await page.$('img.public-import'))!
     expect(await el.evaluate((el) => (el as HTMLImageElement).src)).toMatch(
       `/icon.png`,
     )
   })
 
   test('svg fragment', async () => {
-    const img = await page.$('.svg-frag')
+    const img = (await page.$('.svg-frag'))!
     expect(await img.getAttribute('src')).toMatch(/svg#icon-heart-view$/)
   })
 
@@ -284,7 +284,7 @@ describe('src imports', () => {
   })
 
   test('style src', async () => {
-    const el = await page.$('.src-imports-style')
+    const el = (await page.$('.src-imports-style'))!
     expect(await getColor(el)).toBe('tan')
     if (isBuild) return
     editFile('src-import/style.css', (code) =>
@@ -294,7 +294,7 @@ describe('src imports', () => {
   })
 
   test.runIf(isServe)('template src import hmr', async () => {
-    const el = await page.$('.src-imports-style')
+    const el = (await page.$('.src-imports-style'))!
     editFile('src-import/template.html', (code) =>
       code.replace('should be tan', 'should be red'),
     )
@@ -317,7 +317,7 @@ describe('external src imports', () => {
   })
 
   test('style src', async () => {
-    const el = await page.$('.external-src-imports-style')
+    const el = (await page.$('.external-src-imports-style'))!
     expect(await getColor(el)).toBe('tan')
     if (isBuild) return
     editFile('../vue-external/src-import/style.css', (code) =>
@@ -327,7 +327,7 @@ describe('external src imports', () => {
   })
 
   test.runIf(isServe)('template src import hmr', async () => {
-    const el = await page.$('.external-src-imports-style')
+    const el = (await page.$('.external-src-imports-style'))!
     editFile('../vue-external/src-import/template.html', (code) =>
       code.replace('should be tan', 'should be red'),
     )

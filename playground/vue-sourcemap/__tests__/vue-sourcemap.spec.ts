@@ -13,7 +13,7 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
   const getStyleTagContentIncluding = async (content: string) => {
     const styles = await page.$$('style')
     for (const style of styles) {
-      const text = await style.textContent()
+      const text = (await style.textContent())!
       if (text.includes(content)) {
         return text
       }

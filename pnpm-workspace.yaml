@@ -10,6 +10,9 @@ catalog:
 overrides:
   '@vitejs/plugin-vue': workspace:*
 
+minimumReleaseAgeExclude:
+  - '*'
+
 ignoredBuiltDependencies:
   - '@parcel/watcher'
   - '@swc/core'

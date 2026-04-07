@@ -8,7 +8,7 @@ import {
 } from '~utils'
 
 test.runIf(isServe)('regenerate CSS and HMR (pug template)', async () => {
-  const el = await page.$('.pug')
+  const el = (await page.$('.pug'))!
   expect(await getBgColor(el)).toBe('rgb(248, 113, 113)')
 
   await untilBrowserLogAfter(
