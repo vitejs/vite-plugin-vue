@@ -17,7 +17,7 @@
     {
       groupName: "upstream",
       matchPackageNames: ["vite"],
-      matchPackagePrefixes: ["rollup", "@rollup", "@vitejs"],
+      matchPackagePrefixes: ["@vitejs"],
     },
     {
       groupName: "prettier",
