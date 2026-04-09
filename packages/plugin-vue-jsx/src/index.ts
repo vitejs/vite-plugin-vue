@@ -50,6 +50,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
     defineComponentName = ['defineComponent'],
     tsPluginOptions = {},
     tsTransform,
+    autoWrapDefaultSlot,
     ...babelPluginOptions
   } = options
   const filter = createFilter(include, exclude)
@@ -141,6 +142,9 @@ function vueJsxPlugin(options: Options = {}): Plugin {
         // use filepath for plain jsx files (e.g. App.jsx)
         if (filter(id) || filter(filepath)) {
           const plugins = [[jsx, babelPluginOptions], ...babelPlugins]
+          if (autoWrapDefaultSlot) {
+            plugins.unshift(createAutoWrapDefaultSlotPlugin())
+          }
           if (id.endsWith('.tsx') || filepath.endsWith('.tsx')) {
             if (tsTransform === 'built-in') {
               // For 'built-in' add "syntax" plugin
@@ -415,6 +419,63 @@ function unwrapTypeAssertion(
 
 function getHash(text: string) {
   return crypto.hash('sha256', text, 'hex').substring(0, 8)
+}
+
+function createAutoWrapDefaultSlotPlugin(): babel.PluginObj {
+  return {
+    visitor: {
+      JSXElement(path) {
+        const { openingElement, children } = path.node
+        if (children.length === 0) return
+
+        // Skip if already has v-slots or v-slot
+        const hasVSlots = openingElement.attributes.some(
+          (attr) =>
+            attr.type === 'JSXAttribute' &&
+            (attr.name.name === 'v-slots' || attr.name.name === 'v-slot'),
+        )
+        if (hasVSlots) return
+
+        const nameNode = openingElement.name
+        let isComponent = false
+        if (nameNode.type === 'JSXIdentifier') {
+          if (/^[A-Z]/.test(nameNode.name)) {
+            isComponent = true
+          }
+        } else if (nameNode.type === 'JSXMemberExpression') {
+          isComponent = true
+        } else if (nameNode.type === 'JSXNamespacedName') {
+          isComponent = true
+        }
+
+        if (isComponent) {
+          // Wrap children in a v-slots attribute
+          const slotValue = types.jsxExpressionContainer(
+            types.objectExpression([
+              types.objectProperty(
+                types.identifier('default'),
+                types.arrowFunctionExpression(
+                  [],
+                  children.length === 1 && children[0].type === 'JSXElement'
+                    ? children[0]
+                    : types.jsxFragment(
+                        types.jsxOpeningFragment(),
+                        types.jsxClosingFragment(),
+                        children,
+                      ),
+                ),
+              ),
+            ]),
+          )
+
+          openingElement.attributes.push(
+            types.jsxAttribute(types.jsxIdentifier('v-slots'), slotValue),
+          )
+          path.node.children = []
+        }
+      },
+    },
+  }
 }
 
 export default vueJsxPlugin
