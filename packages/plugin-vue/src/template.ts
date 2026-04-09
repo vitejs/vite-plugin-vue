@@ -34,6 +34,7 @@ export async function transformTemplateAsModule(
   )
 
   let returnCode = result.code
+  returnCode += `\nexport const multiRoot = ${JSON.stringify(result.multiRoot)}`
   if (
     options.devServer &&
     options.devServer.config.server.hmr !== false &&

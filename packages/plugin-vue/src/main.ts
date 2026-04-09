@@ -67,6 +67,9 @@ export async function transformMain(
   // feature information
   const attachedProps: [string, string][] = []
   const hasScoped = descriptor.styles.some((s) => s.scoped)
+  // @ts-expect-error TODO remove when 3.6 is out
+  const isTemplateOnlyVapor =
+    !descriptor.script && !descriptor.scriptSetup && descriptor.vapor
 
   // script
   const { code: scriptCode, map: scriptMap } = await genScriptCode(
@@ -80,11 +83,20 @@ export async function transformMain(
   // template
   const hasTemplateImport =
     descriptor.template && !isUseInlineTemplate(descriptor, options)
+  const isTemplateInlined =
+    !!descriptor.template &&
+    (!descriptor.template.lang || descriptor.template.lang === 'html') &&
+    !descriptor.template.src
 
   let templateCode = ''
   let templateMap: RawSourceMap | undefined = undefined
+  let templateMultiRoot: boolean | undefined
   if (hasTemplateImport) {
-    ;({ code: templateCode, map: templateMap } = await genTemplateCode(
+    ;({
+      code: templateCode,
+      map: templateMap,
+      multiRoot: templateMultiRoot,
+    } = await genTemplateCode(
       descriptor,
       options,
       pluginContext,
@@ -122,6 +134,11 @@ export async function transformMain(
   const output: string[] = [
     scriptCode,
     templateCode,
+    isTemplateOnlyVapor
+      ? `${scriptIdentifier}.__multiRoot = ${
+          isTemplateInlined ? templateMultiRoot : '_sfc_multiRoot'
+        }`
+      : '',
     stylesCode,
     customBlocksCode,
   ]
@@ -321,15 +338,22 @@ async function genTemplateCode(
   pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
-) {
+): Promise<{
+  code: string
+  map?: RawSourceMap
+  multiRoot?: boolean
+}> {
   const template = descriptor.template!
   const hasScoped = descriptor.styles.some((style) => style.scoped)
+  // @ts-expect-error TODO remove when 3.6 is out
+  const needsMultiRoot =
+    !descriptor.script && !descriptor.scriptSetup && descriptor.vapor
 
   // If the template is not using pre-processor AND is not using external src,
   // compile and inline it directly in the main module. When served in vite this
   // saves an extra request per SFC which can improve load performance.
   if ((!template.lang || template.lang === 'html') && !template.src) {
-    return transformTemplateInMain(
+    const result = transformTemplateInMain(
       template.content,
       descriptor,
       options,
@@ -337,6 +361,10 @@ async function genTemplateCode(
       ssr,
       customElement,
     )
+    return {
+      ...result,
+      multiRoot: needsMultiRoot ? result.multiRoot : undefined,
+    }
   } else {
     if (template.src) {
       await linkSrcToDescriptor(
@@ -358,7 +386,9 @@ async function genTemplateCode(
     const request = JSON.stringify(src + query)
     const renderFnName = ssr ? 'ssrRender' : 'render'
     return {
-      code: `import { ${renderFnName} as _sfc_${renderFnName} } from ${request}`,
+      code: `import { ${renderFnName} as _sfc_${renderFnName}${
+        needsMultiRoot ? ', multiRoot as _sfc_multiRoot' : ''
+      } } from ${request}`,
       map: undefined,
     }
   }
