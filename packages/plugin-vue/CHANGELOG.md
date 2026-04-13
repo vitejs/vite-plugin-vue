@@ -1,3 +1,17 @@
+## <small>[6.0.6](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.5...plugin-vue@6.0.6) (2026-04-13)</small>
+### Features
+
+* **plugin-vue:** propagate multiRoot for template-only vapor components ([#745](https://github.com/vitejs/vite-plugin-vue/issues/745)) ([9e07ae9](https://github.com/vitejs/vite-plugin-vue/commit/9e07ae94d0ca2e40cf0c2aac6a3d355a445a5e2d))
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#738](https://github.com/vitejs/vite-plugin-vue/issues/738)) ([050c996](https://github.com/vitejs/vite-plugin-vue/commit/050c9962660e7bb189fe8e03f0fa4cbd0b5ba766))
+
+### Miscellaneous Chores
+
+* **deps:** update dependency rollup to ^4.59.0 ([#749](https://github.com/vitejs/vite-plugin-vue/issues/749)) ([a0e1ef8](https://github.com/vitejs/vite-plugin-vue/commit/a0e1ef83bd841c22c3fddc62189b545ec7c71729))
+* remove unused deps ([#760](https://github.com/vitejs/vite-plugin-vue/issues/760)) ([6d834d8](https://github.com/vitejs/vite-plugin-vue/commit/6d834d82614ec76eb7618a2b015b6e8b0664f096))
+
 ## <small>[6.0.5](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.4...plugin-vue@6.0.5) (2026-03-12)</small>
 ### Miscellaneous Chores
 
