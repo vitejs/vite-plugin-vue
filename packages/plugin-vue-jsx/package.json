@@ -1,6 +1,6 @@
 {
   "name": "@vitejs/plugin-vue-jsx",
-  "version": "5.1.4",
+  "version": "5.1.5",
   "type": "module",
   "license": "MIT",
   "author": "Evan You",
@@ -38,15 +38,15 @@
     "@babel/core": "^7.29.0",
     "@babel/plugin-syntax-typescript": "^7.28.6",
     "@babel/plugin-transform-typescript": "^7.28.6",
-    "@rolldown/pluginutils": "^1.0.0-rc.2",
+    "@rolldown/pluginutils": "^1.0.0-rc.13",
     "@vue/babel-plugin-jsx": "^2.0.1"
   },
   "devDependencies": {
-    "tsdown": "^0.20.1",
+    "tsdown": "^0.21.7",
     "vite": "catalog:"
   },
   "peerDependencies": {
-    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0",
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
     "vue": "^3.0.0"
   },
   "tsdown": {

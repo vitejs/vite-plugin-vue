@@ -12,6 +12,7 @@
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "types": ["vite/client", "node"],
     "paths": {
       "~utils": ["./test-utils.ts"]

@@ -1,6 +1,5 @@
 import { URL } from 'node:url'
 import { describe, expect, test } from 'vitest'
-import * as vite from 'vite'
 import {
   extractSourcemap,
   formatSourcemapForSnapshot,
@@ -10,13 +9,11 @@ import {
   serverLogs,
 } from '~utils'
 
-const isRolldownVite = 'rolldownVersion' in vite
-
 describe.runIf(isServe)('serve:vue-sourcemap', () => {
   const getStyleTagContentIncluding = async (content: string) => {
     const styles = await page.$$('style')
     for (const style of styles) {
-      const text = await style.textContent()
+      const text = (await style.textContent())!
       if (text.includes(content)) {
         return text
       }
@@ -31,8 +28,7 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot('serve-js')
   })
 
-  // skip this test for now with rolldown-vite as the snapshot is slightly different
-  test.skipIf(isRolldownVite)('ts', async () => {
+  test('ts', async () => {
     const res = await page.request.get(new URL('./Ts.vue', page.url()).href)
     const js = await res.text()
     const map = extractSourcemap(js)

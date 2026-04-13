@@ -136,7 +136,7 @@ test('asset', async () => {
   browserLogs.forEach((msg) => {
     expect(msg).not.toMatch('404')
   })
-  const img = await page.$('img')
+  const img = (await page.$('img'))!
   expect(await img.getAttribute('src')).toMatch(
     isBuild ? /\/test\/assets\/logo-[-\w]{8}\.png/ : '/src/assets/logo.png',
   )
@@ -201,7 +201,7 @@ test.runIf(isBuild)('dynamic css file should be preloaded', async () => {
   const homeHtml = await (await fetch(url)).text()
   const re =
     /link rel="modulepreload".*?href="\/test\/assets\/(Home-[-\w]{8}\.js)"/
-  const filename = re.exec(homeHtml)[1]
+  const filename = re.exec(homeHtml)![1]
   const manifest = (
     await import(
       resolve(
@@ -224,13 +224,13 @@ test.runIf(!isBuild)(
     const THROW_MESSAGE = 'it is an expected error'
 
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const expectedErrors = []
+    const expectedErrors: Error[] = []
     for (const _ of [0, 1]) {
       try {
         console.log(viteServer)
         await viteServer.ssrLoadModule(badjs, { fixStacktrace: true })
       } catch (e) {
-        expectedErrors.push(e)
+        expectedErrors.push(e as Error)
       }
     }
     expect(expectedErrors).toHaveLength(2)

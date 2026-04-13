@@ -6,13 +6,18 @@ import express from 'express'
 
 const isTest = process.env.VITEST
 
+/**
+ * @param {string} [root]
+ * @param {boolean} [isProd]
+ * @param {number} [hmrPort]
+ */
 export async function createServer(
   root = process.cwd(),
   isProd = process.env.NODE_ENV === 'production',
   hmrPort,
 ) {
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
-  const resolve = (p) => path.resolve(__dirname, p)
+  const resolve = (/** @type {string} */ p) => path.resolve(__dirname, p)
 
   const indexProd = isProd
     ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8')
@@ -30,7 +35,7 @@ export async function createServer(
   const app = express()
 
   /**
-   * @type {import('vite').ViteDevServer}
+   * @type {import('vite').ViteDevServer | undefined}
    */
   let vite
   if (!isProd) {
@@ -71,7 +76,7 @@ export async function createServer(
       const url = req.originalUrl.replace('/test/', '/')
 
       let template, render
-      if (!isProd) {
+      if (vite) {
         // always read fresh template in dev
         template = fs.readFileSync(resolve('index.html'), 'utf-8')
         template = await vite.transformIndexHtml(url, template)
@@ -89,7 +94,7 @@ export async function createServer(
         .replace(`<!--app-html-->`, appHtml)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
-    } catch (e) {
+    } catch (/** @type {any} */ e) {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       vite && vite.ssrFixStacktrace(e)
       console.log(e.stack)

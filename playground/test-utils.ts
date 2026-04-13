@@ -69,7 +69,7 @@ function rgbToHex(rgb: string): string | undefined {
 
 async function toEl(el: string | ElementHandle): Promise<ElementHandle> {
   if (typeof el === 'string') {
-    return await page.$(el)
+    return (await page.$(el))!
   }
   return el
 }
@@ -77,7 +77,7 @@ async function toEl(el: string | ElementHandle): Promise<ElementHandle> {
 export async function getColor(el: string | ElementHandle): Promise<string> {
   el = await toEl(el)
   const rgb = await el.evaluate((el) => getComputedStyle(el as Element).color)
-  return hexToNameMap[rgbToHex(rgb)] ?? rgb
+  return hexToNameMap[rgbToHex(rgb)!] ?? rgb
 }
 
 export async function getBg(el: string | ElementHandle): Promise<string> {
@@ -126,7 +126,7 @@ export function findAssetFile(
   let files: string[]
   try {
     files = fs.readdirSync(assetsDir)
-  } catch (e) {
+  } catch (e: any) {
     if (e.code === 'ENOENT') {
       return ''
     }
@@ -180,13 +180,13 @@ async function untilBrowserLog(
   expectOrder = true,
 ): Promise<string[]> {
   let resolve: () => void
-  let reject: (reason: any) => void
+  let reject!: (reason: any) => void
   const promise = new Promise<void>((_resolve, _reject) => {
     resolve = _resolve
     reject = _reject
   })
 
-  const logs = []
+  const logs: string[] = []
 
   try {
     const isMatch = (matcher: string | RegExp) => (text: string) =>
@@ -200,7 +200,7 @@ async function untilBrowserLog(
       if (expectOrder) {
         const remainingTargets = [...target]
         processMsg = (text: string) => {
-          const nextTarget = remainingTargets.shift()
+          const nextTarget = remainingTargets.shift()!
           expect(text).toMatch(nextTarget)
           return remainingTargets.length === 0
         }
@@ -234,7 +234,7 @@ async function untilBrowserLog(
     }
 
     page.on('console', handleMsg)
-  } catch (err) {
+  } catch (err: any) {
     reject(err)
   }
 
@@ -254,7 +254,7 @@ export const formatSourcemapForSnapshot = (map: any): any => {
   delete m.file
   delete m.names
   delete m.sourceRoot
-  m.sources = m.sources.map((source) => source.replace(root, '/root'))
+  m.sources = m.sources.map((source: string) => source.replace(root, '/root'))
   return m
 }
 

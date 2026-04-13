@@ -1,5 +1,10 @@
 {
-  "extends": ["config:base", "schedule:weekly", "group:allNonMajor"],
+  "extends": [
+    "config:base",
+    "schedule:weekly",
+    "group:allNonMajor",
+    "helpers:pinGitHubActionDigests",
+  ],
   "labels": ["dependencies"],
   "ignorePaths": ["**/__tests__/**"],
   "pin": false,
@@ -12,7 +17,7 @@
     {
       groupName: "upstream",
       matchPackageNames: ["vite"],
-      matchPackagePrefixes: ["rollup", "@rollup", "@vitejs"],
+      matchPackagePrefixes: ["@vitejs"],
     },
     {
       groupName: "prettier",
