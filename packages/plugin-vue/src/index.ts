@@ -123,6 +123,14 @@ export interface Options {
      */
     customElement?: boolean | string | RegExp | (string | RegExp)[]
     /**
+     * Force all Vue SFC (`.vue`) files to compile in Vapor mode.
+     * When enabled, this acts as a plugin-level fallback for SFCs without the
+     * per-file `vapor` marker.
+     * - Available in Vue 3.6 and later.
+     * - **default:** `false`
+     */
+    vapor?: boolean
+    /**
      * Set to `false` to disable Options API support and allow related code in
      * Vue core to be dropped via dead-code elimination in production builds,
      * resulting in smaller bundles.
