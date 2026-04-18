@@ -15,7 +15,7 @@
   "devDependencies": {
     "@babel/plugin-syntax-decorators": "^7.28.6",
     "@rollup/plugin-swc": "^0.4.0",
-    "@swc/core": "^1.15.24",
+    "@swc/core": "^1.15.26",
     "@vitejs/plugin-vue": "workspace:*",
     "@vitejs/plugin-vue-jsx": "workspace:*"
   }
