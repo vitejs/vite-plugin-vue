@@ -225,4 +225,132 @@ describe.todo('features.vapor', () => {
       }),
     )
   })
+
+  it('does not force normal script SFCs into vapor mode', async () => {
+    const filename = '/root/NormalScript.vue'
+    const source = `
+      <script>
+      export default {
+        props: {
+          href: String
+        }
+      }
+      </script>
+      <template><a :href="href"><slot /></a></template>
+    `
+    const options = createForcedVaporOptions()
+    const compileScript = vi.fn(compiler.compileScript)
+    const compileTemplate = vi.fn(compiler.compileTemplate)
+
+    const result = await transformMain(
+      source,
+      filename,
+      {
+        ...options,
+        compiler: {
+          ...compiler,
+          compileScript,
+          compileTemplate,
+        },
+      },
+      createPluginContext(),
+      false,
+      false,
+    )
+
+    expect(result?.code).not.toContain('__vapor: true')
+    expect(result?.code).not.toContain('template as _template')
+    expect(compileScript).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        vapor: false,
+        templateOptions: expect.objectContaining({
+          vapor: false,
+        }),
+      }),
+    )
+    expect(compileTemplate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        vapor: false,
+      }),
+    )
+  })
+
+  it('forces SFCs with both normal script and script setup into vapor mode', async () => {
+    const filename = '/root/ScriptAndSetup.vue'
+    const source = `
+      <script>
+      export default {
+        props: {
+          href: String
+        }
+      }
+      </script>
+      <script setup>
+      const msg = 'hi'
+      </script>
+      <template><a :href="href">{{ msg }}</a></template>
+    `
+    const options = createForcedVaporOptions()
+    const compileScript = vi.fn(compiler.compileScript)
+
+    await transformMain(
+      source,
+      filename,
+      {
+        ...options,
+        compiler: {
+          ...compiler,
+          compileScript,
+        },
+      },
+      createPluginContext(),
+      false,
+      false,
+    )
+
+    expect(compileScript).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        vapor: true,
+        templateOptions: expect.objectContaining({
+          vapor: true,
+        }),
+      }),
+    )
+  })
+
+  it('continues to force VitePress markdown SFCs into vapor mode', async () => {
+    const filename = '/root/index.md'
+    const source = `
+      <script >
+      export const __pageData = JSON.parse("{\\"title\\":\\"Hello\\",\\"description\\":\\"\\",\\"frontmatter\\":{},\\"headers\\":[],\\"relativePath\\":\\"index.md\\",\\"filePath\\":\\"index.md\\"}")
+      export default {name:"index.md",__vapor:true}
+      </script>
+      <template><div><h1 id="hello" tabindex="-1">Hello</h1></div></template>
+    `
+    const options = createForcedVaporOptions()
+    const compileTemplate = vi.fn(compiler.compileTemplate)
+
+    await transformMain(
+      source,
+      filename,
+      {
+        ...options,
+        compiler: {
+          ...compiler,
+          compileTemplate,
+        },
+      },
+      createPluginContext(),
+      false,
+      false,
+    )
+
+    expect(compileTemplate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        vapor: true,
+      }),
+    )
+  })
 })

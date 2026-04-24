@@ -123,7 +123,7 @@ export interface Options {
      */
     customElement?: boolean | string | RegExp | (string | RegExp)[]
     /**
-     * Force all Vue SFC (`.vue`) files to compile in Vapor mode.
+     * Force all <script setup> Vue SFC (`.vue`) files to compile in Vapor mode.
      * When enabled, this acts as a plugin-level fallback for SFCs without the
      * per-file `vapor` marker.
      * - Available in Vue 3.6 and later.
