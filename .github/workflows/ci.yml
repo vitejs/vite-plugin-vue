@@ -121,7 +121,7 @@ jobs:
         run: pnpm run lint
 
       - name: Check formatting
-        run: pnpm prettier --check .
+        run: pnpm run format --check
 
       - name: Typecheck
         run: pnpm run typecheck

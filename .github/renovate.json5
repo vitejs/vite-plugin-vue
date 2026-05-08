@@ -20,10 +20,6 @@
       matchPackagePrefixes: ["@vitejs"],
     },
     {
-      groupName: "prettier",
-      matchPackageNames: ["prettier"],
-    },
-    {
       "matchDepTypes": ["action"],
       "excludePackagePrefixes": ["actions/", "github/"],
       "pinDigests": true,
