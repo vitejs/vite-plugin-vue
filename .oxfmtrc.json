@@ -1,24 +1,10 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
   "semi": false,
-  "tabWidth": 2,
   "singleQuote": true,
   "printWidth": 80,
   "trailingComma": "all",
   "sortPackageJson": false,
-  "ignorePatterns": [
-    "packages/*/CHANGELOG.md",
-    "playground-temp/",
-    "dist/",
-    "temp/",
-    "LICENSE.md",
-    "pnpm-lock.yaml",
-    "pnpm-workspace.yaml",
-    "playground/tsconfig-json-load-error/has-error/tsconfig.json",
-    "playground/html/invalid.html",
-    "playground/html/valid.html",
-    "playground/worker/classic-worker.js"
-  ],
   "overrides": [
     {
       "files": ["*.json5"],
@@ -33,5 +19,18 @@
         "singleQuote": false
       }
     }
+  ],
+  "ignorePatterns": [
+    "packages/*/CHANGELOG.md",
+    "playground-temp/",
+    "dist/",
+    "temp/",
+    "LICENSE.md",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "playground/tsconfig-json-load-error/has-error/tsconfig.json",
+    "playground/html/invalid.html",
+    "playground/html/valid.html",
+    "playground/worker/classic-worker.js"
   ]
 }
