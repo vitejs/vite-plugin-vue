@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "lodash-es": "^4.17.23",
+    "@vitejs/test-dep-lodash-es": "link:dep-lodash-es",
     "vue": "catalog:"
   },
   "devDependencies": {
