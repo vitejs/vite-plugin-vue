@@ -18,6 +18,6 @@
     "@swc/core": "^1.15.33",
     "@vitejs/plugin-vue": "workspace:*",
     "@vitejs/plugin-vue-jsx": "workspace:*",
-    "rollup": "^4.60.3"
+    "rollup": "^4.60.4"
   }
 }
