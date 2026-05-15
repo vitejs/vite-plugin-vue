@@ -1,3 +1,13 @@
+## <small>[6.0.7](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.6...plugin-vue@6.0.7) (2026-05-15)</small>
+### Features
+
+* use carets for `@rolldown/pluginutils` version ([#776](https://github.com/vitejs/vite-plugin-vue/issues/776)) ([941b651](https://github.com/vitejs/vite-plugin-vue/commit/941b651d8329559fce9231aad4e178f54cccb013))
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#762](https://github.com/vitejs/vite-plugin-vue/issues/762)) ([9e825b8](https://github.com/vitejs/vite-plugin-vue/commit/9e825b85ebe9b6006dc5927aaa8aabc0bcc7eceb))
+* **deps:** update all non-major dependencies ([#774](https://github.com/vitejs/vite-plugin-vue/issues/774)) ([77dc8bc](https://github.com/vitejs/vite-plugin-vue/commit/77dc8bc935216bb7ed13f1c2653a80ffdc99fd45))
+
 ## <small>[6.0.6](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.5...plugin-vue@6.0.6) (2026-04-13)</small>
 ### Features
 
