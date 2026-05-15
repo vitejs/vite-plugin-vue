@@ -51,7 +51,7 @@
     "vue": "catalog:"
   },
   "dependencies": {
-    "@rolldown/pluginutils": "1.0.1"
+    "@rolldown/pluginutils": "^1.0.1"
   },
   "compatiblePackages": {
     "schemaVersion": 1,
