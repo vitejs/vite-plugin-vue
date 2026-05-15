@@ -1,35 +1,47 @@
 {
-  "extends": [
-    "config:base",
-    "schedule:weekly",
-    "group:allNonMajor",
-    "helpers:pinGitHubActionDigests",
+  extends: [
+    'config:recommended',
+    'schedule:weekly',
+    'group:allNonMajor',
+    'helpers:pinGitHubActionDigests',
   ],
-  "labels": ["dependencies"],
-  "ignorePaths": ["**/__tests__/**"],
-  "pin": false,
-  "rangeStrategy": "bump",
-  "packageRules": [
+  labels: [
+    'dependencies',
+  ],
+  ignorePaths: [
+    '**/__tests__/**',
+  ],
+  pin: {
+    enabled: false,
+  },
+  rangeStrategy: 'bump',
+  packageRules: [
     {
-      "depTypeList": ["peerDependencies"],
-      "enabled": false,
+      matchDepTypes: [
+        'peerDependencies',
+      ],
+      enabled: false,
     },
     {
-      groupName: "upstream",
-      matchPackageNames: ["vite"],
-      matchPackagePrefixes: ["@vitejs"],
+      groupName: 'upstream',
+      matchPackageNames: [
+        'vite',
+        '@vitejs{/,}**',
+      ],
     },
     {
-      "matchDepTypes": ["action"],
-      "excludePackagePrefixes": ["actions/", "github/"],
-      "pinDigests": true,
+      matchDepTypes: [
+        'action',
+      ],
+      pinDigests: true,
+      matchPackageNames: [
+        '!actions/{/,}**',
+        '!github/{/,}**',
+      ],
     },
   ],
-  "ignoreDeps": [
-    // manually bumping
-    "node",
-
-    // breaking changes
-    "kill-port", // `kill-port:^2.0.0 has perf issues (#8392)
+  ignoreDeps: [
+    'node',
+    'kill-port',
   ],
 }
