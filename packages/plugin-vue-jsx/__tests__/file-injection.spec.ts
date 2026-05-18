@@ -2,72 +2,125 @@ import { describe, expect, it } from 'vitest'
 import type { Plugin, ResolvedConfig } from 'vite'
 import vueJsxPlugin from '../src/index'
 
-function createPlugin() {
+function createPlugin(
+  opts: { command?: 'serve' | 'build'; isProduction?: boolean } = {},
+) {
+  const { command = 'serve', isProduction = false } = opts
   const plugin = vueJsxPlugin() as Plugin
-  // Simulate configResolved with serve + dev (needHmr = true)
-  const fakeConfig = {
-    command: 'serve',
-    isProduction: false,
+  ;(plugin.configResolved as any)({
+    command,
+    isProduction,
     build: { sourcemap: false },
     root: '/project',
-  } as unknown as ResolvedConfig
-  ;(plugin.configResolved as Function)(fakeConfig)
+  } as unknown as ResolvedConfig)
   return plugin
 }
 
-async function transform(plugin: Plugin, code: string, id: string) {
-  const handler =
-    typeof plugin.transform === 'function'
-      ? plugin.transform
-      : (plugin.transform as any)?.handler
-  return handler?.call({ meta: {} }, code, id, {})
+async function transform(plugin: Plugin, code: string, id: string, opts = {}) {
+  const t = plugin.transform as any
+  const handler = typeof t === 'function' ? t : t?.handler
+  return handler?.call({ meta: {} }, code, id, opts)
 }
 
-const defineComponentCode = `
+const namedExportCode = `
 import { defineComponent, ref } from 'vue'
-
-export const MyButton = defineComponent(() => {
+export const MyComp = defineComponent(() => {
   const count = ref(0)
-  return () => <button>{count.value}</button>
+  return () => <div>{count.value}</div>
 })
 `
 
-describe('__file injection in dev/HMR mode', () => {
-  it('injects __file on a named defineComponent export (.jsx)', async () => {
-    const plugin = createPlugin()
-    const id = '/project/src/components/MyButton.jsx'
-    const result = await transform(plugin, defineComponentCode, id)
-    expect(result?.code).toContain(`MyButton.__file = ${JSON.stringify(id)}`)
+const namedSpecifierCode = `
+import { defineComponent } from 'vue'
+const MyComp = defineComponent(() => () => <div />)
+export { MyComp }
+`
+
+const defaultExportCode = `
+import { defineComponent } from 'vue'
+export default defineComponent(() => () => <div />)
+`
+
+const defaultExportAsCode = `
+import { defineComponent } from 'vue'
+import type { DefineComponent } from 'vue'
+export default defineComponent(() => () => <div />) as DefineComponent<any>
+`
+
+describe('__file injection', () => {
+  describe('in dev/HMR mode', () => {
+    it('injects __file on a named export (.jsx)', async () => {
+      const plugin = createPlugin()
+      const id = '/project/src/MyComp.jsx'
+      const result = await transform(plugin, namedExportCode, id)
+      expect(result?.code).toContain(`MyComp.__file = ${JSON.stringify(id)}`)
+    })
+
+    it('injects __file on a named export (.tsx)', async () => {
+      const plugin = createPlugin()
+      const id = '/project/src/MyComp.tsx'
+      const result = await transform(plugin, namedExportCode, id)
+      expect(result?.code).toContain(`MyComp.__file = ${JSON.stringify(id)}`)
+    })
+
+    it('injects __file on a named export via specifier', async () => {
+      const plugin = createPlugin()
+      const id = '/project/src/MyComp.jsx'
+      const result = await transform(plugin, namedSpecifierCode, id)
+      expect(result?.code).toContain(`MyComp.__file = ${JSON.stringify(id)}`)
+    })
+
+    it('injects __file on a default export', async () => {
+      const plugin = createPlugin()
+      const id = '/project/src/MyComp.jsx'
+      const result = await transform(plugin, defaultExportCode, id)
+      expect(result?.code).toContain(
+        `__default__.__file = ${JSON.stringify(id)}`,
+      )
+    })
+
+    it('injects __file on a default export with type assertion (TSX)', async () => {
+      const plugin = createPlugin()
+      const id = '/project/src/MyComp.tsx'
+      const result = await transform(plugin, defaultExportAsCode, id)
+      expect(result?.code).toContain(
+        `__default__.__file = ${JSON.stringify(id)}`,
+      )
+    })
+
+    it('injects __file alongside __hmrId', async () => {
+      const plugin = createPlugin()
+      const id = '/project/src/MyComp.jsx'
+      const result = await transform(plugin, namedExportCode, id)
+      expect(result?.code).toContain('__hmrId')
+      expect(result?.code).toContain(`__file = ${JSON.stringify(id)}`)
+    })
+
+    it('does not inject __file for .vue script blocks', async () => {
+      const plugin = createPlugin()
+      // Simulate the id format for Vue SFC script blocks
+      const id = '/project/src/Comp.vue?vue&type=script&lang.jsx'
+      const result = await transform(plugin, namedExportCode, id)
+      expect(result?.code).not.toContain('__file')
+    })
   })
 
-  it('injects __file on a named defineComponent export (.tsx)', async () => {
-    const plugin = createPlugin()
-    const id = '/project/src/components/MyButton.tsx'
-    const tsxCode = defineComponentCode
-    const result = await transform(plugin, tsxCode, id)
-    expect(result?.code).toContain(`MyButton.__file = ${JSON.stringify(id)}`)
+  describe('in build/production mode', () => {
+    it('does not inject __file', async () => {
+      const plugin = createPlugin({ command: 'build', isProduction: true })
+      const id = '/project/src/MyComp.jsx'
+      const result = await transform(plugin, namedExportCode, id)
+      expect(result?.code).not.toContain('__file')
+    })
   })
 
-  it('injects __file alongside __hmrId', async () => {
-    const plugin = createPlugin()
-    const id = '/project/src/MyComp.jsx'
-    const result = await transform(plugin, defineComponentCode, id)
-    expect(result?.code).toContain('__hmrId')
-    expect(result?.code).toContain(`__file = ${JSON.stringify(id)}`)
-  })
-
-  it('does not inject __file when not in HMR mode', async () => {
-    const plugin = vueJsxPlugin() as Plugin
-    const fakeConfig = {
-      command: 'build',
-      isProduction: true,
-      build: { sourcemap: false },
-      root: '/project',
-    } as unknown as ResolvedConfig
-    ;(plugin.configResolved as Function)(fakeConfig)
-
-    const id = '/project/src/MyComp.jsx'
-    const result = await transform(plugin, defineComponentCode, id)
-    expect(result?.code).not.toContain('__file')
+  describe('in SSR mode', () => {
+    it('does not inject __file (uses ssrRegisterHelper instead)', async () => {
+      const plugin = createPlugin()
+      const id = '/project/src/MyComp.jsx'
+      const result = await transform(plugin, namedExportCode, id, { ssr: true })
+      expect(result?.code).not.toContain('__file')
+      expect(result?.code).toContain('ssrRegisterHelper')
+    })
   })
 })
