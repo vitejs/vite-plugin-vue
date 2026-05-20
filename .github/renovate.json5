@@ -21,7 +21,6 @@
     },
     {
       "matchDepTypes": ["action"],
-      "excludePackagePrefixes": ["actions/", "github/"],
       "pinDigests": true,
     },
   ],
