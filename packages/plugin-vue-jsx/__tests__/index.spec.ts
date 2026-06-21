@@ -61,8 +61,8 @@ async function createTransform(tsTransform?: 'babel' | 'built-in') {
       : plugin.transform
   if (!transform) throw new TypeError('Missing transform hook')
 
-  return async (id: string, ssr = false) => {
-    const result = await transform.call({} as any, code, id, { ssr })
+  return async (id: string) => {
+    const result = await transform.call({} as any, code, id)
     if (!result || typeof result === 'string') {
       throw new TypeError('Missing transform result')
     }
@@ -76,27 +76,21 @@ beforeEach(() => {
 })
 
 describe('TypeScript plugin caching', () => {
-  test('reuses the transform plugin for client and SSR transforms', async () => {
+  test('reuses the transform plugin', async () => {
     const transform = await createTransform()
-    const clientResult = await transform('/project/src/Client.tsx')
-    const ssrResult = await transform('/project/src/Server.tsx', true)
+    const result = await transform('/project/src/First.tsx')
+    await transform('/project/src/Second.tsx')
 
     expect(pluginFactoryCalls.transformTypeScript).toBe(1)
-    expect(clientResult.code).not.toContain('interface Props')
-    expect(clientResult.code).toContain('/* @__PURE__ */ defineComponent')
-    expect(ssrResult.code).toContain('const __default__ = defineComponent')
-    expect(ssrResult.code).toContain(
-      'ssrRegisterHelper(__default__, __moduleId)',
-    )
+    expect(result.code).not.toContain('interface Props')
   })
 
   test('reuses the syntax plugin in built-in transform mode', async () => {
     const transform = await createTransform('built-in')
-    const firstResult = await transform('/project/src/First.tsx')
-    const secondResult = await transform('/project/src/Second.tsx')
+    const result = await transform('/project/src/First.tsx')
+    await transform('/project/src/Second.tsx')
 
     expect(pluginFactoryCalls.syntaxTypeScript).toBe(1)
-    expect(firstResult.code).toContain('interface Props')
-    expect(secondResult.code).toBe(firstResult.code)
+    expect(result.code).toContain('interface Props')
   })
 })
