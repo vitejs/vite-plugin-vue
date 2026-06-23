@@ -1,3 +1,15 @@
+## <small>[5.1.6](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.1.5...plugin-vue-jsx@5.1.6) (2026-06-23)</small>
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#738](https://github.com/vitejs/vite-plugin-vue/issues/738)) ([050c996](https://github.com/vitejs/vite-plugin-vue/commit/050c9962660e7bb189fe8e03f0fa4cbd0b5ba766))
+* **deps:** update all non-major dependencies ([#762](https://github.com/vitejs/vite-plugin-vue/issues/762)) ([9e825b8](https://github.com/vitejs/vite-plugin-vue/commit/9e825b85ebe9b6006dc5927aaa8aabc0bcc7eceb))
+* **deps:** update all non-major dependencies ([#774](https://github.com/vitejs/vite-plugin-vue/issues/774)) ([77dc8bc](https://github.com/vitejs/vite-plugin-vue/commit/77dc8bc935216bb7ed13f1c2653a80ffdc99fd45))
+* **deps:** update all non-major dependencies ([#781](https://github.com/vitejs/vite-plugin-vue/issues/781)) ([d369e5a](https://github.com/vitejs/vite-plugin-vue/commit/d369e5a57592ed525c4da5ef0458cb89a6977ad2))
+
+### Performance Improvements
+
+* **jsx:** cache TypeScript Babel plugin config ([#799](https://github.com/vitejs/vite-plugin-vue/issues/799)) ([5f3ffab](https://github.com/vitejs/vite-plugin-vue/commit/5f3ffabacdca7049747b28f7c78f52735c6fa0e1))
+
 ## <small>[5.1.5](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue-jsx@5.1.4...plugin-vue-jsx@5.1.5) (2026-03-12)</small>
 ### Miscellaneous Chores
 
