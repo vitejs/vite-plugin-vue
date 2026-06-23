@@ -5,6 +5,7 @@ permissions: {}
 
 jobs:
   build:
+    if: github.repository == 'vitejs/vite-plugin-vue'
     runs-on: ubuntu-latest
 
     steps:
