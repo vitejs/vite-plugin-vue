@@ -53,6 +53,30 @@ function vueJsxPlugin(options: Options = {}): Plugin {
     ...babelPluginOptions
   } = options
   const filter = createFilter(include, exclude)
+  let tsPluginPromise: Promise<babel.ConfigItem> | undefined
+  const resolveTsPlugin = () => {
+    tsPluginPromise ??=
+      tsTransform === 'built-in'
+        ? // @ts-ignore missing type
+          import('@babel/plugin-syntax-typescript').then(
+            (r) =>
+              babel.createConfigItem([r.default, { isTSX: true }], {
+                type: 'plugin',
+              })!,
+          )
+        : // @ts-ignore missing type
+          import('@babel/plugin-transform-typescript').then(
+            (r) =>
+              babel.createConfigItem(
+                [
+                  r.default,
+                  { ...tsPluginOptions, isTSX: true, allowExtensions: true },
+                ],
+                { type: 'plugin' },
+              )!,
+          )
+    return tsPluginPromise
+  }
 
   return {
     name: 'vite:vue-jsx',
@@ -142,26 +166,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
         if (filter(id) || filter(filepath)) {
           const plugins = [[jsx, babelPluginOptions], ...babelPlugins]
           if (id.endsWith('.tsx') || filepath.endsWith('.tsx')) {
-            if (tsTransform === 'built-in') {
-              // For 'built-in' add "syntax" plugin
-              // to enable parsing without transformation.
-              plugins.push([
-                // @ts-ignore missing type
-                await import('@babel/plugin-syntax-typescript').then(
-                  (r) => r.default,
-                ),
-                { isTSX: true },
-              ])
-            } else {
-              plugins.push([
-                // @ts-ignore missing type
-                await import('@babel/plugin-transform-typescript').then(
-                  (r) => r.default,
-                ),
-                // @ts-ignore
-                { ...tsPluginOptions, isTSX: true, allowExtensions: true },
-              ])
-            }
+            plugins.push(await resolveTsPlugin())
           }
 
           if (!ssr && !needHmr) {
