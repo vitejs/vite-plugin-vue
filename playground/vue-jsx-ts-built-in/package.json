@@ -13,11 +13,11 @@
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@babel/plugin-syntax-decorators": "^7.28.6",
-    "@rollup/plugin-swc": "^0.4.0",
-    "@swc/core": "^1.15.33",
+    "@babel/plugin-syntax-decorators": "^7.29.7",
+    "@rollup/plugin-swc": "^0.4.1",
+    "@swc/core": "^1.15.43",
     "@vitejs/plugin-vue": "workspace:*",
     "@vitejs/plugin-vue-jsx": "workspace:*",
-    "rollup": "^4.60.4"
+    "rollup": "^4.62.2"
   }
 }
