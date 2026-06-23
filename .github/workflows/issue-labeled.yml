@@ -9,23 +9,36 @@ jobs:
     if: github.repository == 'vitejs/vite-plugin-vue'
     runs-on: ubuntu-latest
     permissions:
-      issues: write # for actions-cool/issues-helper to update issues
-      pull-requests: write # for actions-cool/issues-helper to update PRs
+      contents: read # to check out the repo for local actions
+      issues: write # for actions/issues-helper to update issues
+      pull-requests: write # for actions/issues-helper to update PRs
     steps:
-      - name: contribution welcome
-        if: github.event.label.name == 'contribution welcome' || github.event.label.name == 'help wanted'
-        uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
-          actions: "create-comment, remove-labels"
+          persist-credentials: false
+
+      - name: contribution welcome comment
+        if: github.event.label.name == 'contribution welcome' || github.event.label.name == 'help wanted'
+        uses: ./.github/actions/issues-helper
+        with:
+          actions: "create-comment"
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
             Hello @${{ github.event.issue.user.login }}. We like your proposal/feedback and would appreciate a contribution via a Pull Request by you or another community member. We thank you in advance for your contribution and are looking forward to reviewing it!
+
+      - name: contribution welcome labels
+        if: github.event.label.name == 'contribution welcome' || github.event.label.name == 'help wanted'
+        uses: ./.github/actions/issues-helper
+        with:
+          actions: "remove-labels"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
           labels: "pending triage, need reproduction"
 
       - name: remove pending
-        if: (github.event.label.name == 'enhancement' || contains(github.event.label.description, '(priority)')) && contains(github.event.issue.labels.*.name, 'pending triage')
-        uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3
+        if: (github.event.label.name == 'enhancement' || contains(github.event.label.description, '(priority)') || github.event.label.name == 'need reproduction') && contains(github.event.issue.labels.*.name, 'pending triage')
+        uses: ./.github/actions/issues-helper
         with:
           actions: "remove-labels"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -34,11 +47,10 @@ jobs:
 
       - name: need reproduction
         if: github.event.label.name == 'need reproduction'
-        uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3
+        uses: ./.github/actions/issues-helper
         with:
-          actions: "create-comment, remove-labels"
+          actions: "create-comment"
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
             Hello @${{ github.event.issue.user.login }}. Please provide a [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) using a GitHub repository or [StackBlitz](https://vite.new). Issues marked with `need reproduction` will be closed if they have no activity within 3 days.
-          labels: "pending triage"
