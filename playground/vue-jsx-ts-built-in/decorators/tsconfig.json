@@ -3,5 +3,6 @@
   "compilerOptions": {
     "target": "es2020",
     "experimentalDecorators": false
-  }
+  },
+  "include": ["**/*.{ts,tsx,vue}"]
 }
