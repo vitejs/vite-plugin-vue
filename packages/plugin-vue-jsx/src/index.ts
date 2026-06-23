@@ -55,15 +55,17 @@ function vueJsxPlugin(options: Options = {}): Plugin {
   const filter = createFilter(include, exclude)
   let tsPluginPromise: Promise<babel.ConfigItem> | undefined
   const resolveTsPlugin = () => {
-    return (tsPluginPromise ??=
+    tsPluginPromise ??=
       tsTransform === 'built-in'
-        ? import('@babel/plugin-syntax-typescript').then(
+        ? // @ts-ignore missing type
+          import('@babel/plugin-syntax-typescript').then(
             (r) =>
               babel.createConfigItem([r.default, { isTSX: true }], {
                 type: 'plugin',
               })!,
           )
-        : import('@babel/plugin-transform-typescript').then(
+        : // @ts-ignore missing type
+          import('@babel/plugin-transform-typescript').then(
             (r) =>
               babel.createConfigItem(
                 [
@@ -72,7 +74,8 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                 ],
                 { type: 'plugin' },
               )!,
-          ))
+          )
+    return tsPluginPromise
   }
 
   return {
