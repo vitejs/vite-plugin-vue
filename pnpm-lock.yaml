@@ -7,6 +7,9 @@ settings:
 
 catalogs:
   default:
+    vite:
+      specifier: ^8.0.13
+      version: 8.0.16
     vue:
       specifier: ^3.5.38
       version: 3.5.38
@@ -282,7 +285,7 @@ importers:
         version: link:../../packages/plugin-vue
       js-yaml:
         specifier: ^4.1.1
-        version: 4.1.1
+        version: 4.2.0
       less:
         specifier: ^4.6.7
         version: 4.6.7
@@ -3574,8 +3577,8 @@ packages:
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
-  js-yaml@4.1.1:
-    resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
+  js-yaml@4.2.0:
+    resolution: {integrity: sha512-ePWsvanv0DWuDRsW8dnt+R4jQ31SCRCQ7hhNcPXZPsoBZiemuZNYGf7adZdqX2D86j6rvKp3RpCxVTSb8WQlOw==}
     hasBin: true
 
   jsdoc-type-pratt-parser@7.1.0:
@@ -7949,7 +7952,7 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
-  js-yaml@4.1.1:
+  js-yaml@4.2.0:
     dependencies:
       argparse: 2.0.1
 
