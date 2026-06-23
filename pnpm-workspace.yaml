@@ -13,18 +13,16 @@ overrides:
 minimumReleaseAgeExclude:
   - '*'
 
-ignoredBuiltDependencies:
-  - '@parcel/watcher'
-  - '@swc/core'
-  - core-js
-  - esbuild
-  - less
-
-onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - playwright-chromium
-  - simple-git-hooks
-  - unrs-resolver
+allowBuilds:
+  '@tailwindcss/oxide': true
+  'playwright-chromium': true
+  'simple-git-hooks': true
+  'unrs-resolver': true
+  '@parcel/watcher': false
+  '@swc/core': false
+  'core-js': false
+  'esbuild': false
+  'less': false
 
 hoistPattern:
   - postcss
@@ -36,3 +34,5 @@ autoInstallPeers: false
 strictPeerDependencies: false
 
 shellEmulator: true
+
+dedupePeers: true
