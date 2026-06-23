@@ -79,5 +79,5 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "pnpm@10.34.4"
+  "packageManager": "pnpm@11.8.0"
 }
