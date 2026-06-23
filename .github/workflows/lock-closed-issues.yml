@@ -5,20 +5,20 @@ on:
     - cron: "0 0 * * *"
 
 permissions:
-  issues: write
+  contents: read # to check out the repo for local actions
+  issues: write # for actions/issues-helper to update issues
 
 jobs:
   action:
     if: github.repository == 'vitejs/vite-plugin-vue'
     runs-on: ubuntu-latest
     steps:
-      - uses: dessant/lock-threads@7266a7ce5c1df01b1c6db85bf8cd86c737dadbe7 # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-inactive-days: "14"
-          #issue-comment: |
-          #  This issue has been locked since it has been closed for more than 14 days.
-          #
-          #  If you have found a concrete bug or regression related to it, please open a new [bug report](https://github.com/vitejs/vite-plugin-vue/issues/new/choose) with a reproduction against the latest Vite version. If you have any other comments you should join the chat at [Vite Land](https://chat.vitejs.dev) or create a new [discussion](https://github.com/vitejs/vite-plugin-vue/discussions).
-          issue-lock-reason: ""
-          process-only: "issues"
+          persist-credentials: false
+
+      - uses: ./.github/actions/issues-helper
+        with:
+          actions: "lock-closed-issues"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          inactive-day: 14
