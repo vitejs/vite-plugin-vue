@@ -425,7 +425,14 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           if (query.src) {
             return fs.readFileSync(filename, 'utf-8')
           }
-          const descriptor = getDescriptor(filename, options.value)!
+          const descriptor = getDescriptor(
+            filename,
+            options.value,
+            true,
+            false,
+            undefined,
+            ssr,
+          )!
           let block: SFCBlock | null | undefined
           if (query.type === 'script') {
             // handle <script> + <script setup> merge via compileScript()
@@ -481,7 +488,14 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           const descriptor: ExtendedSFCDescriptor = query.src
             ? getSrcDescriptor(filename, query) ||
               getTempSrcDescriptor(filename, query)
-            : getDescriptor(filename, options.value)!
+            : getDescriptor(
+                filename,
+                options.value,
+                true,
+                false,
+                undefined,
+                ssr,
+              )!
 
           if (query.src) {
             this.addWatchFile(filename)

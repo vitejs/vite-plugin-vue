@@ -38,10 +38,18 @@ export async function transformMain(
   const { devServer, isProduction, devToolsEnabled } = options
 
   const prevDescriptor = getPrevDescriptor(filename)
-  const { descriptor, errors } = createDescriptor(filename, code, options)
+  const { descriptor, errors } = createDescriptor(
+    filename,
+    code,
+    options,
+    false,
+    ssr,
+  )
 
   if (fs.existsSync(filename)) {
-    // populate descriptor cache for HMR if it's not set yet
+    // populate descriptor cache for HMR if it's not set yet.
+    // HMR is client-only, so we always store the HMR descriptor under the
+    // client key regardless of the current transform's ssr flag.
     getDescriptor(
       filename,
       options,
@@ -54,6 +62,7 @@ export async function transformMain(
       // post-transform code, so we populate the descriptor with post-transform
       // code here as well.
       filename.endsWith('.vue') ? undefined : code,
+      false,
     )
   }
 

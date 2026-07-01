@@ -6,10 +6,10 @@ import { isCSSRequest } from 'vite'
 import type * as t from '@babel/types'
 
 import {
-  cache,
   createDescriptor,
   getDescriptor,
   invalidateDescriptor,
+  setCachedDescriptor,
 } from './utils/descriptorCache'
 import {
   getResolvedScript,
@@ -159,8 +159,11 @@ export async function handleHotUpdate(
   if (updateType.length) {
     if (file.endsWith('.vue')) {
       // invalidate the descriptor cache so that the next transform will
-      // re-analyze the file and pick up the changes.
-      invalidateDescriptor(file)
+      // re-analyze the file and pick up the changes. Clear both the client
+      // and ssr-keyed entries so a subsequent transform (in either mode)
+      // picks up the new source.
+      invalidateDescriptor(file, false, false)
+      invalidateDescriptor(file, false, true)
     } else {
       // https://github.com/vuejs/vitepress/issues/3129
       // For non-vue files, e.g. .md files in VitePress, invalidating the
@@ -169,7 +172,9 @@ export async function handleHotUpdate(
       // To fix that we need to provide the descriptor we parsed here in the
       // main cache. This assumes no other plugin is applying pre-transform to
       // the file type - not impossible, but should be extremely unlikely.
-      cache.set(file, descriptor)
+      // HMR is client-only, so we store the fresh descriptor under the
+      // client key.
+      setCachedDescriptor(file, descriptor, false)
     }
     debug(`[vue:update(${updateType.join('&')})] ${file}`)
   }

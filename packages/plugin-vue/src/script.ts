@@ -1,6 +1,6 @@
 import type { SFCDescriptor, SFCScriptBlock } from 'vue/compiler-sfc'
 import { resolveTemplateCompilerOptions } from './template'
-import { cache as descriptorCache } from './utils/descriptorCache'
+import { peekCachedDescriptor } from './utils/descriptorCache'
 import type { ResolvedOptions } from './index'
 
 // ssr and non ssr builds would output different script content
@@ -10,10 +10,14 @@ let ssrCache = new WeakMap<SFCDescriptor, SFCScriptBlock | null>()
 export const typeDepToSFCMap = new Map<string, Set<string>>()
 
 export function invalidateScript(filename: string): void {
-  const desc = descriptorCache.get(filename)
-  if (desc) {
-    clientCache.delete(desc)
-    ssrCache.delete(desc)
+  // Descriptors are keyed by `(filename, ssr)`; clear both variants so a
+  // subsequent transform recompiles the script.
+  for (const ssr of [false, true]) {
+    const desc = peekCachedDescriptor(filename, ssr)
+    if (desc) {
+      clientCache.delete(desc)
+      ssrCache.delete(desc)
+    }
   }
 }
 
