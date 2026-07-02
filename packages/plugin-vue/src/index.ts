@@ -321,8 +321,10 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     configResolved(config) {
+      const { compiler, ...rest } = options.value
       options.value = {
-        ...options.value,
+        compiler: compiler ?? resolveCompiler(options.value.root),
+        ...rest,
         root: config.root,
         sourceMap: config.command === 'build' ? !!config.build.sourcemap : true,
         cssDevSourcemap: config.css?.devSourcemap ?? false,
