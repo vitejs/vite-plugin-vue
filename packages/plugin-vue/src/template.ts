@@ -9,6 +9,7 @@ import type {
 import type { Rollup } from 'vite'
 import { getResolvedScript, resolveScript } from './script'
 import { createRollupError } from './utils/error'
+import { isVaporMode } from './utils/vapor'
 import type { ResolvedOptions } from './index'
 
 export async function transformTemplateAsModule(
@@ -193,7 +194,8 @@ export function resolveTemplateCompilerOptions(
   return {
     ...options.template,
     // @ts-expect-error TODO remove when 3.6 is out
-    vapor: descriptor.vapor,
+
+    vapor: isVaporMode(descriptor, options),
     id,
     ast: canReuseAST(options.compiler.version)
       ? descriptor.template?.ast
