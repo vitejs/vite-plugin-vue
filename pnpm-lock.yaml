@@ -380,6 +380,16 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-vue
 
+  playground/vue-refresh-bug:
+    dependencies:
+      vue:
+        specifier: 'catalog:'
+        version: 3.5.39(typescript@6.0.3)
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue
+
   playground/vue-server-origin:
     dependencies:
       vue:
@@ -6839,7 +6849,7 @@ snapshots:
 
   '@vue-macros/common@3.1.2(vue@3.5.39)':
     dependencies:
-      '@vue/compiler-sfc': 3.5.38
+      '@vue/compiler-sfc': 3.5.39
       ast-kit: 2.2.0
       local-pkg: 1.1.2
       magic-string-ast: 1.0.3

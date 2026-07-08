@@ -292,6 +292,10 @@ export async function transformMain(
           // target can be overridden by oxc config target
           // @ts-ignore Rolldown-specific
           ...options.devServer?.config.oxc,
+          jsx: {
+            ...options.devServer?.config.oxc?.jsx,
+            refresh: false,
+          },
           lang: 'ts',
           sourcemap: options.sourceMap,
         },
