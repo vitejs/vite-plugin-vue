@@ -24,6 +24,7 @@ import { transformTemplateInMain } from './template'
 import { isEqualBlock, isOnlyTemplateChanged } from './handleHotUpdate'
 import { createRollupError } from './utils/error'
 import { EXPORT_HELPER_ID } from './helper'
+import { isVaporMode } from './utils/vapor'
 import type { ResolvedOptions } from './index'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -67,9 +68,10 @@ export async function transformMain(
   // feature information
   const attachedProps: [string, string][] = []
   const hasScoped = descriptor.styles.some((s) => s.scoped)
-  // @ts-expect-error TODO remove when 3.6 is out
   const isTemplateOnlyVapor =
-    !descriptor.script && !descriptor.scriptSetup && descriptor.vapor
+    !descriptor.script &&
+    !descriptor.scriptSetup &&
+    isVaporMode(descriptor, options)
 
   // script
   const { code: scriptCode, map: scriptMap } = await genScriptCode(
@@ -345,9 +347,10 @@ async function genTemplateCode(
 }> {
   const template = descriptor.template!
   const hasScoped = descriptor.styles.some((style) => style.scoped)
-  // @ts-expect-error TODO remove when 3.6 is out
   const needsMultiRoot =
-    !descriptor.script && !descriptor.scriptSetup && descriptor.vapor
+    !descriptor.script &&
+    !descriptor.scriptSetup &&
+    isVaporMode(descriptor, options)
 
   // If the template is not using pre-processor AND is not using external src,
   // compile and inline it directly in the main module. When served in vite this
@@ -404,8 +407,7 @@ async function genScriptCode(
   code: string
   map: RawSourceMap | undefined
 }> {
-  // @ts-expect-error TODO remove when 3.6 is out
-  const vaporFlag = descriptor.vapor ? '__vapor: true' : ''
+  const vaporFlag = isVaporMode(descriptor, options) ? '__vapor: true' : ''
   let scriptCode = `const ${scriptIdentifier} = { ${vaporFlag} }`
   let map: RawSourceMap | undefined
 
