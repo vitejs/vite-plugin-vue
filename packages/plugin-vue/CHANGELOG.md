@@ -1,3 +1,12 @@
+## <small>[6.0.8](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.7...plugin-vue@6.0.8) (2026-07-14)</small>
+### Features
+
+* **plugin-vue:** add forced vapor mode option ([#766](https://github.com/vitejs/vite-plugin-vue/issues/766)) ([d59c3c0](https://github.com/vitejs/vite-plugin-vue/commit/d59c3c04b0c5cd920bab5f0f6000bedfef901e1c))
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#781](https://github.com/vitejs/vite-plugin-vue/issues/781)) ([d369e5a](https://github.com/vitejs/vite-plugin-vue/commit/d369e5a57592ed525c4da5ef0458cb89a6977ad2))
+
 ## <small>[6.0.7](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.6...plugin-vue@6.0.7) (2026-05-15)</small>
 ### Features
 
