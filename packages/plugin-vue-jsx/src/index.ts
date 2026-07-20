@@ -158,7 +158,7 @@ function vueJsxPlugin(options: Options = {}): Plugin {
         },
       },
       async handler(code, id, opt) {
-        const ssr = opt?.ssr === true
+        const ssr = this.environment.config.consumer === 'server'
         const [filepath] = id.split('?')
 
         // use id for script blocks in Vue SFCs (e.g. `App.vue?vue&type=script&lang.jsx`)
