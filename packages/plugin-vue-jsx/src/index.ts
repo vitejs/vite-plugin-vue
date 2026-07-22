@@ -58,22 +58,20 @@ function vueJsxPlugin(options: Options = {}): Plugin {
     tsPluginPromise ??=
       tsTransform === 'built-in'
         ? // @ts-ignore missing type
-          import('@babel/plugin-syntax-typescript').then(
-            (r) =>
-              babel.createConfigItem([r.default, { isTSX: true }], {
-                type: 'plugin',
-              })!,
+          import('@babel/plugin-syntax-typescript').then((r) =>
+            babel.createConfigItem([r.default, { isTSX: true }], {
+              type: 'plugin',
+            })!,
           )
         : // @ts-ignore missing type
-          import('@babel/plugin-transform-typescript').then(
-            (r) =>
-              babel.createConfigItem(
-                [
-                  r.default,
-                  { ...tsPluginOptions, isTSX: true, allowExtensions: true },
-                ],
-                { type: 'plugin' },
-              )!,
+          import('@babel/plugin-transform-typescript').then((r) =>
+            babel.createConfigItem(
+              [
+                r.default,
+                { ...tsPluginOptions, isTSX: true, allowExtensions: true },
+              ],
+              { type: 'plugin' },
+            )!,
           )
     return tsPluginPromise
   }
