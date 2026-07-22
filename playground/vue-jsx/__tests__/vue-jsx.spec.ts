@@ -96,7 +96,10 @@ describe.runIf(isServe)('vue-jsx server', () => {
 
   test('hmr: script in .vue', async () => {
     editFile('Script.vue', (code) =>
-      code.replace('script {count', 'script updated {count'),
+      code.replace(
+        /script\{' '\}\n( *)\{count/,
+        "script updated{' '}\n$1{count",
+      ),
     )
     await expect
       .poll(() => page.textContent('.script'))
