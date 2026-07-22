@@ -24,7 +24,7 @@ import { beforeAll } from 'vitest'
 
 // #region env
 
-export const workspaceRoot = resolve(__dirname, '../')
+export const workspaceRoot = resolve(import.meta.dirname, '../')
 
 export const isBuild = !!process.env.VITE_TEST_BUILD
 export const isServe = !isBuild

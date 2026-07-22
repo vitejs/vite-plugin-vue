@@ -127,6 +127,7 @@ export default tseslint.config(
         'error',
         {
           version: '^20.19.0 || >=22.12.0',
+          ignores: ['import.meta.dirname'],
         },
       ],
       '@typescript-eslint/explicit-module-boundary-types': 'off',

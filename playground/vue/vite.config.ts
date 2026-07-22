@@ -1,21 +1,23 @@
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
-import { vueI18nPlugin } from './CustomBlockPlugin'
+import { vueI18nPlugin } from './CustomBlockPlugin.ts'
 
 export default defineConfig({
   resolve: {
     alias: {
-      '/@': __dirname,
-      '@': __dirname,
-      '#external': resolve(__dirname, '../vue-external'),
-      '/#external': resolve(__dirname, '../vue-external'),
+      '/@': import.meta.dirname,
+      '@': import.meta.dirname,
+      '#external': resolve(import.meta.dirname, '../vue-external'),
+      '/#external': resolve(import.meta.dirname, '../vue-external'),
     },
   },
   plugins: [
     vuePlugin({
       script: {
-        globalTypeFiles: [resolve(__dirname, 'HmrCircularReferenceFile.d.ts')],
+        globalTypeFiles: [
+          resolve(import.meta.dirname, 'HmrCircularReferenceFile.d.ts'),
+        ],
       },
       template: {
         compilerOptions: {

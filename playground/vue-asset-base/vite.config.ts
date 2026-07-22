@@ -5,7 +5,7 @@ export default defineConfig({
   base: '/foo/',
   resolve: {
     alias: {
-      '@': __dirname,
+      '@': import.meta.dirname,
     },
   },
   plugins: [vuePlugin()],
