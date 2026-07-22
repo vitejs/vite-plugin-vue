@@ -54,6 +54,12 @@ export default tseslint.config(
       'n/no-unpublished-import': 'off',
       'n/no-unpublished-require': 'off',
       'n/no-unsupported-features/es-syntax': 'off',
+      'n/no-unsupported-features/node-builtins': [
+        'error',
+        {
+          ignores: ['import.meta.dirname'],
+        },
+      ],
 
       '@typescript-eslint/ban-ts-comment': 'off', // TODO: we should turn this on in a new PR
       '@typescript-eslint/explicit-module-boundary-types': [
