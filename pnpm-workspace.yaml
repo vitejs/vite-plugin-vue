@@ -3,9 +3,9 @@ packages:
   - 'playground/**'
 
 catalog:
-  'vue': ^3.5.39
+  'vue': ^3.5.40
   'vite': ^8.1.5
-  'vue-router': ^5.1.0
+  'vue-router': ^5.2.0
 
 overrides:
   '@vitejs/plugin-vue': workspace:*
