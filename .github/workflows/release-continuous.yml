@@ -34,4 +34,4 @@ jobs:
 
       - name: Publish
         # zizmor: ignore[use-trusted-publishing]
-        run: pnpm dlx pkg-pr-new@0.0 publish --pnpm --compact './packages/*'
+        run: pnpm dlx pkg-pr-new@0.0 publish --pnpm --compact './packages/*' --packageManager=pnpm,npm,yarn --commentWithDev
