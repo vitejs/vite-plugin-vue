@@ -7,7 +7,8 @@ export default defineComponent(() => {
 
   return () => (
     <button class="script" onClick={inc}>
-      script {count.value}
+      script{' '}
+      {count.value}
     </button>
   )
 })

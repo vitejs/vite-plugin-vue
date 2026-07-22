@@ -17,9 +17,9 @@
     "@types/js-yaml": "^4.0.9",
     "@vitejs/plugin-vue": "workspace:*",
     "js-yaml": "^5.2.1",
-    "less": "^4.6.7",
+    "less": "^4.7.0",
     "pug": "^3.0.4",
-    "sass": "^1.101.0",
+    "sass": "^1.101.3",
     "stylus": "^0.64.0"
   }
 }
