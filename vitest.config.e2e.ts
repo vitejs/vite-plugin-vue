@@ -10,7 +10,7 @@ process.env.NODE_ENV = process.env.VITE_TEST_BUILD
 export default defineConfig({
   resolve: {
     alias: {
-      '~utils': resolve(__dirname, './playground/test-utils'),
+      '~utils': resolve(import.meta.dirname, './playground/test-utils'),
     },
   },
   test: {

@@ -12,6 +12,8 @@
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "jsx": "preserve",
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "jsxImportSource": "vue",
     "types": ["vite/client", "node"],
     "paths": {

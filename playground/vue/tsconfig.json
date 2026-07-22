@@ -2,7 +2,10 @@
   "compilerOptions": {
     // esbuild transpile should ignore this
     "target": "ES5",
+    "module": "preserve",
     "jsx": "preserve",
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "allowJs": true,
     "paths": {
       "~utils": ["../test-utils.ts"],

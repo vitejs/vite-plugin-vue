@@ -1,5 +1,4 @@
 import { resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { expect, test, vi } from 'vitest'
 import { port } from './serve'
 import {
@@ -219,8 +218,10 @@ test.runIf(isBuild)('dynamic css file should be preloaded', async () => {
 test.runIf(!isBuild)(
   'always throw error when evaluating an wrong SSR module',
   async () => {
-    const __filename = fileURLToPath(import.meta.url)
-    const badjs = resolve(__filename, '../fixtures/ssrModuleLoader-bad.js')
+    const badjs = resolve(
+      import.meta.dirname,
+      './fixtures/ssrModuleLoader-bad.js',
+    )
     const THROW_MESSAGE = 'it is an expected error'
 
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
