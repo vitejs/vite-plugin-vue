@@ -330,10 +330,12 @@ function vueJsxPlugin(options: Options = {}): Plugin {
           if (hotComponents.length) {
             if (needHmr && !ssr && !/\?vue&type=script/.test(id)) {
               let code = result.code
+              const normalizedFilepath = normalizePath(filepath)
               let callbackCode = ``
               for (const { local, exported, id } of hotComponents) {
                 code +=
                   `\n${local}.__hmrId = "${id}"` +
+                  `\n${local}.__file = ${JSON.stringify(normalizedFilepath)}` +
                   `\n__VUE_HMR_RUNTIME__.createRecord("${id}", ${local})`
                 callbackCode += `\n__VUE_HMR_RUNTIME__.reload("${id}", __${exported})`
               }
