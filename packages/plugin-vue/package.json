@@ -39,7 +39,7 @@
     "vue": "^3.2.25"
   },
   "devDependencies": {
-    "@babel/types": "^7.29.7",
+    "@babel/types": "^8.0.4",
     "@jridgewell/gen-mapping": "^0.3.13",
     "@jridgewell/trace-mapping": "^0.3.31",
     "obug": "^2.1.4",
