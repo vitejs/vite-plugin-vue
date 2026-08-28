@@ -262,6 +262,16 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     },
 
     handleHotUpdate(ctx) {
+      // `buildStart` (where `options.value.compiler` is resolved) may not
+      // have run yet: Vite's `restartServer` creates the new watcher and
+      // plugin instances before calling `buildStart`, so a file change
+      // landing in that window reaches this hook on an instance that
+      // hasn't been initialized. There's nothing to do yet since this
+      // instance hasn't transformed any module either.
+      if (!options.value.compiler) {
+        return
+      }
+
       ctx.server.ws.send({
         type: 'custom',
         event: 'file-changed',
