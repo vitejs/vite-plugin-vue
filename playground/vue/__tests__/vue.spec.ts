@@ -484,6 +484,13 @@ describe('template parse options', () => {
       'custom',
     )
   })
+
+  test('customizable select does not warn', async () => {
+    expect(await page.textContent('.customizable-select')).toMatch('test')
+    expect(serverLogs.join('\n')).not.toContain(
+      '<span> cannot be child of <option>',
+    )
+  })
 })
 
 test('scoped style should be tree-shakeable', async () => {
