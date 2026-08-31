@@ -1,6 +1,8 @@
 import { defineComponent } from 'vue'
 import SrcImportStyle from './srcImportStyle.vue'
 import SrcImportStyle2 from './srcImportStyle2.vue'
+import SrcImportScopedStyle from './srcImportScopedStyle.vue'
+import SrcImportScopedStyle2 from './srcImportScopedStyle2.vue'
 import SrcImportModuleStyle from './srcImportModuleStyle.vue'
 import SrcImportModuleStyle2 from './srcImportModuleStyle2.vue'
 
@@ -8,6 +10,8 @@ export default defineComponent({
   components: {
     SrcImportStyle,
     SrcImportStyle2,
+    SrcImportScopedStyle,
+    SrcImportScopedStyle2,
     SrcImportModuleStyle,
     SrcImportModuleStyle2,
   },
