@@ -39,13 +39,13 @@
     "vue": "^3.2.25"
   },
   "devDependencies": {
-    "@babel/types": "^7.29.7",
+    "@babel/types": "^7.29.8",
     "@jridgewell/gen-mapping": "^0.3.13",
     "@jridgewell/trace-mapping": "^0.3.31",
     "obug": "^2.1.4",
     "slash": "^5.1.0",
     "source-map-js": "^1.2.1",
-    "tsdown": "^0.22.13",
+    "tsdown": "^0.23.0",
     "unrun": "^0.3.1",
     "vite": "catalog:",
     "vue": "catalog:"
