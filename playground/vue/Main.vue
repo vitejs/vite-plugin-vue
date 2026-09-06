@@ -39,6 +39,7 @@
   <ParserOptions />
   <ExportTypeProps1 msg="msg" />
   <ExportTypeProps2 msg="msg" />
+  <EmptyScriptSetupTs />
 </template>
 
 <script setup lang="ts">
@@ -79,6 +80,7 @@ function foo() {
 
 import ExportTypeProps1 from './ExportTypeProps1.vue'
 import ExportTypeProps2 from './ExportTypeProps2.vue'
+import EmptyScriptSetupTs from './EmptyScriptSetupTs.vue'
 
 const TsGeneric = defineAsyncComponent(() => import('./TsGeneric.vue'))
 

@@ -30,6 +30,10 @@ test('template/script latest syntax support', async () => {
   expect(await page.textContent('.syntax')).toBe('baz')
 })
 
+test('template ts syntax support with empty script setup', async () => {
+  expect(await page.textContent('.empty-script-setup-ts')).toBe('ok')
+})
+
 test('import ts with .js extension with lang="ts"', async () => {
   expect(await page.textContent('.ts-import')).toBe('success')
   expect(await page.textContent('.ts-import2')).toBe('success')
