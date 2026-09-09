@@ -48,7 +48,7 @@
     "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-n": "^18.2.2",
     "eslint-plugin-regexp": "^3.1.1",
-    "execa": "^9.6.1",
+    "execa": "^10.0.1",
     "fs-extra": "^11.3.6",
     "lint-staged": "^17.1.1",
     "oxfmt": "^0.60.0",
