@@ -32,6 +32,8 @@ test('template/script latest syntax support', async () => {
 
 test('template ts syntax support with empty script setup', async () => {
   expect(await page.textContent('.empty-script-setup-ts')).toBe('ok')
+  expect(await page.textContent('.empty-script-setup-ts-spaced')).toBe('ok')
+  expect(await page.textContent('.self-closing-script-setup-ts')).toBe('ok')
 })
 
 test('import ts with .js extension with lang="ts"', async () => {

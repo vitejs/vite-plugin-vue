@@ -28,7 +28,7 @@ import { isVaporMode } from './utils/vapor'
 import type { ResolvedOptions } from './index'
 
 const emptyScriptLangRE =
-  /<script[^>]*\slang=["']?(tsx?)\b[^>]*>\s*<\/script\s*>/
+  /<script[^>]*\slang\s*=\s*["']?(tsx?)\b[^>]*?(?:\/>|>\s*<\/script\s*>)/
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function transformMain(
