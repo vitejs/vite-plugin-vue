@@ -3,4 +3,5 @@
   <div class="empty-script-setup-ts-spaced">{{ 'ok' as string }}</div>
 </template>
 
-<script setup lang="ts"></script>
+<!-- prettier-ignore -->
+<script setup lang = "ts"></script>
