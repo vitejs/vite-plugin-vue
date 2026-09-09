@@ -424,7 +424,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           return helperCode
         }
 
-        const ssr = opt?.ssr === true
+        const ssr = this.environment.config.consumer === 'server'
 
         const { filename, query } = parseVueRequest(id)
 
@@ -463,7 +463,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     transform: {
       // filter is set in options() hook
       handler(code, id, opt) {
-        const ssr = opt?.ssr === true
+        const ssr = this.environment.config.consumer === 'server'
         const { filename, query } = parseVueRequest(id)
 
         if (query.raw || query.url) {
