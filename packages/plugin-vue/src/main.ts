@@ -27,6 +27,9 @@ import { EXPORT_HELPER_ID } from './helper'
 import { isVaporMode } from './utils/vapor'
 import type { ResolvedOptions } from './index'
 
+const emptyScriptLangRE =
+  /<script[^>]*\slang\s*=\s*["']?(tsx?)\b[^>]*?(?:\/>|>\s*<\/script\s*>)/
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function transformMain(
   code: string,
@@ -276,7 +279,12 @@ export async function transformMain(
 
   // handle TS transpilation
   let resolvedCode = output.join('\n')
-  const lang = descriptor.scriptSetup?.lang || descriptor.script?.lang
+  const lang =
+    descriptor.scriptSetup?.lang ||
+    descriptor.script?.lang ||
+    // the SFC parser discards empty script blocks, but their lang still
+    // applies to the code generated from the template
+    emptyScriptLangRE.exec(code)?.[1]
 
   if (
     lang &&
