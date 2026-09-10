@@ -59,7 +59,7 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.65.0",
     "vite": "catalog:",
-    "vitest": "^4.1.10",
+    "vitest": "^5.0.0",
     "vue": "catalog:"
   },
   "simple-git-hooks": {
