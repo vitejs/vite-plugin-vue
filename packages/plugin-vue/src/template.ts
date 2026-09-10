@@ -2,6 +2,7 @@ import path from 'node:path'
 import slash from 'slash'
 import type {
   CompilerOptions,
+  CompilerError,
   SFCDescriptor,
   SFCTemplateCompileOptions,
   SFCTemplateCompileResults,
@@ -93,9 +94,33 @@ export function compile(
   customElement: boolean,
 ) {
   resolveScript(descriptor, options, ssr, customElement)
+  const templateCompilerOptions = resolveTemplateCompilerOptions(
+    descriptor,
+    options,
+    filename,
+    ssr,
+  )
+  if (!templateCompilerOptions) {
+    return
+  }
+
+  const userOnWarn = templateCompilerOptions.compilerOptions?.onWarn
   const result = options.compiler.compileTemplate({
-    ...resolveTemplateCompilerOptions(descriptor, options, filename, ssr)!,
+    ...templateCompilerOptions,
     source: code,
+    compilerOptions: {
+      ...templateCompilerOptions.compilerOptions,
+      onWarn: (warning) => {
+        if (shouldIgnoreCustomizableSelectWarning(warning, code)) {
+          return
+        }
+        if (userOnWarn) {
+          userOnWarn(warning)
+        } else {
+          console.warn(`[Vue warn] ${warning.message}`)
+        }
+      },
+    },
   })
 
   if (result.errors.length) {
@@ -118,6 +143,35 @@ export function compile(
   }
 
   return result
+}
+
+function shouldIgnoreCustomizableSelectWarning(
+  warning: CompilerError,
+  source: string,
+) {
+  if (
+    !warning.message.includes(
+      'cannot be child of <option>, according to HTML specifications',
+    )
+  ) {
+    return false
+  }
+
+  const optionOffset = warning.loc?.start.offset
+  if (optionOffset == null) {
+    return false
+  }
+
+  const selectStart = source.lastIndexOf('<select', optionOffset)
+  if (selectStart < 0) {
+    return false
+  }
+
+  const selectContent = source.slice(selectStart, optionOffset)
+
+  return /<select\b[^>]*>(?:\s|<!--[\s\S]*?-->)*<button\b[\s\S]*?<selectedcontent\b[\s\S]*?<option\b/.test(
+    selectContent,
+  )
 }
 
 export function resolveTemplateCompilerOptions(
