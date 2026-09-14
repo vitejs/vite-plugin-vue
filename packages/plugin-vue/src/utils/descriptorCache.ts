@@ -11,13 +11,25 @@ export interface SFCParseResult {
   errors: (CompilerError | SyntaxError)[]
 }
 
+// Descriptor caches are keyed by `(filename, ssr)` so that SSR and client
+// transforms operate on distinct descriptor objects. `compileScript` mutates
+// the descriptor with ssr-specific state, so sharing one descriptor between
+// an ssr pass and a subsequent client pass produces incorrect output
+// (e.g. `<script setup>` imports that are only referenced from the template
+// get dropped from `__returned__`).
 export const cache = new Map<string, SFCDescriptor>()
 // we use a separate descriptor cache for HMR purposes.
 // The main cached descriptors are parsed from SFCs that may have been
 // transformed by other plugins, e.g. vue-macros;
 // The HMR cached descriptors are based on the raw, pre-transform SFCs.
+// HMR is client-only, but we still namespace the key for consistency.
 export const hmrCache = new Map<string, SFCDescriptor>()
+// `prevCache` is consulted for HMR diffing, which is client-only.
 const prevCache = new Map<string, SFCDescriptor | undefined>()
+
+function getCacheKey(filename: string, ssr: boolean): string {
+  return `${filename}\0${ssr ? 'ssr' : 'client'}`
+}
 
 export function createDescriptor(
   filename: string,
@@ -31,12 +43,22 @@ export function createDescriptor(
     features,
   }: ResolvedOptions,
   hmr = false,
+  ssr = false,
 ): SFCParseResult {
-  const { descriptor, errors } = compiler.parse(source, {
+  const parseResult = compiler.parse(source, {
     filename,
     sourceMap,
     templateParseOptions: template?.compilerOptions,
   })
+  // `compiler.parse` is backed by an internal LRU cache keyed by the source
+  // (and other parse options). Two parses of the same SFC therefore return
+  // the **same** descriptor object. Because `compileScript` mutates the
+  // descriptor (and its script/scriptSetup blocks) with ssr-specific compiled
+  // state, reusing that shared object across ssr and client transforms would
+  // poison the second transform. Clone the descriptor so each cache entry
+  // owns an independent object that `compileScript` is free to mutate.
+  const descriptor = cloneDescriptor(parseResult.descriptor)
+  const { errors } = parseResult
 
   // ensure the path is normalized in a way that is consistent inside
   // project (relative to root) and on different systems.
@@ -58,7 +80,7 @@ export function createDescriptor(
     descriptor.id = getHash(normalizedPath + (isProduction ? source : ''))
   }
 
-  ;(hmr ? hmrCache : cache).set(filename, descriptor)
+  ;(hmr ? hmrCache : cache).set(getCacheKey(filename, ssr), descriptor)
   return { descriptor, errors }
 }
 
@@ -66,10 +88,15 @@ export function getPrevDescriptor(filename: string): SFCDescriptor | undefined {
   return prevCache.get(filename)
 }
 
-export function invalidateDescriptor(filename: string, hmr = false): void {
+export function invalidateDescriptor(
+  filename: string,
+  hmr = false,
+  ssr = false,
+): void {
   const _cache = hmr ? hmrCache : cache
-  const prev = _cache.get(filename)
-  _cache.delete(filename)
+  const key = getCacheKey(filename, ssr)
+  const prev = _cache.get(key)
+  _cache.delete(key)
   if (prev) {
     prevCache.set(filename, prev)
   }
@@ -85,10 +112,12 @@ export function getDescriptor(
   createIfNotFound = true,
   hmr = false,
   code?: string,
+  ssr = false,
 ): SFCDescriptor | undefined {
   const _cache = hmr ? hmrCache : cache
-  if (_cache.has(filename)) {
-    return _cache.get(filename)!
+  const key = getCacheKey(filename, ssr)
+  if (_cache.has(key)) {
+    return _cache.get(key)!
   }
   if (createIfNotFound) {
     const { descriptor, errors } = createDescriptor(
@@ -96,12 +125,28 @@ export function getDescriptor(
       code ?? fs.readFileSync(filename, 'utf-8'),
       options,
       hmr,
+      ssr,
     )
     if (errors.length && !hmr) {
       throw errors[0]
     }
     return descriptor
   }
+}
+
+export function setCachedDescriptor(
+  filename: string,
+  descriptor: SFCDescriptor,
+  ssr = false,
+): void {
+  cache.set(getCacheKey(filename, ssr), descriptor)
+}
+
+export function peekCachedDescriptor(
+  filename: string,
+  ssr = false,
+): SFCDescriptor | undefined {
+  return cache.get(getCacheKey(filename, ssr))
 }
 
 export function getSrcDescriptor(
@@ -139,6 +184,9 @@ export function setSrcDescriptor(
   entry: SFCDescriptor,
   scoped?: boolean,
 ): void {
+  // `?src=` descriptors are only consumed by the style transform (via
+  // `getSrcDescriptor`), which never calls `compileScript`. They are safe to
+  // key by filename alone.
   if (scoped) {
     // if multiple Vue files use the same src file, they will be overwritten
     // should use other key
@@ -150,4 +198,15 @@ export function setSrcDescriptor(
 
 function getHash(text: string): string {
   return crypto.hash('sha256', text, 'hex').substring(0, 8)
+}
+
+function cloneDescriptor(descriptor: SFCDescriptor): SFCDescriptor {
+  return {
+    ...descriptor,
+    script: descriptor.script ? { ...descriptor.script } : null,
+    scriptSetup: descriptor.scriptSetup ? { ...descriptor.scriptSetup } : null,
+    template: descriptor.template ? { ...descriptor.template } : null,
+    styles: descriptor.styles.map((s) => ({ ...s })),
+    customBlocks: descriptor.customBlocks.map((b) => ({ ...b })),
+  }
 }
