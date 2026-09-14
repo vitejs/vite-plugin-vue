@@ -31,3 +31,8 @@ function App() {
 }
 
 createApp(App).mount('#app')
+
+// Expose __file values so e2e tests can assert they are set in dev mode
+window.__jsxFileNamed = Named.__file
+window.__jsxFileTsx = TsxDefault.__file
+window.__jsxFileDefault = Default.__file
