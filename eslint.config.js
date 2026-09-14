@@ -4,7 +4,8 @@ import eslint from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import nodePlugin from 'eslint-plugin-n'
 import * as regexpPlugin from 'eslint-plugin-regexp'
-import importPlugin from 'eslint-plugin-import-x'
+import importPlugin, { createNodeResolver } from 'eslint-plugin-import-x'
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript'
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -15,6 +16,12 @@ export default tseslint.config(
   {
     plugins: {
       import: importPlugin,
+    },
+    settings: {
+      'import-x/resolver-next': [
+        createNodeResolver(),
+        createTypeScriptImportResolver(),
+      ],
     },
     rules: {
       eqeqeq: ['warn', 'always', { null: 'never' }],
@@ -40,13 +47,19 @@ export default tseslint.config(
       ],
       'n/no-extraneous-import': [
         'error',
-        { allowModules: ['vite', 'less', 'sass', 'vitest', 'unbuild'] },
+        { allowModules: ['vite', 'less', 'sass', 'vitest'] },
       ],
       'n/no-extraneous-require': ['error', { allowModules: ['vite'] }],
       'n/no-deprecated-api': 'off',
       'n/no-unpublished-import': 'off',
       'n/no-unpublished-require': 'off',
       'n/no-unsupported-features/es-syntax': 'off',
+      'n/no-unsupported-features/node-builtins': [
+        'error',
+        {
+          ignores: ['import.meta.dirname'],
+        },
+      ],
 
       '@typescript-eslint/ban-ts-comment': 'off', // TODO: we should turn this on in a new PR
       '@typescript-eslint/explicit-module-boundary-types': [
@@ -95,12 +108,6 @@ export default tseslint.config(
     },
   },
   {
-    files: ['*.spec.ts'],
-    rules: {
-      'n/no-extraneous-import': 'off',
-    },
-  },
-  {
     files: ['**/build.config.ts'],
     rules: {
       'no-undef': 'off',
@@ -119,13 +126,14 @@ export default tseslint.config(
       'n/no-unsupported-features/es-builtins': [
         'error',
         {
-          version: '^18.0.0 || >=20.0.0',
+          version: '^20.19.0 || >=22.12.0',
         },
       ],
       'n/no-unsupported-features/node-builtins': [
         'error',
         {
-          version: '^18.0.0 || >=20.0.0',
+          version: '^20.19.0 || >=22.12.0',
+          ignores: ['import.meta.dirname'],
         },
       ],
       '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -139,6 +147,20 @@ export default tseslint.config(
       'no-empty': 'off',
       'no-constant-condition': 'off',
       '@typescript-eslint/no-empty-function': 'off',
+    },
+  },
+  {
+    name: 'tests',
+    files: ['**/__tests__/**/*'],
+    rules: {
+      'n/no-extraneous-import': 'off',
+      'n/no-unsupported-features/node-builtins': [
+        'error',
+        {
+          version: '^20.19.0 || >=22.12.0',
+          allowExperimental: true,
+        },
+      ],
     },
   },
   {

@@ -13,7 +13,7 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
   const getStyleTagContentIncluding = async (content: string) => {
     const styles = await page.$$('style')
     for (const style of styles) {
-      const text = await style.textContent()
+      const text = (await style.textContent())!
       if (text.includes(content)) {
         return text
       }
@@ -91,6 +91,18 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     )
   })
 
+  test('src imported html', async () => {
+    const res = await page.request.get(
+      new URL(
+        './src-import-html/src-import.html?import&vue&type=template&src=true&lang.js',
+        page.url(),
+      ).href,
+    )
+    const js = await res.text()
+    const map = extractSourcemap(js)
+    expect(formatSourcemapForSnapshot(map)).toMatchSnapshot('serve-html')
+  })
+
   test('no script', async () => {
     const res = await page.request.get(
       new URL('./NoScript.vue', page.url()).href,
@@ -98,6 +110,17 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     const js = await res.text()
     const map = extractSourcemap(js)
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot('serve-no-script')
+  })
+
+  test('empty script', async () => {
+    const res = await page.request.get(
+      new URL('./EmptyScript.vue', page.url()).href,
+    )
+    const js = await res.text()
+    const map = extractSourcemap(js)
+    expect(formatSourcemapForSnapshot(map)).toMatchSnapshot(
+      'serve-empty-script',
+    )
   })
 
   test('no template', async () => {

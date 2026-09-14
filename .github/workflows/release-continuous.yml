@@ -1,21 +1,30 @@
 name: Publish Any Commit
 on: [push, pull_request]
 
+permissions: {}
+
 jobs:
   build:
+    if: github.repository == 'vitejs/vite-plugin-vue'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4.0.0
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: lts/*
-          cache: pnpm
+          # disable cache, to avoid cache poisoning (https://docs.zizmor.sh/audits/#cache-poisoning)
+          package-manager-cache: false
+
+      - name: Disallow installation scripts
+        run: yq '.allowBuilds[]=false' -i pnpm-workspace.yaml
 
       - name: Install dependencies
         run: pnpm install
@@ -24,4 +33,5 @@ jobs:
         run: pnpm build
 
       - name: Publish
-        run: pnpm dlx pkg-pr-new@0.0 publish --pnpm --compact './packages/*'
+        # zizmor: ignore[use-trusted-publishing]
+        run: pnpm dlx pkg-pr-new@0.0 publish --pnpm --compact './packages/*' --packageManager=pnpm,npm,yarn --commentWithDev

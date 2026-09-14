@@ -75,6 +75,10 @@ export function invalidateDescriptor(filename: string, hmr = false): void {
   }
 }
 
+export interface ExtendedSFCDescriptor extends SFCDescriptor {
+  isTemp?: boolean
+}
+
 export function getDescriptor(
   filename: string,
   options: ResolvedOptions,
@@ -113,7 +117,7 @@ export function getSrcDescriptor(
 export function getTempSrcDescriptor(
   filename: string,
   query: VueQuery,
-): SFCDescriptor {
+): ExtendedSFCDescriptor {
   // this is only used for pre-compiled <style src> with scoped flag
   return {
     filename,
@@ -124,9 +128,10 @@ export function getTempSrcDescriptor(
         loc: {
           start: { line: 0, column: 0 },
         },
-      },
+      } as any,
     ],
-  } as SFCDescriptor
+    isTemp: true,
+  } as ExtendedSFCDescriptor
 }
 
 export function setSrcDescriptor(
@@ -143,15 +148,6 @@ export function setSrcDescriptor(
   cache.set(filename, entry)
 }
 
-const hash =
-  // eslint-disable-next-line n/no-unsupported-features/node-builtins -- crypto.hash is supported in Node 21.7.0+, 20.12.0+
-  crypto.hash ??
-  ((
-    algorithm: string,
-    data: crypto.BinaryLike,
-    outputEncoding: crypto.BinaryToTextEncoding,
-  ) => crypto.createHash(algorithm).update(data).digest(outputEncoding))
-
 function getHash(text: string): string {
-  return hash('sha256', text, 'hex').substring(0, 8)
+  return crypto.hash('sha256', text, 'hex').substring(0, 8)
 }

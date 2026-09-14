@@ -10,11 +10,6 @@ const nestedVirtualId = '\0' + nestedVirtualFile
 
 const base = '/test/'
 
-// preserve this to test loading __filename & __dirname in ESM as Vite polyfills them.
-// if Vite incorrectly load this file, node.js would error out.
-globalThis.__vite_test_filename = __filename
-globalThis.__vite_test_dirname = __dirname
-
 export default defineConfig(({ command, ssrBuild, isSsrBuild }) => ({
   base,
   plugins: [
@@ -93,7 +88,9 @@ export default defineConfig(({ command, ssrBuild, isSsrBuild }) => ({
           ) {
             return {
               code:
-                `import { __ssr_vue_processAssetPath } from '${virtualId}';__ssr_vue_processAssetPath;` +
+                `import { __ssr_vue_processAssetPath } from '${virtualId}';` +
+                // make `__ssr_vue_processAssetPath` not to be tree-shaken (`globalThis.__ssr_vue` doesn't exist)
+                `globalThis.__ssr_vue?.(__ssr_vue_processAssetPath);` +
                 code,
               sourcemap: null, // no sourcemap support to speed up CI
             }

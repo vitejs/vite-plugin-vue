@@ -8,6 +8,7 @@ import type {
   Logger,
   PluginOption,
   ResolvedConfig,
+  Rollup,
   UserConfig,
   ViteDevServer,
 } from 'vite'
@@ -19,13 +20,11 @@ import {
   preview,
 } from 'vite'
 import type { Browser, Page } from 'playwright-chromium'
-import type { RollupError, RollupWatcher, RollupWatcherEvent } from 'rollup'
-import type { File } from 'vitest'
 import { beforeAll } from 'vitest'
 
 // #region env
 
-export const workspaceRoot = resolve(__dirname, '../')
+export const workspaceRoot = resolve(import.meta.dirname, '../')
 
 export const isBuild = !!process.env.VITE_TEST_BUILD
 export const isServe = !isBuild
@@ -54,10 +53,6 @@ export let testPath: string
  */
 export let testDir: string
 /**
- * Test folder name
- */
-export let testName: string
-/**
  * current test using vite inline config
  * when using server.js is not possible to get the config
  */
@@ -72,7 +67,7 @@ export let resolvedConfig: ResolvedConfig = undefined!
 export let page: Page = undefined!
 export let browser: Browser = undefined!
 export let viteTestUrl: string = ''
-export let watcher: RollupWatcher | undefined = undefined
+export let watcher: Rollup.RollupWatcher | undefined = undefined
 
 declare module 'vite' {
   interface InlineConfig {
@@ -92,13 +87,8 @@ export function setViteUrl(url: string): void {
 
 const DIR = join(os.tmpdir(), 'vitest_playwright_global_setup')
 
-beforeAll(async (s) => {
-  const suite = s as File
-  // skip browser setup for non-playground tests
-  if (!suite.filepath.includes('playground')) {
-    return
-  }
-
+// eslint-disable-next-line no-empty-pattern
+beforeAll(async ({}, suite) => {
   const wsEndpoint = fs.readFileSync(join(DIR, 'wsEndpoint'), 'utf-8')
   if (!wsEndpoint) {
     throw new Error('wsEndpoint not found')
@@ -132,8 +122,8 @@ beforeAll(async (s) => {
       browserErrors.push(error)
     })
 
-    testPath = suite.filepath!
-    testName = slash(testPath).match(/playground\/([\w-]+)\//)?.[1]
+    testPath = suite.file.filepath
+    const testName = slash(testPath).match(/playground\/([\w-]+)\//)?.[1]
     testDir = dirname(testPath)
 
     // if this is a test placed under playground/xxx/__tests__
@@ -269,7 +259,7 @@ export async function startDefaultServe(): Promise<void> {
     const isWatch = !!resolvedConfig!.build.watch
     // in build watch,call startStaticServer after the build is complete
     if (isWatch) {
-      watcher = rollupOutput as RollupWatcher
+      watcher = rollupOutput as Rollup.RollupWatcher
       await notifyRebuildComplete(watcher)
     }
     // @ts-ignore
@@ -281,7 +271,7 @@ export async function startDefaultServe(): Promise<void> {
     const previewServer = await preview(testConfig)
     // prevent preview change NODE_ENV
     process.env.NODE_ENV = _nodeEnv
-    viteTestUrl = previewServer.resolvedUrls.local[0]
+    viteTestUrl = previewServer.resolvedUrls!.local[0]
     await page.goto(viteTestUrl)
   }
 }
@@ -290,10 +280,10 @@ export async function startDefaultServe(): Promise<void> {
  * Send the rebuild complete message in build watch
  */
 export async function notifyRebuildComplete(
-  watcher: RollupWatcher,
-): Promise<RollupWatcher> {
+  watcher: Rollup.RollupWatcher,
+): Promise<Rollup.RollupWatcher> {
   let resolveFn: undefined | (() => void)
-  const callback = (event: RollupWatcherEvent): void => {
+  const callback = (event: Rollup.RollupWatcherEvent): void => {
     if (event.code === 'END') {
       resolveFn?.()
     }
@@ -306,7 +296,7 @@ export async function notifyRebuildComplete(
 }
 
 function createInMemoryLogger(logs: string[]): Logger {
-  const loggedErrors = new WeakSet<Error | RollupError>()
+  const loggedErrors = new WeakSet<Error | Rollup.RollupError>()
   const warnedMessages = new Set<string>()
 
   const logger: Logger = {

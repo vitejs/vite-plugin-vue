@@ -4,5 +4,5 @@
 </template>
 
 <script setup lang="ts">
-import { debounce } from 'lodash-es'
+import { debounce } from '@vitejs/test-dep-lodash-es'
 </script>

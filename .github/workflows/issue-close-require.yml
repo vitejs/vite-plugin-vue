@@ -8,9 +8,17 @@ jobs:
   close-issues:
     if: github.repository == 'vitejs/vite-plugin-vue'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # to check out the repo for local actions
+      issues: write # for actions/issues-helper to update issues
+      pull-requests: write # for actions/issues-helper to update PRs
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
       - name: need reproduction
-        uses: actions-cool/issues-helper@v3
+        uses: ./.github/actions/issues-helper
         with:
           actions: "close-issues"
           token: ${{ secrets.GITHUB_TOKEN }}

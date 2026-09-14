@@ -16,16 +16,19 @@
   },
   "dependencies": {
     "@vitejs/test-example-external-component": "file:example-external-component",
-    "pinia": "^2.3.1",
+    "pinia": "^4.0.3",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
   "devDependencies": {
+    "@types/compression": "^1.8.1",
+    "@types/express": "^5.0.6",
+    "@types/serve-static": "^2.2.0",
     "@vitejs/plugin-vue": "workspace:*",
     "@vitejs/plugin-vue-jsx": "workspace:*",
     "@vitejs/test-dep-import-type": "link:dep-import-type",
-    "compression": "^1.7.5",
-    "express": "^4.21.2",
-    "serve-static": "^1.16.2"
+    "compression": "^1.8.1",
+    "express": "^5.2.1",
+    "serve-static": "^2.2.1"
   }
 }

@@ -1,10 +1,10 @@
-import { test } from 'vitest'
-import { getBg, untilUpdated } from '~utils'
+import { expect, test } from 'vitest'
+import { getBg } from '~utils'
 
 test('vue legacy assets', async () => {
-  await untilUpdated(() => getBg('.main'), 'assets/asset', true)
+  await expect.poll(() => getBg('.main')).toMatch('assets/asset')
 })
 
 test('async vue legacy assets', async () => {
-  await untilUpdated(() => getBg('.module'), 'assets/asset', true)
+  await expect.poll(() => getBg('.module')).toMatch('assets/asset')
 })

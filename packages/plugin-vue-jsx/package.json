@@ -1,29 +1,29 @@
 {
   "name": "@vitejs/plugin-vue-jsx",
-  "version": "4.1.1",
-  "type": "commonjs",
+  "version": "5.1.6",
+  "type": "module",
   "license": "MIT",
   "author": "Evan You",
+  "description": "Provides Vue 3 JSX & TSX support with HMR.",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "vue"
+  ],
   "files": [
     "dist"
   ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    }
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "unbuild --stub",
-    "build": "unbuild && pnpm run patch-cjs",
-    "patch-cjs": "tsx ../../scripts/patchCJS.ts",
+    "dev": "tsdown --watch",
+    "build": "tsdown",
     "prepublishOnly": "npm run build"
   },
   "engines": {
-    "node": "^18.0.0 || >=20.0.0"
+    "node": "^20.19.0 || >=22.12.0"
   },
   "repository": {
     "type": "git",
@@ -35,15 +35,35 @@
   },
   "homepage": "https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx#readme",
   "dependencies": {
-    "@babel/core": "^7.26.7",
-    "@babel/plugin-transform-typescript": "^7.26.7",
-    "@vue/babel-plugin-jsx": "^1.2.5"
+    "@babel/core": "^7.29.7",
+    "@babel/plugin-syntax-typescript": "^7.29.7",
+    "@babel/plugin-transform-typescript": "^7.29.7",
+    "@rolldown/pluginutils": "^1.0.1",
+    "@vue/babel-plugin-jsx": "^2.0.1"
   },
   "devDependencies": {
+    "tsdown": "^0.22.13",
+    "unrun": "^0.3.1",
     "vite": "catalog:"
   },
   "peerDependencies": {
-    "vite": "^5.0.0 || ^6.0.0",
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
     "vue": "^3.0.0"
+  },
+  "tsdown": {
+    "dts": {
+      "tsgo": true
+    }
+  },
+  "compatiblePackages": {
+    "schemaVersion": 1,
+    "rolldown": {
+      "type": "incompatible",
+      "reason": "Uses Vite-specific APIs"
+    },
+    "rollup": {
+      "type": "incompatible",
+      "reason": "Uses Vite-specific APIs"
+    }
   }
 }

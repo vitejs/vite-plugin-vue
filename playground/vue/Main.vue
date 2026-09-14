@@ -11,6 +11,7 @@
   <HmrCircularReference name="test" />
   <TypeProps msg="msg" bar="bar" :id="123" />
   <TypePropsTsx msg="msg" bar="bar" />
+  <WithQuery />
   <Syntax />
   <PreProcessors />
   <PreProcessorsHmr />
@@ -36,12 +37,18 @@
   <PreCompiledExternalScoped />
   <PreCompiledExternalCssModules />
   <ParserOptions />
+  <ExportTypeProps1 msg="msg" />
+  <ExportTypeProps2 msg="msg" />
+  <EmptyScriptSetupTs />
+  <EmptyScriptSetupTsSpaced />
+  <SelfClosingScriptSetupTs />
 </template>
 
 <script setup lang="ts">
 import { version, defineAsyncComponent } from 'vue'
 import Hmr from './Hmr.vue'
 import HmrTsx from './HmrTsx.vue'
+import WithQuery from './WithQuery.vue?with-query'
 import Syntax from './Syntax.vue'
 import PreProcessors from './PreProcessors.vue'
 import PreProcessorsHmr from './PreProcessorsHmr.vue'
@@ -66,6 +73,18 @@ import PreCompiledExternalScoped from './pre-compiled/external-scoped.vue'
 import PreCompiledExternalCssModules from './pre-compiled/external-cssmodules.vue'
 import ParserOptions from './ParserOptions.vue'
 import HmrCircularReference from './HmrCircularReference.vue'
+import TreeShakeScopedStyle from './TreeShakeScopedStyle.vue'
+
+// NOTE: this function is not used intentionally
+function foo() {
+  console.log(TreeShakeScopedStyle)
+}
+
+import ExportTypeProps1 from './ExportTypeProps1.vue'
+import ExportTypeProps2 from './ExportTypeProps2.vue'
+import EmptyScriptSetupTs from './EmptyScriptSetupTs.vue'
+import EmptyScriptSetupTsSpaced from './EmptyScriptSetupTsSpaced.vue'
+import SelfClosingScriptSetupTs from './SelfClosingScriptSetupTs.vue'
 
 const TsGeneric = defineAsyncComponent(() => import('./TsGeneric.vue'))
 

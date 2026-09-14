@@ -8,7 +8,7 @@ export default defineConfig({
   base: '',
   resolve: {
     alias: {
-      '@': __dirname,
+      '@': import.meta.dirname,
     },
   },
   plugins: [
@@ -25,7 +25,7 @@ export default defineConfig({
   // attrs so that we run the legacy bundle instead.
   // @ts-ignore
   __test__() {
-    const indexPath = path.resolve(__dirname, './dist/index.html')
+    const indexPath = path.resolve(import.meta.dirname, './dist/index.html')
     let index = fs.readFileSync(indexPath, 'utf-8')
     index = index
       .replace(/<script type="module".*?<\/script>/g, '')

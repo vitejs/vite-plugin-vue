@@ -1,12 +1,12 @@
 import type { CompilerError } from 'vue/compiler-sfc'
-import type { RollupError } from 'rollup'
+import type { Rollup } from 'vite'
 
 export function createRollupError(
   id: string,
   error: CompilerError | SyntaxError,
-): RollupError {
+): Rollup.RollupError {
   const { message, name, stack } = error
-  const rollupError: RollupError = {
+  const rollupError: Rollup.RollupError = {
     id,
     plugin: 'vue',
     message,

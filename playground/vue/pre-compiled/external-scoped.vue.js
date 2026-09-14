@@ -20,7 +20,10 @@ const __sfc__ = {
 }
 
 const _withScopeId = (n) => (
-  _pushScopeId('data-v-0d49ede6'), (n = n()), _popScopeId(), n
+  _pushScopeId('data-v-0d49ede6'),
+  (n = n()),
+  _popScopeId(),
+  n
 )
 const _hoisted_1 = { class: 'pre-compiled-external-scoped-title' }
 

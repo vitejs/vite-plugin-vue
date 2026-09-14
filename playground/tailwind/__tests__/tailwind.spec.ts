@@ -5,12 +5,11 @@ import {
   isServe,
   page,
   untilBrowserLogAfter,
-  untilUpdated,
 } from '~utils'
 
 test.runIf(isServe)('regenerate CSS and HMR (pug template)', async () => {
-  const el = await page.$('.pug')
-  expect(await getBgColor(el)).toBe('rgb(248, 113, 113)')
+  const el = (await page.$('.pug'))!
+  expect(await getBgColor(el)).toBe('oklch(0.704 0.191 22.216)')
 
   await untilBrowserLogAfter(
     () =>
@@ -23,5 +22,5 @@ test.runIf(isServe)('regenerate CSS and HMR (pug template)', async () => {
     ],
     false,
   )
-  await untilUpdated(() => getBgColor(el), 'rgb(220, 38, 38)')
+  await expect.poll(() => getBgColor(el)).toMatch('oklch(0.577 0.245 27.325)')
 })

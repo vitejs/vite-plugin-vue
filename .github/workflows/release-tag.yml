@@ -13,8 +13,12 @@ jobs:
   release:
     if: github.repository == 'vitejs/vite-plugin-vue'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # for yyx990803/release-tag to create a release tag
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
       - name: Get pkgName for tag
         id: tag
@@ -32,7 +36,7 @@ jobs:
 
       - name: Create Release for Tag
         id: release_tag
-        uses: yyx990803/release-tag@master
+        uses: yyx990803/release-tag@8cccf7c5aa332d71d222df46677f70f77a8d2dc0 # v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { editFile, isServe, page, untilUpdated } from '~utils'
+import { editFile, isServe, page } from '~utils'
 
 test('should render', async () => {
   expect(await page.textContent('.named')).toMatch('0')
@@ -11,6 +11,12 @@ test('should render', async () => {
   expect(await page.textContent('.jsx-with-query')).toMatch('6')
   expect(await page.textContent('.other-ext')).toMatch('Other Ext')
   expect(await page.textContent('.ts-import')).toMatch('success')
+  expect(await page.textContent('.export-default')).toMatch(
+    'export default defineComponent',
+  )
+  expect(await page.textContent('.export-default-as')).toMatch(
+    'export default defineComponent as',
+  )
 })
 
 test('should update', async () => {
@@ -35,7 +41,9 @@ describe.runIf(isServe)('vue-jsx server', () => {
     editFile('Comps.jsx', (code) =>
       code.replace('named {count', 'named updated {count'),
     )
-    await untilUpdated(() => page.textContent('.named'), 'named updated 0')
+    await expect
+      .poll(() => page.textContent('.named'))
+      .toMatch('named updated 0')
 
     // affect all components in same file
     expect(await page.textContent('.named-specifier')).toMatch('1')
@@ -48,10 +56,9 @@ describe.runIf(isServe)('vue-jsx server', () => {
     editFile('Comps.jsx', (code) =>
       code.replace('named specifier {count', 'named specifier updated {count'),
     )
-    await untilUpdated(
-      () => page.textContent('.named-specifier'),
-      'named specifier updated 1',
-    )
+    await expect
+      .poll(() => page.textContent('.named-specifier'))
+      .toMatch('named specifier updated 1')
 
     // affect all components in same file
     expect(await page.textContent('.default')).toMatch('2')
@@ -63,7 +70,9 @@ describe.runIf(isServe)('vue-jsx server', () => {
     editFile('Comps.jsx', (code) =>
       code.replace('default {count', 'default updated {count'),
     )
-    await untilUpdated(() => page.textContent('.default'), 'default updated 2')
+    await expect
+      .poll(() => page.textContent('.default'))
+      .toMatch('default updated 2')
 
     // should not affect other components on the page
     expect(await page.textContent('.default-tsx')).toMatch('4')
@@ -77,10 +86,9 @@ describe.runIf(isServe)('vue-jsx server', () => {
     editFile('Comp.tsx', (code) =>
       code.replace('default tsx {count', 'default tsx updated {count'),
     )
-    await untilUpdated(
-      () => page.textContent('.default-tsx'),
-      'default tsx updated 3',
-    )
+    await expect
+      .poll(() => page.textContent('.default-tsx'))
+      .toMatch('default tsx updated 3')
 
     // should not affect other components on the page
     expect(await page.textContent('.named')).toMatch('1')
@@ -88,9 +96,14 @@ describe.runIf(isServe)('vue-jsx server', () => {
 
   test('hmr: script in .vue', async () => {
     editFile('Script.vue', (code) =>
-      code.replace('script {count', 'script updated {count'),
+      code.replace(
+        /script\{' '\}\n( *)\{count/,
+        "script updated{' '}\n$1{count",
+      ),
     )
-    await untilUpdated(() => page.textContent('.script'), 'script updated 4')
+    await expect
+      .poll(() => page.textContent('.script'))
+      .toMatch('script updated 4')
 
     expect(await page.textContent('.src-import')).toMatch('6')
   })
@@ -100,10 +113,9 @@ describe.runIf(isServe)('vue-jsx server', () => {
     editFile('SrcImport.jsx', (code) =>
       code.replace('src import {count', 'src import updated {count'),
     )
-    await untilUpdated(
-      () => page.textContent('.src-import'),
-      'src import updated 5',
-    )
+    await expect
+      .poll(() => page.textContent('.src-import'))
+      .toMatch('src import updated 5')
 
     expect(await page.textContent('.script')).toMatch('5')
   })
@@ -112,6 +124,6 @@ describe.runIf(isServe)('vue-jsx server', () => {
     editFile('setup-syntax-jsx.vue', (code) =>
       code.replace('let count = ref(100)', 'let count = ref(1000)'),
     )
-    await untilUpdated(() => page.textContent('.setup-jsx'), '1000')
+    await expect.poll(() => page.textContent('.setup-jsx')).toMatch('1000')
   })
 })

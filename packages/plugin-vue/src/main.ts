@@ -1,12 +1,12 @@
 import path from 'node:path'
 import fs from 'node:fs'
 import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
-import type { PluginContext, TransformPluginContext } from 'rollup'
 import type { RawSourceMap } from 'source-map-js'
 import type { EncodedSourceMap as TraceEncodedSourceMap } from '@jridgewell/trace-mapping'
 import { TraceMap, eachMapping } from '@jridgewell/trace-mapping'
 import type { EncodedSourceMap as GenEncodedSourceMap } from '@jridgewell/gen-mapping'
 import { addMapping, fromMap, toEncodedMap } from '@jridgewell/gen-mapping'
+import type { Rollup } from 'vite'
 import { normalizePath, transformWithEsbuild } from 'vite'
 import {
   createDescriptor,
@@ -24,14 +24,18 @@ import { transformTemplateInMain } from './template'
 import { isEqualBlock, isOnlyTemplateChanged } from './handleHotUpdate'
 import { createRollupError } from './utils/error'
 import { EXPORT_HELPER_ID } from './helper'
+import { isVaporMode } from './utils/vapor'
 import type { ResolvedOptions } from './index'
+
+const emptyScriptLangRE =
+  /<script[^>]*\slang\s*=\s*["']?(tsx?)\b[^>]*?(?:\/>|>\s*<\/script\s*>)/
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function transformMain(
   code: string,
   filename: string,
   options: ResolvedOptions,
-  pluginContext: TransformPluginContext,
+  pluginContext: Rollup.TransformPluginContext,
   ssr: boolean,
   customElement: boolean,
 ) {
@@ -67,6 +71,10 @@ export async function transformMain(
   // feature information
   const attachedProps: [string, string][] = []
   const hasScoped = descriptor.styles.some((s) => s.scoped)
+  const isTemplateOnlyVapor =
+    !descriptor.script &&
+    !descriptor.scriptSetup &&
+    isVaporMode(descriptor, options)
 
   // script
   const { code: scriptCode, map: scriptMap } = await genScriptCode(
@@ -80,11 +88,20 @@ export async function transformMain(
   // template
   const hasTemplateImport =
     descriptor.template && !isUseInlineTemplate(descriptor, options)
+  const isTemplateInlined =
+    !!descriptor.template &&
+    (!descriptor.template.lang || descriptor.template.lang === 'html') &&
+    !descriptor.template.src
 
   let templateCode = ''
   let templateMap: RawSourceMap | undefined = undefined
+  let templateMultiRoot: boolean | undefined
   if (hasTemplateImport) {
-    ;({ code: templateCode, map: templateMap } = await genTemplateCode(
+    ;({
+      code: templateCode,
+      map: templateMap,
+      multiRoot: templateMultiRoot,
+    } = await genTemplateCode(
       descriptor,
       options,
       pluginContext,
@@ -122,6 +139,11 @@ export async function transformMain(
   const output: string[] = [
     scriptCode,
     templateCode,
+    isTemplateOnlyVapor
+      ? `${scriptIdentifier}.__multiRoot = ${
+          isTemplateInlined ? templateMultiRoot : '_sfc_multiRoot'
+        }`
+      : '',
     stylesCode,
     customBlocksCode,
   ]
@@ -196,14 +218,23 @@ export async function transformMain(
 
   let resolvedMap: RawSourceMap | undefined = undefined
   if (options.sourceMap) {
-    if (scriptMap && templateMap) {
-      // if the template is inlined into the main module (indicated by the presence
-      // of templateMap), we need to concatenate the two source maps.
-
+    // the mappings of the source map for the inlined template should be moved
+    // because the position does not include the script tag part.
+    // we also concatenate the two source maps while doing that.
+    if (templateMap) {
+      const from = scriptMap ?? {
+        file: filename,
+        sourceRoot: '',
+        version: 3,
+        sources: [],
+        sourcesContent: [],
+        names: [],
+        mappings: '',
+      }
       const gen = fromMap(
         // version property of result.map is declared as string
         // but actually it is `3`
-        scriptMap as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap,
+        from as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap,
       )
       const tracer = new TraceMap(
         // same above
@@ -231,8 +262,7 @@ export async function transformMain(
       // of the main module compile result, which has outdated sourcesContent.
       resolvedMap.sourcesContent = templateMap.sourcesContent
     } else {
-      // if one of `scriptMap` and `templateMap` is empty, use the other one
-      resolvedMap = scriptMap ?? templateMap
+      resolvedMap = scriptMap
     }
   }
 
@@ -249,35 +279,61 @@ export async function transformMain(
 
   // handle TS transpilation
   let resolvedCode = output.join('\n')
-  const lang = descriptor.scriptSetup?.lang || descriptor.script?.lang
+  const lang =
+    descriptor.scriptSetup?.lang ||
+    descriptor.script?.lang ||
+    // the SFC parser discards empty script blocks, but their lang still
+    // applies to the code generated from the template
+    emptyScriptLangRE.exec(code)?.[1]
 
   if (
     lang &&
     /tsx?$/.test(lang) &&
     !descriptor.script?.src // only normal script can have src
   ) {
-    const { code, map } = await transformWithEsbuild(
-      resolvedCode,
-      filename,
-      {
-        target: 'esnext',
-        // #430 support decorators in .vue file
-        // target can be overridden by esbuild config target
-        ...options.devServer?.config.esbuild,
-        loader: 'ts',
-        sourcemap: options.sourceMap,
-      },
-      resolvedMap,
-    )
-    resolvedCode = code
-    resolvedMap = resolvedMap ? (map as any) : resolvedMap
+    // @ts-ignore Rolldown-specific
+    const { transformWithOxc } = await import('vite')
+    if (transformWithOxc) {
+      const { code, map } = await transformWithOxc(
+        resolvedCode,
+        filename,
+        {
+          // #430 support decorators in .vue file
+          // target can be overridden by oxc config target
+          // @ts-ignore Rolldown-specific
+          ...options.devServer?.config.oxc,
+          lang: 'ts',
+          sourcemap: options.sourceMap,
+        },
+        resolvedMap,
+      )
+      resolvedCode = code
+      resolvedMap = resolvedMap ? (map as any) : resolvedMap
+    } else {
+      const { code, map } = await transformWithEsbuild(
+        resolvedCode,
+        filename,
+        {
+          target: 'esnext',
+          charset: 'utf8',
+          // #430 support decorators in .vue file
+          // target can be overridden by esbuild config target
+          ...options.devServer?.config.esbuild,
+          loader: 'ts',
+          sourcemap: options.sourceMap,
+        },
+        resolvedMap,
+      )
+      resolvedCode = code
+      resolvedMap = resolvedMap ? (map as any) : resolvedMap
+    }
   }
 
   return {
     code: resolvedCode,
-    map: resolvedMap || {
+    map: (resolvedMap || {
       mappings: '',
-    },
+    }) as any,
     meta: {
       vite: {
         lang: descriptor.script?.lang || descriptor.scriptSetup?.lang || 'js',
@@ -289,18 +345,26 @@ export async function transformMain(
 async function genTemplateCode(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
-) {
+): Promise<{
+  code: string
+  map?: RawSourceMap
+  multiRoot?: boolean
+}> {
   const template = descriptor.template!
   const hasScoped = descriptor.styles.some((style) => style.scoped)
+  const needsMultiRoot =
+    !descriptor.script &&
+    !descriptor.scriptSetup &&
+    isVaporMode(descriptor, options)
 
   // If the template is not using pre-processor AND is not using external src,
   // compile and inline it directly in the main module. When served in vite this
   // saves an extra request per SFC which can improve load performance.
   if ((!template.lang || template.lang === 'html') && !template.src) {
-    return transformTemplateInMain(
+    const result = transformTemplateInMain(
       template.content,
       descriptor,
       options,
@@ -308,6 +372,10 @@ async function genTemplateCode(
       ssr,
       customElement,
     )
+    return {
+      ...result,
+      multiRoot: needsMultiRoot ? result.multiRoot : undefined,
+    }
   } else {
     if (template.src) {
       await linkSrcToDescriptor(
@@ -329,7 +397,9 @@ async function genTemplateCode(
     const request = JSON.stringify(src + query)
     const renderFnName = ssr ? 'ssrRender' : 'render'
     return {
-      code: `import { ${renderFnName} as _sfc_${renderFnName} } from ${request}`,
+      code: `import { ${renderFnName} as _sfc_${renderFnName}${
+        needsMultiRoot ? ', multiRoot as _sfc_multiRoot' : ''
+      } } from ${request}`,
       map: undefined,
     }
   }
@@ -338,15 +408,14 @@ async function genTemplateCode(
 async function genScriptCode(
   descriptor: SFCDescriptor,
   options: ResolvedOptions,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   ssr: boolean,
   customElement: boolean,
 ): Promise<{
   code: string
   map: RawSourceMap | undefined
 }> {
-  // @ts-expect-error TODO remove when 3.6 is out
-  const vaporFlag = descriptor.vapor ? '__vapor: true' : ''
+  const vaporFlag = isVaporMode(descriptor, options) ? '__vapor: true' : ''
   let scriptCode = `const ${scriptIdentifier} = { ${vaporFlag} }`
   let map: RawSourceMap | undefined
 
@@ -396,7 +465,7 @@ async function genScriptCode(
 
 async function genStyleCode(
   descriptor: SFCDescriptor,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   customElement: boolean,
   attachedProps: [string, string][],
 ) {
@@ -486,7 +555,7 @@ function genCSSModulesCode(
 
 async function genCustomBlockCode(
   descriptor: SFCDescriptor,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
 ) {
   let code = ''
   for (let index = 0; index < descriptor.customBlocks.length; index++) {
@@ -513,7 +582,7 @@ async function genCustomBlockCode(
 async function linkSrcToDescriptor(
   src: string,
   descriptor: SFCDescriptor,
-  pluginContext: PluginContext,
+  pluginContext: Rollup.PluginContext,
   scoped?: boolean,
 ) {
   const srcFile =

@@ -43,6 +43,34 @@ Default: `['defineComponent']`
 
 The name of the function to be used for defining components. This is useful when you have a custom `defineComponent` function.
 
+### tsTransform
+
+Type: `'babel' | 'built-in'`
+
+Default: `'babel'`
+
+Defines how `typescript` transformation is handled for `.tsx` files.
+
+`'babel'` - `typescript` transformation is handled by `@babel/plugin-transform-typescript` during `babel` invocation for JSX transformation.
+
+`'built-in'` - `babel` is invoked only for JSX transformation and then `typescript` transformation is handled by the same toolchain used for `.ts` files (currently `esbuild`).
+
+### babelPlugins
+
+Type: `any[]`
+
+Default: `undefined`
+
+Provide additional plugins for `babel` invocation for JSX transformation.
+
+### tsPluginOptions
+
+Type: `any`
+
+Default: `undefined`
+
+Defines options for `@babel/plugin-transform-typescript` plugin.
+
 ## HMR Detection
 
 This plugin supports HMR of Vue JSX components. The detection requirements are:

@@ -10,7 +10,7 @@ process.env.NODE_ENV = process.env.VITE_TEST_BUILD
 export default defineConfig({
   resolve: {
     alias: {
-      '~utils': resolve(__dirname, './playground/test-utils'),
+      '~utils': resolve(import.meta.dirname, './playground/test-utils'),
     },
   },
   test: {
@@ -23,6 +23,11 @@ export default defineConfig({
     onConsoleLog(log) {
       if (log.match(/experimental|jit engine|emitted file|tailwind/i))
         return false
+    },
+    expect: {
+      poll: {
+        timeout: 50 * (process.env.CI ? 200 : 50),
+      },
     },
   },
 })

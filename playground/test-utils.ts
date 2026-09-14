@@ -10,7 +10,7 @@ import { normalizePath } from 'vite'
 import { fromComment } from 'convert-source-map'
 import { expect } from 'vitest'
 import type { ResultPromise as ExecaResultPromise } from 'execa'
-import { isBuild, isWindows, page, testDir } from './vitestSetup'
+import { isWindows, page, testDir } from './vitestSetup'
 
 export * from './vitestSetup'
 
@@ -53,7 +53,7 @@ function componentToHex(c: number): string {
   return hex.length === 1 ? '0' + hex : hex
 }
 
-function rgbToHex(rgb: string): string {
+function rgbToHex(rgb: string): string | undefined {
   const match = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/)
   if (match) {
     const [_, rs, gs, bs] = match
@@ -63,16 +63,13 @@ function rgbToHex(rgb: string): string {
       componentToHex(parseInt(gs, 10)) +
       componentToHex(parseInt(bs, 10))
     )
-  } else {
-    return '#000000'
   }
+  return undefined
 }
-
-const timeout = (n: number) => new Promise((r) => setTimeout(r, n))
 
 async function toEl(el: string | ElementHandle): Promise<ElementHandle> {
   if (typeof el === 'string') {
-    return await page.$(el)
+    return (await page.$(el))!
   }
   return el
 }
@@ -80,7 +77,7 @@ async function toEl(el: string | ElementHandle): Promise<ElementHandle> {
 export async function getColor(el: string | ElementHandle): Promise<string> {
   el = await toEl(el)
   const rgb = await el.evaluate((el) => getComputedStyle(el as Element).color)
-  return hexToNameMap[rgbToHex(rgb)] ?? rgb
+  return hexToNameMap[rgbToHex(rgb)!] ?? rgb
 }
 
 export async function getBg(el: string | ElementHandle): Promise<string> {
@@ -100,9 +97,7 @@ export function readFile(filename: string): string {
 export function editFile(
   filename: string,
   replacer: (str: string) => string,
-  runInBuild: boolean = false,
 ): void {
-  if (isBuild && !runInBuild) return
   filename = path.resolve(testDir, filename)
   const content = fs.readFileSync(filename, 'utf-8')
   const modified = replacer(content)
@@ -131,7 +126,7 @@ export function findAssetFile(
   let files: string[]
   try {
     files = fs.readdirSync(assetsDir)
-  } catch (e) {
+  } catch (e: any) {
     if (e.code === 'ENOENT') {
       return ''
     }
@@ -147,46 +142,6 @@ export function readManifest(base = ''): Manifest {
   return JSON.parse(
     fs.readFileSync(path.join(testDir, 'dist', base, 'manifest.json'), 'utf-8'),
   )
-}
-
-/**
- * Poll a getter until the value it returns includes the expected value.
- */
-export async function untilUpdated(
-  poll: () => string | Promise<string>,
-  expected: string,
-  runInBuild = false,
-): Promise<void> {
-  if (isBuild && !runInBuild) return
-  const maxTries = process.env.CI ? 200 : 50
-  for (let tries = 0; tries < maxTries; tries++) {
-    const actual = (await poll()) ?? ''
-    if (actual.indexOf(expected) > -1 || tries === maxTries - 1) {
-      expect(actual).toMatch(expected)
-      break
-    } else {
-      await timeout(50)
-    }
-  }
-}
-
-/**
- * Retry `func` until it does not throw error.
- */
-export async function withRetry(
-  func: () => Promise<void>,
-  runInBuild = false,
-): Promise<void> {
-  if (isBuild && !runInBuild) return
-  const maxTries = process.env.CI ? 200 : 50
-  for (let tries = 0; tries < maxTries; tries++) {
-    try {
-      await func()
-      return
-    } catch {}
-    await timeout(50)
-  }
-  await func()
 }
 
 type UntilBrowserLogAfterCallback = (logs: string[]) => PromiseLike<void> | void
@@ -225,13 +180,13 @@ async function untilBrowserLog(
   expectOrder = true,
 ): Promise<string[]> {
   let resolve: () => void
-  let reject: (reason: any) => void
+  let reject!: (reason: any) => void
   const promise = new Promise<void>((_resolve, _reject) => {
     resolve = _resolve
     reject = _reject
   })
 
-  const logs = []
+  const logs: string[] = []
 
   try {
     const isMatch = (matcher: string | RegExp) => (text: string) =>
@@ -245,7 +200,7 @@ async function untilBrowserLog(
       if (expectOrder) {
         const remainingTargets = [...target]
         processMsg = (text: string) => {
-          const nextTarget = remainingTargets.shift()
+          const nextTarget = remainingTargets.shift()!
           expect(text).toMatch(nextTarget)
           return remainingTargets.length === 0
         }
@@ -279,7 +234,7 @@ async function untilBrowserLog(
     }
 
     page.on('console', handleMsg)
-  } catch (err) {
+  } catch (err: any) {
     reject(err)
   }
 
@@ -299,7 +254,7 @@ export const formatSourcemapForSnapshot = (map: any): any => {
   delete m.file
   delete m.names
   delete m.sourceRoot
-  m.sources = m.sources.map((source) => source.replace(root, '/root'))
+  m.sources = m.sources.map((source: string) => source.replace(root, '/root'))
   return m
 }
 

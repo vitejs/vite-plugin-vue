@@ -1,6 +1,4 @@
 import { resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import fetch from 'node-fetch'
 import { expect, test, vi } from 'vitest'
 import { port } from './serve'
 import {
@@ -8,9 +6,9 @@ import {
   editFile,
   getColor,
   isBuild,
+  isServe,
   page,
   untilBrowserLogAfter,
-  untilUpdated,
   viteServer,
 } from '~utils'
 
@@ -126,8 +124,8 @@ test('css', async () => {
   } else {
     // During dev, the CSS is loaded from async chunk and we may have to wait
     // when the test runs concurrently.
-    await untilUpdated(() => getColor('h1'), 'green')
-    await untilUpdated(() => getColor('.jsx'), 'blue')
+    await expect.poll(() => getColor('h1')).toMatch('green')
+    await expect.poll(() => getColor('.jsx')).toMatch('blue')
   }
 })
 
@@ -137,7 +135,7 @@ test('asset', async () => {
   browserLogs.forEach((msg) => {
     expect(msg).not.toMatch('404')
   })
-  const img = await page.$('img')
+  const img = (await page.$('img'))!
   expect(await img.getAttribute('src')).toMatch(
     isBuild ? /\/test\/assets\/logo-[-\w]{8}\.png/ : '/src/assets/logo.png',
   )
@@ -166,29 +164,30 @@ test('hydration', async () => {
   expect(await page.textContent('button')).toMatch('1')
 })
 
-test(
-  'hmr',
-  async () => {
-    // This is test is flaky in Mac CI, but can't be reproduced locally. Wait until
-    // network idle to avoid the issue. TODO: This may be caused by a bug when
-    // modifying a file while loading, we should remove this guard
-    await page.goto(url, { waitUntil: 'networkidle' })
-    editFile('src/pages/Home.vue', (code) => code.replace('Home', 'changed'))
-    await untilUpdated(() => page.textContent('h1'), 'changed')
-  },
-  { retry: 3 },
-)
+test.runIf(isServe)('hmr', { retry: 3 }, async () => {
+  // This is test is flaky in Mac CI, but can't be reproduced locally. Wait until
+  // network idle to avoid the issue. TODO: This may be caused by a bug when
+  // modifying a file while loading, we should remove this guard
+  await page.goto(url, { waitUntil: 'networkidle' })
+  editFile('src/pages/Home.vue', (code) => code.replace('Home', 'changed'))
+  await expect.poll(() => page.textContent('h1')).toMatch('changed')
+})
 
 test('client navigation', async () => {
   await untilBrowserLogAfter(() => page.goto(url), 'hydrated')
 
-  await untilUpdated(() => page.textContent('a[href="/test/about"]'), 'About')
+  await expect
+    .poll(() => page.textContent('a[href="/test/about"]'))
+    .toMatch('About')
   await page.click('a[href="/test/about"]')
-  await untilUpdated(() => page.textContent('h1'), 'About')
+  await expect.poll(() => page.textContent('h1')).toMatch('About')
+
+  if (isBuild) return
+
   editFile('src/pages/About.vue', (code) => code.replace('About', 'changed'))
-  await untilUpdated(() => page.textContent('h1'), 'changed')
+  await expect.poll(() => page.textContent('h1')).toMatch('changed')
   await page.click('a[href="/test/"]')
-  await untilUpdated(() => page.textContent('a[href="/test/"]'), 'Home')
+  await expect.poll(() => page.textContent('a[href="/test/"]')).toMatch('Home')
 })
 
 test('import.meta.url', async () => {
@@ -201,7 +200,7 @@ test.runIf(isBuild)('dynamic css file should be preloaded', async () => {
   const homeHtml = await (await fetch(url)).text()
   const re =
     /link rel="modulepreload".*?href="\/test\/assets\/(Home-[-\w]{8}\.js)"/
-  const filename = re.exec(homeHtml)[1]
+  const filename = re.exec(homeHtml)![1]
   const manifest = (
     await import(
       resolve(
@@ -219,18 +218,20 @@ test.runIf(isBuild)('dynamic css file should be preloaded', async () => {
 test.runIf(!isBuild)(
   'always throw error when evaluating an wrong SSR module',
   async () => {
-    const __filename = fileURLToPath(import.meta.url)
-    const badjs = resolve(__filename, '../fixtures/ssrModuleLoader-bad.js')
+    const badjs = resolve(
+      import.meta.dirname,
+      './fixtures/ssrModuleLoader-bad.js',
+    )
     const THROW_MESSAGE = 'it is an expected error'
 
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const expectedErrors = []
+    const expectedErrors: Error[] = []
     for (const _ of [0, 1]) {
       try {
         console.log(viteServer)
         await viteServer.ssrLoadModule(badjs, { fixStacktrace: true })
       } catch (e) {
-        expectedErrors.push(e)
+        expectedErrors.push(e as Error)
       }
     }
     expect(expectedErrors).toHaveLength(2)

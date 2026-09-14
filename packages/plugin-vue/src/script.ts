@@ -1,6 +1,7 @@
 import type { SFCDescriptor, SFCScriptBlock } from 'vue/compiler-sfc'
 import { resolveTemplateCompilerOptions } from './template'
 import { cache as descriptorCache } from './utils/descriptorCache'
+import { isVaporMode } from './utils/vapor'
 import type { ResolvedOptions } from './index'
 
 // ssr and non ssr builds would output different script content
@@ -74,12 +75,19 @@ export function resolveScript(
     id: descriptor.id,
     isProd: options.isProduction,
     inlineTemplate: isUseInlineTemplate(descriptor, options),
-    templateOptions: resolveTemplateCompilerOptions(descriptor, options, ssr),
+    templateOptions: resolveTemplateCompilerOptions(
+      descriptor,
+      options,
+      descriptor.filename,
+      ssr,
+    ),
     sourceMap: options.sourceMap,
     genDefaultAs: canInlineMain(descriptor, options)
       ? scriptIdentifier
       : undefined,
     customElement,
+    // @ts-expect-error TODO remove when 3.6 is out
+    vapor: isVaporMode(descriptor, options),
     propsDestructure:
       options.features?.propsDestructure ?? options.script?.propsDestructure,
   })

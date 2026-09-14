@@ -3,6 +3,36 @@ packages:
   - 'playground/**'
 
 catalog:
-  'vue': ^3.5.13
-  'vite': ^6.2.0
-  'vue-router': ^4.5.0
+  'vue': ^3.5.40
+  'vite': ^8.3.0
+  'vue-router': ^5.2.0
+
+overrides:
+  '@vitejs/plugin-vue': workspace:*
+
+minimumReleaseAgeExclude:
+  - '*'
+
+allowBuilds:
+  '@tailwindcss/oxide': true
+  'playwright-chromium': true
+  'simple-git-hooks': true
+  'unrs-resolver': true
+  '@parcel/watcher': false
+  '@swc/core': false
+  'core-js': false
+  'esbuild': false
+  'less': false
+
+hoistPattern:
+  - postcss
+  - pug # playground/vue > @vue/compiler-sfc
+  - ts-node # playground/tailwind
+
+autoInstallPeers: false
+
+strictPeerDependencies: false
+
+shellEmulator: true
+
+dedupePeers: true
