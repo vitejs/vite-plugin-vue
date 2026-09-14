@@ -1,3 +1,14 @@
+## <small>[6.0.9](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue%406.0.8...plugin-vue%406.0.9) (2026-09-14)</small>
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#812](https://github.com/vitejs/vite-plugin-vue/issues/812)) ([b2b559d](https://github.com/vitejs/vite-plugin-vue/commit/b2b559dd01b245be5b09c954ac112833d16c3b8b))
+* **plugin-vue:** initialize compiler correctly ([#475](https://github.com/vitejs/vite-plugin-vue/issues/475)) ([127b03f](https://github.com/vitejs/vite-plugin-vue/commit/127b03fea1581bf1e4118033dcafd58b0417f9bf))
+* **plugin-vue:** transpile TS in templates with empty script block ([#838](https://github.com/vitejs/vite-plugin-vue/issues/838)) ([189148e](https://github.com/vitejs/vite-plugin-vue/commit/189148e7c36d26941a046c45d2455ec1c1edf61e))
+
+### Miscellaneous Chores
+
+* **deps:** update dependency obug to v3 ([#846](https://github.com/vitejs/vite-plugin-vue/issues/846)) ([3180192](https://github.com/vitejs/vite-plugin-vue/commit/3180192830204b7b1bcaa2e07a410d51603b73e0))
+
 ## <small>[6.0.8](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue@6.0.7...plugin-vue@6.0.8) (2026-07-14)</small>
 ### Features
 
