@@ -15,14 +15,37 @@ beforeEach(() => {
 })
 
 describe('compiler initialization', () => {
-  it('initializes the compiler during config resolution using the resolved root', async () => {
+  it('exposes an initialized compiler after configuration resolves', async () => {
+    const plugin = vuePlugin()
+
+    await resolveConfig({ configFile: false, plugins: [plugin] }, 'serve')
+
+    // #474: During Nuxt warmup, @intlify/unplugin-vue-i18n copied the Vue
+    // plugin options before buildStart initialized the compiler. The copied
+    // compiler stayed null, causing SFC parsing to fail.
+    // Initializing the compiler in configResolved prevents this.
+    const copiedOptions = { ...plugin.api!.options }
+    const { descriptor, errors } = copiedOptions.compiler.parse(
+      '<script setup>const { t } = useI18n()</script><template>{{ t("hello") }}</template>',
+      {
+        filename: 'app.vue',
+        templateParseOptions: copiedOptions.template?.compilerOptions,
+      },
+    )
+
+    expect(errors).toEqual([])
+    expect(descriptor.scriptSetup?.content).toBe('const { t } = useI18n()')
+    expect(descriptor.template?.content).toBe('{{ t("hello") }}')
+  })
+
+  it('uses the configured project root when it differs from the working directory', async () => {
     const root = path.resolve(process.cwd(), 'playground/vue')
     const plugin = vuePlugin()
 
     await resolveConfig({ configFile: false, root, plugins: [plugin] }, 'serve')
 
     expect(plugin.api!.options.compiler).toBe(compiler)
-    expect(resolveCompiler).toHaveBeenCalledExactlyOnceWith(root)
+    expect(resolveCompiler).toHaveBeenCalledWith(root)
   })
 
   it('preserves an explicitly supplied compiler', async () => {
