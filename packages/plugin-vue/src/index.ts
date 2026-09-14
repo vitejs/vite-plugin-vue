@@ -202,7 +202,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
 
   const options = shallowRef<ResolvedOptions>({
     isProduction: process.env.NODE_ENV === 'production',
-    compiler: null as any, // to be set in buildStart
+    compiler: null as any, // to be set in configResolved
     customElement: /\.ce\.vue$/,
     ...rawOptions,
     root: process.cwd(),
@@ -331,7 +331,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
     configResolved(config) {
       const { compiler, ...rest } = options.value
       options.value = {
-        compiler: compiler ?? resolveCompiler(options.value.root),
+        compiler: compiler ?? resolveCompiler(config.root),
         ...rest,
         root: config.root,
         sourceMap: config.command === 'build' ? !!config.build.sourcemap : true,
