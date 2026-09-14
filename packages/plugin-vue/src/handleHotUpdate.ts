@@ -156,7 +156,7 @@ export async function handleHotUpdate(
   if (didUpdateStyle) {
     updateType.push(`style`)
   }
-  if (updateType.length) {
+  if (updateType.length || scriptChanged) {
     if (file.endsWith('.vue')) {
       // invalidate the descriptor cache so that the next transform will
       // re-analyze the file and pick up the changes.
