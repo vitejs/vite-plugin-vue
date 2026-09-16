@@ -227,7 +227,7 @@ export function resolveTemplateCompilerOptions(
 function canReuseAST(version: string | undefined) {
   if (version) {
     const [_, minor, patch] = version.split('.').map(Number)
-    if (minor >= 4 && patch >= 3) {
+    if (minor > 4 || (minor === 4 && patch >= 3)) {
       return true
     }
   }
