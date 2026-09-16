@@ -202,7 +202,9 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
 
   const options = shallowRef<ResolvedOptions>({
     isProduction: process.env.NODE_ENV === 'production',
-    compiler: null as any, // to be set in configResolved
+    // Initialized in configResolved for Vite integrations during warmup (#474).
+    // Standalone Rollup/Rolldown skip that hook and initialize it in buildStart.
+    compiler: null as any,
     customElement: /\.ce\.vue$/,
     ...rawOptions,
     root: process.cwd(),
