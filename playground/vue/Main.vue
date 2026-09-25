@@ -8,6 +8,7 @@
   <div class="hmr-tsx-block">
     <HmrTsx />
   </div>
+  <HmrScriptRevert />
   <HmrCircularReference name="test" />
   <TypeProps msg="msg" bar="bar" :id="123" />
   <TypePropsTsx msg="msg" bar="bar" />
@@ -48,6 +49,7 @@
 import { version, defineAsyncComponent } from 'vue'
 import Hmr from './Hmr.vue'
 import HmrTsx from './HmrTsx.vue'
+import HmrScriptRevert from './HmrScriptRevert.vue'
 import WithQuery from './WithQuery.vue?with-query'
 import Syntax from './Syntax.vue'
 import PreProcessors from './PreProcessors.vue'
