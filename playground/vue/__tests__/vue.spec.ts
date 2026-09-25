@@ -273,6 +273,36 @@ describe.runIf(isServe)('hmr', () => {
       .poll(() => page.textContent('.hmr-circular-reference-inc'))
       .toMatch('count is 100')
   })
+
+  // https://github.com/vitejs/vite-plugin-vue/issues/837
+  test('should reload when script is reverted after a template edit', async () => {
+    const value = () => page.textContent('.hmr-script-revert-value')
+    expect(await value()).toBe('original')
+
+    // template edit + revert
+    editFile('HmrScriptRevert.vue', (code) =>
+      code.replace('HMR script revert<', 'HMR script revert edited<'),
+    )
+    await expect
+      .poll(() => page.textContent('h2.hmr-script-revert'))
+      .toMatch('HMR script revert edited')
+    editFile('HmrScriptRevert.vue', (code) =>
+      code.replace('HMR script revert edited<', 'HMR script revert<'),
+    )
+    await expect
+      .poll(() => page.textContent('h2.hmr-script-revert'))
+      .toBe('HMR script revert')
+
+    // script edit + byte-exact revert
+    editFile('HmrScriptRevert.vue', (code) =>
+      code.replace("'original'", "'changed'"),
+    )
+    await expect.poll(value).toBe('changed')
+    editFile('HmrScriptRevert.vue', (code) =>
+      code.replace("'changed'", "'original'"),
+    )
+    await expect.poll(value).toBe('original')
+  })
 })
 
 describe('src imports', () => {
