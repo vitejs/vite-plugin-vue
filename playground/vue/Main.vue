@@ -37,6 +37,7 @@
   <PreCompiledExternalScoped />
   <PreCompiledExternalCssModules />
   <ParserOptions />
+  <CustomizableSelect />
   <ExportTypeProps1 msg="msg" />
   <ExportTypeProps2 msg="msg" />
   <EmptyScriptSetupTs />
@@ -72,6 +73,7 @@ import PreCompiled from './pre-compiled/foo.vue'
 import PreCompiledExternalScoped from './pre-compiled/external-scoped.vue'
 import PreCompiledExternalCssModules from './pre-compiled/external-cssmodules.vue'
 import ParserOptions from './ParserOptions.vue'
+import CustomizableSelect from './CustomizableSelect.vue'
 import HmrCircularReference from './HmrCircularReference.vue'
 import TreeShakeScopedStyle from './TreeShakeScopedStyle.vue'
 
