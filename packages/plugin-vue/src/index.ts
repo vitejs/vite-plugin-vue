@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import type { ModuleNode, Plugin, ViteDevServer } from 'vite'
+import type { ModuleNode, Plugin, ResolvedConfig, ViteDevServer } from 'vite'
 import { createFilter, normalizePath } from 'vite'
 import type {
   SFCBlock,
@@ -180,6 +180,7 @@ export interface ResolvedOptions extends Omit<Options, 'include' | 'exclude'> {
   sourceMap: boolean
   cssDevSourcemap: boolean
   devServer?: ViteDevServer
+  viteConfig?: ResolvedConfig
   devToolsEnabled?: boolean
 }
 
@@ -336,6 +337,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         compiler: compiler ?? resolveCompiler(config.root),
         ...rest,
         root: config.root,
+        viteConfig: config,
         sourceMap: config.command === 'build' ? !!config.build.sourcemap : true,
         cssDevSourcemap: config.css?.devSourcemap ?? false,
         isProduction: config.isProduction,
