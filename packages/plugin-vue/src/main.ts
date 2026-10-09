@@ -306,6 +306,9 @@ export async function transformMain(
           sourcemap: options.sourceMap,
         },
         resolvedMap,
+        // so that the `tsconfig` option of Vite is respected
+        options.viteConfig,
+        options.devServer?.watcher,
       )
       resolvedCode = code
       resolvedMap = resolvedMap ? (map as any) : resolvedMap
