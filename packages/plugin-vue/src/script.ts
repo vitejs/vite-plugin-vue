@@ -87,7 +87,7 @@ export function resolveScript(
       : undefined,
     customElement,
     // @ts-expect-error TODO remove when 3.6 is out
-    vapor: isVaporMode(descriptor, options),
+    vapor: !!descriptor.scriptSetup && isVaporMode(descriptor, options),
     propsDestructure:
       options.features?.propsDestructure ?? options.script?.propsDestructure,
   })

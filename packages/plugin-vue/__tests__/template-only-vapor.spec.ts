@@ -319,8 +319,10 @@ describe.todo('features.vapor', () => {
       }),
     )
   })
+})
 
-  it('continues to force VitePress markdown SFCs into vapor mode', async () => {
+describe('VitePress markdown vapor', () => {
+  it('forces only the template into vapor mode', async () => {
     const filename = '/root/index.md'
     const source = `
       <script >
@@ -330,15 +332,17 @@ describe.todo('features.vapor', () => {
       <template><div><h1 id="hello" tabindex="-1">Hello</h1></div></template>
     `
     const options = createForcedVaporOptions()
+    const compileScript = vi.fn(compiler.compileScript)
     const compileTemplate = vi.fn(compiler.compileTemplate)
 
-    await transformMain(
+    const result = await transformMain(
       source,
       filename,
       {
         ...options,
         compiler: {
           ...compiler,
+          compileScript,
           compileTemplate,
         },
       },
@@ -347,6 +351,16 @@ describe.todo('features.vapor', () => {
       false,
     )
 
+    expect(result?.code).toContain('__vapor:true')
+    expect(compileScript).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        vapor: false,
+        templateOptions: expect.objectContaining({
+          vapor: true,
+        }),
+      }),
+    )
     expect(compileTemplate).toHaveBeenCalledWith(
       expect.objectContaining({
         vapor: true,
