@@ -1,6 +1,6 @@
 import path from 'node:path'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { resolveConfig } from 'vite'
+import { normalizePath, resolveConfig } from 'vite'
 import * as compiler from 'vue/compiler-sfc'
 import vuePlugin from '../src/index'
 import { resolveCompiler } from '../src/compiler'
@@ -45,7 +45,7 @@ describe('compiler initialization', () => {
     await resolveConfig({ configFile: false, root, plugins: [plugin] }, 'serve')
 
     expect(plugin.api!.options.compiler).toBe(compiler)
-    expect(resolveCompiler).toHaveBeenCalledWith(root)
+    expect(resolveCompiler).toHaveBeenCalledWith(normalizePath(root))
   })
 
   it('preserves an explicitly supplied compiler', async () => {
