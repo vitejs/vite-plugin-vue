@@ -141,6 +141,13 @@ export async function handleHotUpdate(
   }
 
   const updateType = []
+  // Record script changes too, so that the descriptor is invalidated and the
+  // next transform compares against it. Otherwise `prevCache` keeps a stale
+  // baseline from the last template/style update, and reverting the script
+  // back to that content is wrongly treated as template-only (rerender).
+  if (scriptChanged) {
+    updateType.push(`script`)
+  }
   if (needRerender) {
     updateType.push(`template`)
     // template is inlined into main, add main module instead
