@@ -8,7 +8,7 @@ import {
 } from '~utils'
 
 test.runIf(isServe)('regenerate CSS and HMR', async () => {
-  const el = await page.$('.uno')
+  const el = (await page.$('.uno'))!
   expect(await getBgColor(el)).toBe('rgb(187, 247, 208)')
 
   await untilBrowserLogAfter(
@@ -22,6 +22,6 @@ test.runIf(isServe)('regenerate CSS and HMR', async () => {
     ],
     false,
   )
-  const newEl = await page.$('.uno')
+  const newEl = (await page.$('.uno'))!
   await expect.poll(() => getBgColor(newEl)).toMatch('rgb(254, 202, 202)')
 })
