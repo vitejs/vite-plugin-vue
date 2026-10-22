@@ -37,6 +37,9 @@ export async function handleHotUpdate(
     return
   }
 
+  // Snapshot the raw file first
+  const rawContent = fs.readFileSync(file, 'utf-8')
+
   const content = await read()
   const { descriptor } = createDescriptor(file, content, options, true)
 
@@ -159,16 +162,16 @@ export async function handleHotUpdate(
   }
   if (updateType.length) {
     if (file.endsWith('.vue')) {
-      // If the descriptor was created from transformed content (e.g., by UnoCSS vue-scoped),
-      // we should update the main cache with the transformed descriptor instead of invalidating it.
-      // This ensures that subsequent style block requests get the correct transformed content.
-      if (content !== fs.readFileSync(file, 'utf-8')) {
-        // Use the descriptor created from transformed content
+      // HMR `read()` may be overridden by other plugins (e.g. UnoCSS
+      // vue-scoped injects a `<style scoped>` block). Such a descriptor cannot
+      // be recreated by re-reading the file, so it must stay in the main cache
+      // for subsequent style block requests.
+      const isTransformedContent = content !== rawContent
+      // Invalidate first so that `prevCache` is updated, which `transformMain`
+      // uses to decide whether a template-only update can re-render.
+      invalidateDescriptor(file)
+      if (isTransformedContent) {
         cache.set(file, descriptor)
-      } else {
-        // invalidate the descriptor cache so that the next transform will
-        // re-analyze the file and pick up the changes.
-        invalidateDescriptor(file)
       }
     } else {
       // https://github.com/vuejs/vitepress/issues/3129
