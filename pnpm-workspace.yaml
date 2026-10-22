@@ -28,6 +28,7 @@ hoistPattern:
   - postcss
   - pug # playground/vue > @vue/compiler-sfc
   - ts-node # playground/tailwind
+  - '@unocss/core' # playground/unocss-vue-scoped > @unocss/autocomplete
 
 autoInstallPeers: false
 
