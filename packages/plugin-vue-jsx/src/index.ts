@@ -113,9 +113,20 @@ function vueJsxPlugin(options: Options = {}): Plugin {
               config.define?.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__,
             ) ?? false,
         },
+        // Classic (not preserve): scan glob transform returns moduleType 'js',
+        // so JSX must be lowered. Avoids react/jsx-runtime; real transform is Babel.
+        // https://github.com/vitejs/vite-plugin-vue/issues/862
         optimizeDeps: isRolldownVite
           ? {
-              rolldownOptions: { transform: { jsx: 'preserve' } },
+              rolldownOptions: {
+                transform: {
+                  jsx: {
+                    runtime: 'classic',
+                    pragma: 'h',
+                    pragmaFrag: 'Fragment',
+                  },
+                },
+              },
             }
           : {},
       }

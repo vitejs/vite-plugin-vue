@@ -17,6 +17,8 @@ test('should render', async () => {
   expect(await page.textContent('.export-default-as')).toMatch(
     'export default defineComponent as',
   )
+  // #862: .jsx with JSX + import.meta.glob must survive dep-scan
+  expect(await page.textContent('.glob-jsx')).toMatch('1')
 })
 
 test('should update', async () => {
