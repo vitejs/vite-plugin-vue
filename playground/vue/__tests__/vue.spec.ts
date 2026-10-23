@@ -276,6 +276,12 @@ describe.runIf(isServe)('hmr', () => {
 })
 
 describe('src imports', () => {
+  test('template ts syntax with script src', async () => {
+    expect(await page.textContent('.src-imports-template-ts')).toBe(
+      'hello from external TS script!',
+    )
+  })
+
   test('script src with ts', async () => {
     expect(await page.textContent('.src-imports-script')).toMatch(
       'hello from script src',
