@@ -10,6 +10,7 @@ import JsxWithQuery from './Query.jsx?query=true'
 import TsImport from './TsImport.vue'
 import ExportDefault from './ExportDefault'
 import ExportDefaultAs from './ExportDefaultAs'
+import GlobJsx from './GlobJsx'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <TsImport />
       <ExportDefault />
       <ExportDefaultAs />
+      <GlobJsx />
     </>
   )
 }
