@@ -1,0 +1,43 @@
+playground/vue/Main.vue
+  s_01ed6d559d3584::t_4824bfc3391277 22,60
+packages/plugin-vue/src/main.ts
+  s_8f98c5dc1eb178::t_21358a879726a1 289
+playground/vue/__tests__/vue.spec.ts
+  s_835a7a62894783::t_199a88722f68d4 279-284
+playground/vue/src-import/SrcImportTs.vue
+  s_8f98c5dc1eb178::t_cf70c0d77efef6 1-7
+playground/vue/src-import/script-ts.ts
+  s_835a7a62894783::t_1e6c188890df56 1-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "586083cf47219e08c0d7c88c58324497873e4087",
+  "prompts": {},
+  "sessions": {
+    "s_01ed6d559d3584": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1665f-0242-7ac3-95b4-2fdefcdeabdb",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "sapphi-red <green@sapphi.red>"
+    },
+    "s_835a7a62894783": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a167cb-34a7-7350-8ae9-381f61de6774",
+        "model": "unknown"
+      },
+      "human_author": "sapphi-red <green@sapphi.red>"
+    },
+    "s_8f98c5dc1eb178": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a167cb-345c-7bf1-a21f-34ef0aa61793",
+        "model": "unknown"
+      },
+      "human_author": "sapphi-red <green@sapphi.red>"
+    }
+  }
+}
