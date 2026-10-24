@@ -220,7 +220,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
   const filter = computed(() => createFilter(include.value, exclude.value))
   const customElementFilter = computed(() => {
     const customElement =
-      options.value.features?.customElement || options.value.customElement
+      options.value.features?.customElement ?? options.value.customElement
     return typeof customElement === 'boolean'
       ? () => customElement
       : createFilter(customElement)
