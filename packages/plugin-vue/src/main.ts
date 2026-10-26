@@ -286,11 +286,7 @@ export async function transformMain(
     // applies to the code generated from the template
     emptyScriptLangRE.exec(code)?.[1]
 
-  if (
-    lang &&
-    /tsx?$/.test(lang) &&
-    !descriptor.script?.src // only normal script can have src
-  ) {
+  if (lang && /tsx?$/.test(lang)) {
     // @ts-ignore Rolldown-specific
     const { transformWithOxc } = await import('vite')
     if (transformWithOxc) {
