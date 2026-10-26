@@ -1,3 +1,13 @@
+## <small>[6.0.10](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue%406.0.9...plugin-vue%406.0.10) (2026-10-10)</small>
+### Bug Fixes
+
+* **plugin-vue:** compile transformed normal scripts outside vapor mode ([#857](https://github.com/vitejs/vite-plugin-vue/issues/857)) ([7b63e3c](https://github.com/vitejs/vite-plugin-vue/commit/7b63e3cac7430b855ae31545583015ebb125f8f2))
+* **plugin-vue:** correct AST reuse checks and allow Vue 3.6 RC ([ccc06dd](https://github.com/vitejs/vite-plugin-vue/commit/ccc06dd5813b3fcf9b226e9bd0c7ef6c5c082f82))
+
+### Documentation
+
+* **plugin-vue:** clarify compiler initialization hooks ([55d0cab](https://github.com/vitejs/vite-plugin-vue/commit/55d0cabf3cf2f6efad1193dba6464faf912b6ce2))
+
 ## <small>[6.0.9](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue%406.0.8...plugin-vue%406.0.9) (2026-09-14)</small>
 ### Bug Fixes
 
