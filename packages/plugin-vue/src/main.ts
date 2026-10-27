@@ -419,7 +419,13 @@ async function genScriptCode(
   let scriptCode = `const ${scriptIdentifier} = { ${vaporFlag} }`
   let map: RawSourceMap | undefined
 
-  const script = resolveScript(descriptor, options, ssr, customElement)
+  const script = resolveScript(
+    descriptor,
+    options,
+    ssr,
+    customElement,
+    pluginContext,
+  )
   if (script) {
     // If the script is js/ts and has no external src, it can be directly placed
     // in the main module.
