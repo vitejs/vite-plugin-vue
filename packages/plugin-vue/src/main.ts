@@ -1,6 +1,6 @@
 import path from 'node:path'
 import fs from 'node:fs'
-import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
+import type { SFCBlock, SFCDescriptor, SFCScriptBlock } from 'vue/compiler-sfc'
 import type { RawSourceMap } from 'source-map-js'
 import type { EncodedSourceMap as TraceEncodedSourceMap } from '@jridgewell/trace-mapping'
 import { TraceMap, eachMapping } from '@jridgewell/trace-mapping'
@@ -419,7 +419,15 @@ async function genScriptCode(
   let scriptCode = `const ${scriptIdentifier} = { ${vaporFlag} }`
   let map: RawSourceMap | undefined
 
-  const script = resolveScript(descriptor, options, ssr, customElement)
+  let script: SFCScriptBlock | null
+  try {
+    script = resolveScript(descriptor, options, ssr, customElement)
+  } catch (error: any) {
+    if (error?.loc?.start) {
+      pluginContext.error(createRollupError(descriptor.filename, error))
+    }
+    throw error
+  }
   if (script) {
     // If the script is js/ts and has no external src, it can be directly placed
     // in the main module.
