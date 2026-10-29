@@ -4,6 +4,7 @@ import { editFile, isServe, page } from '~utils'
 test('should render', async () => {
   expect(await page.textContent('.named')).toMatch('0')
   expect(await page.textContent('.named-specifier')).toMatch('1')
+  expect(await page.textContent('.named-specifier-before')).toMatch('1')
   expect(await page.textContent('.default')).toMatch('2')
   expect(await page.textContent('.default-tsx')).toMatch('3')
   expect(await page.textContent('.script')).toMatch('4')
@@ -24,6 +25,8 @@ test('should update', async () => {
   expect(await page.textContent('.named')).toMatch('1')
   await page.click('.named-specifier')
   expect(await page.textContent('.named-specifier')).toMatch('2')
+  await page.click('.named-specifier-before')
+  expect(await page.textContent('.named-specifier-before')).toMatch('2')
   await page.click('.default')
   expect(await page.textContent('.default')).toMatch('3')
   await page.click('.default-tsx')
@@ -47,6 +50,7 @@ describe.runIf(isServe)('vue-jsx server', () => {
 
     // affect all components in same file
     expect(await page.textContent('.named-specifier')).toMatch('1')
+    expect(await page.textContent('.named-specifier-before')).toMatch('1')
     expect(await page.textContent('.default')).toMatch('2')
     // should not affect other components from different file
     expect(await page.textContent('.default-tsx')).toMatch('4')
@@ -59,6 +63,23 @@ describe.runIf(isServe)('vue-jsx server', () => {
     await expect
       .poll(() => page.textContent('.named-specifier'))
       .toMatch('named specifier updated 1')
+
+    // affect all components in same file
+    expect(await page.textContent('.default')).toMatch('2')
+    // should not affect other components on the page
+    expect(await page.textContent('.default-tsx')).toMatch('4')
+  })
+
+  test('hmr: named export via specifier before declaration', async () => {
+    editFile('Comps.jsx', (code) =>
+      code.replace(
+        'named specifier before {count',
+        'named specifier before updated {count',
+      ),
+    )
+    await expect
+      .poll(() => page.textContent('.named-specifier-before'))
+      .toMatch('named specifier before updated 1')
 
     // affect all components in same file
     expect(await page.textContent('.default')).toMatch('2')
