@@ -262,7 +262,9 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                 declaredComponents.push(...names)
               }
             }
+          }
 
+          for (const node of result.ast!.program.body) {
             if (node.type === 'ExportNamedDeclaration') {
               if (
                 node.declaration &&

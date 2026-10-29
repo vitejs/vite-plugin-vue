@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { Named, NamedSpec, default as Default } from './Comps'
+import { Named, NamedSpec, NamedSpecBefore, default as Default } from './Comps'
 import { default as TsxDefault } from './Comp'
 import OtherExt from './OtherExt.tesx'
 import JsxScript from './Script.vue'
@@ -16,6 +16,7 @@ function App() {
     <>
       <Named />
       <NamedSpec />
+      <NamedSpecBefore />
       <Default />
       <TsxDefault />
       <OtherExt />
