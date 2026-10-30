@@ -380,6 +380,16 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-vue
 
+  playground/vue-refresh-bug:
+    dependencies:
+      vue:
+        specifier: 'catalog:'
+        version: 3.5.39(typescript@6.0.3)
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue
+
   playground/vue-server-origin:
     dependencies:
       vue:
