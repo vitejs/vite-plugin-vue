@@ -126,4 +126,21 @@ describe.runIf(isServe)('vue-jsx server', () => {
     )
     await expect.poll(() => page.textContent('.setup-jsx')).toMatch('1000')
   })
+
+  describe('__file injection', () => {
+    test('sets __file on named jsx component', async () => {
+      const file = await page.evaluate(() => (window as any).__jsxFileNamed)
+      expect(file).toMatch(/Comps\.jsx$/)
+    })
+
+    test('sets __file on default jsx component', async () => {
+      const file = await page.evaluate(() => (window as any).__jsxFileDefault)
+      expect(file).toMatch(/Comps\.jsx$/)
+    })
+
+    test('sets __file on default tsx component', async () => {
+      const file = await page.evaluate(() => (window as any).__jsxFileTsx)
+      expect(file).toMatch(/Comp\.tsx$/)
+    })
+  })
 })
