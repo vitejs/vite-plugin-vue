@@ -342,7 +342,11 @@ function vueJsxPlugin(options: Options = {}): Plugin {
                 .map((c) => `${c.exported}: __${c.exported}`)
                 .join(',')
 
-              code += `\nimport.meta.hot.accept(({${newCompNames}}) => {${callbackCode}\n})`
+              const missingCompNames = hotComponents
+                .map((c) => `!__${c.exported}`)
+                .join(' || ')
+
+              code += `\nimport.meta.hot.accept(({${newCompNames}}) => {\nif (${missingCompNames}) return import.meta.hot.invalidate()${callbackCode}\n})`
               result.code = code
             }
 
