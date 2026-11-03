@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { editFile, isServe, page } from '~utils'
+import { browserErrors, browserLogs, editFile, isServe, page } from '~utils'
 
 test('should render', async () => {
   expect(await page.textContent('.named')).toMatch('0')
@@ -126,4 +126,50 @@ describe.runIf(isServe)('vue-jsx server', () => {
     )
     await expect.poll(() => page.textContent('.setup-jsx')).toMatch('1000')
   })
+
+  test.each(['remove', 'rename'])(
+    'hmr: %s an unused export',
+    async (change) => {
+      await page.evaluate(() => {
+        document.documentElement.dataset.hmrMarker = 'preserved'
+      })
+      editFile('RemovedExports.jsx', (code) =>
+        code.replace(/retained \w+/, `retained ${change}`),
+      )
+      await expect
+        .poll(() => page.textContent('.retained-export'))
+        .toBe(`retained ${change}`)
+      expect(
+        await page.evaluate(() => document.documentElement.dataset.hmrMarker),
+      ).toBe('preserved')
+
+      await page.evaluate(() => {
+        const runtime = (window as any).__VUE_HMR_RUNTIME__
+        const reload = runtime.reload
+        runtime.reload = (...args: any[]) => {
+          console.debug('component reload before invalidation')
+          return reload(...args)
+        }
+      })
+      const logStart = browserLogs.length
+      const errorStart = browserErrors.length
+      editFile('RemovedExports.jsx', (code) =>
+        change === 'remove'
+          ? code.replace(/^export const Removed = .*\r?\n/m, '')
+          : code.replace('export const Renamed', 'export const RenamedAgain'),
+      )
+      await expect
+        .poll(() =>
+          page.evaluate(() => document.documentElement.dataset.hmrMarker),
+        )
+        .toBeUndefined()
+      await expect
+        .poll(() => page.textContent('.retained-export'))
+        .toBe(`retained ${change}`)
+      expect(browserErrors.slice(errorStart)).toEqual([])
+      expect(browserLogs.slice(logStart).join('\n')).not.toMatch(
+        /component reload before invalidation|Something went wrong during Vue component hot-reload|TypeError/,
+      )
+    },
+  )
 })
