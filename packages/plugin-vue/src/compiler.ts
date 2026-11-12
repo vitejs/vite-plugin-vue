@@ -3,12 +3,6 @@ declare module 'vue/compiler-sfc' {
   interface SFCDescriptor {
     id: string
   }
-
-  // TODO: remove once Vue 3.6 is officially released and stable compiler-sfc
-  // types include `multiRoot`.
-  interface SFCTemplateCompileResults {
-    multiRoot?: boolean
-  }
 }
 
 import { createRequire } from 'node:module'
