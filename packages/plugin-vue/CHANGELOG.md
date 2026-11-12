@@ -1,3 +1,12 @@
+## <small>[6.0.11](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue%406.0.10...plugin-vue%406.0.11) (2026-11-12)</small>
+### Bug Fixes
+
+* **plugin-vue:** reload when a script edit is reverted after a template edit ([#849](https://github.com/vitejs/vite-plugin-vue/issues/849)) ([ee04334](https://github.com/vitejs/vite-plugin-vue/commit/ee04334aadbb8cfaa9a77ebc15bb8a270d012f95))
+
+### Code Refactoring
+
+* **plugin-vue:** remove the vapor __multiRoot marker ([#871](https://github.com/vitejs/vite-plugin-vue/issues/871)) ([64586b1](https://github.com/vitejs/vite-plugin-vue/commit/64586b175c3068c2c3e09db2c36a9d29cdb59d58))
+
 ## <small>[6.0.10](https://github.com/vitejs/vite-plugin-vue/compare/plugin-vue%406.0.9...plugin-vue%406.0.10) (2026-10-10)</small>
 ### Bug Fixes
 
