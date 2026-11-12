@@ -44,7 +44,7 @@ export async function transformMain(
   const prevDescriptor = getPrevDescriptor(filename)
   const { descriptor, errors } = createDescriptor(filename, code, options)
 
-  if (fs.existsSync(filename)) {
+  if (devServer && fs.existsSync(filename)) {
     // populate descriptor cache for HMR if it's not set yet
     getDescriptor(
       filename,
