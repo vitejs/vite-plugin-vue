@@ -1,6 +1,6 @@
 import path from 'node:path'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { resolveConfig } from 'vite'
+import { normalizePath, resolveConfig } from 'vite'
 import * as compiler from 'vue/compiler-sfc'
 import vuePlugin from '../src/index'
 import { resolveCompiler } from '../src/compiler'
@@ -39,7 +39,7 @@ describe('compiler initialization', () => {
   })
 
   it('uses the configured project root when it differs from the working directory', async () => {
-    const root = path.resolve(process.cwd(), 'playground/vue')
+    const root = normalizePath(path.resolve(process.cwd(), 'playground/vue'))
     const plugin = vuePlugin()
 
     await resolveConfig({ configFile: false, root, plugins: [plugin] }, 'serve')
