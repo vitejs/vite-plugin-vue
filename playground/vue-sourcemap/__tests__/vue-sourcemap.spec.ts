@@ -2,10 +2,12 @@ import { URL } from 'node:url'
 import { describe, expect, test } from 'vitest'
 import {
   extractSourcemap,
+  findAssetFile,
   formatSourcemapForSnapshot,
   isBuild,
   isServe,
   page,
+  readFile,
   serverLogs,
 } from '~utils'
 
@@ -131,7 +133,30 @@ describe.runIf(isServe)('serve:vue-sourcemap', () => {
     const map = extractSourcemap(js)
     expect(formatSourcemapForSnapshot(map)).toMatchSnapshot('serve-no-template')
   })
+
+  test('script block of a pre-transformed sfc maps to the original file', async () => {
+    const res = await page.request.get(
+      new URL('./PreTransformed.vue?vue&type=script&lang.ts', page.url()).href,
+    )
+    const map = extractSourcemap(await res.text())
+    const index = map.sources.findIndex((source: string) =>
+      source.endsWith('PreTransformed.vue'),
+    )
+    expect(map.sourcesContent[index]).toBe(readFile('PreTransformed.vue'))
+  })
 })
+
+test.runIf(isBuild)(
+  'sourcemap sources of a pre-transformed sfc hold its original content',
+  () => {
+    const map = JSON.parse(findAssetFile(/\.js\.map$/))
+    const contents = map.sources.flatMap((source: string, i: number) =>
+      source.endsWith('PreTransformed.vue') ? [map.sourcesContent[i]] : [],
+    )
+    expect(contents.length).toBeGreaterThan(0)
+    expect(new Set(contents)).toEqual(new Set([readFile('PreTransformed.vue')]))
+  },
+)
 
 test.runIf(isBuild)('should not output sourcemap warning (#4939)', () => {
   serverLogs.forEach((log) => {

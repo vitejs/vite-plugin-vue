@@ -13,6 +13,7 @@ import {
   getDescriptor,
   getPrevDescriptor,
   setSrcDescriptor,
+  trackPreTransform,
 } from './utils/descriptorCache'
 import {
   canInlineMain,
@@ -44,7 +45,14 @@ export async function transformMain(
   const prevDescriptor = getPrevDescriptor(filename)
   const { descriptor, errors } = createDescriptor(filename, code, options)
 
-  if (fs.existsSync(filename)) {
+  const exists = fs.existsSync(filename)
+  const isVueFile = filename.endsWith('.vue')
+  const rawSource =
+    exists && isVueFile && options.sourceMap
+      ? fs.readFileSync(filename, 'utf-8')
+      : undefined
+
+  if (exists) {
     // populate descriptor cache for HMR if it's not set yet
     getDescriptor(
       filename,
@@ -57,7 +65,17 @@ export async function transformMain(
       // `hmrContext.read` is overwritten so handleHotUpdate() is dealing with
       // post-transform code, so we populate the descriptor with post-transform
       // code here as well.
-      filename.endsWith('.vue') ? undefined : code,
+      isVueFile ? rawSource : code,
+    )
+  }
+
+  if (options.sourceMap && isVueFile) {
+    trackPreTransform(
+      descriptor,
+      code,
+      rawSource,
+      () =>
+        pluginContext.getCombinedSourcemap() as unknown as TraceEncodedSourceMap,
     )
   }
 
