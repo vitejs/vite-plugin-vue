@@ -44,7 +44,9 @@ export async function transformMain(
   const prevDescriptor = getPrevDescriptor(filename)
   const { descriptor, errors } = createDescriptor(filename, code, options)
 
-  if (fs.existsSync(filename)) {
+  // only when a dev server exists: `hmrCache` is read by handleHotUpdate() alone, which
+  // never runs on a build, and both caches live until the process exits
+  if (devServer && fs.existsSync(filename)) {
     // populate descriptor cache for HMR if it's not set yet
     getDescriptor(
       filename,
