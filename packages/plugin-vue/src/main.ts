@@ -62,13 +62,19 @@ export async function transformMain(
     )
   }
 
-  if (options.sourceMap) {
-    const rawSource = getDescriptor(filename, options, false, true)?.source
-    if (rawSource != null && rawSource !== code) {
+  if (
+    options.sourceMap &&
+    filename.endsWith('.vue') &&
+    fs.existsSync(filename) &&
+    fs.readFileSync(filename, 'utf-8') !== code
+  ) {
+    const map = pluginContext.getCombinedSourcemap()
+    const original = map.sourcesContent?.[0]
+    if (original != null && original !== code) {
       setPreTransformMap(
         descriptor,
-        pluginContext.getCombinedSourcemap() as TraceEncodedSourceMap,
-        rawSource,
+        map as unknown as TraceEncodedSourceMap,
+        original,
       )
     }
   }
