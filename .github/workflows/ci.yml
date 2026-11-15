@@ -91,6 +91,9 @@ jobs:
       - name: Test serve
         run: pnpm run test-serve
 
+      - name: Unit tests
+        run: pnpm exec vitest run
+
       - name: Test build
         run: pnpm run test-build
 
