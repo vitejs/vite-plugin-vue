@@ -21,6 +21,7 @@ import {
   getDescriptor,
   getSrcDescriptor,
   getTempSrcDescriptor,
+  remapBlockToRawSource,
 } from './utils/descriptorCache'
 import { clearScriptCache, resolveScript, typeDepToSFCMap } from './script'
 import { transformMain } from './main'
@@ -457,7 +458,7 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
           if (block) {
             return {
               code: block.content,
-              map: block.map as any,
+              map: remapBlockToRawSource(descriptor, block.map) as any,
             }
           }
         }

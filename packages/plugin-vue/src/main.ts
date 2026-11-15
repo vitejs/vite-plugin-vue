@@ -12,6 +12,7 @@ import {
   createDescriptor,
   getDescriptor,
   getPrevDescriptor,
+  setPreTransformMap,
   setSrcDescriptor,
 } from './utils/descriptorCache'
 import {
@@ -59,6 +60,17 @@ export async function transformMain(
       // code here as well.
       filename.endsWith('.vue') ? undefined : code,
     )
+  }
+
+  if (options.sourceMap) {
+    const rawSource = getDescriptor(filename, options, false, true)?.source
+    if (rawSource != null && rawSource !== code) {
+      setPreTransformMap(
+        descriptor,
+        pluginContext.getCombinedSourcemap() as TraceEncodedSourceMap,
+        rawSource,
+      )
+    }
   }
 
   if (errors.length) {

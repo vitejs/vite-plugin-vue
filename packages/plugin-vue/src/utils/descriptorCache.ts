@@ -2,6 +2,20 @@ import fs from 'node:fs'
 import path from 'node:path'
 import crypto from 'node:crypto'
 import type { CompilerError, SFCDescriptor } from 'vue/compiler-sfc'
+import type { RawSourceMap } from 'source-map-js'
+import type { EncodedSourceMap as TraceEncodedSourceMap } from '@jridgewell/trace-mapping'
+import {
+  TraceMap,
+  eachMapping,
+  originalPositionFor,
+} from '@jridgewell/trace-mapping'
+import type { EncodedSourceMap as GenEncodedSourceMap } from '@jridgewell/gen-mapping'
+import {
+  GenMapping,
+  addMapping,
+  setSourceContent,
+  toEncodedMap,
+} from '@jridgewell/gen-mapping'
 import { normalizePath } from 'vite'
 import type { ResolvedOptions, VueQuery } from '../index'
 
@@ -150,4 +164,53 @@ export function setSrcDescriptor(
 
 function getHash(text: string): string {
   return crypto.hash('sha256', text, 'hex').substring(0, 8)
+}
+
+// Maps from the raw SFC on disk to the code that reached this plugin, when
+// earlier plugins (e.g. `enforce: 'pre'`) changed it. Block maps point at the
+// changed code, so sub-block requests must be remapped to the raw file.
+const preTransformMaps = new WeakMap<
+  SFCDescriptor,
+  { map: TraceMap; source: string }
+>()
+
+export function setPreTransformMap(
+  descriptor: SFCDescriptor,
+  map: TraceEncodedSourceMap,
+  source: string,
+): void {
+  preTransformMaps.set(descriptor, { map: new TraceMap(map), source })
+}
+
+export function remapBlockToRawSource(
+  descriptor: SFCDescriptor,
+  blockMap: RawSourceMap | undefined,
+): RawSourceMap | undefined {
+  const pre = preTransformMaps.get(descriptor)
+  if (!pre || !blockMap) return blockMap
+
+  const gen = new GenMapping({ file: blockMap.file })
+  setSourceContent(gen, descriptor.filename, pre.source)
+  eachMapping(
+    new TraceMap(
+      blockMap as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap,
+    ),
+    (m) => {
+      if (m.originalLine == null) return
+      const original = originalPositionFor(pre.map, {
+        line: m.originalLine,
+        column: m.originalColumn,
+      })
+      if (original.line == null) return
+      addMapping(gen, {
+        source: descriptor.filename,
+        original: { line: original.line, column: original.column },
+        generated: { line: m.generatedLine, column: m.generatedColumn },
+      })
+    },
+  )
+  return toEncodedMap(gen) as Omit<
+    GenEncodedSourceMap,
+    'version'
+  > as RawSourceMap
 }
