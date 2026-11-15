@@ -166,31 +166,51 @@ function getHash(text: string): string {
   return crypto.hash('sha256', text, 'hex').substring(0, 8)
 }
 
-// Maps from the raw SFC on disk to the code that reached this plugin, when
-// earlier plugins (e.g. `enforce: 'pre'`) changed it. Block maps point at the
-// changed code, so sub-block requests must be remapped to the raw file.
-const preTransformMaps = new WeakMap<
-  SFCDescriptor,
-  { map: TraceMap; source: string }
->()
+// When plugins before this one (e.g. `enforce: 'pre'`) changed an SFC, its
+// block maps point at the changed code. This holds the map from that code back
+// to the sources the bundler loaded, so sub-block requests can be remapped.
+interface PreTransform {
+  map: TraceMap
+  contents: Map<string, string>
+}
 
-export function setPreTransformMap(
+const preTransforms = new WeakMap<SFCDescriptor, PreTransform>()
+
+export function trackPreTransform(
   descriptor: SFCDescriptor,
-  map: TraceEncodedSourceMap,
-  source: string,
+  code: string,
+  rawSource: string | undefined,
+  getCombinedMap: () => TraceEncodedSourceMap,
 ): void {
-  preTransformMaps.set(descriptor, { map: new TraceMap(map), source })
+  preTransforms.delete(descriptor)
+  if (rawSource === code) return
+
+  const map = new TraceMap(getCombinedMap())
+  const filename = normalizePath(descriptor.filename)
+  const contents = new Map<string, string>()
+  map.resolvedSources.forEach((source, i) => {
+    const content =
+      map.sourcesContent?.[i] ??
+      (normalizePath(source) === filename ? rawSource : undefined)
+    if (content != null) contents.set(source, content)
+  })
+  const original = [...contents].find(
+    ([source]) => normalizePath(source) === filename,
+  )?.[1]
+  if (original == null || original === code) return
+
+  preTransforms.set(descriptor, { map, contents })
 }
 
 export function remapBlockToRawSource(
   descriptor: SFCDescriptor,
   blockMap: RawSourceMap | undefined,
 ): RawSourceMap | undefined {
-  const pre = preTransformMaps.get(descriptor)
+  const pre = preTransforms.get(descriptor)
   if (!pre || !blockMap) return blockMap
 
   const gen = new GenMapping({ file: blockMap.file })
-  setSourceContent(gen, descriptor.filename, pre.source)
+  const used = new Set<string>()
   eachMapping(
     new TraceMap(
       blockMap as Omit<RawSourceMap, 'version'> as TraceEncodedSourceMap,
@@ -201,14 +221,19 @@ export function remapBlockToRawSource(
         line: m.originalLine,
         column: m.originalColumn,
       })
-      if (original.line == null) return
+      if (original.source == null) return
+      used.add(original.source)
       addMapping(gen, {
-        source: descriptor.filename,
+        source: original.source,
         original: { line: original.line, column: original.column },
         generated: { line: m.generatedLine, column: m.generatedColumn },
       })
     },
   )
+  for (const source of used) {
+    const content = pre.contents.get(source)
+    if (content != null) setSourceContent(gen, source, content)
+  }
   return toEncodedMap(gen) as Omit<
     GenEncodedSourceMap,
     'version'
