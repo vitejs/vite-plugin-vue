@@ -1,4 +1,5 @@
-<style src="/@/src-import/style.css" scoped></style>
+<style src="/@/src-import/style.css"></style>
+<style src="./style2.css"></style>
 <template>
   <div class="src-imports-script">{{ msg }}</div>
 </template>
