@@ -435,7 +435,15 @@ export default function vuePlugin(rawOptions: Options = {}): Plugin<Api> {
         // select corresponding block for sub-part virtual modules
         if (query.vue) {
           if (query.src) {
-            return fs.readFileSync(filename, 'utf-8')
+            try {
+              return fs.readFileSync(filename, 'utf-8')
+            } catch (error) {
+              const owner = getSrcDescriptor(filename, query)?.filename
+              const suffix = owner ? ` imported by ${owner}` : ''
+              throw this.error(
+                `Failed to load ${query.type || 'block'} src "${filename}"${suffix}: ${error instanceof Error ? error.message : String(error)}`,
+              )
+            }
           }
           const descriptor = getDescriptor(filename, options.value)!
           let block: SFCBlock | null | undefined
