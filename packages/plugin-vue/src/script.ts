@@ -1,4 +1,5 @@
 import type { SFCDescriptor, SFCScriptBlock } from 'vue/compiler-sfc'
+import { normalizePath } from 'vite'
 import { resolveTemplateCompilerOptions } from './template'
 import { cache as descriptorCache } from './utils/descriptorCache'
 import { isVaporMode } from './utils/vapor'
@@ -11,7 +12,7 @@ let ssrCache = new WeakMap<SFCDescriptor, SFCScriptBlock | null>()
 export const typeDepToSFCMap = new Map<string, Set<string>>()
 
 export function invalidateScript(filename: string): void {
-  const desc = descriptorCache.get(filename)
+  const desc = descriptorCache.get(normalizePath(filename))
   if (desc) {
     clientCache.delete(desc)
     ssrCache.delete(desc)

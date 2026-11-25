@@ -58,20 +58,21 @@ export function createDescriptor(
     descriptor.id = getHash(normalizedPath + (isProduction ? source : ''))
   }
 
-  ;(hmr ? hmrCache : cache).set(filename, descriptor)
+  ;(hmr ? hmrCache : cache).set(normalizePath(filename), descriptor)
   return { descriptor, errors }
 }
 
 export function getPrevDescriptor(filename: string): SFCDescriptor | undefined {
-  return prevCache.get(filename)
+  return prevCache.get(normalizePath(filename))
 }
 
 export function invalidateDescriptor(filename: string, hmr = false): void {
   const _cache = hmr ? hmrCache : cache
-  const prev = _cache.get(filename)
-  _cache.delete(filename)
+  const key = normalizePath(filename)
+  const prev = _cache.get(key)
+  _cache.delete(key)
   if (prev) {
-    prevCache.set(filename, prev)
+    prevCache.set(key, prev)
   }
 }
 
@@ -87,8 +88,9 @@ export function getDescriptor(
   code?: string,
 ): SFCDescriptor | undefined {
   const _cache = hmr ? hmrCache : cache
-  if (_cache.has(filename)) {
-    return _cache.get(filename)!
+  const key = normalizePath(filename)
+  if (_cache.has(key)) {
+    return _cache.get(key)!
   }
   if (createIfNotFound) {
     const { descriptor, errors } = createDescriptor(
@@ -108,10 +110,11 @@ export function getSrcDescriptor(
   filename: string,
   query: VueQuery,
 ): SFCDescriptor {
+  const key = normalizePath(filename)
   if (query.scoped) {
-    return cache.get(`${filename}?src=${query.src}`)!
+    return cache.get(`${key}?src=${query.src}`)!
   }
-  return cache.get(filename)!
+  return cache.get(key)!
 }
 
 export function getTempSrcDescriptor(
@@ -139,13 +142,14 @@ export function setSrcDescriptor(
   entry: SFCDescriptor,
   scoped?: boolean,
 ): void {
+  const key = normalizePath(filename)
   if (scoped) {
     // if multiple Vue files use the same src file, they will be overwritten
     // should use other key
-    cache.set(`${filename}?src=${entry.id}`, entry)
+    cache.set(`${key}?src=${entry.id}`, entry)
     return
   }
-  cache.set(filename, entry)
+  cache.set(key, entry)
 }
 
 function getHash(text: string): string {
