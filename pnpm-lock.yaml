@@ -115,6 +115,9 @@ importers:
       '@jridgewell/trace-mapping':
         specifier: ^0.3.31
         version: 0.3.31
+      magic-string:
+        specifier: ^1.4.5
+        version: 1.4.5
       obug:
         specifier: ^3.0.0
         version: 3.0.0
@@ -402,6 +405,9 @@ importers:
       less:
         specifier: ^4.7.0
         version: 4.7.0
+      magic-string:
+        specifier: ^1.4.5
+        version: 1.4.5
       postcss-nested:
         specifier: ^9.0.1
         version: 9.0.1(postcss@8.5.28)
@@ -3896,8 +3902,8 @@ packages:
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
-  magic-string@1.1.0:
-    resolution: {integrity: sha512-kS3VHe0nEPST2saQV4Rbkchcd3UBRkVTQHo1D3h/ZTwFDhai/mfKkmtPAtD129EOI7K3HlHIsFOt0WrI2/oU9g==}
+  magic-string@1.4.5:
+    resolution: {integrity: sha512-oLLC2+YvQUfAa+vxoufE/yc1icb87M9iXIRqAoR/2EhE/8cb3SF/+Gi0c2By1B+5Vz2e2vQtUvHiu1+63Znh+w==}
 
   make-dir@5.1.0:
     resolution: {integrity: sha512-IfpFq6UM39dUNiphpA6uDezNx/AvWyhwfICWPR3t1VspkgkMZrL+Rk1RbN1bx+aeNYwOrqGJgEgV3yotk+ZUVw==}
@@ -6901,7 +6907,7 @@ snapshots:
       browserslist: 4.28.9
       browserslist-to-esbuild: 2.1.1(browserslist@4.28.9)
       core-js: 3.49.0
-      magic-string: 1.1.0
+      magic-string: 1.4.5
       regenerator-runtime: 0.14.1
       systemjs: 6.15.1
       vite: 8.3.2(@types/node@24.13.3)(esbuild@0.28.0)(jiti@2.7.0)(less@4.7.0)(sass@1.101.3)(stylus@0.64.0)(tsx@4.23.1)(yaml@2.9.0)
@@ -8256,7 +8262,7 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  magic-string@1.1.0:
+  magic-string@1.4.5:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
 

@@ -10,6 +10,7 @@
   <SrcImportHtml />
   <NoScript />
   <NoTemplate />
+  <PreTransformed />
 </template>
 
 <script setup lang="ts">
@@ -23,4 +24,5 @@ import SrcImport from './src-import/SrcImport.vue'
 import SrcImportHtml from './src-import-html/SrcImportHtml.vue'
 import NoScript from './NoScript.vue'
 import NoTemplate from './NoTemplate.vue'
+import PreTransformed from './PreTransformed.vue'
 </script>
