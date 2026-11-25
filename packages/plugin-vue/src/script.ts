@@ -1,4 +1,10 @@
-import type { SFCDescriptor, SFCScriptBlock } from 'vue/compiler-sfc'
+import type {
+  CompilerOptions,
+  SFCDescriptor,
+  SFCScriptBlock,
+  SFCTemplateCompileOptions,
+} from 'vue/compiler-sfc'
+import type { Rollup } from 'vite'
 import { resolveTemplateCompilerOptions } from './template'
 import { cache as descriptorCache } from './utils/descriptorCache'
 import { isVaporMode } from './utils/vapor'
@@ -60,6 +66,7 @@ export function resolveScript(
   options: ResolvedOptions,
   ssr: boolean,
   customElement: boolean,
+  pluginContext?: Rollup.PluginContext,
 ): SFCScriptBlock | null {
   if (!descriptor.script && !descriptor.scriptSetup) {
     return null
@@ -70,17 +77,28 @@ export function resolveScript(
     return cached
   }
 
+  const inlineTemplate = isUseInlineTemplate(descriptor, options)
+  let templateOptions = resolveTemplateCompilerOptions(
+    descriptor,
+    options,
+    descriptor.filename,
+    ssr,
+  )
+  if (inlineTemplate && templateOptions && pluginContext) {
+    templateOptions = withTemplateWarnings(
+      templateOptions,
+      descriptor,
+      options,
+      pluginContext,
+    )
+  }
+
   const resolved: SFCScriptBlock = options.compiler.compileScript(descriptor, {
     ...options.script,
     id: descriptor.id,
     isProd: options.isProduction,
-    inlineTemplate: isUseInlineTemplate(descriptor, options),
-    templateOptions: resolveTemplateCompilerOptions(
-      descriptor,
-      options,
-      descriptor.filename,
-      ssr,
-    ),
+    inlineTemplate,
+    templateOptions,
     sourceMap: options.sourceMap,
     genDefaultAs: canInlineMain(descriptor, options)
       ? scriptIdentifier
@@ -111,6 +129,42 @@ export function resolveScript(
 
   setResolvedScript(descriptor, resolved, ssr)
   return resolved
+}
+
+type NodeTransform = NonNullable<CompilerOptions['nodeTransforms']>[number]
+
+// compileScript() does not expose warnings from the inline template compile
+function withTemplateWarnings(
+  templateOptions: Omit<SFCTemplateCompileOptions, 'source'>,
+  descriptor: SFCDescriptor,
+  options: ResolvedOptions,
+  pluginContext: Rollup.PluginContext,
+): Omit<SFCTemplateCompileOptions, 'source'> {
+  const forwardWarnings: NodeTransform = (node, context) => {
+    if (node !== context.root) return
+    const source = context.root.source || descriptor.template!.content
+    context.onWarn = (warning) => {
+      let message = warning.message
+      if (warning.loc) {
+        message += `\n${options.compiler.generateCodeFrame(
+          source,
+          warning.loc.start.offset,
+          warning.loc.end.offset,
+        )}`
+      }
+      pluginContext.warn({ id: descriptor.filename, message })
+    }
+  }
+  return {
+    ...templateOptions,
+    compilerOptions: {
+      ...templateOptions.compilerOptions,
+      nodeTransforms: [
+        forwardWarnings,
+        ...(templateOptions.compilerOptions?.nodeTransforms || []),
+      ],
+    },
+  }
 }
 
 // If the script is js/ts and has no external src, it can be directly placed
