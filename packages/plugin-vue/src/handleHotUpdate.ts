@@ -1,7 +1,7 @@
 import { createDebug } from 'obug'
 import type { SFCBlock, SFCDescriptor } from 'vue/compiler-sfc'
 import type { HmrContext, ModuleNode } from 'vite'
-import { isCSSRequest } from 'vite'
+import { isCSSRequest, normalizePath } from 'vite'
 
 import type * as t from '@babel/types'
 
@@ -176,7 +176,7 @@ export async function handleHotUpdate(
       // To fix that we need to provide the descriptor we parsed here in the
       // main cache. This assumes no other plugin is applying pre-transform to
       // the file type - not impossible, but should be extremely unlikely.
-      cache.set(file, descriptor)
+      cache.set(normalizePath(file), descriptor)
     }
     debug(`[vue:update(${updateType.join('&')})] ${file}`)
   }
