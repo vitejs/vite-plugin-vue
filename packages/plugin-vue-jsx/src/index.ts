@@ -14,7 +14,14 @@ import type { Options } from './types'
 
 export type * from './types'
 
-const ssrRegisterHelperId = '/__vue-jsx-ssr-register-helper'
+// The default id is rootless ("/id"): fine for vite's own resolution
+// pipeline, but module runners on Windows materialize import.meta.url from
+// it as a drive-less "file:///id" and Node's createRequire throws
+// ERR_INVALID_ARG_VALUE for those (vitest#11883). The config hook re-roots
+// it against the project root so it stays a valid file URL on every
+// platform; resolveId/load keep matching it by exact id.
+const ssrRegisterHelperIdDefault = '/__vue-jsx-ssr-register-helper'
+let ssrRegisterHelperId = ssrRegisterHelperIdDefault
 const ssrRegisterHelperCode =
   `import { useSSRContext } from "vue"\n` +
   // the const here is just to work around the Bun bug where
@@ -80,6 +87,13 @@ function vueJsxPlugin(options: Options = {}): Plugin {
     name: 'vite:vue-jsx',
 
     config(config) {
+      // Re-root the SSR helper's virtual id against the project root (see
+      // the note at ssrRegisterHelperIdDefault). The user config's root may
+      // be unset — vite resolves it to process.cwd() afterwards, so the
+      // fallback matches the root vite itself will use.
+      ssrRegisterHelperId = normalizePath(
+        path.resolve(config.root || process.cwd(), '__vue-jsx-ssr-register-helper'),
+      )
       const parseDefine = (v: unknown) => {
         try {
           return typeof v === 'string' ? JSON.parse(v) : v
