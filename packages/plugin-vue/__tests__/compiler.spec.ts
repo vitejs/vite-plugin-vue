@@ -45,7 +45,7 @@ describe('compiler initialization', () => {
     await resolveConfig({ configFile: false, root, plugins: [plugin] }, 'serve')
 
     expect(plugin.api!.options.compiler).toBe(compiler)
-    expect(resolveCompiler).toHaveBeenCalledWith(root)
+    expect(resolveCompiler).toHaveBeenCalledWith(normalizePath(root))
   })
 
   it('preserves an explicitly supplied compiler', async () => {
