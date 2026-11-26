@@ -118,18 +118,19 @@ export function getTempSrcDescriptor(
   filename: string,
   query: VueQuery,
 ): ExtendedSFCDescriptor {
-  // this is only used for pre-compiled <style src> with scoped flag
+  // External styles can be transformed without the main SFC when it is cached.
+  // Pre-compiled imports use `id`, while generated scoped src imports use `src`.
+  const styles: SFCDescriptor['styles'] = []
+  styles[query.index || 0] = {
+    scoped: query.scoped,
+    loc: {
+      start: { line: 0, column: 0 },
+    },
+  } as any
   return {
     filename,
-    id: query.id || '',
-    styles: [
-      {
-        scoped: query.scoped,
-        loc: {
-          start: { line: 0, column: 0 },
-        },
-      } as any,
-    ],
+    id: query.id || (query.scoped ? query.src : '') || '',
+    styles,
     isTemp: true,
   } as ExtendedSFCDescriptor
 }
