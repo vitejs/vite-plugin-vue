@@ -20,6 +20,7 @@
   <Assets />
   <CustomBlock />
   <SrcImport />
+  <SrcImportTs />
   <ExternalSrcImport />
   <Slotted>
     <div class="slotted">this should be red</div>
@@ -58,6 +59,7 @@ import CssModules from './CssModules.vue'
 import Assets from './Assets.vue'
 import CustomBlock from './CustomBlock.vue'
 import SrcImport from './src-import/SrcImport.vue'
+import SrcImportTs from './src-import/SrcImportTs.vue'
 import ExternalSrcImport from '#external/src-import/SrcImport.vue'
 import Slotted from './Slotted.vue'
 import ScanDep from './ScanDep.vue'
